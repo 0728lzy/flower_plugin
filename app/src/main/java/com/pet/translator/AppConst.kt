@@ -10,26 +10,26 @@ object AppConst {
 
     //----------------------------模板常量（常修改）----------------------------start
     const val CHANNEL = "XIAOMI" //CSJ HUAWEI BAIDU OPPO
-    const val DJ_APP_ID = "a92c610a88358742855638431ac72034ec"
-    const val UM_APP_ID = "66f505a7f5ffeb6b15c00b64"
+    const val DJ_APP_ID = "a92c610a98359d1894113456448f2234fd5bbe41fabce2b4e0ca74c5"
+    const val UM_APP_ID = "66f79ecb61c3b13bde90b57a"
     const val TAG = "ad_log"
     //GroMore
-    const val Ad_ID = "5611545" //穿山甲广告APP ID
-    const val GMCPAd_ID_IN = "103159170" //插屏应用内
-    const val GMCPAd_ID_IN_TWO = "103159250" //插屏应用内2
-    const val FEEDSIMPLE_ID_ONE = "103159171" //信息流首页1
-    const val FEEDSIMPLE_ID_TWO = "103159249" //信息流首页2
-    const val GMSPAd_ID = "103159339" //开屏ID
-    const val GMDDAd_ID = "890007337" //快报兜底开屏id
-    const val GMSPAd_TWO_ID = "103158975" //开屏ID 2
-    const val GMDDAd_TWO_ID = "890007338" //快报兜底开屏id 2
-    const val GMRDAd_ID_IN = "103158878" //激励视频
+    const val Ad_ID = "5612273" //穿山甲广告APP ID
+    const val GMCPAd_ID_IN = "103160879" //插屏应用内
+    const val GMCPAd_ID_IN_TWO = "103160691" //插屏应用内2
+    const val FEEDSIMPLE_ID_ONE = "103162027" //信息流首页1
+    const val FEEDSIMPLE_ID_TWO = "103163912" //信息流首页2
+    const val GMSPAd_ID = "103160690" //开屏ID
+    const val GMDDAd_ID = "890024540" //快报兜底开屏id
+    const val GMSPAd_TWO_ID = "103164004" //开屏ID 2
+    const val GMDDAd_TWO_ID = "890024541" //快报兜底开屏id 2
+    const val GMRDAd_ID_IN = "103162317" //激励视频
     //用户协议和隐私政策
-    const val APP_HOST = "云翼"  //建议每次修改协议时，同时修改这里的主体名，这样就可以保证出包主体不会错！
+    const val APP_HOST = "武汉壮牛"  //建议每次修改协议时，同时修改这里的主体名，这样就可以保证出包主体不会错！
     const val URL_USER_AGREEMENT =
-        "https://app.xiaodanzi.com/protocol/mould/agreement/0d592a18-231e-4ce4-adee-af681dd8f618.html"//用户协议MK
+        "https://app.xiaodanzi.com/protocol/mould/agreement/405229ef-0ae0-4c50-868e-cc8a509b2d8f.html"//用户协议MK
     const val URL_PRIVACY_POLICY =
-        "https://app.xiaodanzi.com/protocol/mould/privacy/d8799336-9438-419a-ac61-459d4b7435dd.html"//隐私政策 MK
+        "https://app.xiaodanzi.com/protocol/mould/privacy/e9f352b3-9ac3-4b25-8392-528d7c886453.html"//隐私政策 MK
     //----------------------------模板常量（常修改）----------------------------end
 
 

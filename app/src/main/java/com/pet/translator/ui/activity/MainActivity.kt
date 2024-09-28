@@ -4,6 +4,8 @@ import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.os.Bundle
+import android.os.Handler
+import android.view.KeyEvent
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -12,6 +14,13 @@ import androidx.viewpager2.widget.ViewPager2
 import com.pet.translator.R
 import com.pet.translator.base.dj.BaseActivity
 import com.gyf.immersionbar.ImmersionBar
+import com.kwad.sdk.api.util.GMCPAdNoLimitUtils
+import com.kwad.sdk.api.util.GMCPAdUtils
+import com.kwad.sdk.api.util.GMCPTwoAdUtils
+import com.pet.translator.utils.lzy.LZYLog
+import com.lxj.xpopup.XPopup
+import com.lxj.xpopup.core.BasePopupView
+import com.pet.translator.AppConst
 import com.pet.translator.databinding.ActivityMainBinding
 import com.pet.translator.ext.thrillClickListener
 import com.pet.translator.ui.fragment.Index1Fragment
@@ -19,6 +28,8 @@ import com.pet.translator.ui.fragment.Index2Fragment
 import com.pet.translator.ui.fragment.Index3Fragment
 import com.pet.translator.ui.fragment.Index4Fragment
 import com.pet.translator.ui.fragment.Index5Fragment
+import com.pet.translator.utils.dj.UserInfoModel
+import com.pet.translator.widget.popup.dj.ExitDialogPopup
 
 class MainActivity : BaseActivity() {
 
@@ -85,13 +96,6 @@ class MainActivity : BaseActivity() {
         binding.contentNav.llLanguage.thrillClickListener {
             LanguageActivity.forward(this, false)
         }
-//        binding.contentNav.llShareNow.thrillClickListener {
-//            val str1 = getString(R.string.app_name)
-//            val str2 = getString(R.string.let_me_recommend)
-//            val url = "https://play.google.com/store/apps/details?id=com.ruite.app.pet.translator"
-//            val result = "${str1}\n${str2}\n${url}"
-//            com.pet.translator.utils.ShareFileUtils.shareUrl(this, result)
-//        }
     }
 
     private fun tabChange(index: Int) {
@@ -149,5 +153,181 @@ class MainActivity : BaseActivity() {
         }
         super.onBackPressed()
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        LZYLog.e("MainActivity","onResume  AppConst.splashInfoShowMainCP:${AppConst.splashInfoShowMainCP}")
+
+        if (AppConst.splashInfoShowMainCP) {
+            AppConst.splashInfoShowMainCP = false
+            showAdCpOne()
+        }
+    }
+
+    //首页广告
+    private fun showAdCpOne() {
+        if(!UserInfoModel.getIsCheckFlag() || AppConst.is_show_ad) {
+            GMCPAdNoLimitUtils.init(this, object : GMCPAdNoLimitUtils.GirdMenuStateListener {
+                override fun onSuccess() {
+                    LZYLog.e(this@MainActivity, "first one cp onSuccess")
+                    GMCPAdNoLimitUtils.showInterstitialFullAd(this@MainActivity)
+                }
+
+                override fun onError() {
+                    LZYLog.e(this@MainActivity, "first one cp onError")
+
+                }
+
+                override fun showVideoClosed() {
+
+                    if(AppConst.is_show_ad  && !AppConst.isWaked){
+                        if(GMCPTwoAdUtils.isReady()) {
+                            GMCPTwoAdUtils.showInterstitialFullAd(this@MainActivity)
+                        }
+                    }
+                }
+
+                override fun onShowError() {
+
+                }
+            })
+            if (!GMCPAdNoLimitUtils.isReady()) {
+                GMCPAdNoLimitUtils.initPreloading("")
+            } else {
+                GMCPAdNoLimitUtils.showInterstitialFullAd(this)
+            }
+            if (AppConst.is_show_ad && !AppConst.isWaked){
+                showAdCpTwo()
+            }
+
+        }
+
+
+    }
+
+    private fun showAdCpTwo() {
+        AppConst.isWaked=false
+        GMCPTwoAdUtils.init(this, object : GMCPTwoAdUtils.GirdMenuStateListener {
+            override fun onSuccess() {
+                LZYLog.e(this@MainActivity, "first two cp onSuccess")
+            }
+
+            override fun onError() {
+                LZYLog.e(this@MainActivity, "first two cp onError")
+
+            }
+
+            override fun showVideoClosed() {
+                LZYLog.e(this@MainActivity, "first one cp showVideoClosedisShowTwoAd")
+
+
+            }
+
+            override fun onShowError() {
+
+            }
+        })
+        if(!GMCPTwoAdUtils.isReady()) {
+            Handler().postDelayed({
+                if (AppConst.is_show_ad) {
+                    GMCPTwoAdUtils.initPreloading("")
+                }
+            }, 1000)
+        }
+
+    }
+
+    //退出
+    private val exitTime = 0
+
+    ///adv---------------------------------------------------start
+    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+        // 监听返回键，点击两次退出程序
+        if (AppConst.is_show_ad && keyCode == KeyEvent.KEYCODE_BACK && event.action == KeyEvent.ACTION_DOWN) {
+
+            showExitDialog()
+
+            return true
+        }
+        return super.onKeyDown(keyCode, event)
+    }
+
+
+    var exitPopupView: BasePopupView? = null
+    var isExitApp = false
+    private fun showExitDialog() {
+        if (exitPopupView?.isShow == true) {
+            return
+        }
+        isExitApp = false
+        initExitCpAdData()
+        val customPopup =
+            ExitDialogPopup(this)
+        customPopup.listener = object : ExitDialogPopup.OnExitClickListener {
+            override fun cancel() {
+                isExitApp = true
+                showExitCpAdData()
+            }
+
+            override fun closeDialog() {
+                isExitApp = false
+                showExitCpAdData()
+            }
+
+            override fun ok() {
+                isExitApp = true
+                showExitCpAdData()
+            }
+
+
+        }
+        exitPopupView = XPopup.Builder(this)
+            .autoOpenSoftInput(false)
+            .autoDismiss(false)
+//            .enableDrag(false)
+            .dismissOnBackPressed(false)
+            .dismissOnTouchOutside(false)
+            .asCustom(customPopup)
+            .show()
+    }
+
+
+    private fun initExitCpAdData() {
+        GMCPAdUtils.init(this, object : GMCPAdUtils.GirdMenuStateListener {
+            override fun onError() {
+
+            }
+
+
+            override fun showVideoClosed() {
+                if (isExitApp) {
+                    moveTaskToBack(true)
+                }
+            }
+
+            override fun onShowError() {
+                if (isExitApp) {
+                    moveTaskToBack(true)
+                }
+            }
+
+            override fun onSuccess() {
+
+            }
+        }) //初始化插全屏广告
+        if(!GMCPAdUtils.isReady()) {
+            GMCPAdUtils.initPreloading(AppConst.GMCPAd_ID_IN) //显示插屏广告
+        }
+    }
+
+    fun showExitCpAdData() {
+        if (GMCPAdUtils.isReady()) {
+            GMCPAdUtils.showInterstitialFullAd(this) //显示插屏广告
+        } else {
+            if (isExitApp) {
+                moveTaskToBack(true)
+            }
+        }
     }
 }

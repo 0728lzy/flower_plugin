@@ -16,8 +16,8 @@ android {
         applicationId = "com.ruite.app.pet.translator"
         minSdk = 24
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 100
+        versionName = "1.0.0"
 
         ndk {
             abiFilters += listOf("arm64-v8a")

@@ -139,7 +139,7 @@ class APP : Application() {
         DialogX.init(this)
         DialogX.globalTheme = DialogX.THEME.DARK
         ToastUtils.init(this)
-        LZYLog.setLogEnabled(false)
+        LZYLog.setLogEnabled(true)
         var currProcessName = getAppProcessName()
         if (currProcessName == this.packageName) {
             var installTime = SPUtils.getInstance().getLong(SPUtils.SP_INSTALL_TIME)
