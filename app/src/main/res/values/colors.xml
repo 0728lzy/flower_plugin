@@ -442,4 +442,31 @@
     <color name="tt_appdownloader_s8">#ffffffff</color>
     <color name="ttdownloader_transparent">#00000000</color>
     <color name="white">#ffffffff</color>
+
+
+    <!-- dj -->
+    <color name="h16">#ff262626</color>
+    <color name="black_1">#353535</color>
+    <color name="agreement_bg">#ffff3232</color>
+    <color name="ex">#ff0f5fda</color>
+    <color name="colorA9A9A9">#FFA9A9A9</color>
+    <color name="color_blue">#0000ff</color>
+    <color name="color_65c1ff">#65c1ff</color>
+    <color name="colorBlack">#FF000000</color>
+    <color name="color_49D665">#49D665</color>
+
+
+
+
+    <!-- lzy -->
+    <color name="default_blue">#1296db</color>
+    <color name="default_gray">#707070</color>
+    <color name="much_gray">#515151</color>
+    <color name="common_gray">#bfbfbf</color>
+    <color name="little_gray">#dbdbdb</color>
+    <color name="little_gray_2">#a0a0a0</color>
+    <color name="wsdk_color_common_blue">#3385ff</color>
+    <color name="nav_active_color">#0080ff</color> <!-- 天空蓝色 -->
+    <color name="nav_dead_color">#D3D3D3</color> <!-- 浅灰色 -->
+    <color name="purple">#8A2BE2</color>
 </resources>

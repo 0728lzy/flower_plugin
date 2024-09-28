@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/pop_permission_tips"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="why i need permission"
+        android:textSize="18dp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginHorizontal="20dp"
+        android:gravity="center_vertical"
+        android:layout_marginVertical="10dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="权限："
+            android:textColor="@color/common_gray"
+            android:textSize="14dp" />
+        <TextView
+            android:id="@+id/pop_permission_permission"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="permission"
+            android:textColor="@color/common_gray"
+            android:textSize="14dp" />
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/little_gray"/>
+    <TextView
+        android:id="@+id/pop_permission_set"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="去设置"
+        android:textSize="14dp"
+        android:textColor="@color/wsdk_color_common_blue"
+        android:gravity="center"
+        android:paddingVertical="12dp"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/little_gray"/>
+    <TextView
+        android:id="@+id/pop_permission_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="取消"
+        android:textSize="14dp"
+        android:textColor="@color/wsdk_color_common_blue"
+        android:gravity="center"
+        android:paddingVertical="12dp"/>
+</LinearLayout>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="15.0dip"
+        android:layout_marginTop="10.0dip"
+        android:layout_marginRight="15.0dip"
+        android:orientation="horizontal">
+
+        <com.pet.translator.widget.dj.SmoothCheckBox
+            android:id="@+id/buAgree_ico"
+            android:layout_width="15.0dip"
+            android:layout_height="15.0dip"
+            app:color_checked="@color/white"
+            app:color_tick="@color/agreement_bg"
+            app:color_unchecked="@android:color/transparent"
+            app:color_unchecked_stroke="@color/agreement_bg" />
+
+        <TextView
+            android:id="@+id/but_agreement"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5.0dip"
+            android:gravity="center"
+            android:text="@string/agreement_dialog_context19"
+            android:textColor="#ff999999"
+            android:textSize="12.0sp" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15.0dip"
+        android:layout_marginBottom="15.0dip"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tvDisagree"
+            android:layout_width="0.0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:gravity="center"
+            android:paddingTop="13.0dip"
+            android:paddingBottom="13.0dip"
+            android:text="@string/agreement_dialog_context5"
+            android:textColor="#ff999999"
+            android:textSize="16.0sp" />
+
+        <TextView
+            android:id="@+id/buAgree"
+            android:layout_width="0.0dip"
+            android:layout_height="fill_parent"
+            android:layout_marginEnd="15.0dip"
+            android:layout_weight="1.0"
+            android:gravity="center"
+            android:text="@string/agreement_dialog_context20"
+            android:textColor="#ff999999"
+            android:textSize="16.0sp" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.appcompat.widget.LinearLayoutCompat>

@@ -8,7 +8,8 @@ plugins {
 }
 
 android {
-    namespace = "com.ruite.app.pet.translator"
+//    namespace = "com.ruite.app.pet.translator"
+    namespace = "com.pet.translator"
     compileSdk = 34
 
     defaultConfig {
@@ -118,16 +119,10 @@ dependencies {
     implementation("com.hyman:flowlayout-lib:1.1.2")
 
     implementation("com.geyifeng.immersionbar:immersionbar:3.2.2")
-    implementation("com.github.getActivity:XXPermissions:18.5")
-
+    implementation("com.github.getActivity:XXPermissions:18.63")//权限管理   已混淆
 
     implementation("io.github.scwang90:refresh-layout-kernel:2.1.0")      //核心必须依赖
     implementation("io.github.scwang90:refresh-header-classics:2.1.0")    //经典刷新头
-    // implementation  ("io.github.scwang90:refresh-header-radar:2.1.0")       //雷达刷新头
-    // implementation  ("io.github.scwang90:refresh-header-falsify:2.1.0")     //虚拟刷新头
-    // implementation  ("io.github.scwang90:refresh-header-material:2.1.0")    //谷歌刷新头
-    // implementation  ("io.github.scwang90:refresh-header-two-level:2.1.0")   //二级刷新头
-    // implementation  ("io.github.scwang90:refresh-footer-ball:2.1.0")        //球脉冲加载
     implementation("io.github.scwang90:refresh-footer-classics:2.1.0")    //经典加载
 
 
@@ -166,4 +161,80 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+
+    implementation("org.greenrobot:eventbus:3.3.1")//eventbus  已混淆
+
+
+
+    //网络框架-------------------------------------------------start
+    //导入RxJava 和 RxAndroid
+    implementation("com.google.code.gson:gson:2.10.1")
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
+    implementation("io.reactivex.rxjava2:rxandroid:2.1.0")
+    implementation("io.reactivex.rxjava2:rxjava:2.2.3")
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    //导入retrofit
+    implementation("com.squareup.retrofit2:converter-gson:2.4.0")
+    //转换器，请求结果转换成Model
+    implementation("com.squareup.retrofit2:adapter-rxjava2:2.4.0")
+    //网络框架---------------------------------------------------end
+
+    //GroMore new begin
+
+    val csjVersion = "6.2.1.7"
+
+    val adnGdtVersion = "4.575.1445"
+    val adnGdtVersionFix = ".1"
+
+    val adnKsVersion = "3.3.63"
+    val adnKsVersionFix = ".2"
+
+    val adnBaiduVersion = "9.35"
+    val adnBaiduVersionFix = ".1"
+
+    val adnAdmobVersion = "17.2.0"
+    val adnAdmobVersionFix = ".58"
+//GroMore new end
+
+    //dj----------------------------------------------------------------start
+    implementation("com.github.li-xiaojun:XPopup:2.9.19") {
+        exclude( group="com.github.bumptech.glide")
+        exclude (group="com.davemorrissey.labs", module= "subsampling-scale-image-view-androidx")
+    }
+    implementation(files("libs/oaid_sdk_1.0.25.aar"))
+    implementation("com.umeng.umsdk:common:+")// (必选)版本号
+    implementation("com.umeng.umsdk:asms:+") // asms包依赖(必选)
+    implementation("com.umeng.umsdk:apm:+")// U-APM产品包依赖(必选)
+    //判断是否虚拟机
+    implementation("io.github.happylishang:antifake:1.5.0")
+    // qm-ui
+    implementation("com.github.jrfeng.snow:player:1.2")//不加这个qm-ui会报错重复依赖
+    implementation("com.qmuiteam:qmui:2.1.0")
+    implementation("com.qmuiteam:arch:2.1.0")
+    implementation("com.qmuiteam:arch-compiler:2.1.0")
+    // 吐司框架：https://github.com/getActivity/ToastUtils
+    implementation("com.github.getActivity:ToastUtils:10.3")
+    //dj----------------------------------------------------------------end
+
+
+    //广告---------------------------------------------------------start
+    implementation("androidx.annotation:annotation:1.1.0")
+    implementation("com.pangle.cn:mediation-sdk:${csjVersion}")
+    implementation("com.pangle.cn:mediation-ks-adapter:${adnKsVersion}${adnKsVersionFix}")
+    implementation(files("libs/kssdk-ad-${adnKsVersion}.aar"))
+    implementation("com.pangle.cn:mediation-baidu-adapter:${adnBaiduVersion}${adnBaiduVersionFix}")
+    implementation(files("libs/Baidu_MobAds_SDK_v${adnBaiduVersion}.aar"))
+    implementation("com.pangle.cn:mediation-gdt-adapter:${adnGdtVersion}${adnGdtVersionFix}")
+    implementation(files("libs/GDTSDK.unionNormal.${adnGdtVersion}.aar"))
+    implementation("com.google.android.gms:play-services-ads:${adnAdmobVersion}") {
+        exclude (group="com.android.support")
+    }
+    implementation("com.pangle.cn:mediation-admob-adapter:${adnAdmobVersion}${adnAdmobVersionFix}")
+    implementation(files("libs/library-yl-utils-1.0.2.aar"))
+    implementation("com.tencent.mm.opensdk:wechat-sdk-android:+")
+    implementation("me.weishu:free_reflection:2.2.0")
+    implementation("net.grandcentrix.tray:tray:0.12.0")
+    implementation("com.github.JessYanCoding:AndroidAutoSize:v1.2.1")
+    //广告---------------------------------------------------------end
 }

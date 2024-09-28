@@ -1,0 +1,281 @@
+package com.pet.translator.utils.xxpermission;
+
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.res.Configuration;
+import android.os.Build;
+import android.os.Handler;
+import android.os.Looper;
+import android.text.TextUtils;
+import android.view.ViewGroup;
+import android.widget.PopupWindow;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import com.hjq.permissions.OnPermissionCallback;
+import com.hjq.permissions.OnPermissionInterceptor;
+import com.hjq.permissions.OnPermissionPageCallback;
+import com.hjq.permissions.Permission;
+import com.hjq.permissions.PermissionFragment;
+import com.hjq.permissions.XXPermissions;
+import com.pet.translator.R;
+
+import java.util.List;
+
+/**
+ *    author : Android 轮子哥
+ *    github : https://github.com/getActivity/XXPermissions
+ *    time   : 2021/01/04
+ *    desc   : 权限申请拦截器
+ */
+public final class PermissionInterceptor implements OnPermissionInterceptor {
+
+    public static final Handler HANDLER = new Handler(Looper.getMainLooper());
+
+    private int type = -1;
+    /** 权限申请标记 */
+    private boolean mRequestFlag;
+
+    /** 权限申请说明 Popup */
+    private PopupWindow mPermissionPopup;
+
+    /** 权限说明文案 */
+    @Nullable
+    private String mPermissionDescription;
+
+    public PermissionInterceptor(int functionType) {
+        this(null);
+        type = functionType;
+    }
+
+    public PermissionInterceptor(@Nullable String permissionDescription) {
+        mPermissionDescription = permissionDescription;
+    }
+
+    @Override
+    public void launchPermissionRequest(@NonNull Activity activity, @NonNull List<String> allPermissions, @Nullable OnPermissionCallback callback) {
+        mRequestFlag = true;
+        List<String> deniedPermissions = XXPermissions.getDenied(activity, allPermissions);
+
+        if (TextUtils.isEmpty(mPermissionDescription)) {
+            mPermissionDescription = generatePermissionDescription(activity, deniedPermissions);
+        }
+
+        ViewGroup decorView = (ViewGroup) activity.getWindow().getDecorView();
+        int activityOrientation = activity.getResources().getConfiguration().orientation;
+
+        boolean showPopupWindow = activityOrientation == Configuration.ORIENTATION_PORTRAIT;
+        for (String permission : allPermissions) {
+            if (!XXPermissions.isSpecial(permission)) {
+                continue;
+            }
+            if (XXPermissions.isGranted(activity, permission)) {
+                continue;
+            }
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R &&
+                    TextUtils.equals(Permission.MANAGE_EXTERNAL_STORAGE, permission)) {
+                continue;
+            }
+            // 如果申请的权限带有特殊权限，并且还没有授予的话
+            // 就不用 PopupWindow 对话框来显示，而是用 Dialog 来显示
+            showPopupWindow = false;
+            break;
+        }
+
+
+        String titleDes = "权限申请说明";
+        if(type == 1){
+            mPermissionDescription = "由于定位数据需要定位权限，缺失权限将导致当前定位数据获取失败，功能无法正常使用，请给予权限";
+        }
+        new AlertDialog.Builder(activity)
+                .setTitle(titleDes)
+                .setMessage(mPermissionDescription)
+                .setCancelable(false)
+                .setPositiveButton(R.string.common_permission_granted, (dialog, which) -> {
+                    dialog.dismiss();
+                    PermissionFragment.launch(activity, allPermissions,
+                            PermissionInterceptor.this, callback);
+                })
+                .setNegativeButton(R.string.common_permission_denied, (dialog, which) -> {
+                    dialog.dismiss();
+                    if (callback == null) {
+                        return;
+                    }
+                    callback.onDenied(deniedPermissions, false);
+                })
+                .show();
+//        if (!AppConst.INSTANCE.is_show_ad()) {
+//            new AlertDialog.Builder(activity)
+//                    .setTitle(titleDes)
+//                    .setMessage(mPermissionDescription)
+//                    .setCancelable(false)
+//                    .setPositiveButton(R.string.common_permission_granted, (dialog, which) -> {
+//                        dialog.dismiss();
+//                        PermissionFragment.launch(activity, allPermissions,
+//                                PermissionInterceptor.this, callback);
+//                    })
+//                    .setNegativeButton(R.string.common_permission_denied, (dialog, which) -> {
+//                        dialog.dismiss();
+//                        if (callback == null) {
+//                            return;
+//                        }
+//                        callback.onDenied(deniedPermissions, false);
+//                    })
+//                    .show();
+//        }else {
+//            PermissionFragment.launch(activity, allPermissions,
+//                    PermissionInterceptor.this, callback);
+//        }
+    }
+
+    @Override
+    public void grantedPermissionRequest(@NonNull Activity activity, @NonNull List<String> allPermissions,
+                                         @NonNull List<String> grantedPermissions, boolean allGranted,
+                                         @Nullable OnPermissionCallback callback) {
+        if (callback == null) {
+            return;
+        }
+        callback.onGranted(grantedPermissions, allGranted);
+    }
+
+    @Override
+    public void deniedPermissionRequest(@NonNull Activity activity, @NonNull List<String> allPermissions,
+                                        @NonNull List<String> deniedPermissions, boolean doNotAskAgain,
+                                        @Nullable OnPermissionCallback callback) {
+        if (callback != null) {
+            callback.onDenied(deniedPermissions, doNotAskAgain);
+        }
+
+        if (doNotAskAgain) {
+            if (deniedPermissions.size() == 1 && Permission.ACCESS_MEDIA_LOCATION.equals(deniedPermissions.get(0))) {
+//                Toaster.show(R.string.common_permission_media_location_hint_fail);
+                return;
+            }
+
+            showPermissionSettingDialog(activity, allPermissions, deniedPermissions, callback);
+            return;
+        }
+
+        if (deniedPermissions.size() == 1) {
+
+            String deniedPermission = deniedPermissions.get(0);
+
+            String backgroundPermissionOptionLabel = getBackgroundPermissionOptionLabel(activity);
+
+            if (Permission.ACCESS_BACKGROUND_LOCATION.equals(deniedPermission)) {
+//                Toaster.show(activity.getString(R.string.common_permission_background_location_fail_hint, backgroundPermissionOptionLabel));
+                return;
+            }
+
+            if (Permission.BODY_SENSORS_BACKGROUND.equals(deniedPermission)) {
+//                Toaster.show(activity.getString(R.string.common_permission_background_sensors_fail_hint, backgroundPermissionOptionLabel));
+                return;
+            }
+        }
+    }
+
+    @Override
+    public void finishPermissionRequest(@NonNull Activity activity, @NonNull List<String> allPermissions,
+                                        boolean skipRequest, @Nullable OnPermissionCallback callback) {
+        mRequestFlag = false;
+        dismissPopupWindow();
+    }
+
+    /**
+     * 生成权限说明文案
+     */
+    protected String generatePermissionDescription(Context context, @NonNull List<String> permissions) {
+        return PermissionDescriptionConvert.getPermissionDescription(context, permissions);
+    }
+
+
+    private void dismissPopupWindow() {
+        if (mPermissionPopup == null) {
+            return;
+        }
+        if (!mPermissionPopup.isShowing()) {
+            return;
+        }
+        mPermissionPopup.dismiss();
+    }
+
+    private void showPermissionSettingDialog(Activity activity, List<String> allPermissions,
+                                             List<String> deniedPermissions, OnPermissionCallback callback) {
+        if (activity == null || activity.isFinishing() ||
+                (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1 && activity.isDestroyed())) {
+            return;
+        }
+
+        String message = null;
+
+        List<String> permissionNames = PermissionNameConvert.permissionsToNames(activity, deniedPermissions);
+        if (!permissionNames.isEmpty()) {
+            if (deniedPermissions.size() == 1) {
+                String deniedPermission = deniedPermissions.get(0);
+
+                if (Permission.ACCESS_BACKGROUND_LOCATION.equals(deniedPermission)) {
+                    message = activity.getString(R.string.common_permission_manual_assign_fail_background_location_hint, getBackgroundPermissionOptionLabel(activity));
+                } else if (Permission.BODY_SENSORS_BACKGROUND.equals(deniedPermission)) {
+                    message = activity.getString(R.string.common_permission_manual_assign_fail_background_sensors_hint, getBackgroundPermissionOptionLabel(activity));
+                }
+            }
+            if (TextUtils.isEmpty(message)) {
+                message = activity.getString(R.string.common_permission_manual_assign_fail_hint,
+                    PermissionNameConvert.listToString(activity, permissionNames));
+            }
+        } else {
+            message = activity.getString(R.string.common_permission_manual_fail_hint);
+        }
+
+
+//        if(allPermissions.toString().contains("ACCESS_FINE_LOCATION")) {
+//            if (type == 1 || type == 2) {
+//                mPermissionDescription = "获取您的位置，用于开启WiFi、检查蹭网设备";
+//            }
+//        }
+
+
+        // 这里的 Dialog 只是示例，没有用 DialogFragment 来处理 Dialog 生命周期
+        new AlertDialog.Builder(activity)
+                .setTitle(R.string.common_permission_alert)
+                .setMessage(message)
+                .setPositiveButton(R.string.common_permission_goto_setting_page, (dialog, which) -> {
+                    dialog.dismiss();
+                    XXPermissions.startPermissionActivity(activity,
+                            deniedPermissions, new OnPermissionPageCallback() {
+
+                        @Override
+                        public void onGranted() {
+                            if (callback == null) {
+                                return;
+                            }
+                            callback.onGranted(allPermissions, true);
+                        }
+
+                        @Override
+                        public void onDenied() {
+                            showPermissionSettingDialog(activity, allPermissions,
+                                    XXPermissions.getDenied(activity, allPermissions), callback);
+                        }
+                    });
+                })
+                .show();
+    }
+
+    /**
+     * 获取后台权限的《始终允许》选项的文案
+     */
+    @NonNull
+    private String getBackgroundPermissionOptionLabel(Context context) {
+        String backgroundPermissionOptionLabel = "";
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            backgroundPermissionOptionLabel = String.valueOf(context.getPackageManager().getBackgroundPermissionOptionLabel());
+        }
+        if (TextUtils.isEmpty(backgroundPermissionOptionLabel)) {
+            backgroundPermissionOptionLabel = context.getString(R.string.common_permission_background_default_option_label);
+        }
+        return backgroundPermissionOptionLabel;
+    }
+}
