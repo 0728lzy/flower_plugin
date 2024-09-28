@@ -11,11 +11,17 @@ import com.pet.translator.R
 import com.pet.translator.base.dj.RootFragment
 import com.pet.translator.databinding.FragmentIndex3Binding
 import com.pet.translator.entity.Index3Entity
+import com.pet.translator.event.SimpleEvent
 import com.pet.translator.ext.countDown
 import com.pet.translator.ext.getBinding
 import com.pet.translator.ext.thrillClickListener
 import com.pet.translator.ui.dialog.ResultDialog
+import com.pet.translator.utils.lzy.LZYADSUtils
+import com.pet.translator.utils.lzy.LZYLog
 import kotlinx.coroutines.Job
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import java.util.Formatter
 
 
@@ -27,13 +33,33 @@ class Index3Fragment : RootFragment(R.layout.fragment_index_3) {
 
     private var record: com.pet.translator.utils.AudioRecordUtil? = null
 
+    private lateinit var lzyadsUtils: LZYADSUtils
+
 
     private var isDog1 = true
     private var isDog2 = true
 
+    override fun onStart() {
+        super.onStart()
+        EventBus.getDefault().register(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().unregister(this)
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onMessageSimpleEvent(message: SimpleEvent) {
+        if(message.simple == 2){
+            LZYLog.e("simple","message simple:${message.simple}")
+            LZYADSUtils("Index5Fragment",requireActivity()).loadSimpleAdTurn(binding.feedContainerFragment3,-1)
+        }
+    }
+
     override fun initView(view: View, savedInstanceState: Bundle?) {
         _binding = view.getBinding()
-
+        lzyadsUtils= LZYADSUtils("Index3Fragment",requireActivity())
         binding.viewAnimal1.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
             val scrollY = binding.viewAnimal1.scrollY
             val contentHeight = binding.viewAnimal1.getChildAt(0).height

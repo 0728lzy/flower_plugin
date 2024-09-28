@@ -388,6 +388,25 @@ class LZYADSUtils(val tag: String,val activity: Activity?){
         }
         GMFeedSimpleAdTwoUtils.initPreloading("",dip)
     }
+    fun loadSimpleAdTurn(fragment: FrameLayout?,dip:Int){
+        when(AppConst.adsInfoFlag){
+            0 -> {
+                if (dip == -1){
+                    loadSimpleAd1(fragment)
+                }else{
+                    loadSimpleAd1(fragment,dip)
+                }
+            }
+            1 -> {
+                if (dip == -1){
+                    loadSimpleAd2(fragment)
+                }else{
+                    loadSimpleAd2(fragment,dip)
+                }
+            }
+        }
+        AppConst.adsInfoFlag = (AppConst.adsInfoFlag + 1) % 2
+    }
     //adv加载信息流---------------------------------------------------end
     fun loadSimpleAd1WithLimit(fragment: FrameLayout?,second:Int){
         val currentTimeMillis = System.currentTimeMillis()

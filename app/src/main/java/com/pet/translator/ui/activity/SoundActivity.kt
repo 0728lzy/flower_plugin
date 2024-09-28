@@ -20,6 +20,7 @@ import com.pet.translator.databinding.ActivitySoundDetailBinding
 import com.pet.translator.ext.dp2px
 import com.pet.translator.ext.thrillClickListener
 import com.pet.translator.ui.dialog.BackDialog
+import com.pet.translator.utils.lzy.LZYADSUtils
 import java.math.BigDecimal
 import java.math.RoundingMode
 
@@ -37,6 +38,7 @@ class SoundActivity : BaseActivity() {
     override fun getLayoutId() = R.layout.activity_sound_detail
 
     private lateinit var binding: ActivitySoundDetailBinding
+    private lateinit var lzyadsUtils: LZYADSUtils
 
     private var rawPath: Int = 0
 
@@ -65,6 +67,9 @@ class SoundActivity : BaseActivity() {
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
         binding = ActivitySoundDetailBinding.bind(view)
+        lzyadsUtils=LZYADSUtils("SoundActivity",this@SoundActivity)
+        lzyadsUtils.showAdCpTurn()
+        lzyadsUtils.loadSimpleAdTurn(binding.feedContainerActivitySound,-1)
         binding.toolbar.ivMenu.setImageResource(R.drawable.ic_arrow_back_24)
         binding.toolbar.ivMenu.thrillClickListener { onBackPressed() }
         val index = intent.getIntExtra("index", 1)
@@ -195,12 +200,7 @@ class SoundActivity : BaseActivity() {
     }
 
     override fun onBackPressed() {
-        val dialog = BackDialog()
-        dialog.show(this)
-        binding.ivMusic.postDelayed(1500) {
-            dialog.dismiss()
-            finish()
-        }
+        finish()
     }
 
 }

@@ -22,6 +22,7 @@ import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.core.BasePopupView
 import com.pet.translator.AppConst
 import com.pet.translator.databinding.ActivityMainBinding
+import com.pet.translator.event.SimpleEvent
 import com.pet.translator.ext.thrillClickListener
 import com.pet.translator.ui.fragment.Index1Fragment
 import com.pet.translator.ui.fragment.Index2Fragment
@@ -29,7 +30,9 @@ import com.pet.translator.ui.fragment.Index3Fragment
 import com.pet.translator.ui.fragment.Index4Fragment
 import com.pet.translator.ui.fragment.Index5Fragment
 import com.pet.translator.utils.dj.UserInfoModel
+import com.pet.translator.utils.lzy.LZYADSUtils
 import com.pet.translator.widget.popup.dj.ExitDialogPopup
+import org.greenrobot.eventbus.EventBus
 
 class MainActivity : BaseActivity() {
 
@@ -45,6 +48,8 @@ class MainActivity : BaseActivity() {
     override fun getLayoutId() = R.layout.activity_main
 
     lateinit var binding: ActivityMainBinding
+    private lateinit var lzyadsUtils: LZYADSUtils
+    var isFirst=true
 
     val fragments = listOf<Fragment>(
         Index1Fragment(),
@@ -56,9 +61,9 @@ class MainActivity : BaseActivity() {
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
         binding = ActivityMainBinding.bind(view)
-
-        binding.ivMenu.thrillClickListener {
-            binding.drawerLayout.openDrawer(binding.navView)
+        lzyadsUtils=LZYADSUtils("MainActivity",this)
+        binding.ivAbout.thrillClickListener {
+            AboutActivity.forward(this@MainActivity)
         }
 
         binding.mainPager.adapter = object : FragmentStateAdapter(this@MainActivity) {
@@ -74,6 +79,12 @@ class MainActivity : BaseActivity() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 tabChange(position)
+                if (!isFirst) {
+                    lzyadsUtils.showAdCpTurn()
+                }else{
+                    isFirst=false
+                }
+                EventBus.getDefault().post(SimpleEvent(position))
             }
         })
 
@@ -91,10 +102,6 @@ class MainActivity : BaseActivity() {
         }
         binding.bottomBar.tab5.thrillClickListener {
             tabChange(4)
-        }
-
-        binding.contentNav.llLanguage.thrillClickListener {
-            LanguageActivity.forward(this, false)
         }
     }
 

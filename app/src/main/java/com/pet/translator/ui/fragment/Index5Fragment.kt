@@ -10,9 +10,15 @@ import com.pet.translator.R
 import com.pet.translator.base.dj.RootFragment
 import com.pet.translator.databinding.FragmentIndex5Binding
 import com.pet.translator.databinding.Item5Binding
+import com.pet.translator.event.SimpleEvent
 import com.pet.translator.ext.getBinding
 import com.pet.translator.ext.thrillClickListener
 import com.pet.translator.ui.activity.VideoActivity
+import com.pet.translator.utils.lzy.LZYADSUtils
+import com.pet.translator.utils.lzy.LZYLog
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 
 class Index5Fragment : RootFragment(R.layout.fragment_index_5) {
@@ -54,6 +60,24 @@ class Index5Fragment : RootFragment(R.layout.fragment_index_5) {
                 binding.rvList.bindingAdapter.models =
                     list.filter { it.first.contains(keyworkds) || keyworkds.isEmpty() }
             }
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        EventBus.getDefault().register(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().unregister(this)
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onMessageSimpleEvent(message: SimpleEvent) {
+        if(message.simple == 4){
+            LZYLog.e("simple","message simple:${message.simple}")
+            LZYADSUtils("Index5Fragment",requireActivity()).loadSimpleAdTurn(binding.feedContainerFragment5,-1)
         }
     }
 }

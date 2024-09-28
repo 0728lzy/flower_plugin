@@ -5,6 +5,7 @@ import com.pet.translator.R
 import com.pet.translator.base.dj.BaseDialog
 import com.pet.translator.databinding.DialogBackBinding
 import com.pet.translator.ext.getBinding
+import com.pet.translator.utils.lzy.LZYADSUtils
 
 class BackDialog() : BaseDialog() {
 
@@ -14,10 +15,10 @@ class BackDialog() : BaseDialog() {
     private val binding get() = requireNotNull(_binding) { "The property of binding has been destroyed." }
 
 
-
     override fun initView(view: View) {
         _binding = view.getBinding()
         isCancelable = false
+        LZYADSUtils("BackDialog",requireActivity()).loadSimpleAdTurn(binding.feedContainerDialogBack,280)
     }
 
 }

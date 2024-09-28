@@ -46,6 +46,10 @@ object AppConst {
     var isSuspendedBoolen = true  //开启悬浮窗权限的时候 和开启系统权限
     @JvmField
     var adsFlag=0
+
+    @JvmField
+    var adsInfoFlag=0
+
     @JvmField
     var showAdHeadTitle = ""
     @JvmField

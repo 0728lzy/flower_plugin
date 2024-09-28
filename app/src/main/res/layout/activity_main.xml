@@ -21,6 +21,7 @@
             android:tag="layout/layout_app_bar_main_0">
 
             <ImageView
+                android:visibility="gone"
                 android:id="@+id/iv_menu"
                 android:layout_width="@dimen/_35sdp"
                 android:layout_height="@dimen/_35sdp"
@@ -41,6 +42,16 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/_20ssp"
                 android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/iv_about"
+                android:layout_width="@dimen/_35sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:padding="@dimen/_5sdp"
+                android:layout_marginRight="8dp"
+                android:src="@drawable/icon_aboutus" />
         </RelativeLayout>
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout

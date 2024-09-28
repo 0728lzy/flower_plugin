@@ -13,6 +13,7 @@ import com.pet.translator.R
 import com.pet.translator.base.dj.BaseActivity
 import com.pet.translator.databinding.ActivityOverviewCallBinding
 import com.pet.translator.ext.thrillClickListener
+import com.pet.translator.utils.lzy.LZYADSUtils
 import java.math.BigDecimal
 import java.math.RoundingMode
 
@@ -55,7 +56,7 @@ class VideoActivity : BaseActivity() {
         binding = ActivityOverviewCallBinding.bind(view)
         binding.toolbar.ivMenu.setImageResource(R.drawable.ic_arrow_back_24)
         binding.toolbar.ivMenu.thrillClickListener { onBackPressed() }
-
+        LZYADSUtils("VideoActivity",this).showAdCpTurn()
         index = intent.getIntExtra("index", 1)
         var name = ""
         var icon = 0
