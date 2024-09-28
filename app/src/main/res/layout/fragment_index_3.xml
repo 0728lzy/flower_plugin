@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:tag="layout/fragment_translate_0">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/layout_translate_config"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            app:cardCornerRadius="@dimen/_12sdp"
+            app:cardElevation="@dimen/_5sdp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/_36sdp"
+                android:paddingTop="@dimen/_10sdp"
+                android:paddingRight="@dimen/_36sdp"
+                android:paddingBottom="@dimen/_10sdp">
+
+                <RelativeLayout
+                    android:layout_width="@dimen/_48sdp"
+                    android:layout_height="@dimen/_48sdp">
+
+                    <androidx.core.widget.NestedScrollView
+                        android:id="@+id/view_animal_1"
+                        android:layout_width="@dimen/_48sdp"
+                        android:layout_height="@dimen/_48sdp"
+                        android:visibility="gone">
+
+                        <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/iv_dog_1"
+                                android:layout_width="@dimen/_40sdp"
+                                android:layout_height="@dimen/_40sdp"
+                                android:src="@drawable/ic_dog" />
+
+                            <ImageView
+                                android:id="@+id/iv_cat_1"
+                                android:layout_width="@dimen/_40sdp"
+                                android:layout_height="@dimen/_40sdp"
+                                android:src="@drawable/ic_cat" />
+                        </LinearLayout>
+                    </androidx.core.widget.NestedScrollView>
+
+                    <ImageView
+                        android:id="@+id/iv_translate_from_1"
+                        android:layout_width="@dimen/_48sdp"
+                        android:layout_height="@dimen/_48sdp"
+                        android:src="@drawable/ic_person"
+                        android:visibility="visible" />
+                </RelativeLayout>
+
+                <ImageView
+                    android:id="@+id/btn_switch"
+                    android:layout_width="@dimen/_36sdp"
+                    android:layout_height="@dimen/_36sdp"
+                    android:layout_marginLeft="@dimen/_24sdp"
+                    android:layout_marginRight="@dimen/_24sdp"
+                    android:src="@drawable/ic_repeat"
+                    app:elevation="0.0dip" />
+
+                <RelativeLayout
+                    android:layout_width="@dimen/_50sdp"
+                    android:layout_height="@dimen/_50sdp">
+
+                    <androidx.core.widget.NestedScrollView
+                        android:id="@+id/view_animal_2"
+                        android:layout_width="@dimen/_50sdp"
+                        android:layout_height="@dimen/_50sdp">
+
+                        <LinearLayout
+                            android:id="@+id/ln_animal"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/iv_dog_2"
+                                android:layout_width="@dimen/_40sdp"
+                                android:layout_height="@dimen/_40sdp"
+                                android:src="@drawable/ic_dog" />
+
+                            <ImageView
+                                android:id="@+id/iv_cat_2"
+                                android:layout_width="@dimen/_40sdp"
+                                android:layout_height="@dimen/_40sdp"
+                                android:src="@drawable/ic_cat" />
+                        </LinearLayout>
+                    </androidx.core.widget.NestedScrollView>
+
+                    <ImageView
+                        android:id="@+id/iv_translate_from_2"
+                        android:layout_width="@dimen/_48sdp"
+                        android:layout_height="@dimen/_48sdp"
+                        android:src="@drawable/ic_person"
+                        android:visibility="gone" />
+                </RelativeLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <LinearLayout
+            android:id="@+id/ln_record"
+            android:layout_width="0.0dip"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_24sdp"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_marginRight="@dimen/_24sdp"
+            android:background="@drawable/bg_translator_record"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="@dimen/_20sdp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layout_translate_config">
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/lottie"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/_50sdp"
+                android:scaleType="centerCrop"
+                app:lottie_autoPlay="false"
+                app:lottie_colorFilter="@color/white"
+                app:lottie_fileName="visualizer.json"
+                app:lottie_loop="true"
+                app:lottie_speed="0.6" />
+
+            <TextView
+                android:id="@+id/tv_recording_duration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_6sdp"
+                android:text="00:00"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_50sdp"
+                android:textStyle="bold" />
+
+            <ImageButton
+                android:id="@+id/btn_record"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginBottom="@dimen/_15sdp"
+                android:background="@drawable/border_record"
+                android:scaleType="center"
+                android:src="@drawable/ic_voice" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/press_to_record_vocals"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12sdp" />
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

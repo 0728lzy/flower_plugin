@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/main_background"
+    android:fitsSystemWindows="true"
+    android:tag="layout/activity_language_0">
+
+    <LinearLayout
+        android:id="@+id/linear_language"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/toolbar_language"
+            android:layout_width="fill_parent"
+            android:layout_height="?actionBarSize"
+            android:minHeight="?actionBarSize">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:text="@string/language"
+                android:textColor="@color/color_main"
+                android:textSize="@dimen/_12ssp" />
+
+            <ImageView
+                android:id="@+id/iv_done"
+                android:layout_width="34.0dip"
+                android:layout_height="34.0dip"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:padding="6.0dip"
+                android:src="@drawable/ic_done_language"
+                android:visibility="gone"
+                app:tint="#ff242424" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relay_ads"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginRight="@dimen/_10sdp">
+
+            <FrameLayout
+                android:id="@+id/fr_ads"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:tag="binding_1"
+                android:visibility="visible">
+
+            </FrameLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcl_language"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+        </RelativeLayout>
+    </LinearLayout>
+</RelativeLayout>

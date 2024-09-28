@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="last_click_time" type="id" />
+    <item name="tag_view_binding" type="id" />
+    <item name="common_input_dict" type="id" />
+
+
+    <item type="id" name="test_1" />
+    <item type="id" name="test_2" />
+    <item type="id" name="test_3" />
+</resources>

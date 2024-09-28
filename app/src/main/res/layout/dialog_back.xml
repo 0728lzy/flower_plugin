@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/border_dialog"
+    android:backgroundTint="@color/white"
+    android:gravity="center"
+    android:layout_marginHorizontal="@dimen/_50sdp"
+    android:orientation="vertical"
+    android:tag="layout/dialog_back_0">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/img_anim_loading"
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="@dimen/_80sdp"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            app:lottie_autoPlay="true"
+            app:lottie_colorFilter="@color/color_main"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/downloading" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_download"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/back_to_home"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_14ssp" />
+
+    <FrameLayout
+        android:id="@+id/fr_ads"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/_100sdp"
+        android:layout_margin="@dimen/_10sdp"
+        android:orientation="vertical"
+        android:tag="binding_1"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+    </FrameLayout>
+</LinearLayout>

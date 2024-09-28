@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 自定义Dialog -->
+    <style name="dialog_style" parent="android:style/Theme.Dialog">
+        <!--是否去除边框-->
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowBackground">@color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <!--是否浮在activity上-->
+        <item name="android:windowIsFloating">true</item>
+        <!--是否模糊-->
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+    <style name="ButtonSolidCommonStyle">
+        <item name="android:textSize">14.0sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">#ffffffff</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="shapeCornersRadius">23.0dip</item>
+        <item name="shapeGradientAngle">top_bottom</item>
+        <item name="shapeGradientEndColor">#ff6fd593</item>
+        <item name="shapeGradientStartColor">#ff73e4aa</item>
+        <item name="shapeSizeHeight">46.0dip</item>
+    </style>
+
+
+    <style name="MainTabTextAppearance" parent="@style/TextAppearance.Design.Tab">
+        <item name="android:textSize">14.0sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="ChooseTabTextAppearance" parent="@style/TextAppearance.Design.Tab">
+        <item name="android:textSize">14.0sp</item>
+    </style>
+
+    <style name="RadioButtonMain" parent="@style/Theme.AppCompat.Light">
+        <item name="colorControlActivated">#ff454545</item>
+        <item name="colorControlNormal">#ff454545</item>
+    </style>
+
+
+</resources>

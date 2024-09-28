@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:visibility="gone">
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:lineSpacingExtra="@dimen/_3sdp"
+        android:text="@string/content_training_05_01"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_10ssp" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:lineSpacingExtra="@dimen/_3sdp"
+        android:text="@string/content_training_05_02"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_10ssp" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:lineSpacingExtra="@dimen/_3sdp"
+        android:text="@string/content_training_05_03"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_10ssp" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:lineSpacingExtra="@dimen/_3sdp"
+        android:text="@string/content_training_05_04"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_10ssp" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:lineSpacingExtra="@dimen/_3sdp"
+        android:text="@string/content_training_05_05"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_10ssp" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:lineSpacingExtra="@dimen/_3sdp"
+        android:text="@string/content_training_05_06"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_10ssp" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:lineSpacingExtra="@dimen/_3sdp"
+        android:text="@string/content_training_05_07"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_10ssp" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:lineSpacingExtra="@dimen/_3sdp"
+        android:text="@string/content_training_05_08"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_10ssp" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:text="@string/content_training_05_09"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_14ssp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:lineSpacingExtra="@dimen/_3sdp"
+        android:text="@string/content_training_05_10"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_10ssp" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:text="@string/content_training_05_11"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_14ssp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:lineSpacingExtra="@dimen/_3sdp"
+        android:text="@string/content_training_05_12"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_10ssp" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:text="@string/content_training_05_13"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_14ssp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:lineSpacingExtra="@dimen/_3sdp"
+        android:text="@string/content_training_05_14"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_10ssp" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:text="@string/content_training_05_15"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_14ssp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:lineSpacingExtra="@dimen/_3sdp"
+        android:text="@string/content_training_05_16"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_10ssp" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:text="@string/content_training_05_17"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_14ssp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:lineSpacingExtra="@dimen/_3sdp"
+        android:text="@string/content_training_05_18"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_10ssp" />
+</LinearLayout>

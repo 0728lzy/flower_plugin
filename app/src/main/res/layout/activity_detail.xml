@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    android:background="@color/main_background"
+    android:tag="layout/activity_training_detail_0">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/layout_app_bar_main" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_thumb"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/_180sdp"
+        android:layout_below="@+id/toolbar"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_marginRight="@dimen/_10sdp"
+        app:cardCornerRadius="@dimen/_15sdp"
+        app:cardElevation="0.0dip">
+
+        <ImageView
+            android:id="@+id/iv_dog"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/_180sdp"
+            android:scaleType="fitXY" />
+    </androidx.cardview.widget.CardView>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@+id/fr_banner"
+        android:layout_below="@+id/card_thumb"
+        android:paddingLeft="@dimen/_10sdp"
+        android:paddingTop="@dimen/_10sdp"
+        android:paddingRight="@dimen/_10sdp"
+        android:paddingBottom="@dimen/_10sdp">
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:tag="binding_1">
+
+            <include
+                android:id="@+id/content_01"
+                layout="@layout/layout_content_training_01" />
+
+            <include
+                android:id="@+id/content_02"
+                layout="@layout/layout_content_training_02" />
+
+            <include
+                android:id="@+id/content_03"
+                layout="@layout/layout_content_training_03" />
+
+            <include
+                android:id="@+id/content_04"
+                layout="@layout/layout_content_training_04" />
+
+            <include
+                android:id="@+id/content_05"
+                layout="@layout/layout_content_training_05" />
+
+            <include
+                android:id="@+id/content_06"
+                layout="@layout/layout_content_training_06" />
+
+            <include
+                android:id="@+id/content_07"
+                layout="@layout/layout_content_training_07" />
+
+            <include
+                android:id="@+id/content_08"
+                layout="@layout/layout_content_training_08" />
+
+            <include
+                android:id="@+id/content_09"
+                layout="@layout/layout_content_training_09" />
+        </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <FrameLayout
+        android:id="@+id/fr_banner"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:tag="binding_2">
+
+    </FrameLayout>
+</RelativeLayout>

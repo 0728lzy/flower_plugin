@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_selected="true">
+        <layer-list>
+            <item>
+                <shape android:shape="ring" android:useLevel="false" android:innerRadius="0.0dip" android:thickness="4.0dip">
+                    <solid android:color="@color/primaryBlue" />
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+    <item>
+        <layer-list>
+            <item>
+                <shape android:shape="ring" android:useLevel="false" android:innerRadius="0.0dip" android:thickness="4.0dip">
+                    <solid android:color="#ffd8d8d8" />
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+</selector>

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:tag="layout/layout_set_time_call_0">
+
+    <LinearLayout
+        android:id="@+id/ll_time_one"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tv_off"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_12sdp"
+            android:background="@drawable/bg_button_fake_call"
+            android:paddingLeft="@dimen/_16sdp"
+            android:paddingTop="@dimen/_6sdp"
+            android:paddingRight="@dimen/_16sdp"
+            android:paddingBottom="@dimen/_6sdp"
+            android:text="@string/text_off"
+            android:textColor="@color/white"
+            android:textSize="16.0sp" />
+
+        <TextView
+            android:id="@+id/tv_5s"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_12sdp"
+            android:background="@drawable/bg_set_time"
+            android:paddingLeft="@dimen/_16sdp"
+            android:paddingTop="@dimen/_6sdp"
+            android:paddingRight="@dimen/_16sdp"
+            android:paddingBottom="@dimen/_6sdp"
+            android:text="@string/text_5s"
+            android:textColor="@color/black"
+            android:textSize="16.0sp" />
+
+        <TextView
+            android:id="@+id/tv_15s"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_12sdp"
+            android:background="@drawable/bg_set_time"
+            android:paddingLeft="@dimen/_16sdp"
+            android:paddingTop="@dimen/_6sdp"
+            android:paddingRight="@dimen/_16sdp"
+            android:paddingBottom="@dimen/_6sdp"
+            android:text="@string/text_15s"
+            android:textColor="@color/black"
+            android:textSize="16.0sp" />
+
+        <TextView
+            android:id="@+id/tv_30s"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_12sdp"
+            android:background="@drawable/bg_set_time"
+            android:paddingLeft="@dimen/_16sdp"
+            android:paddingTop="@dimen/_6sdp"
+            android:paddingRight="@dimen/_16sdp"
+            android:paddingBottom="@dimen/_6sdp"
+            android:text="@string/text_30s"
+            android:textColor="@color/black"
+            android:textSize="16.0sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_time_one">
+
+        <TextView
+            android:id="@+id/tv_1m"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_12sdp"
+            android:background="@drawable/bg_set_time"
+            android:paddingLeft="@dimen/_16sdp"
+            android:paddingTop="@dimen/_6sdp"
+            android:paddingRight="@dimen/_16sdp"
+            android:paddingBottom="@dimen/_6sdp"
+            android:text="@string/text_1m"
+            android:textColor="@color/black"
+            android:textSize="16.0sp" />
+
+        <TextView
+            android:id="@+id/tv_3m"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_12sdp"
+            android:background="@drawable/bg_set_time"
+            android:paddingLeft="@dimen/_16sdp"
+            android:paddingTop="@dimen/_6sdp"
+            android:paddingRight="@dimen/_16sdp"
+            android:paddingBottom="@dimen/_6sdp"
+            android:text="@string/text_3m"
+            android:textColor="@color/black"
+            android:textSize="16.0sp" />
+
+        <TextView
+            android:id="@+id/tv_5m"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_12sdp"
+            android:background="@drawable/bg_set_time"
+            android:paddingLeft="@dimen/_16sdp"
+            android:paddingTop="@dimen/_6sdp"
+            android:paddingRight="@dimen/_16sdp"
+            android:paddingBottom="@dimen/_6sdp"
+            android:text="@string/text_5m"
+            android:textColor="@color/black"
+            android:textSize="16.0sp" />
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

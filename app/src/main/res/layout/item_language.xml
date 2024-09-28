@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/_10sdp"
+    android:layout_marginTop="@dimen/_2sdp"
+    android:layout_marginRight="@dimen/_10sdp"
+    android:layout_marginBottom="@dimen/_12sdp"
+    android:tag="layout/item_language_0"
+    app:cardCornerRadius="@dimen/_10sdp"
+    app:cardElevation="@dimen/_4sdp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/_48sdp"
+        android:paddingStart="@dimen/_15sdp"
+        android:paddingEnd="@dimen/_8sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/img_language"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_vietnamese"
+            app:civ_border_color="@android:color/transparent"
+            app:civ_border_width="1.0dip"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_title_language"
+            android:layout_width="0.0dip"
+            android:layout_height="wrap_content"
+            android:paddingLeft="6.0dip"
+            android:paddingRight="6.0dip"
+            android:text="Vietnamese"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14ssp"
+            app:layout_constraintBottom_toBottomOf="@+id/img_language"
+            app:layout_constraintEnd_toStartOf="@+id/checkbox_language"
+            app:layout_constraintStart_toEndOf="@+id/img_language"
+            app:layout_constraintTop_toTopOf="@+id/img_language" />
+
+        <RadioButton
+            android:id="@+id/checkbox_language"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:checked="false"
+            android:focusableInTouchMode="false"
+            android:theme="@style/RadioButtonMain"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_title_language"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_title_language" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
