@@ -4,9 +4,11 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import com.blankj.utilcode.util.ThreadUtils.runOnUiThread
 import com.pet.translator.R
 import com.pet.translator.base.dj.RootFragment
 import com.pet.translator.databinding.FragmentIndex3Binding
@@ -18,6 +20,7 @@ import com.pet.translator.ext.thrillClickListener
 import com.pet.translator.ui.dialog.ResultDialog
 import com.pet.translator.utils.lzy.LZYADSUtils
 import com.pet.translator.utils.lzy.LZYLog
+import com.pet.translator.widget.dialog.LoadingDiaLog
 import kotlinx.coroutines.Job
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -34,6 +37,7 @@ class Index3Fragment : RootFragment(R.layout.fragment_index_3) {
     private var record: com.pet.translator.utils.AudioRecordUtil? = null
 
     private lateinit var lzyadsUtils: LZYADSUtils
+    private lateinit var myDiaLog:LoadingDiaLog
 
 
     private var isDog1 = true
@@ -123,9 +127,18 @@ class Index3Fragment : RootFragment(R.layout.fragment_index_3) {
                 }
                 binding.lottie.cancelAnimation()
                 record?.stopRecord()
-                ResultDialog(entity).show(requireRootActivity())
-                job?.cancel()
-                binding.tvRecordingDuration.text = "00:00"
+                myDiaLog= LoadingDiaLog(requireContext())
+                myDiaLog.show()
+                lzyadsUtils.showAdJL(myDiaLog){
+                    Handler().postDelayed({
+                        // 这里是延时后执行的代码
+                        runOnUiThread {
+                            ResultDialog(entity).show(requireRootActivity())
+                            job?.cancel()
+                            binding.tvRecordingDuration.text = "00:00"
+                        }
+                    }, 600)
+                }
             } else {
                 binding.lottie.playAnimation()
                 if (record == null) {

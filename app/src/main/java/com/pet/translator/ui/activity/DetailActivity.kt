@@ -10,6 +10,7 @@ import com.pet.translator.base.dj.BaseActivity
 import com.pet.translator.databinding.ActivityDetailBinding
 import com.pet.translator.ext.getBinding
 import com.pet.translator.ext.thrillClickListener
+import com.pet.translator.utils.lzy.LZYADSUtils
 
 class DetailActivity : BaseActivity() {
 
@@ -23,9 +24,14 @@ class DetailActivity : BaseActivity() {
 
     private lateinit var binding: ActivityDetailBinding
 
+    private lateinit var lzyadsUtils: LZYADSUtils
+
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
         binding = view.getBinding()
+        lzyadsUtils=LZYADSUtils("DetailActivity",this)
+        lzyadsUtils.showAdCpTurn()
+        lzyadsUtils.loadSimpleAdTurn(binding.feedContainerActivityDetail,-1)
         binding.toolbar.ivMenu.setImageResource(R.drawable.ic_arrow_back_24)
         binding.toolbar.ivMenu.thrillClickListener { onBackPressed() }
         val index = intent.getIntExtra("index", 1)

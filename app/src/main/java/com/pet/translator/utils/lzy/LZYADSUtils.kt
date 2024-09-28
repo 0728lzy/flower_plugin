@@ -12,6 +12,7 @@ import com.kwad.sdk.api.util.GMCPTwoAdUtils
 import com.kwad.sdk.api.util.GMFeedSimpleAdOneUtils
 import com.kwad.sdk.api.util.GMFeedSimpleAdTwoUtils
 import com.kwad.sdk.api.util.GMRVAdUtils
+import com.pet.translator.widget.dialog.LoadingDiaLog
 
 class LZYADSUtils(val tag: String,val activity: Activity?){
     val TAG = "LZYADSUtils"
@@ -183,6 +184,45 @@ class LZYADSUtils(val tag: String,val activity: Activity?){
             GMCPTwoAdUtils.initPreloading("")
         } else {
             GMCPTwoAdUtils.showInterstitialFullAd(activity)
+        }
+    }
+    fun showAdJL(diaLog: LoadingDiaLog,play:()->Unit) {
+        if (AppConst.is_show_ad&&activity!=null) {
+            if (!AntiRepeatClickUtils.isFastClickJL()) {
+                return
+            }
+            GMRVAdUtils.init(object : GMRVAdUtils.GirdMenuStateListener {
+                override fun showVideoClosed() {
+                    Log.e(tag, "main jl showVideoClosed")
+                    play()
+                }
+
+                override fun onShowError() {
+                    Log.e(tag, "main jl onLoadError")
+                    play()
+                }
+
+                override fun onEarnRewards() {
+                }
+
+                override fun onLoadError() {
+                    play()
+                }
+
+                override fun onLoadSuccess() {
+                    Log.e(tag, "jl onLoadSuccess")
+                    diaLog.dismiss()
+                    GMRVAdUtils.showRewardAd(activity)
+                }
+            }, activity)
+            Log.e(tag, "激励 进来了GMRVAdUtils.isReady():" + GMRVAdUtils.isReady())
+            if (GMRVAdUtils.isReady()) {
+                GMRVAdUtils.showRewardAd(activity)
+            } else {
+                GMRVAdUtils.initPreloading("")
+            }
+        } else {
+            play()
         }
     }
 
