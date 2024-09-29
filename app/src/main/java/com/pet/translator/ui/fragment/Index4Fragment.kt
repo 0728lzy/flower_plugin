@@ -15,6 +15,7 @@ import com.pet.translator.entity.Index4Entity
 import com.pet.translator.ext.getBinding
 import com.pet.translator.ext.thrillClickListener
 import com.pet.translator.ui.activity.DetailActivity
+import com.pet.translator.utils.lzy.LZYADSUtils
 import com.tbuonomo.viewpagerdotsindicator.setBackgroundCompat
 
 
@@ -24,11 +25,13 @@ class Index4Fragment : RootFragment(R.layout.fragment_index_4) {
 
     val binding get() = _binding!!
 
+    private lateinit var lzyadsUtils: LZYADSUtils
+
     var type = 1
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
         _binding = view.getBinding()
-
+        lzyadsUtils = LZYADSUtils("Index4Fragment", requireActivity())
         binding.tvDog.thrillClickListener {
             binding.tvDog.setBackgroundResource(R.drawable.border_txt_tab_training)
             binding.tvDog.setTextColor(Color.WHITE)
@@ -51,6 +54,12 @@ class Index4Fragment : RootFragment(R.layout.fragment_index_4) {
                     ivThumb.setImageResource(item.icon)
                     tvName.text = item.title
                     tvDescription.text = item.content
+                    if (modelPosition==1){
+                        constraintAdv.visibility=View.VISIBLE
+                        lzyadsUtils.loadSimpleAdTurn(feedContainerItemAdv,320)
+                    }else{
+                        constraintAdv.visibility=View.GONE
+                    }
                     root.thrillClickListener {
                         var index = modelPosition + 1
                         if (type == 2) {
