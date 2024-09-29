@@ -34,11 +34,11 @@ android {
     }
 
     signingConfigs {
-        register("config") {
-            keyAlias = "gjonemap"
-            keyPassword = "123456"
-            storePassword = "123456"
-            storeFile = file("../gjonemap.jks")
+        register("myConfig") {
+            keyAlias = "ruiteapppettranslator"
+            keyPassword = "ruiteapppettranslator123"
+            storePassword = "ruiteapppettranslator123"
+            storeFile = file("../sign/ruiteapppettranslator.jks\"")
             enableV1Signing = true
             enableV2Signing = true
             enableV3Signing = true
@@ -46,17 +46,17 @@ android {
         }
     }
     buildTypes {
-        debug {
+        getByName("release") {
+            isZipAlignEnabled = false
             isMinifyEnabled = false
             isShrinkResources = false
+            signingConfig = signingConfigs.getByName("myConfig")
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-            signingConfig = signingConfigs.getByName("config")
         }
-        release {
+        getByName("debug") {
             isMinifyEnabled = false
-            isShrinkResources = false
+            signingConfig = signingConfigs.getByName("myConfig")
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-            signingConfig = signingConfigs.findByName("config")
         }
     }
     compileOptions {

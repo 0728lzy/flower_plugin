@@ -206,6 +206,7 @@ class LZYADSUtils(val tag: String,val activity: Activity?){
                 }
 
                 override fun onLoadError() {
+                    diaLog.dismiss()
                     play()
                 }
 
@@ -222,6 +223,7 @@ class LZYADSUtils(val tag: String,val activity: Activity?){
                 GMRVAdUtils.initPreloading("")
             }
         } else {
+            diaLog.dismiss()
             play()
         }
     }

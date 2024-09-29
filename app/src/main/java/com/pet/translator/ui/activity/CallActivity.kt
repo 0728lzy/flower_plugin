@@ -8,6 +8,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.camera.core.Camera
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.Preview
@@ -22,11 +23,13 @@ import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.upstream.AssetDataSource
 import com.google.android.exoplayer2.upstream.DataSource
 import com.google.common.util.concurrent.ListenableFuture
+import com.hjq.permissions.Permission
 import com.pet.translator.R
 import com.pet.translator.base.dj.BaseActivity
 import com.pet.translator.databinding.ActivityIncomingCallBinding
 import com.pet.translator.ext.countDown
 import com.pet.translator.ext.thrillClickListener
+import com.pet.translator.utils.lzy.PermissionUtils
 import java.util.Formatter
 import java.util.TimerTask
 import java.util.concurrent.ExecutionException
@@ -98,8 +101,17 @@ class CallActivity : BaseActivity() {
             onBackPressed()
         }
         binding.ivAnswerIncoming.thrillClickListener {
-            answer()
-            com.pet.translator.utils.VibrateTool.vibrateStop()
+            PermissionUtils.tryToDoSomethingWithCheckPermissionAndCode(
+                this,
+                arrayOf(
+                    Permission.CAMERA,
+                ),
+                2,
+                "权限被拒绝，无法使用该功能"
+            ) {
+                answer()
+                com.pet.translator.utils.VibrateTool.vibrateStop()
+            }
         }
         binding.rlIncomingCall.isVisible = true
         binding.rlAnswerCall.isVisible = false
@@ -153,9 +165,7 @@ class CallActivity : BaseActivity() {
 
     private fun startPreview() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                requestPermissions(arrayOf(Manifest.permission.CAMERA), 11);
-            }
+            Toast.makeText(this,"请打开相机权限",Toast.LENGTH_SHORT).show()
         } else {
             //启动相机
             startCamera()

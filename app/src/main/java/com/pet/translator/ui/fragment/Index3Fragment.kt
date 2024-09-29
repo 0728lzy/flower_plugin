@@ -6,9 +6,11 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.blankj.utilcode.util.ThreadUtils.runOnUiThread
+import com.hjq.permissions.Permission
 import com.pet.translator.R
 import com.pet.translator.base.dj.RootFragment
 import com.pet.translator.databinding.FragmentIndex3Binding
@@ -20,6 +22,7 @@ import com.pet.translator.ext.thrillClickListener
 import com.pet.translator.ui.dialog.ResultDialog
 import com.pet.translator.utils.lzy.LZYADSUtils
 import com.pet.translator.utils.lzy.LZYLog
+import com.pet.translator.utils.lzy.PermissionUtils
 import com.pet.translator.widget.dialog.LoadingDiaLog
 import kotlinx.coroutines.Job
 import org.greenrobot.eventbus.EventBus
@@ -99,72 +102,70 @@ class Index3Fragment : RootFragment(R.layout.fragment_index_3) {
             }
         }
         binding.btnRecord.thrillClickListener {
-            if (ContextCompat.checkSelfPermission(
-                    requireContext(),
-                    Manifest.permission.RECORD_AUDIO
-                ) == PackageManager.PERMISSION_DENIED
-            ) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    requestPermissions(arrayOf(Manifest.permission.RECORD_AUDIO), 11);
-                }
-                return@thrillClickListener
-            }
-
-            // 录制
-            if (binding.lottie.isAnimating) {
-                val entity = if (binding.viewAnimal1.isVisible) {
-                    if (isDog1) {
-                        person2Dog.random()
+            PermissionUtils.tryToDoSomethingWithCheckPermissionAndCode(
+                requireContext(),
+                arrayOf(
+                    Permission.RECORD_AUDIO,
+                ),
+                1,
+                "权限被拒绝，无法使用该功能"
+            ){
+                // 录制
+                if (binding.lottie.isAnimating) {
+                    val entity = if (binding.viewAnimal1.isVisible) {
+                        if (isDog1) {
+                            person2Dog.random()
+                        } else {
+                            catList.random()
+                        }
                     } else {
-                        catList.random()
+                        if (isDog2) {
+                            dog2Person.random()
+                        } else {
+                            catList.random()
+                        }
+                    }
+                    binding.lottie.cancelAnimation()
+                    record?.stopRecord()
+                    myDiaLog= LoadingDiaLog(requireContext())
+                    myDiaLog.show()
+                    lzyadsUtils.showAdJL(myDiaLog){
+                        Handler().postDelayed({
+                            // 这里是延时后执行的代码
+                            runOnUiThread {
+                                ResultDialog(entity).show(requireRootActivity())
+                                job?.cancel()
+                                binding.tvRecordingDuration.text = "00:00"
+                            }
+                        }, 600)
                     }
                 } else {
-                    if (isDog2) {
-                        dog2Person.random()
-                    } else {
-                        catList.random()
-                    }
-                }
-                binding.lottie.cancelAnimation()
-                record?.stopRecord()
-                myDiaLog= LoadingDiaLog(requireContext())
-                myDiaLog.show()
-                lzyadsUtils.showAdJL(myDiaLog){
-                    Handler().postDelayed({
-                        // 这里是延时后执行的代码
-                        runOnUiThread {
-                            ResultDialog(entity).show(requireRootActivity())
-                            job?.cancel()
-                            binding.tvRecordingDuration.text = "00:00"
+                    binding.lottie.playAnimation()
+                    if (record == null) {
+                        record = com.pet.translator.utils.AudioRecordUtil()
+                        record?.setOnCompleteListener {
+                            record = null
                         }
-                    }, 600)
-                }
-            } else {
-                binding.lottie.playAnimation()
-                if (record == null) {
-                    record = com.pet.translator.utils.AudioRecordUtil()
-                    record?.setOnCompleteListener {
-                        record = null
                     }
+                    record?.startRecord()
+
+                    job = requireRootActivity().countDown(
+                        time = 100000,
+                        start = {
+
+                        },
+                        next = {
+                            val time = 100000 - it.toInt()
+                            val seconds = time % 60
+                            val minutes = (time / 60) % 60
+                            // 计时
+                            binding.tvRecordingDuration.text = Formatter().format("%02d:%02d", minutes, seconds).toString()
+                        },
+                        end = {
+
+                        }
+                    )
                 }
-                record?.startRecord()
-
-                job = requireRootActivity().countDown(
-                    time = 100000,
-                    start = {
-
-                    },
-                    next = {
-                        val time = 100000 - it.toInt()
-                        val seconds = time % 60
-                        val minutes = (time / 60) % 60
-                        // 计时
-                        binding.tvRecordingDuration.text = Formatter().format("%02d:%02d", minutes, seconds).toString()
-                    },
-                    end = {
-
-                    }
-                )
             }
         }
     }

@@ -87,7 +87,10 @@ public final class PermissionInterceptor implements OnPermissionInterceptor {
 
         String titleDes = "权限申请说明";
         if(type == 1){
-            mPermissionDescription = "由于定位数据需要定位权限，缺失权限将导致当前定位数据获取失败，功能无法正常使用，请给予权限";
+            mPermissionDescription = "由于录制声音需要麦克风权限，缺失权限将导致声音录制失败，功能无法正常使用，请给予权限";
+        }
+        if (type == 2){
+            mPermissionDescription = "由于视频通话需要摄像头权限，缺失权限将导致无法开启摄像头，功能无法正常使用，请给予权限";
         }
         new AlertDialog.Builder(activity)
                 .setTitle(titleDes)
