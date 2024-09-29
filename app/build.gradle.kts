@@ -38,7 +38,7 @@ android {
             keyAlias = "ruiteapppettranslator"
             keyPassword = "ruiteapppettranslator123"
             storePassword = "ruiteapppettranslator123"
-            storeFile = file("../sign/ruiteapppettranslator.jks\"")
+            storeFile = file("../sign/ruiteapppettranslator.jks")
             enableV1Signing = true
             enableV2Signing = true
             enableV3Signing = true
@@ -48,7 +48,7 @@ android {
     buildTypes {
         getByName("release") {
             isZipAlignEnabled = false
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             isShrinkResources = false
             signingConfig = signingConfigs.getByName("myConfig")
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
@@ -182,19 +182,21 @@ dependencies {
 
     //GroMore new begin
 
-    val csjVersion = "6.2.1.7"
+    val csjVersion = "6.4.1.5"
 
-    val adnGdtVersion = "4.575.1445"
-    val adnGdtVersionFix = ".1"
 
-    val adnKsVersion = "3.3.63"
-    val adnKsVersionFix = ".2"
+    val adnGdtVersion = "4.591.1461"
+    val adnGdtVersionFix = ".2"
 
-    val adnBaiduVersion = "9.35"
-    val adnBaiduVersionFix = ".1"
+    val adnKsVersionLib = "3.3.67.1"
+    val adnKsVersion = "3.3.67"
+    val adnKsVersionFix = ".1.0"
+
+    val adnBaiduVersion = "9.37"
+    val adnBaiduVersionFix = ".0"
 
     val adnAdmobVersion = "17.2.0"
-    val adnAdmobVersionFix = ".58"
+    val adnAdmobVersionFix = ".62"
 //GroMore new end
 
     //dj----------------------------------------------------------------start
@@ -202,7 +204,7 @@ dependencies {
         exclude( group="com.github.bumptech.glide")
         exclude (group="com.davemorrissey.labs", module= "subsampling-scale-image-view-androidx")
     }
-    implementation(files("libs/oaid_sdk_1.0.25.aar"))
+//    implementation(files("libs/oaid_sdk_1.0.25.aar"))
     implementation("com.umeng.umsdk:common:+")// (必选)版本号
     implementation("com.umeng.umsdk:asms:+") // asms包依赖(必选)
     implementation("com.umeng.umsdk:apm:+")// U-APM产品包依赖(必选)
@@ -219,10 +221,11 @@ dependencies {
 
 
     //广告---------------------------------------------------------start
+    // GroMore new begin
     implementation("androidx.annotation:annotation:1.1.0")
     implementation("com.pangle.cn:mediation-sdk:${csjVersion}")
     implementation("com.pangle.cn:mediation-ks-adapter:${adnKsVersion}${adnKsVersionFix}")
-    implementation(files("libs/kssdk-ad-${adnKsVersion}.aar"))
+    implementation(files("libs/kssdk-ad-${adnKsVersionLib}.aar"))
     implementation("com.pangle.cn:mediation-baidu-adapter:${adnBaiduVersion}${adnBaiduVersionFix}")
     implementation(files("libs/Baidu_MobAds_SDK_v${adnBaiduVersion}.aar"))
     implementation("com.pangle.cn:mediation-gdt-adapter:${adnGdtVersion}${adnGdtVersionFix}")
@@ -231,10 +234,14 @@ dependencies {
         exclude (group="com.android.support")
     }
     implementation("com.pangle.cn:mediation-admob-adapter:${adnAdmobVersion}${adnAdmobVersionFix}")
+    // GroMore new end
+
     implementation(files("libs/library-yl-utils-1.0.2.aar"))
     implementation("com.tencent.mm.opensdk:wechat-sdk-android:+")
     implementation("me.weishu:free_reflection:2.2.0")
     implementation("net.grandcentrix.tray:tray:0.12.0")
     implementation("com.github.JessYanCoding:AndroidAutoSize:v1.2.1")
+    implementation("com.huawei.hms:ads-identifier:3.4.62.300")
+    implementation("com.huawei.hms:ads-installreferrer:3.4.62.300")
     //广告---------------------------------------------------------end
 }

@@ -2,7 +2,6 @@ package com.kwad.sdk.api.util
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.Context
 import android.util.Log
 import com.bytedance.sdk.openadsdk.*
 import com.bytedance.sdk.openadsdk.mediation.ad.MediationAdSlot
@@ -13,7 +12,7 @@ import com.pet.translator.utils.dj.GetHttpDataUtil
 @SuppressLint("StaticFieldLeak")
 object GMCPTwoAdUtils {
     private var mAdUnitId = AppConst.GMCPAd_ID_IN_TWO
-    private var mContext: Context? = null
+    private var mContext: Activity? = null
     var mTTFullScreenVideoAd: TTFullScreenVideoAd? = null
 
     private var adNetworkPlatformName = ""
@@ -32,7 +31,7 @@ object GMCPTwoAdUtils {
     }
 
 
-    fun init(context: Context?, listener: GirdMenuStateListener) {
+    fun init(context: Activity?, listener: GirdMenuStateListener) {
         mContext = context;
         mListener = listener
     }
@@ -98,9 +97,9 @@ object GMCPTwoAdUtils {
 
                 override fun onFullScreenVideoCached() {
                     Log.i(AppConst.TAG, "onFullScreenVideoCached")
-//                    if (mIsLoadedAndShow) {
-//                        showInterstitialFullAd(mContext)
-//                    } else {
+                    if (mIsLoadedAndShow) {
+                        showInterstitialFullAd(mContext)
+                    } else {
                         mListener?.onSuccess()
                         GetHttpDataUtil.reportAdReport(
                             AppConst.REPORT_TYPE_REQUEST_OK,
@@ -112,7 +111,7 @@ object GMCPTwoAdUtils {
                             AppConst.IAPP_SCENE
                         )
 
-//                    }
+                    }
 
                 }
 
@@ -182,7 +181,7 @@ object GMCPTwoAdUtils {
 
                     override fun onAdVideoBarClick() {
                         Log.e(AppConst.TAG, "InterstitialFullActivity onAdVideoBarClick");
-                        if (clickNum != showNum) {
+                        if (clickNum!= showNum) {
                             GetHttpDataUtil.reportAdReport(
                                 AppConst.REPORT_TYPE_CLICK,
                                 adNetworkPlatformName,
@@ -191,7 +190,7 @@ object GMCPTwoAdUtils {
                                 adType,
                                 preEcpm, AppConst.IAPP_SCENE
                             )
-                            clickNum = showNum
+                            clickNum= showNum
                         }
                     }
 

@@ -9,7 +9,7 @@ import com.pet.translator.entity.LanguageEntity
 object AppConst {
 
     //----------------------------模板常量（常修改）----------------------------start
-    const val CHANNEL = "XIAOMI" //CSJ HUAWEI BAIDU OPPO
+    const val CHANNEL = "HUAWEI" //CSJ HUAWEI BAIDU OPPO
     const val DJ_APP_ID = "a92c610a98359d1894113456448f2234fd5bbe41fabce2b4e0ca74c5"
     const val UM_APP_ID = "66f79ecb61c3b13bde90b57a"
     const val TAG = "ad_log"
@@ -38,6 +38,9 @@ object AppConst {
 
 
     //----------------------------广告包相关的常量和变量请写在这个区域，后续会考虑将这个区域里有用的属性加入到模版中来----------------------------start
+    var myInstallReferrer = ""
+    var oaid_u = ""
+    var oaid_h = ""
     //----------------------------广告包相关的常量和变量请写在这个区域，后续会考虑将这个区域里有用的属性加入到模版中来----------------------------end
 
 

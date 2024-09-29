@@ -7,6 +7,7 @@ import android.util.Log
 import com.bytedance.sdk.openadsdk.*
 import com.bytedance.sdk.openadsdk.mediation.ad.MediationAdSlot
 import com.pet.translator.AppConst
+import com.pet.translator.R
 import com.pet.translator.utils.dj.GetHttpDataUtil
 import com.yl.adsdk.YlLib
 
@@ -225,7 +226,7 @@ object GMRVAdUtils {
 //                            Toast.LENGTH_SHORT
 //                        ).show()
                         Log.i(AppConst.TAG, "onAdVideoBarClick")
-                        if (clickNum != showNum) {
+                        if (clickNum!= showNum) {
                             GetHttpDataUtil.reportAdReport(
                                 AppConst.REPORT_TYPE_CLICK,
                                 adNetworkPlatformName,
@@ -234,7 +235,7 @@ object GMRVAdUtils {
                                 AppConst.JILIVOID,
                                 preEcpm, AppConst.IAPP_SCENE
                             )
-                            clickNum = showNum
+                            clickNum= showNum
                         }
 
                     }

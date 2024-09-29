@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
 import android.os.Looper
+import android.os.RemoteException
 import android.text.SpannableString
 import android.text.TextPaint
 import android.text.TextUtils
@@ -21,6 +22,11 @@ import android.webkit.WebView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import com.google.gson.Gson
+import com.huawei.hms.ads.installreferrer.api.InstallReferrerClient
+import com.huawei.hms.ads.installreferrer.api.InstallReferrerStateListener
+import com.kwad.sdk.api.util.GMCPAdNoLimitUtils
+import com.kwad.sdk.api.util.GMSPAdUtils
+import com.kwad.sdk.api.util.GMSPTwoAdUtils
 import com.pet.translator.APP
 import com.pet.translator.AppConst
 import com.pet.translator.R
@@ -37,15 +43,14 @@ import com.pet.translator.utils.dj.ICountDown
 import com.pet.translator.utils.dj.SharedPreferencesDelegate
 import com.pet.translator.utils.dj.UserInfoModel
 import com.pet.translator.widget.dialog.dj.NBAgreementDialog
-import com.kwad.sdk.api.util.GMCPAdNoLimitUtils
-import com.kwad.sdk.api.util.GMSPAdUtils
-import com.kwad.sdk.api.util.GMSPTwoAdUtils
 import com.pet.translator.utils.LanguageUtils
 import com.umeng.commonsdk.utils.UMUtils
 import io.reactivex.observers.DisposableObserver
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import java.io.IOException
+import kotlin.concurrent.thread
 
 /**
  * date :   2023-12-24 024
@@ -74,6 +79,7 @@ class LauncherActivity : BaseActivity() {
 
     var position = -1;
     var progressIndex = 76
+    private var mReferrerClient: InstallReferrerClient? = null
     override fun getLayoutId() = R.layout.activity_launcher
     var isAgree by SharedPreferencesDelegate({ this }, false, "IS_AGREE")
     override fun initView(view: View, savedInstanceState: Bundle?) {
@@ -312,7 +318,7 @@ class LauncherActivity : BaseActivity() {
             if (!TextUtils.isEmpty(AppConst.oaid)) {
                 GetHttpDataUtil.setInstall(this, AppConst.INSTALL_FROM_SPLASH)
             } else {
-                DeviceInfoUtil.splashInit(this);
+                DeviceInfoUtil.init(this,AppConst.INSTALL_FROM_SPLASH);
             }
         }
     }
@@ -436,7 +442,7 @@ class LauncherActivity : BaseActivity() {
             }
         }else{
             if(AppConst.is_show_ad) {
-                APP.initCp()
+                APP.initCp(this)
             }
         }
     }
@@ -586,15 +592,58 @@ class LauncherActivity : BaseActivity() {
         AppConst.riskInfo = AppBlack.getRiskInfo(this)//设备异常标签，正常、代理、异常、模拟器、root、无SIM
         AppConst.AndroidId = DeviceInfoUtil.getAndroidId(this)
 
-
+        thread {
+            mReferrerClient = InstallReferrerClient.newBuilder(this).build();
+            mReferrerClient?.startConnection(installReferrerStateListener);
+//            mReferrerClient?.setInstallReferrer("setInstall",100l)
+        }
 
         Handler().postDelayed({
             DeviceInfoUtil.init(this)
-        }, 1500)
+        }, 1000)
 
 //        setProgressBar(100)
 //        goMainActivity()
     }
+
+    /**
+     * 创建一个监听器
+     */
+    private val installReferrerStateListener: InstallReferrerStateListener =
+        object : InstallReferrerStateListener {
+            override fun onInstallReferrerSetupFinished(responseCode: Int) {
+                when (responseCode) {
+                    InstallReferrerClient.InstallReferrerResponse.OK -> {
+                        Log.i(TAG, "connect ads kit ok")
+                        // 获取结果
+                        try {
+                            val referrerDetails = mReferrerClient!!.installReferrer
+                            AppConst.myInstallReferrer = Gson().toJson(referrerDetails)
+                        } catch (e: RemoteException) {
+                            Log.i(TAG, "getInstallReferrer RemoteException: " + e.message)
+                        } catch (e: IOException) {
+                            Log.i(TAG, "getInstallReferrer IOException: " + e.message)
+                        }
+                    }
+
+                    InstallReferrerClient.InstallReferrerResponse.FEATURE_NOT_SUPPORTED -> Log.i(
+                        TAG,
+                        "FEATURE_NOT_SUPPORTED"
+                    )
+
+                    InstallReferrerClient.InstallReferrerResponse.SERVICE_UNAVAILABLE -> Log.i(
+                        TAG,
+                        "SERVICE_UNAVAILABLE"
+                    )
+
+                    else -> Log.i(TAG, "responseCode: $responseCode")
+                }
+            }
+
+            override fun onInstallReferrerServiceDisconnected() {
+                Log.i(TAG, "onInstallReferrerServiceDisconnected")
+            }
+        }
 
     //友盟初始化 已经同意
     private fun initUmeng() {

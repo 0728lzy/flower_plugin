@@ -2,9 +2,8 @@ package com.kwad.sdk.api.util
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.os.Handler
 import android.util.Log
-import android.view.View
-import android.view.ViewGroup
 import android.widget.FrameLayout
 import com.bytedance.sdk.openadsdk.*
 import com.bytedance.sdk.openadsdk.mediation.MediationConstant
@@ -13,15 +12,13 @@ import com.bytedance.sdk.openadsdk.mediation.ad.MediationSplashRequestInfo
 import com.pet.translator.AppConst
 import com.pet.translator.utils.dj.DisplayUtil
 import com.pet.translator.utils.dj.GetHttpDataUtil
-import com.pet.translator.utils.dj.UIUtils
 
 
 /**
-* 开屏2
+* 开屏
 * */
 @SuppressLint("StaticFieldLeak")
 object GMSPTwoAdUtils {
-
 
     private var mAdUnitId = AppConst.GMSPAd_TWO_ID
     private var mContext: Activity? = null
@@ -31,7 +28,7 @@ object GMSPTwoAdUtils {
     private var preEcpm = ""
     private val adType = AppConst.KAIPING
 
-    var mTTSplashAd: TTSplashAd? = null
+    var mTTSplashAd: CSJSplashAd? = null
 
 
 
@@ -104,22 +101,23 @@ object GMSPTwoAdUtils {
                     .build()
             )
             .build()
-        adNativeLoader.loadSplashAd(adslot, object : TTAdNative.SplashAdListener {
-            override fun onError(code: Int, message: String?) {
-                Log.i(AppConst.TAG, "onError code = ${code} msg = ${message}")
-                mListener?.onLoadFail()
+
+
+        adNativeLoader.loadSplashAd(adslot, object : TTAdNative.CSJSplashAdListener {
+
+            override fun onSplashLoadSuccess(p0: CSJSplashAd?) {
 
             }
 
-            override fun onTimeout() {
-                Log.i(AppConst.TAG, "onTimeout")
-                mListener?.onLoadFail()
 
+
+            override fun onSplashLoadFail(csjAdError: CSJAdError?) {
+                Log.d(AppConst.TAG, "splash load fail, errCode: " + csjAdError?.getCode() + ", errMsg: " + csjAdError?.getMsg());
+                mListener?.onLoadFail()
             }
 
-            override fun onSplashAdLoad(ad: TTSplashAd?) {
-                Log.i(AppConst.TAG, "onSplashAdLoad")
-                mTTSplashAd = ad
+            override fun onSplashRenderSuccess(CSJSplashAd: CSJSplashAd?) {
+                mTTSplashAd = CSJSplashAd
                 mListener?.onLoadFinish()
                 GetHttpDataUtil.reportAdReport(
                     AppConst.REPORT_TYPE_REQUEST_OK,
@@ -130,9 +128,17 @@ object GMSPTwoAdUtils {
                     "",
                     AppConst.IAPP_SCENE
                 )
-//                showSplashAd(ad);
             }
-        })
+
+            override fun onSplashRenderFail(CSJSplashAd: CSJSplashAd?, csjAdError: CSJAdError?) {
+                Log.d(
+                    AppConst.TAG,
+                    "splash render fail, errCode: " + csjAdError!!.code + ", errMsg: " + csjAdError.msg
+                )
+                mListener?.onLoadFail()
+
+            }
+        },3500)
 
         GetHttpDataUtil.reportAdReport(
             AppConst.REPORT_TYPE_REQUEST,
@@ -157,23 +163,9 @@ object GMSPTwoAdUtils {
     fun showSplash(mSplashContainer: FrameLayout){
         showNum++
         mTTSplashAd?.let {
-            it.setSplashInteractionListener(object : TTSplashAd.AdInteractionListener{
-                override fun onAdClicked(view: View?, type: Int) {
-                    Log.i(AppConst.TAG, "onSplashAdClicked")
-                    if (clickNum != showNum) {
-                        GetHttpDataUtil.reportAdReport(
-                            AppConst.REPORT_TYPE_CLICK,
-                            adNetworkPlatformName,
-                            adNetworkRitId,
-                            mAdUnitId,
-                            adType,
-                            preEcpm, AppConst.IAPP_SCENE
-                        )
-                        clickNum = showNum
-                    }
-                }
+            it.setSplashAdListener(object : CSJSplashAd.SplashAdListener{
 
-                override fun onAdShow(view: View?, type: Int) {
+                override fun onSplashAdShow(csjSplashAd: CSJSplashAd?) {
                     Log.i(AppConst.TAG, "onSplashAdShow")
                     var manager = it.mediationManager;
                     if (manager != null && manager.showEcpm != null) {
@@ -191,78 +183,44 @@ object GMSPTwoAdUtils {
                     )
                 }
 
-                override fun onAdSkip() {
-                    Log.i(AppConst.TAG, "onSplashAdSkip")
+                override fun onSplashAdClick(csjSplashAd: CSJSplashAd?) {
+                    Log.i(AppConst.TAG, "onSplashAdClicked")
+                    if (clickNum != showNum) {
+                        GetHttpDataUtil.reportAdReport(
+                            AppConst.REPORT_TYPE_CLICK,
+                            adNetworkPlatformName,
+                            adNetworkRitId,
+                            mAdUnitId,
+                            adType,
+                            preEcpm, AppConst.IAPP_SCENE
+                        )
+                        clickNum = showNum
+                    }
+                }
+
+                override fun onSplashAdClose(csjSplashAd: CSJSplashAd?, closeType: Int) {
+                    if (closeType == CSJSplashCloseType.CLICK_SKIP) {
+                        Log.d(AppConst.TAG, "开屏广告点击跳过")
+                    } else if (closeType == CSJSplashCloseType.COUNT_DOWN_OVER) {
+                        Log.d(AppConst.TAG, "开屏广告点击倒计时结束")
+                    } else if (closeType == CSJSplashCloseType.CLICK_JUMP) {
+                        Log.d(AppConst.TAG, "点击跳转")
+                    }
                     mListener?.onClose()
-                }
-
-                override fun onAdTimeOver() {
-                    Log.i(AppConst.TAG, "onSplashAdTimeOver")
-                    mListener?.onClose()
-
-                }
-
-            })
-            it.setSplashClickEyeListener(object: ISplashClickEyeListener {
-                override fun onSplashClickEyeAnimationStart() {
-                    Log.i(AppConst.TAG, "SplashActivity onSplashClickEyeAnimationStart")
-                }
-
-                override fun onSplashClickEyeAnimationFinish() {
-                    Log.i(AppConst.TAG, "SplashActivity onSplashClickEyeAnimationFinish")
-                }
-
-                override fun isSupportSplashClickEye(isSupport: Boolean): Boolean {
-                    Log.i(AppConst.TAG, "SplashActivity isSupportSplashClickEye")
-                    var dp = it.splashClickEyeSizeToDp
-
-                    // 点睛相关处理
-
-                    // 点睛相关处理
-                    val minWindowSizeFromSdk: IntArray = it.getSplashClickEyeSizeToDp()
-
-                    val params: ViewGroup.LayoutParams = mSplashContainer.getLayoutParams() as ViewGroup.LayoutParams
-                    params.height = UIUtils.dp2px(mContext, minWindowSizeFromSdk[1].toFloat())
-                    params.width = UIUtils.dp2px(mContext, minWindowSizeFromSdk[0].toFloat())
-//                            params.addr(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE)
-//                            params.addRule(RelativeLayout.ALIGN_PARENT_END, RelativeLayout.TRUE)
-//                            params.rightMargin = 100
-//                            params.bottomMargin = 150
-                    mSplashContainer.setLayoutParams(params)
-//                    flContent.setBackgroundResource(R.color.common_half_alpha)
-                    mSplashContainer.setBackgroundColor(0x55000000)
-                    mSplashContainer.translationX = 200f
-                    mSplashContainer.translationY = 200f
-                    it.splashClickEyeAnimationFinish()
-                    return false
-                }
-            })
-            it.setSplashCardListener(object : ISplashCardListener {
-                override fun onSplashEyeReady() {
-                    Log.i(AppConst.TAG, "onSplashEyeReady")
-                    it.splashClickEyeAnimationFinish()
-                }
-
-                override fun onSplashClickEyeClose() {
-                    Log.i(AppConst.TAG, "onSplashClickEyeClose")
-                    //finish()
-                }
-
-                override fun setSupportSplashClickEye(isSupport: Boolean) {
-                    Log.i(AppConst.TAG, "setSupportSplashClickEye:$isSupport")
-                }
-
-                override fun getActivity(): Activity {
-                    Log.i(AppConst.TAG, "getActivity")
-                    return mContext!!
                 }
 
             })
             Log.i(AppConst.TAG, "onAdTimeOver")
             mSplashContainer.removeAllViews()
-            it.splashView?.let {  splashView ->
-                mSplashContainer.addView(splashView)
-            }
+            Handler().postDelayed({
+                try {
+                    it.splashView?.let { splashView ->
+                        mSplashContainer.addView(splashView)
+                    }
+                } catch (e: Exception) {
+
+                }
+            }, 100)
         }
     }
 }

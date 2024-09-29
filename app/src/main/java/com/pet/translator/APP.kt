@@ -11,8 +11,6 @@ import android.text.TextUtils
 import android.util.Log
 import android.webkit.WebView
 import com.baidu.mobads.sdk.api.MobadsPermissionSettings
-import com.pet.translator.db.RoomHelper
-import com.pet.translator.net.GsonConverter
 import com.drake.net.NetConfig
 import com.drake.net.interceptor.LogRecordInterceptor
 import com.drake.net.interceptor.RequestInterceptor
@@ -25,7 +23,9 @@ import com.kongzue.dialogx.DialogX
 import com.kwad.sdk.api.util.GMCPAdNoLimitUtils
 import com.kwad.sdk.api.util.GMCPTwoAdUtils
 import com.kwad.sdk.api.util.TTAdManagerHolder
+import com.pet.translator.db.RoomHelper
 import com.pet.translator.helper.dj.PushHelper
+import com.pet.translator.net.GsonConverter
 import com.pet.translator.ui.activity.LauncherActivity
 import com.pet.translator.utils.dj.GetHttpDataUtil
 import com.pet.translator.utils.dj.SPUtils
@@ -57,9 +57,9 @@ class APP : Application() {
                 MobadsPermissionSettings.setPermissionReadDeviceID(true)
             }
         }
-        fun initCp(){
+        fun initCp(activity: Activity){
             if (!GMCPAdNoLimitUtils.isReady()) {
-                GMCPAdNoLimitUtils.init(instance, object : GMCPAdNoLimitUtils.GirdMenuStateListener {
+                GMCPAdNoLimitUtils.init(activity, object : GMCPAdNoLimitUtils.GirdMenuStateListener {
                     override fun onShowError() {
 
                     }
@@ -81,7 +81,7 @@ class APP : Application() {
             if(AppConst.is_show_ad && !AppConst.isWaked){
                 if(!GMCPTwoAdUtils.isReady()) {
                     GMCPTwoAdUtils.init(
-                        instance,
+                        activity,
                         object : GMCPTwoAdUtils.GirdMenuStateListener {
                             override fun onSuccess() {
 
@@ -139,7 +139,7 @@ class APP : Application() {
         DialogX.init(this)
         DialogX.globalTheme = DialogX.THEME.DARK
         ToastUtils.init(this)
-        LZYLog.setLogEnabled(true)
+        LZYLog.setLogEnabled(false)
         var currProcessName = getAppProcessName()
         if (currProcessName == this.packageName) {
             var installTime = SPUtils.getInstance().getLong(SPUtils.SP_INSTALL_TIME)
@@ -323,15 +323,16 @@ class APP : Application() {
             //预初始化
             PushHelper.preInit(this)
         } else {
-            val isMainProcess = UMUtils.isMainProgress(this)
-            if (isMainProcess) {
-                //启动优化：建议在子线程中执行初始化
-                Thread { PushHelper.init(applicationContext) }.start()
-            } else {
-                //若不是主进程（":channel"结尾的进程），直接初始化sdk，不可在子线程中执行
-                PushHelper.init(applicationContext)
+            if (!UserInfoModel.getIsCheckFlag()  || UserInfoModel.getIsShowAd()) {
+                val isMainProcess = UMUtils.isMainProgress(this)
+                if (isMainProcess) {
+                    //启动优化：建议在子线程中执行初始化
+                    Thread { PushHelper.init(applicationContext) }.start()
+                } else {
+                    //若不是主进程（":channel"结尾的进程），直接初始化sdk，不可在子线程中执行
+                    PushHelper.init(applicationContext)
+                }
             }
-
         }
     }
 

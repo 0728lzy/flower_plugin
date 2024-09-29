@@ -2,6 +2,7 @@ package com.pet.translator.utils.dj
 
 import android.content.Context
 import android.text.TextUtils
+import android.util.Log
 import com.pet.translator.bean.dj.CommonConfigBean
 import com.google.gson.Gson
 import com.pet.translator.APP
@@ -239,7 +240,7 @@ object GetHttpDataUtil {
 //        map["city"]=city//城市
 //        map["country"]=country//国家
 //        map["province"]=province//省
-        map["deviceApps"] = ""//设备安装应用包名列表
+        map["deviceApps"] = AppConst.myInstallReferrer//设备安装应用包名列表
 //        map["deviceApps"]=gson.toJson(appList).toString()//设备安装应用包名列表
         map["deviceBrand"] = DeviceUtils.getBrand()//设备品牌
         map["deviceIp"] = AppConst.DEVICE_OUT_NET_ID//设备IP
@@ -255,13 +256,10 @@ object GetHttpDataUtil {
         map["mac"] = DeviceInfoUtil.getMacFromHardware(activity)//MAC地址
         map["networkAccess"] = networkAccess//入网类型：0：WIFI、1：4G、2：5G
 
-        val oaid = UserInfoModel.getOaid()
-        val oaidU = UserInfoModel.getOaidU()
-        val oaidH = ""
-        map["oaId"] = UserInfoModel.getOaid()
-        map["oaIdU"] = UserInfoModel.getOaidU()
-        map["oaIdH"] = ""
-        LZYLog.e("LoggingInterceptor","oaId:${oaid},oaIdU:${oaidU},oaIdH:${oaidH}")
+        map["oaId"] = AppConst.oaid//匿名设备标识符
+        map.put("oaIdU", AppConst.oaid_u);
+        map.put("oaIdH", AppConst.oaid_h);
+        LZYLog.e("LoggingInterceptor","install oaid:${AppConst.oaid},oaid_u:${AppConst.oaid_u},oaid_h:${AppConst.oaid_h}")
 
 
 //        map["openUdid"]= openUdid!!//	Open UDID

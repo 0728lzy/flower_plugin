@@ -2,9 +2,8 @@ package com.kwad.sdk.api.util
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.os.Handler
 import android.util.Log
-import android.view.View
-import android.view.ViewGroup
 import android.widget.FrameLayout
 import com.bytedance.sdk.openadsdk.*
 import com.bytedance.sdk.openadsdk.mediation.MediationConstant
@@ -13,12 +12,11 @@ import com.bytedance.sdk.openadsdk.mediation.ad.MediationSplashRequestInfo
 import com.pet.translator.AppConst
 import com.pet.translator.utils.dj.DisplayUtil
 import com.pet.translator.utils.dj.GetHttpDataUtil
-import com.pet.translator.utils.dj.UIUtils
 
 
 /**
-* 开屏
-* */
+ * 开屏
+ * */
 @SuppressLint("StaticFieldLeak")
 object GMSPAdUtils {
 
@@ -30,16 +28,16 @@ object GMSPAdUtils {
     private var preEcpm = ""
     private val adType = AppConst.KAIPING
 
-    var mTTSplashAd: TTSplashAd? = null
+    var mTTSplashAd: CSJSplashAd? = null
 
 
+    private var mIsRequestInfo = false
+    private var initPreloading = false
 
-    private  var mIsRequestInfo = false
-    private  var initPreloading = false
+    private var mListener: GmSplashAdListener? = null
+    var showNum = 0
+    var clickNum = 0
 
-    private var  mListener : GmSplashAdListener? = null
-    var  showNum =0
-    var  clickNum =0
     interface GmSplashAdListener {
 
         fun onLoadFinish()
@@ -51,18 +49,21 @@ object GMSPAdUtils {
     public MediationSplashRequestInfo(String adnName, String adnSlotId, String appId, String appkey)
     adnName 参考MediationConstant.ADN_MINTEGRALadnSlotId 注意这里是代码位idappId adn idappkey如果没有可以传空
      */
-    val pangleSplashBottom = object : MediationSplashRequestInfo(MediationConstant.ADN_PANGLE,AppConst.GMDDAd_ID, AppConst.Ad_ID, ""){} //ok
+    val pangleSplashBottom = object : MediationSplashRequestInfo(
+        MediationConstant.ADN_PANGLE,
+        AppConst.GMDDAd_ID, AppConst.Ad_ID, ""
+    ) {} //ok
 //    val gdtSplashBottom = object : MediationSplashRequestInfo(MediationConstant.ADN_GDT,"9093517612222759", "1106706357", ""){} //ok
 //    val ksSplashBottom = object : MediationSplashRequestInfo(MediationConstant.ADN_KS,"4000000042", "90009", ""){} //ok
 //    val baiduSplashBottom = object : MediationSplashRequestInfo(MediationConstant.ADN_BAIDU,"2058622", "e866cfb0", ""){} //ok
 
 
-    fun init(listener: GmSplashAdListener, activity: Activity, isRequestInfo:Boolean) {
+    fun init(listener: GmSplashAdListener, activity: Activity, isRequestInfo: Boolean) {
         mContext = activity
         mListener = listener
 //        if (AppConst.is_show_ad) {
         initPreloading = false
-        mIsRequestInfo =isRequestInfo
+        mIsRequestInfo = isRequestInfo
 
         //加载开屏广告
         loadSplashAd()
@@ -72,12 +73,12 @@ object GMSPAdUtils {
     /**
      *  预加载
      */
-    fun initPreloading(listener: GmSplashAdListener, activity: Activity, isRequestInfo:Boolean) {
+    fun initPreloading(listener: GmSplashAdListener, activity: Activity, isRequestInfo: Boolean) {
         mContext = activity
         mListener = listener
 //        if (AppConst.is_show_ad) {
         initPreloading = true
-        mIsRequestInfo =isRequestInfo
+        mIsRequestInfo = isRequestInfo
 
         //加载开屏广告
         loadSplashAd()
@@ -87,15 +88,24 @@ object GMSPAdUtils {
     /**
      * 加载开屏广告
      */
-    private fun loadSplashAd(){
-
+    private fun loadSplashAd() {
+        GetHttpDataUtil.reportAdReport(
+            AppConst.REPORT_TYPE_REQUEST,
+            "GroMore",
+            "",
+            mAdUnitId,
+            adType,
+            "",
+            AppConst.IAPP_SCENE
+        )
         val adNativeLoader = TTAdSdk.getAdManager().createAdNative(mContext)
         val adslot = AdSlot.Builder()
             .setCodeId(mAdUnitId)
             .setImageAcceptedSize(
-                DisplayUtil.getWindowWidth(mContext),DisplayUtil.getWindowHeight(
-                mContext
-            ))
+                DisplayUtil.getWindowWidth(mContext), DisplayUtil.getWindowHeight(
+                    mContext
+                )
+            )
             .setMediationAdSlot(
                 MediationAdSlot.Builder()
                     .setMediationSplashRequestInfo(pangleSplashBottom)
@@ -103,22 +113,25 @@ object GMSPAdUtils {
                     .build()
             )
             .build()
-        adNativeLoader.loadSplashAd(adslot, object : TTAdNative.SplashAdListener {
-            override fun onError(code: Int, message: String?) {
-                Log.i(AppConst.TAG, "onError code = ${code} msg = ${message}")
-                mListener?.onLoadFail()
+
+
+        adNativeLoader.loadSplashAd(adslot, object : TTAdNative.CSJSplashAdListener {
+
+
+            override fun onSplashLoadSuccess(p0: CSJSplashAd?) {
 
             }
 
-            override fun onTimeout() {
-                Log.i(AppConst.TAG, "onTimeout")
+            override fun onSplashLoadFail(csjAdError: CSJAdError?) {
+                Log.d(
+                    AppConst.TAG,
+                    "splash load fail, errCode: " + csjAdError?.getCode() + ", errMsg: " + csjAdError?.getMsg()
+                );
                 mListener?.onLoadFail()
-
             }
 
-            override fun onSplashAdLoad(ad: TTSplashAd?) {
-                Log.i(AppConst.TAG, "onSplashAdLoad")
-                mTTSplashAd = ad
+            override fun onSplashRenderSuccess(CSJSplashAd: CSJSplashAd?) {
+                mTTSplashAd = CSJSplashAd
                 mListener?.onLoadFinish()
                 GetHttpDataUtil.reportAdReport(
                     AppConst.REPORT_TYPE_REQUEST_OK,
@@ -129,50 +142,38 @@ object GMSPAdUtils {
                     "",
                     AppConst.IAPP_SCENE
                 )
-//                showSplashAd(ad);
             }
-        })
 
-        GetHttpDataUtil.reportAdReport(
-            AppConst.REPORT_TYPE_REQUEST,
-            "GroMore",
-            "",
-            mAdUnitId,
-            adType,
-            "",
-            AppConst.IAPP_SCENE
-        )
+            override fun onSplashRenderFail(CSJSplashAd: CSJSplashAd?, csjAdError: CSJAdError?) {
+                Log.d(
+                    AppConst.TAG,
+                    "splash render fail, errCode: " + csjAdError!!.code + ", errMsg: " + csjAdError.msg
+                )
+                mListener?.onLoadFail()
+
+            }
+        }, 3500)
+
+
+        Log.i(AppConst.TAG, "AppConst.REPORT_TYPE_REQUEST" + AppConst.REPORT_TYPE_REQUEST)
     }
 
     fun isReady(): Boolean {
-        if (null!= mTTSplashAd && mTTSplashAd?.mediationManager!=null && mTTSplashAd?.mediationManager!!.isReady) {
+        if (null != mTTSplashAd && mTTSplashAd?.mediationManager != null && mTTSplashAd?.mediationManager!!.isReady) {
             return mTTSplashAd?.mediationManager!!.isReady
         }
         return false
     }
+
     /**
      * 展示开屏广告
      */
-    fun showSplash(mSplashContainer: FrameLayout){
+    fun showSplash(mSplashContainer: FrameLayout) {
         showNum++
         mTTSplashAd?.let {
-            it.setSplashInteractionListener(object : TTSplashAd.AdInteractionListener{
-                override fun onAdClicked(view: View?, type: Int) {
-                    Log.i(AppConst.TAG, "onSplashAdClicked")
-                    if (clickNum != showNum) {
-                        GetHttpDataUtil.reportAdReport(
-                            AppConst.REPORT_TYPE_CLICK,
-                            adNetworkPlatformName,
-                            adNetworkRitId,
-                            mAdUnitId,
-                            adType,
-                            preEcpm, AppConst.IAPP_SCENE
-                        )
-                        clickNum = showNum
-                    }
-                }
+            it.setSplashAdListener(object : CSJSplashAd.SplashAdListener {
 
-                override fun onAdShow(view: View?, type: Int) {
+                override fun onSplashAdShow(csjSplashAd: CSJSplashAd?) {
                     Log.i(AppConst.TAG, "onSplashAdShow")
                     var manager = it.mediationManager;
                     if (manager != null && manager.showEcpm != null) {
@@ -190,78 +191,45 @@ object GMSPAdUtils {
                     )
                 }
 
-                override fun onAdSkip() {
-                    Log.i(AppConst.TAG, "onSplashAdSkip")
+                override fun onSplashAdClick(csjSplashAd: CSJSplashAd?) {
+                    Log.i(AppConst.TAG, "onSplashAdClicked")
+                    if (clickNum != showNum) {
+                        GetHttpDataUtil.reportAdReport(
+                            AppConst.REPORT_TYPE_CLICK,
+                            adNetworkPlatformName,
+                            adNetworkRitId,
+                            mAdUnitId,
+                            adType,
+                            preEcpm, AppConst.IAPP_SCENE
+                        )
+                        clickNum = showNum
+                    }
+                }
+
+                override fun onSplashAdClose(csjSplashAd: CSJSplashAd?, closeType: Int) {
+                    if (closeType == CSJSplashCloseType.CLICK_SKIP) {
+                        Log.d(AppConst.TAG, "开屏广告点击跳过")
+                    } else if (closeType == CSJSplashCloseType.COUNT_DOWN_OVER) {
+                        Log.d(AppConst.TAG, "开屏广告点击倒计时结束")
+                    } else if (closeType == CSJSplashCloseType.CLICK_JUMP) {
+                        Log.d(AppConst.TAG, "点击跳转")
+                    }
                     mListener?.onClose()
-                }
-
-                override fun onAdTimeOver() {
-                    Log.i(AppConst.TAG, "onSplashAdTimeOver")
-                    mListener?.onClose()
-
-                }
-
-            })
-            it.setSplashClickEyeListener(object: ISplashClickEyeListener {
-                override fun onSplashClickEyeAnimationStart() {
-                    Log.i(AppConst.TAG, "SplashActivity onSplashClickEyeAnimationStart")
-                }
-
-                override fun onSplashClickEyeAnimationFinish() {
-                    Log.i(AppConst.TAG, "SplashActivity onSplashClickEyeAnimationFinish")
-                }
-
-                override fun isSupportSplashClickEye(isSupport: Boolean): Boolean {
-                    Log.i(AppConst.TAG, "SplashActivity isSupportSplashClickEye")
-                    var dp = it.splashClickEyeSizeToDp
-
-                    // 点睛相关处理
-
-                    // 点睛相关处理
-                    val minWindowSizeFromSdk: IntArray = it.getSplashClickEyeSizeToDp()
-
-                    val params: ViewGroup.LayoutParams = mSplashContainer.getLayoutParams() as ViewGroup.LayoutParams
-                    params.height = UIUtils.dp2px(mContext, minWindowSizeFromSdk[1].toFloat())
-                    params.width = UIUtils.dp2px(mContext, minWindowSizeFromSdk[0].toFloat())
-//                            params.addr(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE)
-//                            params.addRule(RelativeLayout.ALIGN_PARENT_END, RelativeLayout.TRUE)
-//                            params.rightMargin = 100
-//                            params.bottomMargin = 150
-                    mSplashContainer.setLayoutParams(params)
-//                    flContent.setBackgroundResource(R.color.common_half_alpha)
-                    mSplashContainer.setBackgroundColor(0x55000000)
-                    mSplashContainer.translationX = 200f
-                    mSplashContainer.translationY = 200f
-                    it.splashClickEyeAnimationFinish()
-                    return false
-                }
-            })
-            it.setSplashCardListener(object : ISplashCardListener {
-                override fun onSplashEyeReady() {
-                    Log.i(AppConst.TAG, "onSplashEyeReady")
-                    it.splashClickEyeAnimationFinish()
-                }
-
-                override fun onSplashClickEyeClose() {
-                    Log.i(AppConst.TAG, "onSplashClickEyeClose")
-                    //finish()
-                }
-
-                override fun setSupportSplashClickEye(isSupport: Boolean) {
-                    Log.i(AppConst.TAG, "setSupportSplashClickEye:$isSupport")
-                }
-
-                override fun getActivity(): Activity {
-                    Log.i(AppConst.TAG, "getActivity")
-                    return mContext!!
                 }
 
             })
             Log.i(AppConst.TAG, "onAdTimeOver")
             mSplashContainer.removeAllViews()
-            it.splashView?.let {  splashView ->
-                mSplashContainer.addView(splashView)
-            }
+
+            Handler().postDelayed({
+                try {
+                    it.splashView?.let { splashView ->
+                        mSplashContainer.addView(splashView)
+                    }
+                } catch (e: Exception) {
+
+                }
+            }, 100)
         }
     }
 }

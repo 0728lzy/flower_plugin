@@ -3,15 +3,15 @@ package com.pet.translator.utils.lzy
 import android.app.Activity
 import android.util.Log
 import android.widget.FrameLayout
-import com.pet.translator.AppConst
-import com.pet.translator.utils.dj.AntiRepeatClickUtils
-import com.pet.translator.utils.dj.UserInfoModel
 import com.kwad.sdk.api.util.GMCPAdNoLimitUtils
 import com.kwad.sdk.api.util.GMCPAdUtils
 import com.kwad.sdk.api.util.GMCPTwoAdUtils
 import com.kwad.sdk.api.util.GMFeedSimpleAdOneUtils
 import com.kwad.sdk.api.util.GMFeedSimpleAdTwoUtils
 import com.kwad.sdk.api.util.GMRVAdUtils
+import com.pet.translator.AppConst
+import com.pet.translator.utils.dj.AntiRepeatClickUtils
+import com.pet.translator.utils.dj.UserInfoModel
 import com.pet.translator.widget.dialog.LoadingDiaLog
 
 class LZYADSUtils(val tag: String,val activity: Activity?){

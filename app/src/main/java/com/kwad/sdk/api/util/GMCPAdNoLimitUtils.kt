@@ -2,7 +2,6 @@ package com.kwad.sdk.api.util
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.Context
 import android.util.Log
 import com.bytedance.sdk.openadsdk.*
 import com.bytedance.sdk.openadsdk.mediation.ad.MediationAdSlot
@@ -13,7 +12,7 @@ import com.pet.translator.utils.dj.GetHttpDataUtil
 @SuppressLint("StaticFieldLeak")
 object GMCPAdNoLimitUtils {
     private var mAdUnitId = AppConst.GMCPAd_ID_IN
-    private var mContext: Context? = null
+    private var mContext: Activity? = null
     var mTTFullScreenVideoAd: TTFullScreenVideoAd? = null
 
     private var adNetworkPlatformName = ""
@@ -32,7 +31,7 @@ object GMCPAdNoLimitUtils {
     }
 
 
-    fun init(context: Context?, listener: GirdMenuStateListener) {
+    fun init(context: Activity?, listener: GirdMenuStateListener) {
         mContext = context;
         mListener = listener
     }
@@ -100,9 +99,9 @@ object GMCPAdNoLimitUtils {
 
                 override fun onFullScreenVideoCached() {
                     Log.i(AppConst.TAG, "onCpN1Cached")
-//                    if (mIsLoadedAndShow) {
-//                        showInterstitialFullAd(mContext)
-//                    } else {
+                    if (mIsLoadedAndShow) {
+                        showInterstitialFullAd(mContext)
+                    } else {
                         mListener?.onSuccess()
                         GetHttpDataUtil.reportAdReport(
                             AppConst.REPORT_TYPE_REQUEST_OK,
@@ -114,7 +113,7 @@ object GMCPAdNoLimitUtils {
                             AppConst.IAPP_SCENE
                         )
 
-//                    }
+                    }
 
                 }
 
@@ -187,7 +186,7 @@ object GMCPAdNoLimitUtils {
 
                     override fun onAdVideoBarClick() {
                         Log.e(AppConst.TAG, "InterstitialFullActivity CpN1 onAdVideoBarClick");
-                        if (clickNum != showNum) {
+                        if (clickNum!= showNum) {
                             GetHttpDataUtil.reportAdReport(
                                 AppConst.REPORT_TYPE_CLICK,
                                 adNetworkPlatformName,
@@ -196,7 +195,7 @@ object GMCPAdNoLimitUtils {
                                 adType,
                                 preEcpm, AppConst.IAPP_SCENE
                             )
-                            clickNum = showNum
+                            clickNum= showNum
                         }
                     }
 

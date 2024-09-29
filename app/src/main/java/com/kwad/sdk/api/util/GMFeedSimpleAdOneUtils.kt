@@ -13,10 +13,10 @@ import com.bytedance.sdk.openadsdk.*
 import com.bytedance.sdk.openadsdk.mediation.MediationConstant
 import com.bytedance.sdk.openadsdk.mediation.ad.MediationAdSlot
 import com.bytedance.sdk.openadsdk.mediation.ad.MediationExpressRenderListener
-import com.google.android.gms.ads.formats.NativeAdOptions
 import com.pet.translator.AppConst
 import com.pet.translator.utils.dj.GetHttpDataUtil
 import com.pet.translator.utils.dj.GetHttpDataUtil.reportAdReport
+import com.google.android.gms.ads.formats.NativeAdOptions
 import com.pet.translator.utils.lzy.ScreenUtils
 import com.qq.e.ads.cfg.DownAPPConfirmPolicy
 import com.qq.e.ads.cfg.VideoOption
@@ -63,7 +63,7 @@ object GMFeedSimpleAdOneUtils {
             .setCodeId(mAdUnitId)
 //            .setImageAcceptedSize(DisplayUtil.getWindowWidth(mContext)-60,0) ////自渲染使用尺寸单位px
 //            .setImageAcceptedSize(UISimpleUtils.getScreenWidthInPx(mContext), UISimpleUtils.dp2px(mContext, 340F)) // 单位px
-            .setImageAcceptedSize(UISimpleUtils.getScreenWidthInPx(mContext) -90,0) // 单位px
+            .setImageAcceptedSize(UISimpleUtils.getScreenWidthInPx(mContext)-90,0) // 单位px
 //                .setExpressViewAcceptedSize(2000f,3000f)//模板使用尺寸单位dp
             .setAdCount(1)
             .setUserID("1234")
@@ -145,7 +145,6 @@ object GMFeedSimpleAdOneUtils {
             "0"
         )
     }
-
     fun initPreloading(dip:Int){
         if (!AppConst.is_show_ad && AppConst.CHANNEL != "BAIDU") {
             return
@@ -293,7 +292,7 @@ object GMFeedSimpleAdOneUtils {
 
                     override fun onAdClick() {
                         Log.i(AppConst.TAG, "onAdClick")
-                        if (clickNum != showNum) {
+                        if (clickNum!= showNum) {
                             GetHttpDataUtil.reportAdReport(
                                 AppConst.REPORT_TYPE_CLICK,
                                 adNetworkPlatformName,
@@ -305,7 +304,7 @@ object GMFeedSimpleAdOneUtils {
                                 "0",
                                 "0"
                             )
-                            clickNum = showNum
+                            clickNum= showNum
                         }
                     }
 

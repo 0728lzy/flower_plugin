@@ -186,7 +186,7 @@ object GMCPAdUtils {
 
                     override fun onAdVideoBarClick() {
                         Log.e(AppConst.TAG, "InterstitialFullActivity CpN1 onAdVideoBarClick");
-                        if (clickNum != showNum) {
+                        if (clickNum!= showNum) {
                             GetHttpDataUtil.reportAdReport(
                                 AppConst.REPORT_TYPE_CLICK,
                                 adNetworkPlatformName,
@@ -195,7 +195,7 @@ object GMCPAdUtils {
                                 adType,
                                 preEcpm, AppConst.IAPP_SCENE
                             )
-                            clickNum = showNum
+                            clickNum= showNum
                         }
                     }
 
