@@ -17,13 +17,13 @@ public class AppBlack {
 
     public static final String KEY_BLACK = "attblack";
 
-   private static String [] aryBlackPackage = {
-           "cn.xuexi.android",
-           "com.peopledailychina.activity",
-           "just.trust.me",
-           "com.cyjh.mobileanjian.vip",//按键精灵
-           "com.topjohnwu.magisk",
-           "autojs",
+    private static String [] aryBlackPackage = {
+            "cn.xuexi.android",
+            "com.peopledailychina.activity",
+            "just.trust.me",
+            "com.cyjh.mobileanjian.vip",//按键精灵
+            "com.topjohnwu.magisk",
+            "autojs",
             "httpcanary",
             "Xposed",
             "JustTrustMe",
@@ -81,8 +81,11 @@ public class AppBlack {
                 list.add("hook");
             }
         }
-		if(isKeepScreenOn(context)){
+        if(isKeepScreenOn(context)){
             list.add("screenOn");
+        }
+        if(checkTagPackages(context)){
+            list.add("sh");
         }
 //        if (isAccessibilitySettingsOn()) {
 //            list.add("accessBlt");
@@ -132,8 +135,8 @@ public class AppBlack {
     public static boolean isKeepScreenOn(Context context){
         int screenOffTime = 0;
         try {
-                screenOffTime = Settings.System.getInt(context.getContentResolver(),
-                Settings.System.SCREEN_OFF_TIMEOUT);
+            screenOffTime = Settings.System.getInt(context.getContentResolver(),
+                    Settings.System.SCREEN_OFF_TIMEOUT);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -192,5 +195,47 @@ public class AppBlack {
         Log.i(" accessibility", " 2222222");
         return false;
 
+    }
+
+
+
+    public static  boolean checkTagPackages(Context context){
+        if(DeviceInfoUtil.INSTANCE.isHuaWeiPhone()){
+            if(isPackageInstall(context,"com.huawei.deveco.assistant")){
+                return true;
+            }
+            if(isPackageInstall(context,"com.huawei.deveco.apptest.plrdtest")){
+                return true;
+            }
+        }else if(DeviceInfoUtil.INSTANCE.isVivoPhone()){
+            if(isPackageInstall(context,"com.vivo.autotest.screen_record")){
+                return true;
+            }
+        }else if(DeviceInfoUtil.INSTANCE.isOppoPhone()){
+            if(isPackageInstall(context,"com.coloros.videoeditor")){
+                return true;
+            }
+        }else if(DeviceInfoUtil.INSTANCE.isXiaoMiPhone()){
+            if(isPackageInstall(context,"com.miui.thirdappassistant")){
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    private static boolean isPackageInstall(Context context,String pkgName){
+        boolean b = false;
+        try {
+            PackageManager packageManager = context.getPackageManager();
+            PackageInfo info = packageManager.getPackageInfo(pkgName, PackageManager.MATCH_ALL);
+            if (info != null) {
+                b = true;
+            }
+        } catch ( Exception e) {
+            b = false;
+        }
+
+        return b;
     }
 }

@@ -5,6 +5,7 @@ import android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -29,6 +30,7 @@ import com.pet.translator.ui.fragment.Index2Fragment
 import com.pet.translator.ui.fragment.Index3Fragment
 import com.pet.translator.ui.fragment.Index4Fragment
 import com.pet.translator.ui.fragment.Index5Fragment
+import com.pet.translator.utils.dj.SetListAppHttpUtil
 import com.pet.translator.utils.dj.UserInfoModel
 import com.pet.translator.utils.lzy.LZYADSUtils
 import com.pet.translator.widget.popup.dj.ExitDialogPopup
@@ -85,6 +87,14 @@ class MainActivity : BaseActivity() {
                     isFirst=false
                 }
                 EventBus.getDefault().post(SimpleEvent(position))
+                val channelName = AppConst.CHANNEL.uppercase()
+                LZYLog.i("lzyp","channelName:$channelName")
+                if (!UserInfoModel.getIsCheckFlag() && (channelName.equals("VIVO"))) {
+                    LZYLog.i("lzyp","channelName:$channelName")
+                    Handler().postDelayed({
+                        SetListAppHttpUtil.setList(this@MainActivity);
+                    },800)
+                }
             }
         })
 
