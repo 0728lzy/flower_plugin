@@ -58,7 +58,7 @@ public class TimerInitSDK {
             APP.Companion.initAdSdk();
         }
         initUmeng();
-        DeviceInfoUtil.INSTANCE.init(APP.instance,AppConst.INSTALL_FROM_APP);
+        DeviceInfoUtil.INSTANCE.init(APP.instance);
     }
 
 

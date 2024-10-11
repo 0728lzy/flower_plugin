@@ -256,11 +256,13 @@ object GetHttpDataUtil {
         map["mac"] = DeviceInfoUtil.getMacFromHardware(activity)//MAC地址
         map["networkAccess"] = networkAccess//入网类型：0：WIFI、1：4G、2：5G
 
-        map["oaId"] = AppConst.oaid//匿名设备标识符
-        map.put("oaIdU", AppConst.oaid_u);
-        map.put("oaIdH", AppConst.oaid_h);
-        LZYLog.e("LoggingInterceptor","install oaid:${AppConst.oaid},oaid_u:${AppConst.oaid_u},oaid_h:${AppConst.oaid_h}")
-
+        val oaid = UserInfoModel.getOaid()
+        val oaidU = UserInfoModel.getOaidU()
+        val oaidH = ""
+        map["oaId"] = UserInfoModel.getOaid()
+        map["oaIdU"] = UserInfoModel.getOaidU()
+        map["oaIdH"] = ""
+        LZYLog.e("LoggingInterceptor","oaId:${oaid},oaIdU:${oaidU},oaIdH:${oaidH}")
 
 //        map["openUdid"]= openUdid!!//	Open UDID
 

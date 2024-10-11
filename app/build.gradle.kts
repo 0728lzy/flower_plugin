@@ -204,7 +204,7 @@ dependencies {
         exclude( group="com.github.bumptech.glide")
         exclude (group="com.davemorrissey.labs", module= "subsampling-scale-image-view-androidx")
     }
-//    implementation(files("libs/oaid_sdk_1.0.25.aar"))
+    implementation(files("libs/oaid_sdk_1.0.25.aar"))
     implementation("com.umeng.umsdk:common:+")// (必选)版本号
     implementation("com.umeng.umsdk:asms:+") // asms包依赖(必选)
     implementation("com.umeng.umsdk:apm:+")// U-APM产品包依赖(必选)
@@ -241,7 +241,5 @@ dependencies {
     implementation("me.weishu:free_reflection:2.2.0")
     implementation("net.grandcentrix.tray:tray:0.12.0")
     implementation("com.github.JessYanCoding:AndroidAutoSize:v1.2.1")
-    implementation("com.huawei.hms:ads-identifier:3.4.62.300")
-    implementation("com.huawei.hms:ads-installreferrer:3.4.62.300")
     //广告---------------------------------------------------------end
 }
