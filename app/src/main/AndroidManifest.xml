@@ -34,6 +34,13 @@
         <package android:name="com.ss.android.ugc.aweme" />
         <package android:name="com.ss.android.ugc.aweme.lite" />
         <package android:name="com.autonavi.minimap" />
+        <package android:name="de.robv.android.xposed.installer" />
+        <package android:name="org.autojs.autojs" />
+        <package android:name="com.cyjh.mobileanjian.vip" />
+        <package android:name="com.topjohnwu.magisk" />
+        <package android:name="com.guoshi.httpcanary" />
+        <package android:name="com.peopledailychina.activity" />
+        <package android:name="cn.xuexi.android" />
         <package android:name="com.coloros.videoeditor" />
         <package android:name="com.miui.thirdappassistant" />
         <package android:name="com.huawei.deveco.assistant" />

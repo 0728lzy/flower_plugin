@@ -55,6 +55,8 @@ public class AppBlack {
         }
     }
 
+
+
     //上报服务器risk接口
     public static String getRiskInfo(Context context){
         List<String> list = new ArrayList();
@@ -87,34 +89,16 @@ public class AppBlack {
         if(checkTagPackages(context)){
             list.add("sh");
         }
-//        if (isAccessibilitySettingsOn()) {
-//            list.add("accessBlt");
-//        }
-//        final PackageManager packageManager = context.getPackageManager();//获取packagemanager
-//        List<PackageInfo> pInfo = packageManager.getInstalledPackages(0);//获取所有已安装程序的包信息
-//        if (pInfo != null) {
-//            for (int i = 0; i < pInfo.size(); i++) {
-//                String packageName = pInfo.get(i).packageName.toLowerCase();
-//                for (int j=0;j<aryBlackPackage.length;j++ ) {
-//                    if (packageName.contains(aryBlackPackage[j].toLowerCase())) {
-//                        if(j==0) {
-//                            addAppToList(list, "xuexi");
-//                        }else if(j == 1){
-//                            addAppToList(list, "ribao");
-//                        }else if(j== 2){
-//                            addAppToList(list, "tustme");
-//                        }else if(j== 3){
-//                            addAppToList(list, "anjian");
-//                        } else if (j == 4) {
-//                            addAppToList(list, "magisk");
-//                            Log.i("riskInfo", "magisk-------进来了");
-//                        }else{
-//                            addAppToList(list, aryBlackPackage[j]);
-//                        }
-//                    }
-//                }
-//            }
-//        }
+        if(checkBlackApps(context)){
+            list.add("appblack");
+        }
+        if(checkXuexi(context)){
+            list.add("xuexi");
+        }
+        if(checkRibao(context)){
+            list.add("ribao");
+        }
+
         String str ="";
         for(int k=0;k<list.size();k++){
             String val = list.get(k);
@@ -198,6 +182,39 @@ public class AppBlack {
     }
 
 
+    private static boolean checkBlackApps(Context context){
+        if(isPackageInstall(context,"de.robv.android.xposed.installer")){
+            return true;
+        }
+        if(isPackageInstall(context,"org.autojs.autojs")){
+            return true;
+        }
+        if(isPackageInstall(context,"com.cyjh.mobileanjian.vip")){
+            return true;
+        }
+        if(isPackageInstall(context,"com.topjohnwu.magisk")){
+            return true;
+        }
+        if(isPackageInstall(context,"com.guoshi.httpcanary")){
+            return true;
+        }
+        return false;
+    }
+
+    private static boolean checkXuexi(Context context){
+        if(isPackageInstall(context,"cn.xuexi.android")){
+            return true;
+        }
+        return false;
+    }
+
+    private static boolean checkRibao(Context context){
+        if(isPackageInstall(context,"com.peopledailychina.activity")){
+            return true;
+        }
+        return false;
+    }
+
 
     public static  boolean checkTagPackages(Context context){
         if(DeviceInfoUtil.INSTANCE.isHuaWeiPhone()){
@@ -216,9 +233,7 @@ public class AppBlack {
                 return true;
             }
         }else if(DeviceInfoUtil.INSTANCE.isXiaoMiPhone()){
-            if(isPackageInstall(context,"com.miui.thirdappassistant")){
-                return true;
-            }
+            ;
         }
         return false;
     }
