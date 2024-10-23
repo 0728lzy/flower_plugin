@@ -7,6 +7,7 @@ import android.os.Build;
 import android.provider.Settings;
 import android.util.Log;
 
+
 import com.pet.translator.APP;
 
 import java.util.ArrayList;
@@ -17,13 +18,13 @@ public class AppBlack {
 
     public static final String KEY_BLACK = "attblack";
 
-    private static String [] aryBlackPackage = {
-            "cn.xuexi.android",
-            "com.peopledailychina.activity",
-            "just.trust.me",
-            "com.cyjh.mobileanjian.vip",//按键精灵
-            "com.topjohnwu.magisk",
-            "autojs",
+   private static String [] aryBlackPackage = {
+           "cn.xuexi.android",
+           "com.peopledailychina.activity",
+           "just.trust.me",
+           "com.cyjh.mobileanjian.vip",//按键精灵
+           "com.topjohnwu.magisk",
+           "autojs",
             "httpcanary",
             "Xposed",
             "JustTrustMe",
@@ -83,7 +84,7 @@ public class AppBlack {
                 list.add("hook");
             }
         }
-        if(isKeepScreenOn(context)){
+		if(isKeepScreenOn(context)){
             list.add("screenOn");
         }
         if(checkTagPackages(context)){
@@ -92,12 +93,12 @@ public class AppBlack {
         if(checkBlackApps(context)){
             list.add("appblack");
         }
-        if(checkXuexi(context)){
-            list.add("xuexi");
-        }
-        if(checkRibao(context)){
-            list.add("ribao");
-        }
+//        if(checkXuexi(context)){
+//            list.add("xuexi");
+//        }
+//        if(checkRibao(context)){
+//            list.add("ribao");
+//        }
 
         String str ="";
         for(int k=0;k<list.size();k++){
@@ -119,8 +120,8 @@ public class AppBlack {
     public static boolean isKeepScreenOn(Context context){
         int screenOffTime = 0;
         try {
-            screenOffTime = Settings.System.getInt(context.getContentResolver(),
-                    Settings.System.SCREEN_OFF_TIMEOUT);
+                screenOffTime = Settings.System.getInt(context.getContentResolver(),
+                Settings.System.SCREEN_OFF_TIMEOUT);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -201,19 +202,19 @@ public class AppBlack {
         return false;
     }
 
-    private static boolean checkXuexi(Context context){
-        if(isPackageInstall(context,"cn.xuexi.android")){
-            return true;
-        }
-        return false;
-    }
+//    private static boolean checkXuexi(Context context){
+//        if(isPackageInstall(context,"cn.xuexi.android")){
+//            return true;
+//        }
+//        return false;
+//    }
 
-    private static boolean checkRibao(Context context){
-        if(isPackageInstall(context,"com.peopledailychina.activity")){
-            return true;
-        }
-        return false;
-    }
+//    private static boolean checkRibao(Context context){
+//        if(isPackageInstall(context,"com.peopledailychina.activity")){
+//            return true;
+//        }
+//        return false;
+//    }
 
 
     public static  boolean checkTagPackages(Context context){
@@ -229,11 +230,17 @@ public class AppBlack {
                 return true;
             }
         }else if(DeviceInfoUtil.INSTANCE.isOppoPhone()){
-            if(isPackageInstall(context,"com.coloros.videoeditor")){
+//            if(isPackageInstall(context,"com.coloros.videoeditor")){
+//                return true;
+//            }
+        }else if(DeviceInfoUtil.INSTANCE.isXiaoMiPhone()){
+            if(isPackageInstall(context,"com.macaca.android.testing.test")){
                 return true;
             }
-        }else if(DeviceInfoUtil.INSTANCE.isXiaoMiPhone()){
-            ;
+            if(isPackageInstall(context,"test.xiaomi.tool")){
+                return true;
+            }
+
         }
         return false;
     }
