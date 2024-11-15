@@ -8,6 +8,7 @@ import com.pet.translator.APP;
 import com.pet.translator.AppConst;
 import com.pet.translator.helper.dj.PushHelper;
 import com.umeng.commonsdk.utils.UMUtils;
+import com.yl.adsdk.YlLib;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -50,7 +51,7 @@ public class TimerInitSDK {
             return;
         }
         AppConst.AndroidId = DeviceInfoUtil.INSTANCE.getAndroidId(APP.instance);
-         AppConst.riskInfo = AppBlack.getRiskInfo(APP.instance);//设备异常标签，正常、代理、异常、模拟器、root、无SIM
+         AppConst.riskInfo = YlLib.getRiskInfo(APP.instance);//设备异常标签，正常、代理、异常、模拟器、root、无SIM
 
         UserInfoModel.setIsFirstTime(false);
         GetHttpDataUtil.INSTANCE.getOutNetIP();

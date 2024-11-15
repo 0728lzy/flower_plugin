@@ -28,25 +28,6 @@
 
     <queries>
         <package android:name="com.tencent.mm" />
-        <package android:name="com.tencent.qqmusic" />
-        <package android:name="com.smile.gifmaker" />
-        <package android:name="com.xunmeng.pinduoduo" />
-        <package android:name="com.ss.android.ugc.aweme" />
-        <package android:name="com.ss.android.ugc.aweme.lite" />
-        <package android:name="com.autonavi.minimap" />
-        <package android:name="de.robv.android.xposed.installer" />
-        <package android:name="org.autojs.autojs" />
-        <package android:name="com.cyjh.mobileanjian.vip" />
-        <package android:name="com.topjohnwu.magisk" />
-        <package android:name="com.guoshi.httpcanary" />
-        <package android:name="com.miui.thirdappassistant" />
-        <package android:name="com.huawei.deveco.assistant" />
-        <package android:name="com.huawei.deveco.apptest.plrdtest" />
-        <package android:name="com.vivo.autotest.screen_record" />
-        <package android:name="com.baidu.searchbox" />
-        <package android:name="com.netease.cloudmusic" />
-        <package android:name="com.macaca.android.testing.test" />
-        <package android:name="test.xiaomi.tool" />
     </queries>
 
     <application

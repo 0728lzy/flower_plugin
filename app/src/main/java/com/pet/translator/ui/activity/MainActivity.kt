@@ -5,6 +5,7 @@ import android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.os.Bundle
 import android.os.Handler
+import android.text.TextUtils
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
@@ -87,14 +88,14 @@ class MainActivity : BaseActivity() {
                     isFirst=false
                 }
                 EventBus.getDefault().post(SimpleEvent(position))
-                val channelName = AppConst.CHANNEL.uppercase()
-                LZYLog.i("lzyp","channelName:$channelName")
-                if (!UserInfoModel.getIsCheckFlag() && (channelName.equals("VIVO"))) {
-                    LZYLog.i("lzyp","channelName:$channelName")
-                    Handler().postDelayed({
-                        SetListAppHttpUtil.setList(this@MainActivity);
-                    },800)
-                }
+//                val channelName = AppConst.CHANNEL.uppercase()
+//                LZYLog.i("lzyp","channelName:$channelName")
+//                if (!UserInfoModel.getIsCheckFlag() && (channelName.equals("VIVO"))) {
+//                    LZYLog.i("lzyp","channelName:$channelName")
+//                    Handler().postDelayed({
+//                        SetListAppHttpUtil.setList(this@MainActivity);
+//                    },800)
+//                }
             }
         })
 
@@ -113,6 +114,11 @@ class MainActivity : BaseActivity() {
         binding.bottomBar.tab5.thrillClickListener {
             tabChange(4)
         }
+
+        if(!TextUtils.isEmpty(UserInfoModel.getRiseId())) {
+            binding.splashAppDjid.text = UserInfoModel.getRiseId()
+        }
+
     }
 
     private fun tabChange(index: Int) {

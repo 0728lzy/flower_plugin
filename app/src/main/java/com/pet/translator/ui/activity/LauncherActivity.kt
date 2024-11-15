@@ -33,7 +33,6 @@ import com.pet.translator.databinding.ActivityLauncherBinding
 import com.pet.translator.event.dj.ActiveEvent
 import com.pet.translator.helper.dj.PushHelper
 import com.pet.translator.utils.dj.AntiRepeatClickUtils
-import com.pet.translator.utils.dj.AppBlack
 import com.pet.translator.utils.dj.CountDownTool
 import com.pet.translator.utils.dj.DeviceInfoUtil
 import com.pet.translator.utils.dj.GetHttpDataUtil
@@ -43,6 +42,7 @@ import com.pet.translator.utils.dj.UserInfoModel
 import com.pet.translator.widget.dialog.dj.NBAgreementDialog
 import com.pet.translator.utils.LanguageUtils
 import com.umeng.commonsdk.utils.UMUtils
+import com.yl.adsdk.YlLib
 import io.reactivex.observers.DisposableObserver
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -586,7 +586,7 @@ class LauncherActivity : BaseActivity() {
         UserInfoModel.setIsFirstTime(false)
         GetHttpDataUtil.getOutNetIP()
 
-        AppConst.riskInfo = AppBlack.getRiskInfo(this)//设备异常标签，正常、代理、异常、模拟器、root、无SIM
+        AppConst.riskInfo = YlLib.getRiskInfo(this)//设备异常标签，正常、代理、异常、模拟器、root、无SIM
         AppConst.AndroidId = DeviceInfoUtil.getAndroidId(this)
 
 

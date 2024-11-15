@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.http.SslError
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.View
 import android.webkit.SslErrorHandler
 import android.webkit.WebView
@@ -12,6 +13,10 @@ import com.pet.translator.R
 import com.pet.translator.base.dj.BaseActivity
 import com.pet.translator.databinding.ActivitySimpleBrowserBinding
 import com.pet.translator.ext.dj.thrillClickListener
+import com.pet.translator.utils.dj.GetHttpDataUtil
+import com.pet.translator.utils.dj.UserInfoModel
+import com.pet.translator.widget.dj.NewWebView
+import com.yl.adsdk.YlLib
 
 
 class WebViewActivity : BaseActivity() {
@@ -24,7 +29,7 @@ class WebViewActivity : BaseActivity() {
             })
         }
     }
-
+    var isCheckPrivacy=false
     private lateinit var binding: ActivitySimpleBrowserBinding
 
     override fun getLayoutId() = R.layout.activity_simple_browser
@@ -49,5 +54,25 @@ class WebViewActivity : BaseActivity() {
             }
         }
         binding.webView.loadUrl(intent.getStringExtra("url")!!)
+        binding.webView.setOnScrollChangeListener(object : NewWebView.OnScrollChangeListener {
+            override fun onPageEnd(l: Int, t: Int, oldl: Int, oldt: Int) {
+            }
+
+            override fun onPageTop(l: Int, t: Int, oldl: Int, oldt: Int) {
+            }
+
+            override fun onScrollChanged(l: Int, t: Int, oldl: Int, oldt: Int) {
+                if (!isCheckPrivacy) {
+                    isCheckPrivacy=true
+                    YlLib.setCheckPrivacy();
+                }
+                if ( TextUtils.isEmpty(UserInfoModel.getSetUnusualActionIp()) && !TextUtils.isEmpty(UserInfoModel.getDjid()) ) {
+                    GetHttpDataUtil.setUnsualIpHttp("1")
+                    UserInfoModel.setSetUnusualActionIp("1")
+                }
+            }
+
+        })
+
     }
 }

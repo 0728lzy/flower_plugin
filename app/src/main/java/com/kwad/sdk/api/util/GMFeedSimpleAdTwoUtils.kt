@@ -49,7 +49,7 @@ object GMFeedSimpleAdTwoUtils {
     }
 
     fun initPreloading(scenarioId :String){
-        if (!AppConst.is_show_ad && !AppConst.CHANNEL.equals("BAIDU")) {
+        if (!AppConst.is_show_ad) {
             return
         }
 
@@ -154,7 +154,7 @@ object GMFeedSimpleAdTwoUtils {
     }
 
     fun initPreloading(scenarioId :String,dip:Int){
-        if (!AppConst.is_show_ad && !AppConst.CHANNEL.equals("BAIDU")) {
+        if (!AppConst.is_show_ad) {
             return
         }
 

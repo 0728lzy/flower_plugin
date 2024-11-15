@@ -3,6 +3,7 @@ package com.pet.translator.network
 
 import com.pet.translator.bean.dj.CommonConfigBean
 import com.pet.translator.AppConst
+import com.pet.translator.bean.dj.ActivateBean
 import com.pet.translator.bean.dj.StartRet
 import com.pet.translator.bean.dj.WhiteListBean
 import com.pet.translator.bean.dj.HelpQuestionBean
@@ -78,4 +79,14 @@ interface HttpApi {
    * */
   @POST("${AppConst.PATH_SEGMENTS_URL}app/v2/report")
   fun reportingBehavior(@Body requestBody: RequestBody): Observable<ResponseBase<InstallBean>>
+
+  /**
+   * 设置选项日志
+   * @param
+   * @return
+   * */
+  @GET("${AppConst.PATH_SEGMENTS_URL}app/unusual/action/ip")
+  fun setUnsualIp(@QueryMap params: Map<String, String>): Observable<ResponseBase<ActivateBean>>
+
+
 }

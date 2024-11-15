@@ -8,6 +8,7 @@ import com.google.gson.Gson
 import com.pet.translator.APP
 import com.pet.translator.AppConst
 import com.pet.translator.R
+import com.pet.translator.bean.dj.ActivateBean
 import com.pet.translator.bean.dj.StartRet
 import com.pet.translator.bean.dj.WhiteListBean
 import com.pet.translator.bean.dj.HelpQuestionBean
@@ -771,6 +772,42 @@ object GetHttpDataUtil {
                 override fun onNext(t: ResponseBase<OpenMemberBean>) {
                     super.onNext(t)
 //                    LZYLog.e("tttt","上传应用列表返回："+Gson().toJson(t))
+                    if (t.code == 200) {
+
+                    }
+                }
+
+                override fun onError(e: Throwable) {
+                    super.onError(e)
+                }
+
+                override fun onSubscribe(d: Disposable) {
+
+                }
+
+                override fun onComplete() {
+
+                }
+            })
+    }
+
+
+    fun setUnsualIpHttp(type: String) {
+        val startRet = getStartRet()
+        var map = HashMap<String, String>()
+        if (null == startRet.appId) {
+            return
+        }
+        var appId = startRet.appId.toString()
+        map["appId"] = appId
+        map["djId"] = UserInfoModel.getDjid()
+        map["type"] = type//行为类型，0：设置壁纸、1：激活任务管理器
+        map["appVersion"] = DeviceUtils.getVersionName(APP.instance)
+        XtmHttp.toSubscribe(
+            RetrofitFactory.instance.httpApi?.setUnsualIp(map)!!,
+            object : XtmObserver<ActivateBean>() {
+                override fun onNext(t: ResponseBase<ActivateBean>) {
+                    super.onNext(t)
                     if (t.code == 200) {
 
                     }

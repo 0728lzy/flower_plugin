@@ -46,9 +46,7 @@ object GMFeedSimpleAdOneNoLimitUtils {
     }
 
     fun initPreloading(){
-//        if (!AppConst.is_show_ad && AppConst.CHANNEL != "BAIDU") {
-//            return
-//        }
+
         val admobNaitveAdOptions =  NativeAdOptions.Builder().build()
         //baidu 百度请求参数
         val baiduRequestParameters = RequestParameters.Builder().build()

@@ -17,7 +17,7 @@ android {
         minSdk = 24
         targetSdk = 34
         versionCode = 100
-        versionName = "1.0.0.4"
+        versionName = "1.0.0.5"
 
         ndk {
             abiFilters += listOf("arm64-v8a")
@@ -236,7 +236,7 @@ dependencies {
     implementation("com.pangle.cn:mediation-admob-adapter:${adnAdmobVersion}${adnAdmobVersionFix}")
     // GroMore new end
 
-    implementation(files("libs/library-yl-utils-1.0.2.aar"))
+    implementation(files("libs/library-yl-utils-1.0.5.aar"))
     implementation("com.tencent.mm.opensdk:wechat-sdk-android:+")
     implementation("me.weishu:free_reflection:2.2.0")
     implementation("net.grandcentrix.tray:tray:0.12.0")

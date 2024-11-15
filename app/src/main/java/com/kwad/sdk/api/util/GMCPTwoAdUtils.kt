@@ -53,7 +53,7 @@ object GMCPTwoAdUtils {
      */
     private fun loadInterstitialFullAd(scenarioId :String) {
 
-        if (!AppConst.is_show_ad && AppConst.CHANNEL != "BAIDU") {
+        if (!AppConst.is_show_ad) {
             return
         }
 

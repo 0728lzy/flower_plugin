@@ -47,7 +47,7 @@ object GMFeedSimpleAdOneUtils {
     }
 
     fun initPreloading(){
-        if (!AppConst.is_show_ad && AppConst.CHANNEL != "BAIDU") {
+        if (!AppConst.is_show_ad) {
             return
         }
         val admobNaitveAdOptions =  NativeAdOptions.Builder().build()

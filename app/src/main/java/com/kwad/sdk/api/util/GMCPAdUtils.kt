@@ -54,7 +54,7 @@ object GMCPAdUtils {
      * 加载插全屏广告
      */
     private fun loadInterstitialFullAd(scenarioId :String) {
-        if (!AppConst.is_show_ad && AppConst.CHANNEL != "BAIDU") {
+        if (!AppConst.is_show_ad) {
             return
         }
         val adNativeLoader =
