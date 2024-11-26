@@ -212,15 +212,15 @@ object GMSPTwoAdUtils {
             })
             Log.i(AppConst.TAG, "onAdTimeOver")
             mSplashContainer.removeAllViews()
-            Handler().postDelayed({
-                try {
+            try {
+                Handler().postDelayed({
                     it.splashView?.let { splashView ->
                         mSplashContainer.addView(splashView)
                     }
-                } catch (e: Exception) {
+                }, 100)
+            } catch (e: Exception) {
 
-                }
-            }, 100)
+            }
         }
     }
 }

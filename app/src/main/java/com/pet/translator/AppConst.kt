@@ -9,7 +9,7 @@ import com.pet.translator.entity.LanguageEntity
 object AppConst {
 
     //----------------------------模板常量（常修改）----------------------------start
-    const val CHANNEL = "BAIDU" //CSJ HUAWEI BAIDU OPPO
+    const val CHANNEL = "XIAOMI" //CSJ HUAWEI BAIDU OPPO
     const val DJ_APP_ID = "a92c610a98359d1894113456448f2234fd5bbe41fabce2b4e0ca74c5"
     const val UM_APP_ID = "66f79ecb61c3b13bde90b57a"
     const val TAG = "ad_log"
@@ -25,19 +25,19 @@ object AppConst {
     const val GMDDAd_TWO_ID = "890024541" //快报兜底开屏id 2
     const val GMRDAd_ID_IN = "103162317" //激励视频
     //用户协议和隐私政策
-//    const val APP_HOST = "武汉壮牛"  //建议每次修改协议时，同时修改这里的主体名，这样就可以保证出包主体不会错！
-//    const val URL_USER_AGREEMENT =
-//        "https://app.xiaodanzi.com/protocol/mould/agreement/405229ef-0ae0-4c50-868e-cc8a509b2d8f.html"//用户协议MK
-//    const val URL_PRIVACY_POLICY =
-//        "https://app.xiaodanzi.com/protocol/mould/privacy/e9f352b3-9ac3-4b25-8392-528d7c886453.html"//隐私政策 MK
-
-
-    //用户协议和隐私政策
-    const val APP_HOST = "百年"  //建议每次修改协议时，同时修改这里的主体名，这样就可以保证出包主体不会错！
+    const val APP_HOST = "武汉壮牛"  //建议每次修改协议时，同时修改这里的主体名，这样就可以保证出包主体不会错！
     const val URL_USER_AGREEMENT =
-        "https://app.xiaodanzi.com/protocol/mould/agreement/56af7928-9d64-4492-aa13-74fe40ce2e0a.html"//用户协议MK
+        "https://app.xiaodanzi.com/protocol/mould/agreement/405229ef-0ae0-4c50-868e-cc8a509b2d8f.html"//用户协议MK
     const val URL_PRIVACY_POLICY =
-        "https://app.xiaodanzi.com/protocol/mould/privacy/e9fa171a-8298-43cb-82a9-466c0abff216.html"//隐私政策 MK
+        "https://app.xiaodanzi.com/protocol/mould/privacy/e9f352b3-9ac3-4b25-8392-528d7c886453.html"//隐私政策 MK
+
+
+//    //用户协议和隐私政策
+//    const val APP_HOST = "百年"  //建议每次修改协议时，同时修改这里的主体名，这样就可以保证出包主体不会错！
+//    const val URL_USER_AGREEMENT =
+//        "https://app.xiaodanzi.com/protocol/mould/agreement/56af7928-9d64-4492-aa13-74fe40ce2e0a.html"//用户协议MK
+//    const val URL_PRIVACY_POLICY =
+//        "https://app.xiaodanzi.com/protocol/mould/privacy/e9fa171a-8298-43cb-82a9-466c0abff216.html"//隐私政策 MK
     //----------------------------模板常量（常修改）----------------------------end
 
 

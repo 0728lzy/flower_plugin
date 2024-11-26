@@ -734,14 +734,14 @@ object DeviceInfoUtil {
     }
     fun isOppoPhone():Boolean {
         val brand = Build.BRAND //手机厂商
-        if (TextUtils.equals(brand.lowercase(), "OPPO")) {
+        if (TextUtils.equals(brand.lowercase(), "oppo")) {
             return true
         }
         return false
     }
     fun isVivoPhone():Boolean {
         val brand = Build.BRAND //手机厂商
-        if (TextUtils.equals(brand.lowercase(), "VIVO")) {
+        if (TextUtils.equals(brand.lowercase(), "vivo")) {
             return true
         }
         return false
