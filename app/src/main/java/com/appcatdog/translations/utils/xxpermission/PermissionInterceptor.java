@@ -4,12 +4,19 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -66,23 +73,23 @@ public final class PermissionInterceptor implements OnPermissionInterceptor {
         ViewGroup decorView = (ViewGroup) activity.getWindow().getDecorView();
         int activityOrientation = activity.getResources().getConfiguration().orientation;
 
-        boolean showPopupWindow = activityOrientation == Configuration.ORIENTATION_PORTRAIT;
-        for (String permission : allPermissions) {
-            if (!XXPermissions.isSpecial(permission)) {
-                continue;
-            }
-            if (XXPermissions.isGranted(activity, permission)) {
-                continue;
-            }
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R &&
-                    TextUtils.equals(Permission.MANAGE_EXTERNAL_STORAGE, permission)) {
-                continue;
-            }
-            // 如果申请的权限带有特殊权限，并且还没有授予的话
-            // 就不用 PopupWindow 对话框来显示，而是用 Dialog 来显示
-            showPopupWindow = false;
-            break;
-        }
+//        boolean showPopupWindow = activityOrientation == Configuration.ORIENTATION_PORTRAIT;
+//        for (String permission : allPermissions) {
+//            if (!XXPermissions.isSpecial(permission)) {
+//                continue;
+//            }
+//            if (XXPermissions.isGranted(activity, permission)) {
+//                continue;
+//            }
+//            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R &&
+//                    TextUtils.equals(Permission.MANAGE_EXTERNAL_STORAGE, permission)) {
+//                continue;
+//            }
+//            // 如果申请的权限带有特殊权限，并且还没有授予的话
+//            // 就不用 PopupWindow 对话框来显示，而是用 Dialog 来显示
+//            showPopupWindow = false;
+//            break;
+//        }
 
 
         String titleDes = "权限申请说明";
@@ -98,8 +105,39 @@ public final class PermissionInterceptor implements OnPermissionInterceptor {
                 .setCancelable(false)
                 .setPositiveButton(R.string.common_permission_granted, (dialog, which) -> {
                     dialog.dismiss();
-                    PermissionFragment.launch(activity, allPermissions,
-                            PermissionInterceptor.this, callback);
+                    boolean showPopupWindow = activityOrientation == Configuration.ORIENTATION_PORTRAIT;
+                    for (String permission : allPermissions) {
+                        if (!XXPermissions.isSpecial(permission)) {
+                            continue;
+                        }
+                        if (XXPermissions.isGranted(activity, permission)) {
+                            continue;
+                        }
+                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R &&
+                                TextUtils.equals(Permission.MANAGE_EXTERNAL_STORAGE, permission)) {
+                            continue;
+                        }
+                        // 如果申请的权限带有特殊权限，并且还没有授予的话
+                        // 就不用 PopupWindow 对话框来显示，而是用 Dialog 来显示
+                        showPopupWindow = false;
+                        break;
+                    }
+                    if (showPopupWindow) {
+                        PermissionFragment.launch(activity, allPermissions, this, callback);
+                        // 延迟 300 毫秒是为了避免出现 PopupWindow 显示然后立马消失的情况
+                        // 因为框架没有办法在还没有申请权限的情况下，去判断权限是否永久拒绝了，必须要在发起权限申请之后
+                        // 所以只能通过延迟显示 PopupWindow 来做这件事，如果 300 毫秒内权限申请没有结束，证明本次申请的权限没有永久拒绝
+                        HANDLER.postDelayed(() -> {
+                            if (!mRequestFlag) {
+                                return;
+                            }
+                            if (activity.isFinishing() ||
+                                    (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1 && activity.isDestroyed())) {
+                                return;
+                            }
+                            showPopupWindow(activity, decorView, mPermissionDescription);
+                        }, 300);
+                    }
                 })
                 .setNegativeButton(R.string.common_permission_denied, (dialog, which) -> {
                     dialog.dismiss();
@@ -109,29 +147,27 @@ public final class PermissionInterceptor implements OnPermissionInterceptor {
                     callback.onDenied(deniedPermissions, false);
                 })
                 .show();
-//        if (!AppConst.INSTANCE.is_show_ad()) {
-//            new AlertDialog.Builder(activity)
-//                    .setTitle(titleDes)
-//                    .setMessage(mPermissionDescription)
-//                    .setCancelable(false)
-//                    .setPositiveButton(R.string.common_permission_granted, (dialog, which) -> {
-//                        dialog.dismiss();
-//                        PermissionFragment.launch(activity, allPermissions,
-//                                PermissionInterceptor.this, callback);
-//                    })
-//                    .setNegativeButton(R.string.common_permission_denied, (dialog, which) -> {
-//                        dialog.dismiss();
-//                        if (callback == null) {
-//                            return;
-//                        }
-//                        callback.onDenied(deniedPermissions, false);
-//                    })
-//                    .show();
-//        }else {
-//            PermissionFragment.launch(activity, allPermissions,
-//                    PermissionInterceptor.this, callback);
-//        }
     }
+
+    private void showPopupWindow(Activity activity, ViewGroup decorView, String message) {
+        if (mPermissionPopup == null) {
+            View contentView = LayoutInflater.from(activity)
+                    .inflate(R.layout.permission_description_popup, decorView, false);
+            mPermissionPopup = new PopupWindow(activity);
+            mPermissionPopup.setContentView(contentView);
+            mPermissionPopup.setWidth(WindowManager.LayoutParams.MATCH_PARENT);
+            mPermissionPopup.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
+            mPermissionPopup.setAnimationStyle(android.R.style.Animation_Dialog);
+            mPermissionPopup.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            mPermissionPopup.setTouchable(true);
+            mPermissionPopup.setOutsideTouchable(true);
+        }
+        TextView messageView = mPermissionPopup.getContentView().findViewById(R.id.tv_permission_description_message);
+        messageView.setText(message);
+        // 注意：这里的 PopupWindow 只是示例，没有监听 Activity onDestroy 来处理 PopupWindow 生命周期
+        mPermissionPopup.showAtLocation(decorView, Gravity.TOP, 0, 0);
+    }
+
 
     @Override
     public void grantedPermissionRequest(@NonNull Activity activity, @NonNull List<String> allPermissions,
