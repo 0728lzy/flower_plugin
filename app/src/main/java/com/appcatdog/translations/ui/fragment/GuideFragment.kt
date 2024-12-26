@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.appcatdog.translations.R
 import com.appcatdog.translations.ext.thrillClickListener
-import com.appcatdog.translations.ui.activity.GuideActivity
+import com.appcatdog.translations.ui.activity.WNCDGuideActivity
 
 class GuideFragment(val index: Int) : Fragment() {
 
@@ -26,7 +26,7 @@ class GuideFragment(val index: Int) : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         view.findViewById<TextView>(R.id.tv_start).thrillClickListener {
-            (requireActivity() as? GuideActivity)?.next()
+            (requireActivity() as? WNCDGuideActivity)?.next()
         }
     }
 

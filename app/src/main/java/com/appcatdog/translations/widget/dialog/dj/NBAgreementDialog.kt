@@ -12,7 +12,7 @@ import com.appcatdog.translations.R
 import com.appcatdog.translations.base.dj.BaseDialog
 import com.appcatdog.translations.databinding.DialogAgreementBinding
 import com.appcatdog.translations.ext.dj.thrillClickListener
-import com.appcatdog.translations.ui.activity.WebViewActivity
+import com.appcatdog.translations.ui.activity.WNCDWebViewActivity
 import com.appcatdog.translations.utils.dj.SharedPreferencesDelegate
 
 
@@ -120,7 +120,7 @@ class NBAgreementDialog(val activity: Activity) : BaseDialog() {
         override fun onClick(view: View) {
             when (spanType) {
                 SPAN_TYPE_USER_SERVICE_AGREEMENT -> {
-                    WebViewActivity.forward(
+                    WNCDWebViewActivity.forward(
                         context,
                         AppConst.URL_USER_AGREEMENT,
                         context.getString(R.string.user_agreement)
@@ -128,7 +128,7 @@ class NBAgreementDialog(val activity: Activity) : BaseDialog() {
                 }
 
                 SPAN_TYPE_PRIVACY_POLICY_AGREEMENT -> {
-                    WebViewActivity.forward(
+                    WNCDWebViewActivity.forward(
                         context,
                         AppConst.URL_PRIVACY_POLICY,
                         context.getString(R.string.privacy_policy)

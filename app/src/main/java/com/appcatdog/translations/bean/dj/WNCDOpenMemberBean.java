@@ -3,7 +3,7 @@ package com.appcatdog.translations.bean.dj;
 import java.io.Serializable;
 
 //开通会员
-public class OpenMemberBean implements Serializable {
+public class WNCDOpenMemberBean implements Serializable {
 
     private int id;  //商品原价
     private int type;  //商品类型，0：普通商品、1：续费商品、2：试用产品
@@ -13,14 +13,14 @@ public class OpenMemberBean implements Serializable {
     private String description;//商品描述
     private boolean isSelected;
 
-    private OpenMemberBean renewGoodsVO;
+    private WNCDOpenMemberBean renewGoodsVO;
 
 
-    public OpenMemberBean getRenewGoodsVO() {
+    public WNCDOpenMemberBean getRenewGoodsVO() {
         return renewGoodsVO;
     }
 
-    public void setRenewGoodsVO(OpenMemberBean renewGoodsVO) {
+    public void setRenewGoodsVO(WNCDOpenMemberBean renewGoodsVO) {
         this.renewGoodsVO = renewGoodsVO;
     }
 

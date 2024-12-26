@@ -14,11 +14,11 @@ import com.appcatdog.translations.databinding.ItemLanguageBinding
 import com.appcatdog.translations.entity.LanguageEntity
 import com.appcatdog.translations.utils.LanguageUtils
 
-class LanguageActivity : BaseActivity() {
+class WNCDLanguageActivity : BaseActivity() {
 
     companion object {
         fun forward(context: Context, isFirst: Boolean) {
-            context.startActivity(Intent(context, LanguageActivity::class.java).apply {
+            context.startActivity(Intent(context, WNCDLanguageActivity::class.java).apply {
                 putExtra("isFirst", isFirst)
             })
         }
@@ -48,9 +48,9 @@ class LanguageActivity : BaseActivity() {
         binding.rclLanguage.bindingAdapter.models = com.appcatdog.translations.AppConst.languageList
         LanguageUtils.setIndex(0)
         if (isFirst) {
-            GuideActivity.forward(this)
+            WNCDGuideActivity.forward(this)
         } else {
-            MainActivity.forward(this)
+            WNCDMainActivity.forward(this)
         }
         finish()
     }

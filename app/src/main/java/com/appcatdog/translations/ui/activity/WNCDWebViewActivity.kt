@@ -19,11 +19,11 @@ import com.appcatdog.translations.widget.dj.NewWebView
 import com.yl.adsdk.YlLib
 
 
-class WebViewActivity : BaseActivity() {
+class WNCDWebViewActivity : BaseActivity() {
     companion object {
 
         fun forward(context: Context, title: String, url: String) {
-            context.startActivity(Intent(context, WebViewActivity::class.java).apply {
+            context.startActivity(Intent(context, WNCDWebViewActivity::class.java).apply {
                 putExtra("url", url)
                 putExtra("title", title)
             })

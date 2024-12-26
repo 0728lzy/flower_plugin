@@ -18,11 +18,11 @@ import java.math.BigDecimal
 import java.math.RoundingMode
 
 
-class VideoActivity : BaseActivity() {
+class WNCDVideoActivity : BaseActivity() {
 
     companion object {
         fun show(context: Context, index: Int) {
-            context.startActivity(Intent(context, VideoActivity::class.java).apply {
+            context.startActivity(Intent(context, WNCDVideoActivity::class.java).apply {
                 putExtra("index", index)
             })
         }
@@ -200,7 +200,7 @@ class VideoActivity : BaseActivity() {
     private fun goCall() {
         stopTime()
         reset()
-        CallActivity.show(this, index)
+        WNCDCallActivity.show(this, index)
     }
 
 }

@@ -5,7 +5,7 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import com.appcatdog.translations.R
-import com.appcatdog.translations.ui.activity.MainActivity
+import com.appcatdog.translations.ui.activity.WNCDMainActivity
 import com.appcatdog.translations.utils.lzy.LZYADSUtils
 
 import com.lxj.xpopup.core.CenterPopupView
@@ -47,7 +47,7 @@ class ExitDialogPopup(context: Context) : CenterPopupView(context){
 
     override fun onShow() {
         super.onShow()
-        LZYADSUtils("ExitDialog",context as MainActivity).loadSimpleAd2(feed_container_exit_dialog,260)
+        LZYADSUtils("ExitDialog",context as WNCDMainActivity).loadSimpleAd2(feed_container_exit_dialog,260)
     }
 
     override fun onDismiss() {

@@ -1,7 +1,7 @@
 package com.appcatdog.translations.network
 
 import android.util.Log
-import com.appcatdog.translations.bean.dj.ResponseBase
+import com.appcatdog.translations.bean.dj.WNCDResponseBase
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
 
@@ -12,7 +12,7 @@ import io.reactivex.disposables.Disposable
  * Description:观察者，传入泛型即可
  */
 abstract class XtmObserver<T>(
-) : Observer<ResponseBase<T>> {
+) : Observer<WNCDResponseBase<T>> {
 
     override fun onError(e: Throwable) {
         e?.printStackTrace()
@@ -20,7 +20,7 @@ abstract class XtmObserver<T>(
     }
 
 
-    override fun onNext(t: ResponseBase<T>) {
+    override fun onNext(t: WNCDResponseBase<T>) {
         Log.i("confiInit", "Response=${t.code}")
 
     }

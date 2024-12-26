@@ -1,6 +1,6 @@
 package com.appcatdog.translations.bean.dj;
 
-public class ActivateBean {
+public class WNCDActivateBean {
 
     private String source;
 

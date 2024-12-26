@@ -373,8 +373,8 @@ class LZYADSUtils(val tag: String,val activity: Activity?){
                     Log.e(TAG, " loadSimpleAdOne onError")
                 }
             })
+            WNCDAdFSOneUtils.initPreloading()
         }
-        WNCDAdFSOneUtils.initPreloading()
     }
 
     fun loadSimpleAd2(fragment: FrameLayout?) {
@@ -391,8 +391,8 @@ class LZYADSUtils(val tag: String,val activity: Activity?){
                     Log.e(TAG, " loadSimpleAdOne onError")
                 }
             })
+            WNCDAdFSTwoUtils.initPreloading("")
         }
-        WNCDAdFSTwoUtils.initPreloading("")
     }
     fun loadSimpleAd1(fragment: FrameLayout?,dip:Int) {
         if (activity != null && AppConst.is_show_ad) {
@@ -409,8 +409,8 @@ class LZYADSUtils(val tag: String,val activity: Activity?){
                     Log.e(TAG, " loadSimpleAdOne onError")
                 }
             })
+            WNCDAdFSOneUtils.initPreloading(dip)
         }
-        WNCDAdFSOneUtils.initPreloading(dip)
     }
 
     fun loadSimpleAd2(fragment: FrameLayout?,dip:Int) {
@@ -427,8 +427,8 @@ class LZYADSUtils(val tag: String,val activity: Activity?){
                     Log.e(TAG, " loadSimpleAdOne onError")
                 }
             })
+            WNCDAdFSTwoUtils.initPreloading("",dip)
         }
-        WNCDAdFSTwoUtils.initPreloading("",dip)
     }
     fun loadSimpleAdTurn(fragment: FrameLayout?,dip:Int){
         when(AppConst.adsInfoFlag){

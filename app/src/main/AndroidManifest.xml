@@ -70,7 +70,7 @@
             android:value="640" />
 
         <activity
-            android:name=".ui.activity.LauncherActivity"
+            android:name=".ui.activity.WNCDLauncherActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
@@ -85,28 +85,28 @@
         </activity>
 
         <activity
-            android:name=".ui.activity.LanguageActivity"
+            android:name=".ui.activity.WNCDLanguageActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".ui.activity.PermissionActivity"
+            android:name=".ui.activity.WNCDPermissionActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".ui.activity.GuideActivity"
+            android:name=".ui.activity.WNCDGuideActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".ui.activity.MainActivity"
+            android:name=".ui.activity.WNCDMainActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
@@ -114,44 +114,44 @@
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".ui.activity.DetailActivity"
+            android:name=".ui.activity.WNCDDetailActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".ui.activity.VideoActivity"
+            android:name=".ui.activity.WNCDVideoActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".ui.activity.SoundActivity"
+            android:name=".ui.activity.WNCDSoundActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".ui.activity.CallActivity"
+            android:name=".ui.activity.WNCDCallActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".ui.activity.WebViewActivity"
+            android:name=".ui.activity.WNCDWebViewActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.RBContactCustomerServiceActivity"
+            android:name=".ui.activity.WNCDContactCustomerServiceActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.activity.AboutActivity"
+        <activity android:name=".ui.activity.WNCDAboutActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait" />

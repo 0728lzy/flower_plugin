@@ -14,7 +14,7 @@ import com.appcatdog.translations.databinding.Item4Binding
 import com.appcatdog.translations.entity.Index4Entity
 import com.appcatdog.translations.ext.getBinding
 import com.appcatdog.translations.ext.thrillClickListener
-import com.appcatdog.translations.ui.activity.DetailActivity
+import com.appcatdog.translations.ui.activity.WNCDDetailActivity
 import com.appcatdog.translations.utils.lzy.LZYADSUtils
 import com.tbuonomo.viewpagerdotsindicator.setBackgroundCompat
 
@@ -65,7 +65,7 @@ class Index2Fragment : RootFragment(R.layout.fragment_index_4) {
                         if (type == 2) {
                             index += 5
                         }
-                        DetailActivity.show(requireContext(), index)
+                        WNCDDetailActivity.show(requireContext(), index)
                     }
                 }
             }

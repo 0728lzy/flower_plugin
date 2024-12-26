@@ -16,11 +16,11 @@ import com.appcatdog.translations.base.dj.BaseActivity
 import com.appcatdog.translations.databinding.ActivityGuideBinding
 import com.appcatdog.translations.ui.fragment.GuideFragment
 
-class GuideActivity : BaseActivity() {
+class WNCDGuideActivity : BaseActivity() {
 
     companion object {
         fun forward(context: Context) {
-            context.startActivity(Intent(context, GuideActivity::class.java))
+            context.startActivity(Intent(context, WNCDGuideActivity::class.java))
         }
     }
 
@@ -61,9 +61,9 @@ class GuideActivity : BaseActivity() {
             ) != PackageManager.PERMISSION_GRANTED
         ) {
             SPUtils.getInstance().put("first_permission", false)
-            PermissionActivity.forward(this)
+            WNCDPermissionActivity.forward(this)
         } else {
-            MainActivity.forward(this)
+            WNCDMainActivity.forward(this)
             finish()
         }
     }

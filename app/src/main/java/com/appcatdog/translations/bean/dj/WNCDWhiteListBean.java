@@ -1,6 +1,6 @@
 package com.appcatdog.translations.bean.dj;
 
-public class WhiteListBean {
+public class WNCDWhiteListBean {
 
     private String status;
 

@@ -26,7 +26,7 @@ import com.appcatdog.translations.csj.WNCDAdManagerHolder
 import com.appcatdog.translations.db.RoomHelper
 import com.appcatdog.translations.helper.dj.PushHelper
 import com.appcatdog.translations.net.GsonConverter
-import com.appcatdog.translations.ui.activity.LauncherActivity
+import com.appcatdog.translations.ui.activity.WNCDLauncherActivity
 import com.appcatdog.translations.utils.dj.CountdownTimeTask
 import com.appcatdog.translations.utils.dj.GetHttpDataUtil
 import com.appcatdog.translations.utils.dj.SPUtils
@@ -272,7 +272,7 @@ class APP : Application() {
             }
 
             override fun onActivityStarted(activity: Activity) {
-                if (AppConst.is_show_ad||activity is LauncherActivity) {
+                if (AppConst.is_show_ad||activity is WNCDLauncherActivity) {
                     Log.e(TAG, "onActivityStarted: ")
                     appount++
                     if (appount == 1 && !isBackground) {
@@ -281,7 +281,7 @@ class APP : Application() {
                         Log.e(TAG, "AppConst.isFront:${AppConst.isFront},isStarted:${isStarted}")
                         if (!AppConst.isFront && isStarted) {
                             AppConst.isStopped = true
-                            val intent = Intent(this@APP, LauncherActivity::class.java)
+                            val intent = Intent(this@APP, WNCDLauncherActivity::class.java)
                             intent.putExtra("position", 1)
                             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                             startActivity(intent)
@@ -304,7 +304,7 @@ class APP : Application() {
             }
 
             override fun onActivityStopped(activity: Activity) {
-                if (AppConst.is_show_ad||activity is LauncherActivity) {
+                if (AppConst.is_show_ad||activity is WNCDLauncherActivity) {
                     Log.e(TAG, "onActivityStopped: ")
                     appount--
                     if (appount === 0 && AppConst.isStopBoolen && AppConst.isSuspendedBoolen) {

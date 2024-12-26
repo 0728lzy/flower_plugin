@@ -14,7 +14,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.appcatdog.translations.bean.dj.CommonConfigBean
+import com.appcatdog.translations.bean.dj.WNCDCommonConfigBean
 
 import com.google.gson.Gson
 import com.gyf.immersionbar.ImmersionBar
@@ -24,7 +24,7 @@ import com.appcatdog.translations.adapter.dj.RBHelpQuestionAdapter
 import com.appcatdog.translations.adapter.dj.base.ItemClickListener
 import com.appcatdog.translations.adapter.dj.utils.GridRec
 import com.appcatdog.translations.base.dj.BaseActivity
-import com.appcatdog.translations.bean.dj.HelpQuestionBean
+import com.appcatdog.translations.bean.dj.WNCDHelpQuestionBean
 import com.appcatdog.translations.utils.dj.GetHttpDataUtil
 import com.appcatdog.translations.utils.dj.IntentUtil
 import com.lxj.xpopup.XPopup
@@ -32,12 +32,12 @@ import com.lxj.xpopup.impl.LoadingPopupView
 
 
 @SuppressLint("NonConstantResourceId")
-class RBContactCustomerServiceActivity : BaseActivity(){
+class WNCDContactCustomerServiceActivity : BaseActivity(){
 
 
 
 
-    private var questionList = ArrayList<HelpQuestionBean>()
+    private var questionList = ArrayList<WNCDHelpQuestionBean>()
     private var subErrorType = ""   //用于提交反馈类型
 
     private val mAdapter by lazy {
@@ -91,8 +91,8 @@ class RBContactCustomerServiceActivity : BaseActivity(){
 
         getIssuesList()
 
-        mAdapter.setItemClickListener(object : ItemClickListener<HelpQuestionBean> {
-            override fun click(position: Int, data: HelpQuestionBean) {
+        mAdapter.setItemClickListener(object : ItemClickListener<WNCDHelpQuestionBean> {
+            override fun click(position: Int, data: WNCDHelpQuestionBean) {
                 if(questionList?.size!! >0){
 
 
@@ -142,7 +142,7 @@ class RBContactCustomerServiceActivity : BaseActivity(){
 
     companion object {
         fun show(context: Context?) {
-            IntentUtil.redirect(context, RBContactCustomerServiceActivity::class.java, false, null)
+            IntentUtil.redirect(context, WNCDContactCustomerServiceActivity::class.java, false, null)
         }
     }
     private fun initActionBar(title: String) {
@@ -173,13 +173,13 @@ class RBContactCustomerServiceActivity : BaseActivity(){
     }
 
 
-    var commonConfigs = ArrayList<CommonConfigBean>()
+    var commonConfigs = ArrayList<WNCDCommonConfigBean>()
 
     //获取Vip通用配置
     fun getCommonConfig(){
         GetHttpDataUtil.getCommonConfig(object : GetHttpDataUtil.OnSuccessAndFaultListener{
             override fun onSuccess(t: Any) {
-                commonConfigs = t as ArrayList<CommonConfigBean>
+                commonConfigs = t as ArrayList<WNCDCommonConfigBean>
                 setData()
             }
 
@@ -198,7 +198,7 @@ class RBContactCustomerServiceActivity : BaseActivity(){
                 val gson = Gson()
                 questionList.clear()
 
-                questionList.addAll(t as ArrayList<HelpQuestionBean>)
+                questionList.addAll(t as ArrayList<WNCDHelpQuestionBean>)
 
 
 

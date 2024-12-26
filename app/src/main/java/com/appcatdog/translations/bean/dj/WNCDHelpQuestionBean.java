@@ -3,7 +3,7 @@ package com.appcatdog.translations.bean.dj;
 import java.io.Serializable;
 
 //开通会员
-public class HelpQuestionBean implements Serializable {
+public class WNCDHelpQuestionBean implements Serializable {
 
 
     private int id;

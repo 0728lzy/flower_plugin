@@ -35,11 +35,11 @@ import com.appcatdog.translations.utils.lzy.LZYADSUtils
 import com.appcatdog.translations.widget.popup.dj.ExitDialogPopup
 import org.greenrobot.eventbus.EventBus
 
-class MainActivity : BaseActivity() {
+class WNCDMainActivity : BaseActivity() {
 
     companion object {
         fun forward(context: BaseActivity) {
-            val intent = Intent(context, MainActivity::class.java)
+            val intent = Intent(context, WNCDMainActivity::class.java)
             intent.flags = FLAG_ACTIVITY_NEW_TASK or FLAG_ACTIVITY_CLEAR_TASK
             context.startActivity(intent)
             context.overridePendingTransition(0, 0)
@@ -64,10 +64,10 @@ class MainActivity : BaseActivity() {
         binding = ActivityMainBinding.bind(view)
         lzyadsUtils=LZYADSUtils("MainActivity",this)
         binding.ivAbout.thrillClickListener {
-            AboutActivity.forward(this@MainActivity)
+            WNCDAboutActivity.forward(this@WNCDMainActivity)
         }
 
-        binding.mainPager.adapter = object : FragmentStateAdapter(this@MainActivity) {
+        binding.mainPager.adapter = object : FragmentStateAdapter(this@WNCDMainActivity) {
 
             override fun getItemCount() = fragments.size
 
@@ -191,12 +191,12 @@ class MainActivity : BaseActivity() {
         if(!UserInfoModel.getIsCheckFlag() || AppConst.is_show_ad) {
             WNCDAdCPNoLimitUtils.init(this, object : WNCDAdCPNoLimitUtils.GirdMenuStateListener {
                 override fun onSuccess() {
-                    LZYLog.e(this@MainActivity, "first one cp onSuccess")
-                    WNCDAdCPNoLimitUtils.showInterstitialFullAd(this@MainActivity)
+                    LZYLog.e(this@WNCDMainActivity, "first one cp onSuccess")
+                    WNCDAdCPNoLimitUtils.showInterstitialFullAd(this@WNCDMainActivity)
                 }
 
                 override fun onError() {
-                    LZYLog.e(this@MainActivity, "first one cp onError")
+                    LZYLog.e(this@WNCDMainActivity, "first one cp onError")
 
                 }
 
@@ -204,7 +204,7 @@ class MainActivity : BaseActivity() {
 
                     if(AppConst.is_show_ad  && !AppConst.isWaked){
                         if(WNCDAdCPTwoUtils.isReady()) {
-                            WNCDAdCPTwoUtils.showInterstitialFullAd(this@MainActivity)
+                            WNCDAdCPTwoUtils.showInterstitialFullAd(this@WNCDMainActivity)
                         }
                     }
                 }
@@ -231,16 +231,16 @@ class MainActivity : BaseActivity() {
         AppConst.isWaked=false
         WNCDAdCPTwoUtils.init(this, object : WNCDAdCPTwoUtils.GirdMenuStateListener {
             override fun onSuccess() {
-                LZYLog.e(this@MainActivity, "first two cp onSuccess")
+                LZYLog.e(this@WNCDMainActivity, "first two cp onSuccess")
             }
 
             override fun onError() {
-                LZYLog.e(this@MainActivity, "first two cp onError")
+                LZYLog.e(this@WNCDMainActivity, "first two cp onError")
 
             }
 
             override fun showVideoClosed() {
-                LZYLog.e(this@MainActivity, "first one cp showVideoClosedisShowTwoAd")
+                LZYLog.e(this@WNCDMainActivity, "first one cp showVideoClosedisShowTwoAd")
 
 
             }

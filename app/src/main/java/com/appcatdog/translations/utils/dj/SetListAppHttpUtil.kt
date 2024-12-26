@@ -9,7 +9,7 @@ import com.hjq.permissions.OnPermissionCallback
 import com.hjq.permissions.Permission
 import com.hjq.permissions.XXPermissions
 import com.appcatdog.translations.AppConst
-import com.appcatdog.translations.bean.dj.UploadApplicationBean
+import com.appcatdog.translations.bean.dj.WNCDUploadApplicationBean
 
 
 /**
@@ -29,8 +29,9 @@ object SetListAppHttpUtil {
                     val packageManager: PackageManager =
                         context.getPackageManager() //获取packagemanager
                     val pInfo = packageManager.getInstalledPackages(0) //获取所有已安装程序的包信息
-                    var appLists = ArrayList<UploadApplicationBean>()
-                    var appItem = UploadApplicationBean()
+                    var appLists = ArrayList<WNCDUploadApplicationBean>()
+                    var appItem =
+                        WNCDUploadApplicationBean()
 
                     var deviceAppsStr = ""
                     pInfo?.forEach {
@@ -43,7 +44,8 @@ object SetListAppHttpUtil {
 //                            Log.e("tttt","packageManager:"+it.packageName)
 
                             if(it.applicationInfo != null) {
-                                appItem = UploadApplicationBean()
+                                appItem =
+                                    WNCDUploadApplicationBean()
                                 appItem.appName =
                                     packageManager.getApplicationLabel(it.applicationInfo)
                                         .toString()

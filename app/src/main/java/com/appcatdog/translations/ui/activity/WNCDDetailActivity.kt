@@ -12,11 +12,11 @@ import com.appcatdog.translations.ext.getBinding
 import com.appcatdog.translations.ext.thrillClickListener
 import com.appcatdog.translations.utils.lzy.LZYADSUtils
 
-class DetailActivity : BaseActivity() {
+class WNCDDetailActivity : BaseActivity() {
 
     companion object {
         fun show(context: Context, index: Int) {
-            context.startActivity(Intent(context, DetailActivity::class.java).apply { putExtra("index", index) })
+            context.startActivity(Intent(context, WNCDDetailActivity::class.java).apply { putExtra("index", index) })
         }
     }
 

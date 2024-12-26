@@ -22,11 +22,11 @@ import com.appcatdog.translations.utils.lzy.LZYADSUtils
 import java.math.BigDecimal
 import java.math.RoundingMode
 
-class SoundActivity : BaseActivity() {
+class WNCDSoundActivity : BaseActivity() {
 
     companion object {
         fun show(context: Context, isDog: Boolean, index: Int) {
-            context.startActivity(Intent(context, SoundActivity::class.java).apply {
+            context.startActivity(Intent(context, WNCDSoundActivity::class.java).apply {
                 putExtra("index", index)
                 putExtra("isDog", isDog)
             })
@@ -65,7 +65,7 @@ class SoundActivity : BaseActivity() {
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
         binding = ActivitySoundDetailBinding.bind(view)
-        lzyadsUtils=LZYADSUtils("SoundActivity",this@SoundActivity)
+        lzyadsUtils=LZYADSUtils("SoundActivity",this@WNCDSoundActivity)
         lzyadsUtils.showAdCpTurn()
         lzyadsUtils.loadSimpleAdTurn(binding.feedContainerActivitySound,-1)
         binding.toolbar.ivMenu.setImageResource(R.drawable.ic_arrow_back_24)

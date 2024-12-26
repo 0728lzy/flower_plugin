@@ -15,7 +15,7 @@ import com.appcatdog.translations.entity.Index1Entity
 import com.appcatdog.translations.event.SimpleEvent
 import com.appcatdog.translations.ext.getBinding
 import com.appcatdog.translations.ext.thrillClickListener
-import com.appcatdog.translations.ui.activity.SoundActivity
+import com.appcatdog.translations.ui.activity.WNCDSoundActivity
 import com.appcatdog.translations.utils.lzy.LZYADSUtils
 import com.appcatdog.translations.utils.lzy.LZYLog
 import com.tbuonomo.viewpagerdotsindicator.setBackgroundCompat
@@ -78,7 +78,7 @@ class Index1Fragment : RootFragment(R.layout.fragment_index_1) {
                     ivThumb.setImageResource(item.icon)
                     tvName.text = item.title
                     root.thrillClickListener {
-                        SoundActivity.show(requireContext(), type==1, modelPosition)
+                        WNCDSoundActivity.show(requireContext(), type==1, modelPosition)
                     }
                 }
             }

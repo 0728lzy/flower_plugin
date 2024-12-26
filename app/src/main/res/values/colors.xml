@@ -469,4 +469,6 @@
     <color name="nav_active_color">#0080ff</color> <!-- 天空蓝色 -->
     <color name="nav_dead_color">#D3D3D3</color> <!-- 浅灰色 -->
     <color name="purple">#8A2BE2</color>
+
+    <color name="demo_bg_color">#FFFBE6</color>
 </resources>

@@ -22,7 +22,7 @@ import java.util.Set;
 
 import com.appcatdog.translations.R;
 import com.appcatdog.translations.base.dj.RootActivity;
-import com.appcatdog.translations.ui.activity.MainActivity;
+import com.appcatdog.translations.ui.activity.WNCDMainActivity;
 
 public class OpenNotificationsUtil {
 
@@ -121,7 +121,7 @@ public class OpenNotificationsUtil {
             // category = Notification.CATEGORY_STATUS;
         }
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        Intent nfIntent = new Intent(context, MainActivity.class);
+        Intent nfIntent = new Intent(context, WNCDMainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, nfIntent, PendingIntent.FLAG_IMMUTABLE);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelId)
                 .setContentIntent(pendingIntent) // 设置PendingIntent

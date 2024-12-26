@@ -34,12 +34,12 @@ import java.util.TimerTask
 import java.util.concurrent.ExecutionException
 
 
-class CallActivity : BaseActivity() {
+class WNCDCallActivity : BaseActivity() {
 
 
     companion object {
         fun show(context: Context, index: Int) {
-            context.startActivity(Intent(context, CallActivity::class.java).apply {
+            context.startActivity(Intent(context, WNCDCallActivity::class.java).apply {
                 putExtra("index", index)
             })
         }
@@ -230,7 +230,7 @@ class CallActivity : BaseActivity() {
         player?.playWhenReady = true
         player?.repeatMode = SimpleExoPlayer.REPEAT_MODE_ONE
         binding.playerView.player = player
-        val dataSourceFactory = DataSource.Factory { AssetDataSource(this@CallActivity) }
+        val dataSourceFactory = DataSource.Factory { AssetDataSource(this@WNCDCallActivity) }
         val uri = Uri.parse(path)
         val videoSource = ProgressiveMediaSource.Factory(dataSourceFactory).createMediaSource(uri)
         // 播放

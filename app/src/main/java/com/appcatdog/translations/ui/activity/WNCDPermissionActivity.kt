@@ -14,11 +14,11 @@ import com.appcatdog.translations.base.dj.BaseActivity
 import com.appcatdog.translations.databinding.ActivityPermissionBinding
 import com.appcatdog.translations.ext.thrillClickListener
 
-class PermissionActivity : BaseActivity() {
+class WNCDPermissionActivity : BaseActivity() {
 
     companion object {
         fun forward(context: Context) {
-            context.startActivity(Intent(context, PermissionActivity::class.java))
+            context.startActivity(Intent(context, WNCDPermissionActivity::class.java))
         }
     }
 
@@ -33,7 +33,7 @@ class PermissionActivity : BaseActivity() {
 
         binding.trCheck.thrillClickListener {
             if (ContextCompat.checkSelfPermission(
-                    this@PermissionActivity,
+                    this@WNCDPermissionActivity,
                     Manifest.permission.RECORD_AUDIO
                 ) != PackageManager.PERMISSION_GRANTED
             ) {
@@ -45,13 +45,13 @@ class PermissionActivity : BaseActivity() {
         }
         binding.btnContinue2.thrillClickListener {
             if (ContextCompat.checkSelfPermission(
-                    this@PermissionActivity,
+                    this@WNCDPermissionActivity,
                     Manifest.permission.RECORD_AUDIO
                 ) != PackageManager.PERMISSION_GRANTED
             ) {
                 return@thrillClickListener
             }
-            MainActivity.forward(this@PermissionActivity)
+            WNCDMainActivity.forward(this@WNCDPermissionActivity)
         }
     }
 

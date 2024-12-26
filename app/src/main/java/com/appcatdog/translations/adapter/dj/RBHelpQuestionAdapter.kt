@@ -8,16 +8,16 @@ import androidx.core.content.ContextCompat
 import com.appcatdog.translations.R
 import com.appcatdog.translations.adapter.dj.base.BaseAdapter
 import com.appcatdog.translations.adapter.dj.base.BaseViewHolder
-import com.appcatdog.translations.bean.dj.HelpQuestionBean
+import com.appcatdog.translations.bean.dj.WNCDHelpQuestionBean
 
 class RBHelpQuestionAdapter(
     context: Context,
     id: Int,
-    data: List<HelpQuestionBean>
+    data: List<WNCDHelpQuestionBean>
 ) :
-    BaseAdapter<HelpQuestionBean>(context, id, data) {
+    BaseAdapter<WNCDHelpQuestionBean>(context, id, data) {
     @SuppressLint("SuspiciousIndentation")
-    override fun bindView(holder: BaseViewHolder, data: HelpQuestionBean) {
+    override fun bindView(holder: BaseViewHolder, data: WNCDHelpQuestionBean) {
 
 
       val clFrame =   holder.getWidgetFromId<ConstraintLayout>(R.id.contact_item_cl_frame)

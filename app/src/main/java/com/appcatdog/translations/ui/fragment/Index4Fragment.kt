@@ -13,7 +13,7 @@ import com.appcatdog.translations.databinding.Item5Binding
 import com.appcatdog.translations.event.SimpleEvent
 import com.appcatdog.translations.ext.getBinding
 import com.appcatdog.translations.ext.thrillClickListener
-import com.appcatdog.translations.ui.activity.VideoActivity
+import com.appcatdog.translations.ui.activity.WNCDVideoActivity
 import com.appcatdog.translations.utils.lzy.LZYADSUtils
 import com.appcatdog.translations.utils.lzy.LZYLog
 import org.greenrobot.eventbus.EventBus
@@ -47,7 +47,7 @@ class Index4Fragment : RootFragment(R.layout.fragment_index_5) {
                     tvName.text = item.first
                     root.thrillClickListener {
                         val index = list.indexOf(item) + 1
-                        VideoActivity.show(requireContext(), index)
+                        WNCDVideoActivity.show(requireContext(), index)
                     }
                 }
             }

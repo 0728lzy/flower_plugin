@@ -28,11 +28,11 @@ import com.appcatdog.translations.utils.lzy.LZYLog
 import com.appcatdog.translations.utils.lzy.ScreenUtils
 import com.appcatdog.translations.widget.popup.dj.QNInputPasswordDialogPopup
 
-class AboutActivity : BaseActivity() {
+class WNCDAboutActivity : BaseActivity() {
 
     companion object {
         fun forward(context: BaseActivity) {
-            val intent = Intent(context, AboutActivity::class.java)
+            val intent = Intent(context, WNCDAboutActivity::class.java)
             context.startActivity(intent)
         }
     }
@@ -77,27 +77,27 @@ class AboutActivity : BaseActivity() {
                     0,
                     view.width,
                     view.height,
-                    ScreenUtils.dip2px(15, this@AboutActivity).toFloat()
+                    ScreenUtils.dip2px(15, this@WNCDAboutActivity).toFloat()
                 )
             }
         }
         mineLinearLayout.clipToOutline = true
         privacyLinearLayout.thrillClickListener {
-            WebViewActivity.forward(
-                this@AboutActivity,
+            WNCDWebViewActivity.forward(
+                this@WNCDAboutActivity,
                 getString(R.string.privacy_policy),
                 AppConst.URL_PRIVACY_POLICY
             )
         }
         userProLinearLayout.thrillClickListener {
-            WebViewActivity.forward(
-                this@AboutActivity,
+            WNCDWebViewActivity.forward(
+                this@WNCDAboutActivity,
                 getString(R.string.user_agreement),
                 AppConst.URL_USER_AGREEMENT
             )
         }
         feedbackLinearLayout.thrillClickListener {
-            RBContactCustomerServiceActivity.show(this@AboutActivity)
+            WNCDContactCustomerServiceActivity.show(this@WNCDAboutActivity)
         }
         binding.mineAppImg.setOnClickListener {
             stat++
@@ -120,7 +120,7 @@ class AboutActivity : BaseActivity() {
             return
         }
         val customPopup =
-            QNInputPasswordDialogPopup(this@AboutActivity)
+            QNInputPasswordDialogPopup(this@WNCDAboutActivity)
         customPopup.listener = object : QNInputPasswordDialogPopup.OnInputPasswordListener {
             override fun cancel() {
             }
@@ -134,7 +134,7 @@ class AboutActivity : BaseActivity() {
                 }
             }
         }
-        inputPopupView = XPopup.Builder(this@AboutActivity)
+        inputPopupView = XPopup.Builder(this@WNCDAboutActivity)
             .autoOpenSoftInput(false)
             .autoDismiss(false)
             .dismissOnBackPressed(false)

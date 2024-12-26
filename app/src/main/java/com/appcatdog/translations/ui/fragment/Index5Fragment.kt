@@ -11,21 +11,15 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.appcatdog.translations.APP
 import com.appcatdog.translations.AppConst
-import com.drake.brv.utils.bindingAdapter
-import com.drake.brv.utils.grid
-import com.drake.brv.utils.setup
 import com.appcatdog.translations.R
 import com.appcatdog.translations.base.dj.RootFragment
 import com.appcatdog.translations.databinding.FragmentIndex2Binding
-import com.appcatdog.translations.databinding.ItemDogBinding
-import com.appcatdog.translations.entity.Index1Entity
 import com.appcatdog.translations.event.SimpleEvent
 import com.appcatdog.translations.ext.getBinding
 import com.appcatdog.translations.ext.thrillClickListener
-import com.appcatdog.translations.ui.activity.MainActivity
-import com.appcatdog.translations.ui.activity.RBContactCustomerServiceActivity
-import com.appcatdog.translations.ui.activity.SoundActivity
-import com.appcatdog.translations.ui.activity.WebViewActivity
+import com.appcatdog.translations.ui.activity.WNCDMainActivity
+import com.appcatdog.translations.ui.activity.WNCDContactCustomerServiceActivity
+import com.appcatdog.translations.ui.activity.WNCDWebViewActivity
 import com.appcatdog.translations.utils.dj.DeviceUtils
 import com.appcatdog.translations.utils.dj.GetHttpDataUtil
 import com.appcatdog.translations.utils.dj.UserInfoModel
@@ -49,7 +43,7 @@ class Index5Fragment : RootFragment(R.layout.fragment_index_2) {
 
     var _binding: FragmentIndex2Binding? = null
     private lateinit var lzyadsUtils: LZYADSUtils
-    private lateinit var myActivity: MainActivity
+    private lateinit var myActivity: WNCDMainActivity
     private lateinit var mineLinearLayout: LinearLayout
     private lateinit var privacyLinearLayout: LinearLayout
     private lateinit var userProLinearLayout: LinearLayout
@@ -83,7 +77,7 @@ class Index5Fragment : RootFragment(R.layout.fragment_index_2) {
     override fun initView(view: View, savedInstanceState: Bundle?) {
         _binding = view.getBinding()
         lzyadsUtils = LZYADSUtils("Index2Fragment", requireActivity())
-        myActivity = requireActivity() as MainActivity
+        myActivity = requireActivity() as WNCDMainActivity
         mineLinearLayout = binding.mineLin
         privacyLinearLayout = binding.mineLinPrivacy
         userProLinearLayout = binding.mineLinUserPro
@@ -104,21 +98,21 @@ class Index5Fragment : RootFragment(R.layout.fragment_index_2) {
         }
         mineLinearLayout.clipToOutline = true
         privacyLinearLayout.thrillClickListener {
-            WebViewActivity.forward(
+            WNCDWebViewActivity.forward(
                 requireContext(),
                 getString(R.string.privacy_policy),
                 AppConst.URL_PRIVACY_POLICY
             )
         }
         userProLinearLayout.thrillClickListener {
-            WebViewActivity.forward(
+            WNCDWebViewActivity.forward(
                 requireContext(),
                 getString(R.string.user_agreement),
                 AppConst.URL_USER_AGREEMENT
             )
         }
         feedbackLinearLayout.thrillClickListener {
-            RBContactCustomerServiceActivity.show(requireContext())
+            WNCDContactCustomerServiceActivity.show(requireContext())
         }
         binding.mineAppImg.setOnClickListener {
             stat++

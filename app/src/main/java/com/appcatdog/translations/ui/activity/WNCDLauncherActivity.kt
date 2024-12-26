@@ -52,7 +52,7 @@ import org.greenrobot.eventbus.ThreadMode
  * author:  DengZhiYang
  * desc:    something
  */
-class LauncherActivity : BaseActivity() {
+class WNCDLauncherActivity : BaseActivity() {
 
     private lateinit var binding: ActivityLauncherBinding
     var TAG = "SplashActivity"
@@ -274,7 +274,7 @@ class LauncherActivity : BaseActivity() {
         override fun onClick(view: View) {
             when (spanType) {
                 NBAgreementDialog.AgreementClickableSpan.SPAN_TYPE_USER_SERVICE_AGREEMENT -> {
-                    WebViewActivity.forward(
+                    WNCDWebViewActivity.forward(
                         context,
                         context.getString(R.string.user_agreement),
                         AppConst.URL_USER_AGREEMENT
@@ -282,7 +282,7 @@ class LauncherActivity : BaseActivity() {
                 }
 
                 NBAgreementDialog.AgreementClickableSpan.SPAN_TYPE_PRIVACY_POLICY_AGREEMENT -> {
-                    WebViewActivity.forward(
+                    WNCDWebViewActivity.forward(
                         context,
                         context.getString(R.string.privacy_policy),
                         AppConst.URL_PRIVACY_POLICY
@@ -501,7 +501,7 @@ class LauncherActivity : BaseActivity() {
         AppConst.splashInfoShowMainCP = true
         mHandler.postDelayed(Runnable {
             LanguageUtils.setIndex(1)
-            MainActivity.forward(this)
+            WNCDMainActivity.forward(this)
             finish()
         }, 500)
 
