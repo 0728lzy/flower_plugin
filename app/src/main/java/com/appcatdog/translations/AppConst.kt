@@ -9,7 +9,7 @@ import com.appcatdog.translations.entity.LanguageEntity
 object AppConst {
 
     //----------------------------模板常量（常修改）----------------------------start
-    const val CHANNEL = "VIVO" //CSJ HUAWEI BAIDU OPPO
+    const val CHANNEL = "OPPO" //CSJ HUAWEI BAIDU OPPO
     const val DJ_APP_ID = "a92c610a8b308442925e21425bc67c25fb14a440f7b3e5b1eed068"
     const val UM_APP_ID = "66f79ecb61c3b13bde90b57a"  //沿用 猫狗交流翻译器
     const val TAG = "ad_log"
