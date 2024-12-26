@@ -202,22 +202,22 @@ dependencies {
 
     //GroMore new begin
 
-    val csjVersion = "6.4.1.5"
+    val csjVersion = "6.5.0.2"
 
 
-    val adnGdtVersion = "4.591.1461"
-    val adnGdtVersionFix = ".2"
+    val adnGdtVersion = "4.603.1473"
+    val adnGdtVersionFix = ".1"
 
-    val adnKsVersionLib = "3.3.67.1"
-    val adnKsVersion = "3.3.67"
-    val adnKsVersionFix = ".1.0"
+
+    val adnKsVersion = "3.3.69"
+    val adnKsVersionFix = ".1"
 
     val adnBaiduVersion = "9.37"
-    val adnBaiduVersionFix = ".0"
+    val adnBaiduVersionFix = ".1"
 
     val adnAdmobVersion = "17.2.0"
-    val adnAdmobVersionFix = ".62"
-//GroMore new end
+    val adnAdmobVersionFix = ".63"
+    //GroMore new end
 
     //dj----------------------------------------------------------------start
     implementation("com.github.li-xiaojun:XPopup:2.9.19") {
@@ -244,14 +244,14 @@ dependencies {
     // GroMore new begin
     implementation("androidx.annotation:annotation:1.1.0")
     implementation("com.pangle.cn:mediation-sdk:${csjVersion}")
-    implementation("com.pangle.cn:mediation-ks-adapter:${adnKsVersion}${adnKsVersionFix}")
-    implementation(files("libs/kssdk-ad-${adnKsVersionLib}.aar"))
+    implementation(files("libs/mediation_ks_adapter_${adnKsVersion}${adnKsVersionFix}.aar"))
+    implementation(files("libs/kssdk-ad-${adnKsVersion}.aar"))
     implementation("com.pangle.cn:mediation-baidu-adapter:${adnBaiduVersion}${adnBaiduVersionFix}")
     implementation(files("libs/Baidu_MobAds_SDK_v${adnBaiduVersion}.aar"))
-    implementation("com.pangle.cn:mediation-gdt-adapter:${adnGdtVersion}${adnGdtVersionFix}")
+    implementation(files("libs/mediation_gdt_adapter_${adnGdtVersion}${adnGdtVersionFix}.aar"))
     implementation(files("libs/GDTSDK.unionNormal.${adnGdtVersion}.aar"))
     implementation("com.google.android.gms:play-services-ads:${adnAdmobVersion}") {
-        exclude (group="com.android.support")
+        exclude(group = "com.android.support")
     }
     implementation("com.pangle.cn:mediation-admob-adapter:${adnAdmobVersion}${adnAdmobVersionFix}")
     // GroMore new end

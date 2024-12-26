@@ -1,4 +1,4 @@
-package com.kwad.sdk.api.util
+package com.appcatdog.translations.csj
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -10,8 +10,8 @@ import com.appcatdog.translations.utils.dj.GetHttpDataUtil
 
 
 @SuppressLint("StaticFieldLeak")
-object GMCPAdUtils {
-    private var mAdUnitId = AppConst.GMCPAd_ID_IN
+object WNCDAdCPTwoUtils {
+    private var mAdUnitId = AppConst.GMCPAd_ID_IN_TWO
     private var mContext: Activity? = null
     var mTTFullScreenVideoAd: TTFullScreenVideoAd? = null
 
@@ -40,23 +40,23 @@ object GMCPAdUtils {
      * 预加载广告
      */
     fun initPreloading(scenarioId :String="") {
-        Log.i(AppConst.TAG, "initPreloading cp1")
         mIsLoadedAndShow = false
         loadInterstitialFullAd(scenarioId)
     }
 
-//    fun directShow(scenarioId :String) {
+//    fun directShow(mAAdUnitId: String? = null) {
 //        mIsLoadedAndShow = true
-//        loadInterstitialFullAd(scenarioId)
+//        loadInterstitialFullAd()
 //    }
-
     /**
      * 加载插全屏广告
      */
     private fun loadInterstitialFullAd(scenarioId :String) {
+
         if (!AppConst.is_show_ad) {
             return
         }
+
         val adNativeLoader =
             TTAdSdk.getAdManager().createAdNative(mContext)
         val adslot = AdSlot.Builder()
@@ -69,12 +69,11 @@ object GMCPAdUtils {
                     .setVolume(0.7f)
                     .setUseSurfaceView(true)
                     .setBidNotify(true)
-                    .setScenarioId("scenarioid")
+                    .setScenarioId(scenarioId)
                     .setSplashShakeButton(true)
                     .setSplashPreLoad(true)
                     .setRewardName("rewardname")
                     .setRewardAmount(500)
-                    .setScenarioId(scenarioId)
                     .setAllowShowCloseBtn(true)
                     .build()
             )
@@ -85,11 +84,10 @@ object GMCPAdUtils {
                 override fun onError(code: Int, message: String?) {
                     Log.i(AppConst.TAG, "onError code = ${code} msg = ${message}")
                     mListener?.onError()
-//                    EventBus.getDefault().post(CpResultEvent("1"))
                 }
 
                 override fun onFullScreenVideoAdLoad(ad: TTFullScreenVideoAd?) {
-                    Log.i(AppConst.TAG, "onCPN1AdLoad")
+                    Log.i(AppConst.TAG, "onRewardVideoAdLoad")
                     mTTFullScreenVideoAd = ad
                     mTTFullScreenVideoAd?.let {
 
@@ -98,7 +96,7 @@ object GMCPAdUtils {
                 }
 
                 override fun onFullScreenVideoCached() {
-                    Log.i(AppConst.TAG, "onCpN1Cached")
+                    Log.i(AppConst.TAG, "onFullScreenVideoCached")
                     if (mIsLoadedAndShow) {
                         showInterstitialFullAd(mContext)
                     } else {
@@ -118,7 +116,7 @@ object GMCPAdUtils {
                 }
 
                 override fun onFullScreenVideoCached(ad: TTFullScreenVideoAd?) {
-                    Log.i(AppConst.TAG, "onCpN1Cached")
+                    Log.i(AppConst.TAG, "onFullScreenVideoCached")
                     mTTFullScreenVideoAd = ad
 
 
@@ -151,9 +149,8 @@ object GMCPAdUtils {
      */
     fun showInterstitialFullAd(activity: Activity?) {
         if (mTTFullScreenVideoAd == null) {
-            mListener.onShowError()
-//            EventBus.getDefault().post(CpResultEvent("1"))
             Log.i(AppConst.TAG, "请先加载广告或等待广告加载完毕后再调用show方法")
+            mListener.onShowError()
         }
         showNum++
         mTTFullScreenVideoAd?.let {
@@ -165,13 +162,11 @@ object GMCPAdUtils {
                         if (manager != null && manager.showEcpm != null) {
                             Log.i(
                                 AppConst.TAG,
-                                "InterstitialFullActivity onAdShow CPN1  ecpm:" + manager.showEcpm.ecpm + "  sdkName:" + manager.showEcpm.sdkName + "   slotId:" + manager.showEcpm.slotId
+                                "InterstitialFullActivity onAdShow  ecpm:" + manager.showEcpm.ecpm + "  sdkName:" + manager.showEcpm.sdkName + "   slotId:" + manager.showEcpm.slotId
                             )
                             adNetworkPlatformName = manager.showEcpm.sdkName
                             adNetworkRitId = manager.showEcpm.slotId
                             preEcpm = manager.showEcpm.ecpm
-                        }else{
-//                            EventBus.getDefault().post(CpResultEvent("2"))
                         }
                         GetHttpDataUtil.reportAdReport(AppConst.REPORT_TYPE_SHOW,
                             adNetworkPlatformName,
@@ -180,13 +175,13 @@ object GMCPAdUtils {
                             adType,
                             preEcpm,AppConst.IAPP_SCENE
                         )
-                        Log.e(AppConst.TAG, " showInterstitialFullAd  CpN1  onAdShow");
+                        Log.e(AppConst.TAG, "InterstitialFullActivity onAdShow");
 
                     }
 
                     override fun onAdVideoBarClick() {
-                        Log.e(AppConst.TAG, "InterstitialFullActivity CpN1 onAdVideoBarClick");
-                        if (clickNum!= showNum) {
+                        Log.e(AppConst.TAG, "InterstitialFullActivity onAdVideoBarClick");
+                        if (clickNum != showNum) {
                             GetHttpDataUtil.reportAdReport(
                                 AppConst.REPORT_TYPE_CLICK,
                                 adNetworkPlatformName,
@@ -195,32 +190,30 @@ object GMCPAdUtils {
                                 adType,
                                 preEcpm, AppConst.IAPP_SCENE
                             )
-                            clickNum= showNum
+                            clickNum = showNum
                         }
                     }
 
                     override fun onAdClose() {
-                        mListener?.showVideoClosed()
-                        Log.e(AppConst.TAG, "InterstitialFullActivity CpN1 onAdClose");
-//                        EventBus.getDefault().post(CpResultEvent("1"))
+                        Log.e(AppConst.TAG, "InterstitialFullActivity onAdClose");
+                        mListener.showVideoClosed()
                     }
 
                     override fun onVideoComplete() {
-                        Log.e(AppConst.TAG, "InterstitialFullActivity CpN1 onVideoComplete");
-//                        EventBus.getDefault().post(CpResultEvent("1"))
+                        Log.e(AppConst.TAG, "InterstitialFullActivity onVideoComplete");
+//                        mListener.showVideoClosed(GMCPVideoComplete)
                     }
 
                     override fun onSkippedVideo() {
-                        Log.e(AppConst.TAG, "InterstitialFullActivity CpN1 onSkippedVideo");
-//                        EventBus.getDefault().post(CpResultEvent("1"))
+                        Log.e(AppConst.TAG, "InterstitialFullActivity onSkippedVideo");
+//                        mListener.showVideoClosed(GMCPSkippedVideo)
                     }
 
                 })
                 it.showFullScreenVideoAd(activity)
             } else {
-                mListener?.onShowError()
-//                EventBus.getDefault().post(CpResultEvent("1"))
-                Log.i(AppConst.TAG, "showInterstitialFullAd CpN1 is not ready")
+                Log.i(AppConst.TAG, "RewardVideo is not ready")
+                mListener.onShowError()
             }
         }
     }

@@ -1,4 +1,4 @@
-package com.kwad.sdk.api.util
+package com.appcatdog.translations.csj
 
 
 import android.annotation.SuppressLint
@@ -18,13 +18,15 @@ import com.appcatdog.translations.utils.dj.GetHttpDataUtil
 import com.appcatdog.translations.utils.dj.GetHttpDataUtil.reportAdReport
 import com.google.android.gms.ads.formats.NativeAdOptions
 import com.appcatdog.translations.utils.lzy.ScreenUtils
+
 import com.qq.e.ads.cfg.DownAPPConfirmPolicy
 import com.qq.e.ads.cfg.VideoOption
 
-@SuppressLint("StaticFieldLeak")
-object GMFeedSimpleAdOneUtils {
 
-    private var mAdUnitId =  AppConst.FEEDSIMPLE_ID_ONE
+@SuppressLint("StaticFieldLeak")
+object WNCDAdFSTwoUtils {
+
+    private var mAdUnitId = AppConst.FEEDSIMPLE_ID_TWO
     var mTTFeedAd: TTFeedAd? = null
     private lateinit var mContext: Context
     lateinit var mListener: GirdMenuStateListener
@@ -46,10 +48,12 @@ object GMFeedSimpleAdOneUtils {
         mContext = context
     }
 
-    fun initPreloading(){
+    fun initPreloading(scenarioId :String){
         if (!AppConst.is_show_ad) {
             return
         }
+
+
         val admobNaitveAdOptions =  NativeAdOptions.Builder().build()
         //baidu 百度请求参数
         val baiduRequestParameters = RequestParameters.Builder().build()
@@ -62,8 +66,11 @@ object GMFeedSimpleAdOneUtils {
         val adslot = AdSlot.Builder()
             .setCodeId(mAdUnitId)
 //            .setImageAcceptedSize(DisplayUtil.getWindowWidth(mContext)-60,0) ////自渲染使用尺寸单位px
-//            .setImageAcceptedSize(UISimpleUtils.getScreenWidthInPx(mContext), UISimpleUtils.dp2px(mContext, 340F)) // 单位px
-            .setImageAcceptedSize(UISimpleUtils.getScreenWidthInPx(mContext)-90,0) // 单位px
+            .setImageAcceptedSize(
+                UISimpleUtils.getScreenWidthInPx(mContext) -90, UISimpleUtils.dp2px(
+                    mContext, 0F
+                )
+            ) // 单位px
 //                .setExpressViewAcceptedSize(2000f,3000f)//模板使用尺寸单位dp
             .setAdCount(1)
             .setUserID("1234")
@@ -95,6 +102,7 @@ object GMFeedSimpleAdOneUtils {
                     .setSplashPreLoad(true)
                     .setRewardName("rewardname")
                     .setRewardAmount(500)
+                    .setScenarioId(scenarioId)
                     .setAllowShowCloseBtn(true)
                     .build()
             )
@@ -145,10 +153,13 @@ object GMFeedSimpleAdOneUtils {
             "0"
         )
     }
-    fun initPreloading(dip:Int){
-        if (!AppConst.is_show_ad && AppConst.CHANNEL != "BAIDU") {
+
+    fun initPreloading(scenarioId :String,dip:Int){
+        if (!AppConst.is_show_ad) {
             return
         }
+
+
         val admobNaitveAdOptions =  NativeAdOptions.Builder().build()
         //baidu 百度请求参数
         val baiduRequestParameters = RequestParameters.Builder().build()
@@ -161,7 +172,6 @@ object GMFeedSimpleAdOneUtils {
         val adslot = AdSlot.Builder()
             .setCodeId(mAdUnitId)
 //            .setImageAcceptedSize(DisplayUtil.getWindowWidth(mContext)-60,0) ////自渲染使用尺寸单位px
-//            .setImageAcceptedSize(UISimpleUtils.getScreenWidthInPx(mContext), UISimpleUtils.dp2px(mContext, 340F)) // 单位px
             .setImageAcceptedSize(ScreenUtils.dip2px(dip, mContext),0) // 单位px
 //                .setExpressViewAcceptedSize(2000f,3000f)//模板使用尺寸单位dp
             .setAdCount(1)
@@ -194,6 +204,7 @@ object GMFeedSimpleAdOneUtils {
                     .setSplashPreLoad(true)
                     .setRewardName("rewardname")
                     .setRewardAmount(500)
+                    .setScenarioId(scenarioId)
                     .setAllowShowCloseBtn(true)
                     .build()
             )
@@ -292,7 +303,7 @@ object GMFeedSimpleAdOneUtils {
 
                     override fun onAdClick() {
                         Log.i(AppConst.TAG, "onAdClick")
-                        if (clickNum!= showNum) {
+                        if (showNum != clickNum) {
                             GetHttpDataUtil.reportAdReport(
                                 AppConst.REPORT_TYPE_CLICK,
                                 adNetworkPlatformName,
@@ -304,7 +315,7 @@ object GMFeedSimpleAdOneUtils {
                                 "0",
                                 "0"
                             )
-                            clickNum= showNum
+                            clickNum = showNum
                         }
                     }
 
@@ -361,5 +372,6 @@ object GMFeedSimpleAdOneUtils {
             }
         }
     }
+
 
 }

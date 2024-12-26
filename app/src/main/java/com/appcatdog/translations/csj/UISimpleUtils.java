@@ -1,4 +1,4 @@
-package com.kwad.sdk.api.util;
+package com.appcatdog.translations.csj;
 
 import android.app.Activity;
 import android.content.Context;

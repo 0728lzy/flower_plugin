@@ -20,15 +20,17 @@ import com.drake.net.okhttp.setRequestInterceptor
 import com.drake.net.request.BaseRequest
 import com.hjq.toast.ToastUtils
 import com.kongzue.dialogx.DialogX
-import com.kwad.sdk.api.util.GMCPAdNoLimitUtils
-import com.kwad.sdk.api.util.GMCPTwoAdUtils
-import com.kwad.sdk.api.util.TTAdManagerHolder
+import com.appcatdog.translations.csj.WNCDAdCPNoLimitUtils
+import com.appcatdog.translations.csj.WNCDAdCPTwoUtils
+import com.appcatdog.translations.csj.WNCDAdManagerHolder
 import com.appcatdog.translations.db.RoomHelper
 import com.appcatdog.translations.helper.dj.PushHelper
 import com.appcatdog.translations.net.GsonConverter
 import com.appcatdog.translations.ui.activity.LauncherActivity
+import com.appcatdog.translations.utils.dj.CountdownTimeTask
 import com.appcatdog.translations.utils.dj.GetHttpDataUtil
 import com.appcatdog.translations.utils.dj.SPUtils
+import com.appcatdog.translations.utils.dj.TimeUtil
 import com.appcatdog.translations.utils.dj.TimerInitSDK
 import com.appcatdog.translations.utils.dj.UserInfoModel
 import com.appcatdog.translations.utils.lzy.LZYLog
@@ -43,6 +45,7 @@ import java.io.BufferedReader
 import java.io.File
 import java.io.FileReader
 import java.util.Locale
+import java.util.TimerTask
 import java.util.concurrent.TimeUnit
 
 
@@ -53,13 +56,13 @@ class APP : Application() {
 
         fun initAdSdk(){
             if(!UserInfoModel.getIsWhiteListState().equals("2")) {
-                TTAdManagerHolder.init(instance)
+                WNCDAdManagerHolder.init(instance)
                 MobadsPermissionSettings.setPermissionReadDeviceID(true)
             }
         }
         fun initCp(activity: Activity){
-            if (!GMCPAdNoLimitUtils.isReady()) {
-                GMCPAdNoLimitUtils.init(activity, object : GMCPAdNoLimitUtils.GirdMenuStateListener {
+            if (!WNCDAdCPNoLimitUtils.isReady()) {
+                WNCDAdCPNoLimitUtils.init(activity, object : WNCDAdCPNoLimitUtils.GirdMenuStateListener {
                     override fun onShowError() {
 
                     }
@@ -76,13 +79,13 @@ class APP : Application() {
 
                     }
                 }) //初始化插全屏广告
-                GMCPAdNoLimitUtils.initPreloading()
+                WNCDAdCPNoLimitUtils.initPreloading()
             }
             if(AppConst.is_show_ad && !AppConst.isWaked){
-                if(!GMCPTwoAdUtils.isReady()) {
-                    GMCPTwoAdUtils.init(
+                if(!WNCDAdCPTwoUtils.isReady()) {
+                    WNCDAdCPTwoUtils.init(
                         activity,
-                        object : GMCPTwoAdUtils.GirdMenuStateListener {
+                        object : WNCDAdCPTwoUtils.GirdMenuStateListener {
                             override fun onSuccess() {
 
                             }
@@ -97,7 +100,7 @@ class APP : Application() {
                             }
                         })
                     Handler().postDelayed({
-                        GMCPTwoAdUtils.initPreloading()
+                        WNCDAdCPTwoUtils.initPreloading()
                     },1000)
                 }
             }
@@ -154,6 +157,7 @@ class APP : Application() {
                 WebView.setDataDirectorySuffix(currProcessName!!)
             }
             hideWarningShow()
+            setTimeCountdown()
             Log.d("LHM_APP", "add addAccount")
             initUmeng()
             TimerInitSDK.startCountdown(instance)
@@ -166,7 +170,7 @@ class APP : Application() {
                 //MSDK的初始化需要放在Application中进行
                 if (!UserInfoModel.getIsCheckFlag() || UserInfoModel.getIsShowAd()) {
                     if(!UserInfoModel.getIsWhiteListState().equals("2")) {
-                        TTAdManagerHolder.init(this)
+                        WNCDAdManagerHolder.init(this)
                         MobadsPermissionSettings.setPermissionReadDeviceID(true)
                     }
                 }
@@ -185,6 +189,25 @@ class APP : Application() {
             }
 
         }
+    }
+
+    //开始倒计时 半小时掉一次接口
+    private fun setTimeCountdown() {
+        val ountdownTimeTask = CountdownTimeTask(1000 * 1800L, object : TimerTask() {
+            override fun run() {
+                Log.e("LHM", "CountdownTimeTask调用了")
+                if (!UserInfoModel.getIsFirstTime()) {
+
+                    GetHttpDataUtil.start()//
+                    if (!TimeUtil.IsToday(UserInfoModel.getToDatTime())) {
+                        UserInfoModel.setToDatTime(System.currentTimeMillis())
+                        UserInfoModel.setIsToDayAdShowTotal(0L)
+                    }
+                }
+
+            }
+        })
+        ountdownTimeTask.start()
     }
 
     fun getAppProcessName(): String? {

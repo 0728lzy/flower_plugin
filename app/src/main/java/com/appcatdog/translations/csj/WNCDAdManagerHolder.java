@@ -1,4 +1,4 @@
-package com.kwad.sdk.api.util;
+package com.appcatdog.translations.csj;
 
 import android.content.Context;
 import android.util.Log;
@@ -21,7 +21,7 @@ import java.util.Map;
 /**
  * 可以用一个单例来保存TTAdManager实例，在需要初始化sdk的时候调用
  */
-public class TTAdManagerHolder {
+public class WNCDAdManagerHolder {
 
     private static final String TAG = "TTAdManagerHolder";
 

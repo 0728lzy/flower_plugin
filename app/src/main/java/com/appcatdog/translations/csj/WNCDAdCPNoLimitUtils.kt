@@ -1,4 +1,4 @@
-package com.kwad.sdk.api.util
+package com.appcatdog.translations.csj
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -10,7 +10,7 @@ import com.appcatdog.translations.utils.dj.GetHttpDataUtil
 
 
 @SuppressLint("StaticFieldLeak")
-object GMCPAdNoLimitUtils {
+object WNCDAdCPNoLimitUtils {
     private var mAdUnitId = AppConst.GMCPAd_ID_IN
     private var mContext: Activity? = null
     var mTTFullScreenVideoAd: TTFullScreenVideoAd? = null
@@ -186,7 +186,7 @@ object GMCPAdNoLimitUtils {
 
                     override fun onAdVideoBarClick() {
                         Log.e(AppConst.TAG, "InterstitialFullActivity CpN1 onAdVideoBarClick");
-                        if (clickNum!= showNum) {
+                        if (clickNum != showNum) {
                             GetHttpDataUtil.reportAdReport(
                                 AppConst.REPORT_TYPE_CLICK,
                                 adNetworkPlatformName,
@@ -195,7 +195,7 @@ object GMCPAdNoLimitUtils {
                                 adType,
                                 preEcpm, AppConst.IAPP_SCENE
                             )
-                            clickNum= showNum
+                            clickNum = showNum
                         }
                     }
 

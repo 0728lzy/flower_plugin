@@ -15,9 +15,9 @@ import androidx.viewpager2.widget.ViewPager2
 import com.appcatdog.translations.R
 import com.appcatdog.translations.base.dj.BaseActivity
 import com.gyf.immersionbar.ImmersionBar
-import com.kwad.sdk.api.util.GMCPAdNoLimitUtils
-import com.kwad.sdk.api.util.GMCPAdUtils
-import com.kwad.sdk.api.util.GMCPTwoAdUtils
+import com.appcatdog.translations.csj.WNCDAdCPNoLimitUtils
+import com.appcatdog.translations.csj.WNCDAdCPUtils
+import com.appcatdog.translations.csj.WNCDAdCPTwoUtils
 import com.appcatdog.translations.utils.lzy.LZYLog
 import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.core.BasePopupView
@@ -189,10 +189,10 @@ class MainActivity : BaseActivity() {
     //首页广告
     private fun showAdCpOne() {
         if(!UserInfoModel.getIsCheckFlag() || AppConst.is_show_ad) {
-            GMCPAdNoLimitUtils.init(this, object : GMCPAdNoLimitUtils.GirdMenuStateListener {
+            WNCDAdCPNoLimitUtils.init(this, object : WNCDAdCPNoLimitUtils.GirdMenuStateListener {
                 override fun onSuccess() {
                     LZYLog.e(this@MainActivity, "first one cp onSuccess")
-                    GMCPAdNoLimitUtils.showInterstitialFullAd(this@MainActivity)
+                    WNCDAdCPNoLimitUtils.showInterstitialFullAd(this@MainActivity)
                 }
 
                 override fun onError() {
@@ -203,8 +203,8 @@ class MainActivity : BaseActivity() {
                 override fun showVideoClosed() {
 
                     if(AppConst.is_show_ad  && !AppConst.isWaked){
-                        if(GMCPTwoAdUtils.isReady()) {
-                            GMCPTwoAdUtils.showInterstitialFullAd(this@MainActivity)
+                        if(WNCDAdCPTwoUtils.isReady()) {
+                            WNCDAdCPTwoUtils.showInterstitialFullAd(this@MainActivity)
                         }
                     }
                 }
@@ -213,10 +213,10 @@ class MainActivity : BaseActivity() {
 
                 }
             })
-            if (!GMCPAdNoLimitUtils.isReady()) {
-                GMCPAdNoLimitUtils.initPreloading("")
+            if (!WNCDAdCPNoLimitUtils.isReady()) {
+                WNCDAdCPNoLimitUtils.initPreloading("")
             } else {
-                GMCPAdNoLimitUtils.showInterstitialFullAd(this)
+                WNCDAdCPNoLimitUtils.showInterstitialFullAd(this)
             }
             if (AppConst.is_show_ad && !AppConst.isWaked){
                 showAdCpTwo()
@@ -229,7 +229,7 @@ class MainActivity : BaseActivity() {
 
     private fun showAdCpTwo() {
         AppConst.isWaked=false
-        GMCPTwoAdUtils.init(this, object : GMCPTwoAdUtils.GirdMenuStateListener {
+        WNCDAdCPTwoUtils.init(this, object : WNCDAdCPTwoUtils.GirdMenuStateListener {
             override fun onSuccess() {
                 LZYLog.e(this@MainActivity, "first two cp onSuccess")
             }
@@ -249,10 +249,10 @@ class MainActivity : BaseActivity() {
 
             }
         })
-        if(!GMCPTwoAdUtils.isReady()) {
+        if(!WNCDAdCPTwoUtils.isReady()) {
             Handler().postDelayed({
                 if (AppConst.is_show_ad) {
-                    GMCPTwoAdUtils.initPreloading("")
+                    WNCDAdCPTwoUtils.initPreloading("")
                 }
             }, 1000)
         }
@@ -315,7 +315,7 @@ class MainActivity : BaseActivity() {
 
 
     private fun initExitCpAdData() {
-        GMCPAdUtils.init(this, object : GMCPAdUtils.GirdMenuStateListener {
+        WNCDAdCPUtils.init(this, object : WNCDAdCPUtils.GirdMenuStateListener {
             override fun onError() {
 
             }
@@ -337,14 +337,14 @@ class MainActivity : BaseActivity() {
 
             }
         }) //初始化插全屏广告
-        if(!GMCPAdUtils.isReady()) {
-            GMCPAdUtils.initPreloading(AppConst.GMCPAd_ID_IN) //显示插屏广告
+        if(!WNCDAdCPUtils.isReady()) {
+            WNCDAdCPUtils.initPreloading(AppConst.GMCPAd_ID_IN) //显示插屏广告
         }
     }
 
     fun showExitCpAdData() {
-        if (GMCPAdUtils.isReady()) {
-            GMCPAdUtils.showInterstitialFullAd(this) //显示插屏广告
+        if (WNCDAdCPUtils.isReady()) {
+            WNCDAdCPUtils.showInterstitialFullAd(this) //显示插屏广告
         } else {
             if (isExitApp) {
                 moveTaskToBack(true)

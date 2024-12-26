@@ -21,9 +21,9 @@ import android.webkit.WebView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import com.google.gson.Gson
-import com.kwad.sdk.api.util.GMCPAdNoLimitUtils
-import com.kwad.sdk.api.util.GMSPAdUtils
-import com.kwad.sdk.api.util.GMSPTwoAdUtils
+import com.appcatdog.translations.csj.WNCDAdCPNoLimitUtils
+import com.appcatdog.translations.csj.WNCDAdSPUtils
+import com.appcatdog.translations.csj.WNCDAdSPTwoUtils
 import com.appcatdog.translations.APP
 import com.appcatdog.translations.AppConst
 import com.appcatdog.translations.R
@@ -324,7 +324,7 @@ class LauncherActivity : BaseActivity() {
             kpLoadIsSuccess = 0
             kpLoadIsSuccess2 = 0
             Log.d(TAG, "SplashOneActivity 加载开屏: ")
-            GMSPAdUtils.init(object : GMSPAdUtils.GmSplashAdListener {
+            WNCDAdSPUtils.init(object : WNCDAdSPUtils.GmSplashAdListener {
                 override fun onLoadFinish() {
                     Log.d(
                         TAG,
@@ -353,7 +353,7 @@ class LauncherActivity : BaseActivity() {
                     }
                     if (AppConst.is_show_ad && position != 1) {
                         binding.splashAdContainer.visibility = View.VISIBLE
-                        GMSPTwoAdUtils.showSplash(binding.splashAdContainer)
+                        WNCDAdSPTwoUtils.showSplash(binding.splashAdContainer)
                         adHandler.postDelayed({
                             Log.e(TAG, "广告2计时销毁----------------")
                             goMainActivity()
@@ -372,7 +372,7 @@ class LauncherActivity : BaseActivity() {
 
 //                Handler().postDelayed({
                 Log.d(TAG, "SplashTwoActivity 加载开屏: ")
-                GMSPTwoAdUtils.init(object : GMSPTwoAdUtils.GmSplashAdListener {
+                WNCDAdSPTwoUtils.init(object : WNCDAdSPTwoUtils.GmSplashAdListener {
                     override fun onLoadFinish() {
                         Log.d(
                             TAG,
@@ -411,9 +411,9 @@ class LauncherActivity : BaseActivity() {
 
 
     private fun showTimeAdCp() {
-        Log.e(TAG, "showTimeAdCp:" + GMCPAdNoLimitUtils.isReady())
+        Log.e(TAG, "showTimeAdCp:" + WNCDAdCPNoLimitUtils.isReady())
         if(!UserInfoModel.getIsCheckFlag() && !AppConst.is_show_ad) {
-            GMCPAdNoLimitUtils.init(this, object : GMCPAdNoLimitUtils.GirdMenuStateListener {
+            WNCDAdCPNoLimitUtils.init(this, object : WNCDAdCPNoLimitUtils.GirdMenuStateListener {
                 override fun onShowError() {
                     Log.e(TAG, "GMCPAdNoLimitUtils onShowError")
                 }
@@ -431,8 +431,8 @@ class LauncherActivity : BaseActivity() {
 
                 }
             }) //初始化插全屏广告
-            if (!GMCPAdNoLimitUtils.isReady()) {
-                GMCPAdNoLimitUtils.initPreloading()
+            if (!WNCDAdCPNoLimitUtils.isReady()) {
+                WNCDAdCPNoLimitUtils.initPreloading()
             }
         }else{
             if(AppConst.is_show_ad) {
@@ -456,13 +456,13 @@ class LauncherActivity : BaseActivity() {
             )
             if (kpLoadIsSuccess == 1) {
                 binding.splashAdContainer.visibility = View.VISIBLE
-                GMSPAdUtils.showSplash(binding.splashAdContainer)
+                WNCDAdSPUtils.showSplash(binding.splashAdContainer)
                 Log.e(TAG, "广告1计时开始----------------")
                 adHandler.postDelayed({
                     Log.e(TAG, "广告1计时销毁----------------")
                     if (AppConst.is_show_ad) {
                         if (kpLoadIsSuccess2 == 1) {
-                            GMSPTwoAdUtils.showSplash(binding.splashAdContainer)
+                            WNCDAdSPTwoUtils.showSplash(binding.splashAdContainer)
                             adHandler.postDelayed({
                                 Log.e(TAG, "广告2计时销毁----------------")
                                 goMainActivity()
@@ -477,7 +477,7 @@ class LauncherActivity : BaseActivity() {
 
             } else if (kpLoadIsSuccess2 == 1) {
                 binding.splashAdContainer.visibility = View.VISIBLE
-                GMSPTwoAdUtils.showSplash(binding.splashAdContainer)
+                WNCDAdSPTwoUtils.showSplash(binding.splashAdContainer)
                 Log.e(TAG, "广告2计时开始----------------")
                 adHandler.postDelayed({
                     Log.e(TAG, "广告2计时销毁----------------")

@@ -1,4 +1,4 @@
-package com.kwad.sdk.api.util
+package com.appcatdog.translations.csj
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -16,7 +16,7 @@ import com.yl.adsdk.YlLib
  * 激励视频
  */
 @SuppressLint("StaticFieldLeak")
-object GMRVAdUtils {
+object WNCDAdRVUtils {
     private var mAdUnitId = AppConst.GMRDAd_ID_IN
     var mTTRewardVideoAd: TTRewardVideoAd? = null
 
@@ -226,7 +226,7 @@ object GMRVAdUtils {
 //                            Toast.LENGTH_SHORT
 //                        ).show()
                         Log.i(AppConst.TAG, "onAdVideoBarClick")
-                        if (clickNum!= showNum) {
+                        if (clickNum != showNum) {
                             GetHttpDataUtil.reportAdReport(
                                 AppConst.REPORT_TYPE_CLICK,
                                 adNetworkPlatformName,
@@ -235,7 +235,7 @@ object GMRVAdUtils {
                                 AppConst.JILIVOID,
                                 preEcpm, AppConst.IAPP_SCENE
                             )
-                            clickNum= showNum
+                            clickNum = showNum
                         }
 
                     }
