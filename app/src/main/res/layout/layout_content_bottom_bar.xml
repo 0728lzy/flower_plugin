@@ -41,7 +41,7 @@
                     android:id="@+id/tv_1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/dog"
+                    android:text="猫狗"
                     android:textColor="@color/color_main"
                     android:textSize="@dimen/_10ssp" />
             </LinearLayout>
@@ -55,20 +55,20 @@
                 android:background="?selectableItemBackground"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:paddingTop="@dimen/_8sdp"
-                android:paddingBottom="@dimen/_8sdp">
+                android:paddingTop="@dimen/_5sdp"
+                android:paddingBottom="@dimen/_5sdp">
 
                 <ImageView
                     android:id="@+id/iv_2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_index2_n" />
+                    android:src="@drawable/ic_index4_n" />
 
                 <TextView
                     android:id="@+id/tv_2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/cat"
+                    android:text="@string/training"
                     android:textColor="@color/color_777777"
                     android:textSize="@dimen/_10ssp" />
             </LinearLayout>
@@ -116,13 +116,13 @@
                     android:id="@+id/iv_4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_index4_n" />
+                    android:src="@drawable/ic_index5_n" />
 
                 <TextView
                     android:id="@+id/tv_4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/training"
+                    android:text="@string/fake_video"
                     android:textColor="@color/color_777777"
                     android:textSize="@dimen/_10ssp" />
             </LinearLayout>
@@ -136,20 +136,20 @@
                 android:background="?selectableItemBackground"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:paddingTop="@dimen/_5sdp"
-                android:paddingBottom="@dimen/_5sdp">
+                android:paddingTop="@dimen/_8sdp"
+                android:paddingBottom="@dimen/_8sdp">
 
                 <ImageView
                     android:id="@+id/iv_5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_index5_n" />
+                    android:src="@drawable/ic_index2_n" />
 
                 <TextView
                     android:id="@+id/tv_5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/fake_video"
+                    android:text="我的"
                     android:textColor="@color/color_777777"
                     android:textSize="@dimen/_10ssp" />
             </LinearLayout>

@@ -62,33 +62,33 @@ class CallActivity : BaseActivity() {
         var icon = 0
         when (index) {
             1 -> {
-                name = "Husky"
-                icon = R.mipmap.call_1
-                path = "assets:///video_call/" + "call_1.mp4"
+                name = getString(R.string.call_3)
+                icon = R.mipmap.call_3
+                path = "assets:///video_call/" + "call_3.mp4"
             }
 
             2 -> {
-                name = "Husky striped"
+                name = getString(R.string.call_1)
+                icon = R.mipmap.call_1
+                path = "file:///android_asset/video_call/" + "call_1.mp4"
+            }
+
+            3 -> {
+                name = getString(R.string.call_5)
+                icon = R.mipmap.call_5
+                path = "file:///android_asset/video_call/" + "call_5.mp4"
+            }
+
+            4 -> {
+                name = getString(R.string.call_2)
                 icon = R.mipmap.call_2
                 path = "file:///android_asset/video_call/" + "call_2.mp4"
             }
 
-            3 -> {
-                name = "British short hair cat"
-                icon = R.mipmap.call_3
-                path = "file:///android_asset/video_call/" + "call_3.mp4"
-            }
-
-            4 -> {
-                name = "Golden"
+            5 -> {
+                name = getString(R.string.call_4)
                 icon = R.mipmap.call_4
                 path = "file:///android_asset/video_call/" + "call_4.mp4"
-            }
-
-            5 -> {
-                name = "Cat"
-                icon = R.mipmap.call_5
-                path = "file:///android_asset/video_call/" + "call_5.mp4"
             }
 
             else -> {}

@@ -6,7 +6,6 @@ import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.os.Bundle
 import android.os.Handler
 import android.text.TextUtils
-import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -27,11 +26,10 @@ import com.pet.translator.databinding.ActivityMainBinding
 import com.pet.translator.event.SimpleEvent
 import com.pet.translator.ext.thrillClickListener
 import com.pet.translator.ui.fragment.Index1Fragment
-import com.pet.translator.ui.fragment.Index2Fragment
-import com.pet.translator.ui.fragment.Index3Fragment
-import com.pet.translator.ui.fragment.Index4Fragment
 import com.pet.translator.ui.fragment.Index5Fragment
-import com.pet.translator.utils.dj.SetListAppHttpUtil
+import com.pet.translator.ui.fragment.Index3Fragment
+import com.pet.translator.ui.fragment.Index2Fragment
+import com.pet.translator.ui.fragment.Index4Fragment
 import com.pet.translator.utils.dj.UserInfoModel
 import com.pet.translator.utils.lzy.LZYADSUtils
 import com.pet.translator.widget.popup.dj.ExitDialogPopup
@@ -123,10 +121,10 @@ class MainActivity : BaseActivity() {
 
     private fun tabChange(index: Int) {
         binding.bottomBar.iv1.setImageResource(R.drawable.ic_index1_n)
-        binding.bottomBar.iv2.setImageResource(R.drawable.ic_index2_n)
+        binding.bottomBar.iv2.setImageResource(R.drawable.ic_index4_n)
         binding.bottomBar.iv3.setImageResource(R.drawable.ic_index3_n)
-        binding.bottomBar.iv4.setImageResource(R.drawable.ic_index4_n)
-        binding.bottomBar.iv5.setImageResource(R.drawable.ic_index5_n)
+        binding.bottomBar.iv4.setImageResource(R.drawable.ic_index5_n)
+        binding.bottomBar.iv5.setImageResource(R.drawable.ic_index2_n)
         binding.bottomBar.tv1.setTextColor(ContextCompat.getColor(this, R.color.color_777777))
         binding.bottomBar.tv2.setTextColor(ContextCompat.getColor(this, R.color.color_777777))
         binding.bottomBar.tv3.setTextColor(ContextCompat.getColor(this, R.color.color_777777))
@@ -141,7 +139,7 @@ class MainActivity : BaseActivity() {
 
             1 -> {
                 binding.bottomBar.tv2.setTextColor(ContextCompat.getColor(this, R.color.color_main))
-                binding.bottomBar.iv2.setImageResource(R.drawable.ic_index2_s)
+                binding.bottomBar.iv2.setImageResource(R.drawable.ic_index4_s)
             }
 
             2 -> {
@@ -151,12 +149,12 @@ class MainActivity : BaseActivity() {
 
             3 -> {
                 binding.bottomBar.tv4.setTextColor(ContextCompat.getColor(this, R.color.color_main))
-                binding.bottomBar.iv4.setImageResource(R.drawable.ic_index4_s)
+                binding.bottomBar.iv4.setImageResource(R.drawable.ic_index5_s)
             }
 
             4 -> {
                 binding.bottomBar.tv5.setTextColor(ContextCompat.getColor(this, R.color.color_main))
-                binding.bottomBar.iv5.setImageResource(R.drawable.ic_index5_s)
+                binding.bottomBar.iv5.setImageResource(R.drawable.ic_index2_s)
             }
         }
         binding.mainPager.currentItem = index

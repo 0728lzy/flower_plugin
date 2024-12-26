@@ -2,18 +2,18 @@ package com.pet.translator.ui.fragment
 
 import android.os.Bundle
 import android.view.View
-import androidx.core.widget.doAfterTextChanged
 import com.drake.brv.utils.bindingAdapter
-import com.drake.brv.utils.linear
+import com.drake.brv.utils.grid
 import com.drake.brv.utils.setup
 import com.pet.translator.R
 import com.pet.translator.base.dj.RootFragment
-import com.pet.translator.databinding.FragmentIndex5Binding
-import com.pet.translator.databinding.Item5Binding
+import com.pet.translator.databinding.FragmentIndex2Binding
+import com.pet.translator.databinding.ItemDogBinding
+import com.pet.translator.entity.Index1Entity
 import com.pet.translator.event.SimpleEvent
 import com.pet.translator.ext.getBinding
 import com.pet.translator.ext.thrillClickListener
-import com.pet.translator.ui.activity.VideoActivity
+import com.pet.translator.ui.activity.SoundActivity
 import com.pet.translator.utils.lzy.LZYADSUtils
 import com.pet.translator.utils.lzy.LZYLog
 import org.greenrobot.eventbus.EventBus
@@ -21,47 +21,13 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
 
-class Index5Fragment : RootFragment(R.layout.fragment_index_5) {
+class Index5Fragment : RootFragment(R.layout.fragment_index_2) {
 
-    var _binding: FragmentIndex5Binding? = null
+    var _binding: FragmentIndex2Binding? = null
+    private lateinit var lzyadsUtils: LZYADSUtils
+
 
     val binding get() = _binding!!
-
-    val list by lazy {  listOf(
-        getString(R.string.call_1) to R.mipmap.call_1,
-        getString(R.string.call_2) to R.mipmap.call_2,
-        getString(R.string.call_3) to R.mipmap.call_3,
-        getString(R.string.call_4) to R.mipmap.call_4,
-        getString(R.string.call_5) to R.mipmap.call_5,
-    ) }
-
-    override fun initView(view: View, savedInstanceState: Bundle?) {
-        _binding = view.getBinding()
-
-        binding.rvList.linear().setup {
-            addType<Pair<String, Int>>(R.layout.item_5)
-            onBind {
-                getBinding<Item5Binding>().apply {
-                    val item = getModel<Pair<String, Int>>()
-                    ivAvatar.setImageResource(item.second)
-                    tvName.text = item.first
-                    root.thrillClickListener {
-                        val index = list.indexOf(item) + 1
-                        VideoActivity.show(requireContext(), index)
-                    }
-                }
-            }
-        }
-
-        binding.rvList.bindingAdapter.models = list
-        binding.etSearch.doAfterTextChanged {
-            it?.let {
-                val keyworkds = it.toString()
-                binding.rvList.bindingAdapter.models =
-                    list.filter { it.first.contains(keyworkds) || keyworkds.isEmpty() }
-            }
-        }
-    }
 
     override fun onStart() {
         super.onStart()
@@ -77,7 +43,30 @@ class Index5Fragment : RootFragment(R.layout.fragment_index_5) {
     fun onMessageSimpleEvent(message: SimpleEvent) {
         if(message.simple == 4){
             LZYLog.e("simple","message simple:${message.simple}")
-            LZYADSUtils("Index5Fragment",requireActivity()).loadSimpleAdTurn(binding.feedContainerFragment5,-1)
+            lzyadsUtils.loadSimpleAdTurn(binding.feedContainerFragment2,-1)
         }
+    }
+
+    override fun initView(view: View, savedInstanceState: Bundle?) {
+        _binding = view.getBinding()
+        lzyadsUtils = LZYADSUtils("Index2Fragment", requireActivity())
+        binding.rvList.grid(3).setup {
+
+            addType<Index1Entity>(R.layout.item_dog)
+
+            onBind {
+                getBinding<ItemDogBinding>().apply {
+                    val item = getModel<Index1Entity>()
+                    ivThumb.setImageResource(item.icon)
+                    tvName.text = item.title
+                    root.thrillClickListener {
+                        SoundActivity.show(requireContext(), false, modelPosition)
+                    }
+                }
+            }
+        }
+
+
+        binding.rvList.bindingAdapter.models = com.pet.translator.AppConst.catSoundList(requireContext())
     }
 }

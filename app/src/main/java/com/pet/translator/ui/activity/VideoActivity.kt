@@ -62,28 +62,28 @@ class VideoActivity : BaseActivity() {
         var icon = 0
         when (index) {
             1 -> {
-                name = "Husky"
-                icon = R.mipmap.call_1
-            }
-
-            2 -> {
-                name = "Husky striped"
-                icon = R.mipmap.call_2
-            }
-
-            3 -> {
-                name = "British short hair cat"
+                name = getString(R.string.call_3)
                 icon = R.mipmap.call_3
             }
 
+            2 -> {
+                name = getString(R.string.call_1)
+                icon = R.mipmap.call_1
+            }
+
+            3 -> {
+                name = getString(R.string.call_5)
+                icon = R.mipmap.call_5
+            }
+
             4 -> {
-                name = "Golden"
-                icon = R.mipmap.call_4
+                name = getString(R.string.call_2)
+                icon = R.mipmap.call_2
             }
 
             5 -> {
-                name = "Cat"
-                icon = R.mipmap.call_5
+                name = getString(R.string.call_4)
+                icon = R.mipmap.call_4
             }
 
             else -> {}
