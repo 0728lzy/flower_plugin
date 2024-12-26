@@ -6,9 +6,9 @@ import android.os.Bundle
 import android.util.Log
 import com.bytedance.sdk.openadsdk.*
 import com.bytedance.sdk.openadsdk.mediation.ad.MediationAdSlot
-import com.pet.translator.AppConst
-import com.pet.translator.R
-import com.pet.translator.utils.dj.GetHttpDataUtil
+import com.appcatdog.translations.AppConst
+import com.appcatdog.translations.R
+import com.appcatdog.translations.utils.dj.GetHttpDataUtil
 import com.yl.adsdk.YlLib
 
 
@@ -188,7 +188,7 @@ object GMRVAdUtils {
                         Log.i(AppConst.TAG, "onAdShow")
                         var manager = it.mediationManager;
 
-                        YlLib.showIconTips(com.pet.translator.R.drawable.ic_app_logo,
+                        YlLib.showIconTips(com.appcatdog.translations.R.drawable.ic_app_logo,
                             mContext?.getString(R.string.app_name),
                             AppConst.showAdHeadTitle,
                             220)

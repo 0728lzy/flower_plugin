@@ -9,9 +9,9 @@ import com.bytedance.sdk.openadsdk.*
 import com.bytedance.sdk.openadsdk.mediation.MediationConstant
 import com.bytedance.sdk.openadsdk.mediation.ad.MediationAdSlot
 import com.bytedance.sdk.openadsdk.mediation.ad.MediationSplashRequestInfo
-import com.pet.translator.AppConst
-import com.pet.translator.utils.dj.DisplayUtil
-import com.pet.translator.utils.dj.GetHttpDataUtil
+import com.appcatdog.translations.AppConst
+import com.appcatdog.translations.utils.dj.DisplayUtil
+import com.appcatdog.translations.utils.dj.GetHttpDataUtil
 
 
 /**

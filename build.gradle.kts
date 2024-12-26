@@ -2,4 +2,5 @@
 plugins {
     id("com.android.application") version "8.1.0" apply false
     id("org.jetbrains.kotlin.android") version "1.8.0" apply false
+    id("io.github.qq549631030.android-junk-code") version "1.3.2" apply false
 }

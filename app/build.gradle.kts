@@ -5,15 +5,16 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.kapt")
+    id("android-junk-code")
 }
 
 android {
 //    namespace = "com.ruite.app.pet.translator"
-    namespace = "com.pet.translator"
+    namespace = "com.appcatdog.translations"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.ruite.app.pet.translator"
+        applicationId = "com.app.catdog.translations"
         minSdk = 24
         targetSdk = 34
         versionCode = 100
@@ -35,16 +36,35 @@ android {
 
     signingConfigs {
         register("myConfig") {
-            keyAlias = "ruiteapppettranslator"
-            keyPassword = "ruiteapppettranslator123"
-            storePassword = "ruiteapppettranslator123"
-            storeFile = file("../sign/ruiteapppettranslator.jks")
+            keyAlias = "appcatdog"
+            keyPassword = "appcatdog123"
+            storePassword = "appcatdog123"
+            storeFile = file("../sign/appcatdog.jks")
             enableV1Signing = true
             enableV2Signing = true
             enableV3Signing = true
             enableV4Signing = true
         }
     }
+
+    androidJunkCode {
+        variantConfig {
+            register("release"){
+                //注意：这里的release是变体名称，如果没有设置productFlavors就是buildType名称，如果有设置productFlavors就是flavor+buildType，例如（freeRelease、proRelease）
+                packageBase = "com.appcatdog.translations"  //生成java类根包名
+                packageCount = 40 //生成包数量
+                activityCountPerPackage = 20//每个包下生成Activity类数量
+                excludeActivityJavaFile = false
+                //是否排除生成Activity的Java文件,默认false(layout和写入AndroidManifest.xml还会执行)，主要用于处理类似神策全埋点编译过慢问题
+                otherCountPerPackage = 40  //每个包下生成其它类的数量
+                methodCountPerClass = 40  //每个类下生成方法数量
+                resPrefix = "wncd_"  //生成的layout、drawable、string等资源名前缀
+                drawableCount = 300  //生成drawable资源数量
+                stringCount = 300  //生成string数量
+            }
+        }
+    }
+
     buildTypes {
         getByName("release") {
             isZipAlignEnabled = false

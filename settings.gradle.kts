@@ -16,6 +16,7 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         maven("https://jitpack.io")
+        maven(url="https://s01.oss.sonatype.org/content/groups/public")
         maven("https://maven.aliyun.com/nexus/content/groups/public/")
         maven("https://maven.aliyun.com/nexus/content/repositories/google")
         maven("https://maven.aliyun.com/nexus/content/repositories/jcenter")

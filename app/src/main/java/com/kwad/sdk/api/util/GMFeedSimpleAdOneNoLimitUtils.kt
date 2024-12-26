@@ -13,9 +13,9 @@ import com.bytedance.sdk.openadsdk.*
 import com.bytedance.sdk.openadsdk.mediation.MediationConstant
 import com.bytedance.sdk.openadsdk.mediation.ad.MediationAdSlot
 import com.bytedance.sdk.openadsdk.mediation.ad.MediationExpressRenderListener
-import com.pet.translator.AppConst
-import com.pet.translator.utils.dj.GetHttpDataUtil
-import com.pet.translator.utils.dj.GetHttpDataUtil.reportAdReport
+import com.appcatdog.translations.AppConst
+import com.appcatdog.translations.utils.dj.GetHttpDataUtil
+import com.appcatdog.translations.utils.dj.GetHttpDataUtil.reportAdReport
 import com.google.android.gms.ads.formats.NativeAdOptions
 import com.qq.e.ads.cfg.DownAPPConfirmPolicy
 import com.qq.e.ads.cfg.VideoOption

@@ -2,7 +2,7 @@ package com.kwad.sdk.api.util
 
 import android.util.Log
 import com.bytedance.sdk.openadsdk.mediation.manager.MediationBaseManager
-import com.pet.translator.AppConst
+import com.appcatdog.translations.AppConst
 
 
 class PrintUtil {

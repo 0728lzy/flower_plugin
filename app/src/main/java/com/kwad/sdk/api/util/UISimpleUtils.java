@@ -16,7 +16,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
-import com.pet.translator.utils.dj.UIUtils;
+import com.appcatdog.translations.utils.dj.UIUtils;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

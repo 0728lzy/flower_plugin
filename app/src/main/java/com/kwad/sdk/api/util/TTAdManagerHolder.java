@@ -11,8 +11,8 @@ import com.bytedance.sdk.openadsdk.TTCustomController;
 import com.bytedance.sdk.openadsdk.mediation.init.MediationConfig;
 import com.bytedance.sdk.openadsdk.mediation.init.MediationConfigUserInfoForSegment;
 import com.bytedance.sdk.openadsdk.mediation.init.MediationPrivacyConfig;
-import com.pet.translator.AppConst;
-import com.pet.translator.R;
+import com.appcatdog.translations.AppConst;
+import com.appcatdog.translations.R;
 
 import java.util.HashMap;
 import java.util.Map;
