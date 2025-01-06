@@ -15,7 +15,7 @@
         app:qmui_topbar_left_back_drawable_id="@mipmap/ttdownloader_icon_back_arrow"
         app:qmui_topbar_title_color="#333333" />
 
-    <com.appcatdog.translations.widget.dj.NewWebView
+    <com.ruiteapp.pettranslator.widget.dj.NewWebView
         android:id="@+id/web_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

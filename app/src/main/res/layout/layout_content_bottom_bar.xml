@@ -35,7 +35,7 @@
                     android:id="@+id/iv_1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_index1_s" />
+                    android:src="@drawable/icon_index1_s" />
 
                 <TextView
                     android:id="@+id/tv_1"
@@ -62,7 +62,7 @@
                     android:id="@+id/iv_2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_index4_n" />
+                    android:src="@drawable/icon_index4_n" />
 
                 <TextView
                     android:id="@+id/tv_2"
@@ -89,7 +89,7 @@
                     android:id="@+id/iv_3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_index3_n" />
+                    android:src="@drawable/icon_index3_n" />
 
                 <TextView
                     android:id="@+id/tv_3"
@@ -116,7 +116,7 @@
                     android:id="@+id/iv_4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_index5_n" />
+                    android:src="@drawable/icon_index5_n" />
 
                 <TextView
                     android:id="@+id/tv_4"
@@ -143,7 +143,7 @@
                     android:id="@+id/iv_5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_index2_n" />
+                    android:src="@drawable/icon_index2_n" />
 
                 <TextView
                     android:id="@+id/tv_5"

@@ -5,7 +5,7 @@
     android:id="@+id/drawer_layout"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:background="@color/demo_bg_color">
+    android:background="@color/nav_dead_color">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,7 +15,7 @@
 
         <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="?actionBarSize"
+            android:layout_height="30dp"
             android:paddingLeft="@dimen/_5sdp"
             android:paddingRight="@dimen/_5sdp"
             android:tag="layout/layout_app_bar_main_0">
@@ -30,6 +30,7 @@
                 android:src="@drawable/ic_menu" />
 
             <TextView
+                android:visibility="gone"
                 android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -65,7 +66,6 @@
                 android:textColor="@color/little_gray_2"
                 android:gravity="right"
                 android:layout_marginRight="10dp"
-                android:layout_marginTop="20dp"
                 />
         </RelativeLayout>
 

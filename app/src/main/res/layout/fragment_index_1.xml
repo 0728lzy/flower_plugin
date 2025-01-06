@@ -4,7 +4,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:tag="layout/fragment_training_0"
-    android:background="@color/demo_bg_color">
+    android:background="@color/white">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -40,7 +40,7 @@
                 android:gravity="center"
                 android:padding="@dimen/_5sdp"
                 android:text="@string/cat"
-                android:textColor="@color/color_777777"
+                android:background="@drawable/border_txt_tab_two_training"
                 android:textSize="@dimen/_12ssp" />
         </LinearLayout>
         <androidx.constraintlayout.widget.ConstraintLayout

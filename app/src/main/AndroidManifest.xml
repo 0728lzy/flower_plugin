@@ -33,7 +33,7 @@
     </queries>
 
     <application
-        android:name="com.appcatdog.translations.APP"
+        android:name="com.ruiteapp.pettranslator.APP"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -70,7 +70,7 @@
             android:value="640" />
 
         <activity
-            android:name=".ui.activity.WNCDLauncherActivity"
+            android:name=".ui.activity.ZZLauncherActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
@@ -85,28 +85,28 @@
         </activity>
 
         <activity
-            android:name=".ui.activity.WNCDLanguageActivity"
+            android:name=".ui.activity.ZZLanguageActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".ui.activity.WNCDPermissionActivity"
+            android:name=".ui.activity.ZZPermissionActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".ui.activity.WNCDGuideActivity"
+            android:name=".ui.activity.ZZGuideActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".ui.activity.WNCDMainActivity"
+            android:name=".ui.activity.ZZMainActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
@@ -114,44 +114,44 @@
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".ui.activity.WNCDDetailActivity"
+            android:name=".ui.activity.ZZDetailActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".ui.activity.WNCDVideoActivity"
+            android:name=".ui.activity.ZZVideoActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".ui.activity.WNCDSoundActivity"
+            android:name=".ui.activity.ZZSoundActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".ui.activity.WNCDCallActivity"
+            android:name=".ui.activity.ZZCallActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".ui.activity.WNCDWebViewActivity"
+            android:name=".ui.activity.ZZWebViewActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.WNCDContactCustomerServiceActivity"
+            android:name=".ui.activity.ZZContactCustomerServiceActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.activity.WNCDAboutActivity"
+        <activity android:name=".ui.activity.ZZAboutActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait" />
