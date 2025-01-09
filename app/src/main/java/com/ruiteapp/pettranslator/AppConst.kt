@@ -9,7 +9,7 @@ import com.ruiteapp.pettranslator.entity.LanguageEntity
 object AppConst {
 
     //----------------------------模板常量（常修改）----------------------------start
-    const val CHANNEL = "VIVO" //CSJ HUAWEI BAIDU OPPO
+    const val CHANNEL = "BAIDU" //CSJ HUAWEI BAIDU OPPO
     const val DJ_APP_ID = "a92c610a98359d1894113456448f2234fd5bbe41fabce2b4e0ca74c535ca07"
     const val UM_APP_ID = "66f79ecb61c3b13bde90b57a"  //沿用 猫狗交流翻译器
     const val TAG = "ad_log"
