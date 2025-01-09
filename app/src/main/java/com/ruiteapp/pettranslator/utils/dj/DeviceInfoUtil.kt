@@ -16,12 +16,14 @@ import android.os.Looper
 import android.provider.Settings
 import android.telephony.TelephonyManager
 import android.text.TextUtils
+import android.util.Log
 import android.webkit.WebSettings
 import android.webkit.WebView
 import androidx.core.app.ActivityCompat
 import com.ruiteapp.pettranslator.APP
 import com.ruiteapp.pettranslator.AppConst
 import com.hjq.permissions.XXPermissions
+import com.huawei.hms.ads.identifier.AdvertisingIdClient
 import com.ruiteapp.pettranslator.utils.lzy.LZYLog
 import com.umeng.commonsdk.UMConfigure
 import java.io.BufferedReader
@@ -45,28 +47,54 @@ object DeviceInfoUtil {
     private var goConfig = false
     fun init(context: Context) {
         thread {
-            MiitHelper(MiitHelper.AppIdsUpdater { ids ->
-                oaid = ids
-                LZYLog.d("LoggingInterceptor", "MiitHelper oaid: $oaid")
-                if (!TextUtils.isEmpty(oaid)) {
-                    AppConst.oaid = oaid//获取oaid
-                    UserInfoModel.setOaid(oaid)
-                    if (TextUtils.isEmpty(UserInfoModel.getDjid()) && !goConfig && !TextUtils.isEmpty(UserInfoModel.getOaid()) && !TextUtils.isEmpty(UserInfoModel.getOaidU())) {
-                        GetHttpDataUtil.setInstall(
-                            APP.instance!!,
-                            AppConst.INSTALL_FROM_APP
-                        )
-                        goConfig = true
+//            MiitHelper(MiitHelper.AppIdsUpdater { ids ->
+//                oaid = ids
+//                LZYLog.d("LoggingInterceptor", "MiitHelper oaid: $oaid")
+//                if (!TextUtils.isEmpty(oaid)) {
+//                    AppConst.oaid = oaid//获取oaid
+//                    UserInfoModel.setOaid(oaid)
+//                    if (TextUtils.isEmpty(UserInfoModel.getDjid()) && !goConfig && !TextUtils.isEmpty(UserInfoModel.getOaid()) && !TextUtils.isEmpty(UserInfoModel.getOaidU())) {
+//                        GetHttpDataUtil.setInstall(
+//                            APP.instance!!,
+//                            AppConst.INSTALL_FROM_APP
+//                        )
+//                        goConfig = true
+//                    }
+//                }
+//            }).getDeviceIds(context)
+            //        thread {
+            try {
+                val info: AdvertisingIdClient.Info =
+                    AdvertisingIdClient.getAdvertisingIdInfo(APP.instance!!)
+                if (null != info) {
+                    val oa_id = info.getId()
+                    if(!TextUtils.isEmpty(oa_id)) {
+                        AppConst.oaid = oa_id//获取oaid
+                        UserInfoModel.setOaidH(oa_id)
+                        if (TextUtils.isEmpty(UserInfoModel.getDjid()) && !goConfig && !goConfig && !TextUtils.isEmpty(UserInfoModel.getOaidH()) && !TextUtils.isEmpty(UserInfoModel.getOaidU())) {
+                            GetHttpDataUtil.setInstall(
+                                APP.instance!!,
+                                AppConst.INSTALL_FROM_APP
+                            )
+                            goConfig = true
+                        }
                     }
+                    Log.i(
+                        "LoggingInterceptor", "getAdvertisingIdInfo id=" + info.getId() +
+                                ", isLimitAdTrackingEnabled=" + info.isLimitAdTrackingEnabled()
+                    )
                 }
-            }).getDeviceIds(context)
+            } catch (e: IOException) {
+                Log.i("LoggingInterceptor", "getAdvertisingIdInfo Exception: $e")
+            }
+
             UMConfigure.getOaid(context) {
                 var oa_id = it
                 LZYLog.d("LoggingInterceptor", "UMConfigure oaid: $oa_id")
                 if(!TextUtils.isEmpty(oa_id)) {
                     AppConst.oaid = oa_id//获取oaid
                     UserInfoModel.setOaidU(oa_id)
-                    if (TextUtils.isEmpty(UserInfoModel.getDjid()) && !goConfig && !goConfig && !TextUtils.isEmpty(UserInfoModel.getOaid()) && !TextUtils.isEmpty(UserInfoModel.getOaidU())) {
+                    if (TextUtils.isEmpty(UserInfoModel.getDjid()) && !goConfig && !goConfig && !TextUtils.isEmpty(UserInfoModel.getOaidH()) && !TextUtils.isEmpty(UserInfoModel.getOaidU())) {
                         GetHttpDataUtil.setInstall(
                             APP.instance!!,
                             AppConst.INSTALL_FROM_APP
@@ -89,26 +117,55 @@ object DeviceInfoUtil {
 
     fun splashInit(context: Context) {
         thread {
-            MiitHelper(MiitHelper.AppIdsUpdater { ids ->
-                oaid = ids
-                LZYLog.d("LoggingInterceptor", "MiitHelper oaid: $oaid")
-                if (!TextUtils.isEmpty(oaid)) {
-                    AppConst.oaid = oaid//获取oaid
-                    UserInfoModel.setOaid(oaid)
-                    if (TextUtils.isEmpty(UserInfoModel.getDjid()) && !goConfig && !TextUtils.isEmpty(
-                            UserInfoModel.getOaid()
-                        ) && !TextUtils.isEmpty(UserInfoModel.getOaidU())
-                    ) {
+            try {
+                val info: AdvertisingIdClient.Info =
+                    AdvertisingIdClient.getAdvertisingIdInfo(APP.instance!!)
+                if (null != info) {
+                    val oa_id = info.getId()
+                    if(!TextUtils.isEmpty(oa_id)) {
+                        AppConst.oaid = oa_id//获取oaid
+                        UserInfoModel.setOaidH(oa_id)
+                        if (TextUtils.isEmpty(UserInfoModel.getDjid()) && !goConfig && !goConfig && !TextUtils.isEmpty(UserInfoModel.getOaidH()) && !TextUtils.isEmpty(UserInfoModel.getOaidU())) {
+                            GetHttpDataUtil.setInstall(
+                                APP.instance!!,
+                                AppConst.INSTALL_FROM_SPLASH
+                            )
+                            goConfig = true
+                        }
+                    }
+                    Log.i(
+                        "LoggingInterceptor", "getAdvertisingIdInfo id=" + info.getId() +
+                                ", isLimitAdTrackingEnabled=" + info.isLimitAdTrackingEnabled()
+                    )
+                }
+            } catch (e: IOException) {
+                Log.i("LoggingInterceptor", "getAdvertisingIdInfo Exception: $e")
+            }
+
+            UMConfigure.getOaid(context) {
+                var oa_id = it
+                LZYLog.d("LoggingInterceptor", "UMConfigure oaid: $oa_id")
+                if(!TextUtils.isEmpty(oa_id)) {
+                    AppConst.oaid = oa_id//获取oaid
+                    UserInfoModel.setOaidU(oa_id)
+                    if (TextUtils.isEmpty(UserInfoModel.getDjid()) && !goConfig && !goConfig && !TextUtils.isEmpty(UserInfoModel.getOaidH()) && !TextUtils.isEmpty(UserInfoModel.getOaidU())) {
                         GetHttpDataUtil.setInstall(
                             APP.instance!!,
                             AppConst.INSTALL_FROM_SPLASH
                         )
                         goConfig = true
-
                     }
                 }
-            }).getDeviceIds(context)
+            }
+
         }
+        Handler(Looper.getMainLooper()).postDelayed({
+            if (TextUtils.isEmpty(UserInfoModel.getDjid())) {
+                if (!goConfig) {
+                    GetHttpDataUtil.setInstall(APP.instance!!, AppConst.INSTALL_FROM_SPLASH)
+                }
+            }
+        },4000)
     }
 
 

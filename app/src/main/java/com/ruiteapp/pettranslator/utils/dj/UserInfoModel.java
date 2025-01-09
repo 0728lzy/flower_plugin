@@ -186,6 +186,7 @@ public class UserInfoModel {
 
 
     private final static String OAIDU = "oaid_u";
+    private final static String OAIDH = "oaid_h";
     private final static String OAID = "oaid";
 
     public static void setOaid(String oaid) {
@@ -201,6 +202,12 @@ public class UserInfoModel {
     }
     public static String getOaidU() {
         return SPUtils.getInstance().getString(OAIDU,"");
+    }
+    public static void setOaidH(String oaid) {
+        SPUtils.getInstance().setString(OAIDH, oaid);
+    }
+    public static String getOaidH() {
+        return SPUtils.getInstance().getString(OAIDH,"");
     }
 
     public static void setIsWhiteListState(String state) {

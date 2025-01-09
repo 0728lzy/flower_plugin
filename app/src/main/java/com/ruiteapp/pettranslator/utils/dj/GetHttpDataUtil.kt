@@ -258,10 +258,10 @@ object GetHttpDataUtil {
 
         val oaid = UserInfoModel.getOaid()
         val oaidU = UserInfoModel.getOaidU()
-        val oaidH = ""
+        val oaidH = UserInfoModel.getOaidH()
         map["oaId"] = UserInfoModel.getOaid()
         map["oaIdU"] = UserInfoModel.getOaidU()
-        map["oaIdH"] = ""
+        map["oaIdH"] = UserInfoModel.getOaidH()
         LZYLog.e("LoggingInterceptor","oaId:${oaid},oaIdU:${oaidU},oaIdH:${oaidH}")
 
 //        map["openUdid"]= openUdid!!//	Open UDID

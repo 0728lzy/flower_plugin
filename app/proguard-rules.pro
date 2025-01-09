@@ -441,7 +441,9 @@
     *;
 }
 
-
+#鲸鸿动能
+-keep class com.huawei.hms.ads.** {*; }
+-keep interface com.huawei.hms.ads.** {*; }
 
  #解决Missing type parameter. 问题
 -dontobfuscate
