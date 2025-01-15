@@ -6,6 +6,7 @@ import android.view.View
 import androidx.core.view.isVisible
 import com.blankj.utilcode.util.ThreadUtils.runOnUiThread
 import com.hjq.permissions.Permission
+import com.ruiteapp.pettranslator.AppConst
 import com.ruiteapp.pettranslator.R
 import com.ruiteapp.pettranslator.base.dj.RootFragment
 import com.ruiteapp.pettranslator.databinding.FragmentIndex3Binding
@@ -162,6 +163,11 @@ class ZZIndex3Fragment : RootFragment(R.layout.fragment_index_3) {
                     )
                 }
             }
+        }
+        if (AppConst.is_show_ad){
+            binding.tvTop.visibility=View.GONE
+        }else{
+            binding.tvTop.visibility=View.VISIBLE
         }
     }
 
