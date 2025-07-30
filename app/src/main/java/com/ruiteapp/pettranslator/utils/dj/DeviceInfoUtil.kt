@@ -44,128 +44,140 @@ import kotlin.concurrent.thread
 object DeviceInfoUtil {
 
     private var oaid = ""
-    private var goConfig = false
-    fun init(context: Context) {
-        thread {
-//            MiitHelper(MiitHelper.AppIdsUpdater { ids ->
-//                oaid = ids
-//                LZYLog.d("LoggingInterceptor", "MiitHelper oaid: $oaid")
-//                if (!TextUtils.isEmpty(oaid)) {
-//                    AppConst.oaid = oaid//获取oaid
-//                    UserInfoModel.setOaid(oaid)
-//                    if (TextUtils.isEmpty(UserInfoModel.getDjid()) && !goConfig && !TextUtils.isEmpty(UserInfoModel.getOaid()) && !TextUtils.isEmpty(UserInfoModel.getOaidU())) {
-//                        GetHttpDataUtil.setInstall(
-//                            APP.instance!!,
-//                            AppConst.INSTALL_FROM_APP
-//                        )
-//                        goConfig = true
-//                    }
-//                }
-//            }).getDeviceIds(context)
-            //        thread {
-            try {
-                val info: AdvertisingIdClient.Info =
-                    AdvertisingIdClient.getAdvertisingIdInfo(APP.instance!!)
-                if (null != info) {
-                    val oa_id = info.getId()
-                    if(!TextUtils.isEmpty(oa_id)) {
-                        AppConst.oaid = oa_id//获取oaid
-                        UserInfoModel.setOaidH(oa_id)
-                        if (TextUtils.isEmpty(UserInfoModel.getDjid()) && !goConfig && !goConfig && !TextUtils.isEmpty(UserInfoModel.getOaidH()) && !TextUtils.isEmpty(UserInfoModel.getOaidU())) {
+    var goIntData = false
+    fun init(context: Context,GuideStr:Int=AppConst.INSTALL_FROM_APP) {
+        goIntData = false
+        Thread {
+            val brand = DeviceUtils.getBrand()
+//            Log.e("tttt", "品牌：" + DeviceUtils.getBrand())
+
+            if (!TextUtils.isEmpty(brand) && (brand.uppercase().equals("HONOR") || brand.uppercase()
+                    .equals("HUAWEI"))
+            ) {
+                try {
+                    val info: AdvertisingIdClient.Info =
+                        AdvertisingIdClient.getAdvertisingIdInfo(APP.instance!!)
+                    if (null != info) {
+                        val oa_id = info.getId()
+                        if (!TextUtils.isEmpty(oa_id)) {
+                            AppConst.oaid_h = oa_id//获取oaid
+                            oaid = oa_id//获取oaid
+
+                            if (TextUtils.isEmpty(UserInfoModel.getDjid()) && !goIntData && !TextUtils.isEmpty(
+                                    AppConst.oaid_h
+                                ) && !TextUtils.isEmpty(AppConst.oaid) && !TextUtils.isEmpty(
+                                    AppConst.oaid_u
+                                )
+                            ) {
+                                GetHttpDataUtil.setInstall(APP.instance!!, GuideStr)
+                                goIntData = true
+                            }
+                        }
+                        Log.i(
+                            "LoggingInterceptor", "getAdvertisingIdInfo id=" + info.getId() +
+                                    ", isLimitAdTrackingEnabled=" + info.isLimitAdTrackingEnabled()
+                        )
+                    }
+                } catch (e: IOException) {
+                    Log.i("LoggingInterceptor", "getAdvertisingIdInfo Exception: $e")
+                }
+
+
+                MiitHelper(MiitHelper.AppIdsUpdater { ids ->
+                    Log.d("LoggingInterceptor", "MiitHelper oaid: $ids")
+                    if (!TextUtils.isEmpty(ids)) {
+                        AppConst.oaid = ids//获取oaid
+                        if (TextUtils.isEmpty(UserInfoModel.getDjid()) && !TextUtils.isEmpty(
+                                AppConst.oaid
+                            ) && !TextUtils.isEmpty(AppConst.oaid_u)
+                            && !TextUtils.isEmpty(AppConst.oaid_h) && !goIntData
+                        ) {
+                            goIntData = true
                             GetHttpDataUtil.setInstall(
-                                APP.instance!!,
-                                AppConst.INSTALL_FROM_APP
+                                APP.instance!!, GuideStr
                             )
-                            goConfig = true
+                            Log.d("LoggingInterceptor", "22222222222")
                         }
                     }
-                    Log.i(
-                        "LoggingInterceptor", "getAdvertisingIdInfo id=" + info.getId() +
-                                ", isLimitAdTrackingEnabled=" + info.isLimitAdTrackingEnabled()
-                    )
-                }
-            } catch (e: IOException) {
-                Log.i("LoggingInterceptor", "getAdvertisingIdInfo Exception: $e")
-            }
+                }).getDeviceIds(context)
 
-            UMConfigure.getOaid(context) {
-                var oa_id = it
-                LZYLog.d("LoggingInterceptor", "UMConfigure oaid: $oa_id")
-                if(!TextUtils.isEmpty(oa_id)) {
-                    AppConst.oaid = oa_id//获取oaid
-                    UserInfoModel.setOaidU(oa_id)
-                    if (TextUtils.isEmpty(UserInfoModel.getDjid()) && !goConfig && !goConfig && !TextUtils.isEmpty(UserInfoModel.getOaidH()) && !TextUtils.isEmpty(UserInfoModel.getOaidU())) {
-                        GetHttpDataUtil.setInstall(
-                            APP.instance!!,
-                            AppConst.INSTALL_FROM_APP
-                        )
-                        goConfig = true
-                    }
-                }
-            }
-
-        }
-        Handler(Looper.getMainLooper()).postDelayed({
-            if (TextUtils.isEmpty(UserInfoModel.getDjid())) {
-                if (!goConfig) {
-                    GetHttpDataUtil.setInstall(APP.instance!!, AppConst.INSTALL_FROM_APP)
-                }
-            }
-        },4000)
-    }
-
-
-    fun splashInit(context: Context) {
-        thread {
-            try {
-                val info: AdvertisingIdClient.Info =
-                    AdvertisingIdClient.getAdvertisingIdInfo(APP.instance!!)
-                if (null != info) {
-                    val oa_id = info.getId()
-                    if(!TextUtils.isEmpty(oa_id)) {
-                        AppConst.oaid = oa_id//获取oaid
-                        UserInfoModel.setOaidH(oa_id)
-                        if (TextUtils.isEmpty(UserInfoModel.getDjid()) && !goConfig && !goConfig && !TextUtils.isEmpty(UserInfoModel.getOaidH()) && !TextUtils.isEmpty(UserInfoModel.getOaidU())) {
+//        LoggerUtil.loggerMsg("hhh---,DeviceInfoUtil init 222")
+                UMConfigure.getOaid(context) {
+                    var oa_id = it
+                    if (!TextUtils.isEmpty(oa_id)) {
+                        AppConst.oaid_u = oa_id//获取oaid
+                        oaid = oa_id//获取oaid
+                        if (TextUtils.isEmpty(UserInfoModel.getDjid()) && !TextUtils.isEmpty(
+                                AppConst.oaid_h
+                            ) && !TextUtils.isEmpty(AppConst.oaid) && !TextUtils.isEmpty(
+                                AppConst.oaid_u
+                            ) && !goIntData
+                        ) {
+                            goIntData = true
                             GetHttpDataUtil.setInstall(
-                                APP.instance!!,
-                                AppConst.INSTALL_FROM_SPLASH
+                                APP.instance!!, GuideStr
                             )
-                            goConfig = true
+                            Log.d("LoggingInterceptor", "22222222222")
                         }
                     }
-                    Log.i(
-                        "LoggingInterceptor", "getAdvertisingIdInfo id=" + info.getId() +
-                                ", isLimitAdTrackingEnabled=" + info.isLimitAdTrackingEnabled()
-                    )
+                    Log.d("LoggingInterceptor", "UMConfigure oaid: $oa_id")
                 }
-            } catch (e: IOException) {
-                Log.i("LoggingInterceptor", "getAdvertisingIdInfo Exception: $e")
-            }
 
-            UMConfigure.getOaid(context) {
-                var oa_id = it
-                LZYLog.d("LoggingInterceptor", "UMConfigure oaid: $oa_id")
-                if(!TextUtils.isEmpty(oa_id)) {
-                    AppConst.oaid = oa_id//获取oaid
-                    UserInfoModel.setOaidU(oa_id)
-                    if (TextUtils.isEmpty(UserInfoModel.getDjid()) && !goConfig && !goConfig && !TextUtils.isEmpty(UserInfoModel.getOaidH()) && !TextUtils.isEmpty(UserInfoModel.getOaidU())) {
-                        GetHttpDataUtil.setInstall(
-                            APP.instance!!,
-                            AppConst.INSTALL_FROM_SPLASH
-                        )
-                        goConfig = true
+
+            }else{
+                MiitHelper(MiitHelper.AppIdsUpdater { ids ->
+                    Log.d("LoggingInterceptor", "MiitHelper oaid: $ids")
+                    if (!TextUtils.isEmpty(ids)) {
+                        AppConst.oaid = ids//获取oaid
+                        if (TextUtils.isEmpty(UserInfoModel.getDjid()) && !TextUtils.isEmpty(
+                                AppConst.oaid  ) && !TextUtils.isEmpty(AppConst.oaid_u) && !goIntData
+                        ) {
+                            goIntData = true
+                            GetHttpDataUtil.setInstall(
+                                APP.instance!!, GuideStr
+                            )
+                            Log.d("LoggingInterceptor", "22222222222")
+                        }
                     }
+                }).getDeviceIds(context)
+
+
+//        LoggerUtil.loggerMsg("hhh---,DeviceInfoUtil init 222")
+                UMConfigure.getOaid(context) {
+                    var oa_id = it
+                    if (!TextUtils.isEmpty(oa_id)) {
+                        AppConst.oaid_u = oa_id//获取oaid
+                        oaid = oa_id//获取oaid
+                        if (TextUtils.isEmpty(UserInfoModel.getDjid()) &&   !TextUtils.isEmpty(AppConst.oaid) && !TextUtils.isEmpty(
+                                AppConst.oaid_u
+                            ) && !goIntData
+                        ) {
+                            goIntData = true
+                            GetHttpDataUtil.setInstall(
+                                APP.instance!!, GuideStr
+                            )
+                            Log.d("LoggingInterceptor", "22222222222")
+                        }
+                    }
+
+                    Log.d("LoggingInterceptor", "UMConfigure oaid: $oa_id")
                 }
             }
 
-        }
+        }.start()
+
+
+
+
+
         Handler(Looper.getMainLooper()).postDelayed({
             if (TextUtils.isEmpty(UserInfoModel.getDjid())) {
-                if (!goConfig) {
-                    GetHttpDataUtil.setInstall(APP.instance!!, AppConst.INSTALL_FROM_SPLASH)
+                if (!goIntData) {
+                    goIntData = true
+                    GetHttpDataUtil.setInstall(APP.instance!!,GuideStr)
                 }
             }
-        },4000)
+        }, 4000)
     }
 
 

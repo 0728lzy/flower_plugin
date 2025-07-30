@@ -5,12 +5,13 @@ import android.app.Activity
 import android.util.Log
 import com.bytedance.sdk.openadsdk.*
 import com.bytedance.sdk.openadsdk.mediation.ad.MediationAdSlot
+import com.ruiteapp.pettranslator.csj.lzy.LZYCPCounterHelper
 import com.ruiteapp.pettranslator.AppConst
 import com.ruiteapp.pettranslator.utils.dj.GetHttpDataUtil
 
 
 @SuppressLint("StaticFieldLeak")
-object WNCDAdCPUtils {
+object AdCPUtils {
     private var mAdUnitId = AppConst.GMCPAd_ID_IN
     private var mContext: Activity? = null
     var mTTFullScreenVideoAd: TTFullScreenVideoAd? = null
@@ -181,7 +182,7 @@ object WNCDAdCPUtils {
                             preEcpm,AppConst.IAPP_SCENE
                         )
                         Log.e(AppConst.TAG, " showInterstitialFullAd  CpN1  onAdShow");
-
+                        LZYCPCounterHelper.recordEvent()
                     }
 
                     override fun onAdVideoBarClick() {
@@ -197,12 +198,14 @@ object WNCDAdCPUtils {
                             )
                             clickNum = showNum
                         }
+
                     }
 
                     override fun onAdClose() {
                         mListener?.showVideoClosed()
                         Log.e(AppConst.TAG, "InterstitialFullActivity CpN1 onAdClose");
 //                        EventBus.getDefault().post(CpResultEvent("1"))
+                        LZYCPCounterHelper.fullToExecuteShowJL(activity)
                     }
 
                     override fun onVideoComplete() {

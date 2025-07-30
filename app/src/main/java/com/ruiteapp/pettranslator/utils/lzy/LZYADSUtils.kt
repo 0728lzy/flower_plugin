@@ -3,12 +3,12 @@ package com.ruiteapp.pettranslator.utils.lzy
 import android.app.Activity
 import android.util.Log
 import android.widget.FrameLayout
-import com.ruiteapp.pettranslator.csj.WNCDAdCPNoLimitUtils
-import com.ruiteapp.pettranslator.csj.WNCDAdCPUtils
-import com.ruiteapp.pettranslator.csj.WNCDAdCPTwoUtils
-import com.ruiteapp.pettranslator.csj.WNCDAdFSOneUtils
-import com.ruiteapp.pettranslator.csj.WNCDAdFSTwoUtils
-import com.ruiteapp.pettranslator.csj.WNCDAdRVUtils
+import com.ruiteapp.pettranslator.csj.AdCPNoLimitUtils
+import com.ruiteapp.pettranslator.csj.AdCPUtils
+import com.ruiteapp.pettranslator.csj.AdCPTwoUtils
+import com.ruiteapp.pettranslator.csj.AdFeedSimpleOneUtils
+import com.ruiteapp.pettranslator.csj.AdFeedSimpleTwoUtils
+import com.ruiteapp.pettranslator.csj.AdRVUtils
 import com.ruiteapp.pettranslator.AppConst
 import com.ruiteapp.pettranslator.utils.dj.AntiRepeatClickUtils
 import com.ruiteapp.pettranslator.utils.dj.UserInfoModel
@@ -21,7 +21,7 @@ class LZYADSUtils(val tag: String,val activity: Activity?){
         if (!(!UserInfoModel.getIsCheckFlag() || AppConst.is_show_ad)) {
             return
         }
-        WNCDAdCPNoLimitUtils.init(activity, object : WNCDAdCPNoLimitUtils.GirdMenuStateListener {
+        AdCPNoLimitUtils.init(activity, object : AdCPNoLimitUtils.GirdMenuStateListener {
             override fun onSuccess() {
                 Log.e(TAG, "first one cp onSuccess")
             }
@@ -36,9 +36,9 @@ class LZYADSUtils(val tag: String,val activity: Activity?){
             override fun onShowError() {
             }
         })
-        if (!WNCDAdCPNoLimitUtils.isReady()) {
+        if (!AdCPNoLimitUtils.isReady()) {
             Log.i("tttt","审核模式下的插屏预加载没有")
-            WNCDAdCPNoLimitUtils.initPreloading("")
+            AdCPNoLimitUtils.initPreloading("")
         } else {
             Log.i("tttt","审核模式下的插屏预加载是有的")
         }
@@ -48,7 +48,7 @@ class LZYADSUtils(val tag: String,val activity: Activity?){
         if (!AppConst.is_show_ad) {
             return
         }
-        WNCDAdCPUtils.init(activity, object : WNCDAdCPUtils.GirdMenuStateListener {
+        AdCPUtils.init(activity, object : AdCPUtils.GirdMenuStateListener {
             override fun onSuccess() {
                 Log.e(tag, "tab cp onSuccess")
             }
@@ -66,9 +66,9 @@ class LZYADSUtils(val tag: String,val activity: Activity?){
                 Log.e(tag, "tab cp onShowError")
             }
         })
-        if (!WNCDAdCPUtils.isReady()) {
+        if (!AdCPUtils.isReady()) {
             Log.i(TAG,"预加载插屏1")
-            WNCDAdCPUtils.initPreloading("")
+            AdCPUtils.initPreloading("")
             UserInfoModel.setShowChapingYynTime(System.currentTimeMillis())
         }
     }
@@ -76,7 +76,7 @@ class LZYADSUtils(val tag: String,val activity: Activity?){
         if (!AppConst.is_show_ad) {
             return
         }
-        WNCDAdCPTwoUtils.init(activity, object : WNCDAdCPTwoUtils.GirdMenuStateListener {
+        AdCPTwoUtils.init(activity, object : AdCPTwoUtils.GirdMenuStateListener {
             override fun onSuccess() {
                 Log.e(tag, "tab cp onSuccess")
             }
@@ -92,15 +92,15 @@ class LZYADSUtils(val tag: String,val activity: Activity?){
             }
 
         })
-        if (!WNCDAdCPTwoUtils.isReady()) {
+        if (!AdCPTwoUtils.isReady()) {
             Log.i(TAG,"预加载插屏2")
-            WNCDAdCPTwoUtils.initPreloading("")
+            AdCPTwoUtils.initPreloading("")
             UserInfoModel.setShowChapingHomeYynTime2(System.currentTimeMillis())
         }
     }
     fun initAdJL() {
         if (AppConst.is_show_ad&&activity!=null) {
-            WNCDAdRVUtils.init(object : WNCDAdRVUtils.GirdMenuStateListener {
+            AdRVUtils.init(object : AdRVUtils.GirdMenuStateListener {
                 override fun onShowError() {
                 }
 
@@ -119,8 +119,8 @@ class LZYADSUtils(val tag: String,val activity: Activity?){
                     // Implement your logic for onLoadSuccess
                 }
             }, activity)
-            if (!WNCDAdRVUtils.isReady()) {
-                WNCDAdRVUtils.initPreloading("")
+            if (!AdRVUtils.isReady()) {
+                AdRVUtils.initPreloading("")
             }
         }
     }
@@ -133,7 +133,7 @@ class LZYADSUtils(val tag: String,val activity: Activity?){
         if (!AppConst.is_show_ad) {
             return
         }
-        WNCDAdCPUtils.init(activity, object : WNCDAdCPUtils.GirdMenuStateListener {
+        AdCPUtils.init(activity, object : AdCPUtils.GirdMenuStateListener {
             override fun onShowError() {
                 // Do nothing for onShowError in Kotlin
             }
@@ -144,7 +144,7 @@ class LZYADSUtils(val tag: String,val activity: Activity?){
 
             override fun onSuccess() {
                 Log.e(tag, "tab cp onSuccess")
-                WNCDAdCPUtils.showInterstitialFullAd(activity)
+                AdCPUtils.showInterstitialFullAd(activity)
             }
 
             override fun onError() {
@@ -152,20 +152,20 @@ class LZYADSUtils(val tag: String,val activity: Activity?){
             }
         })
 
-        if (!WNCDAdCPUtils.isReady()) {
-            WNCDAdCPUtils.initPreloading("")
+        if (!AdCPUtils.isReady()) {
+            AdCPUtils.initPreloading("")
         } else {
-            WNCDAdCPUtils.showInterstitialFullAd(activity)
+            AdCPUtils.showInterstitialFullAd(activity)
         }
     }
     fun showAdCp2() {
         if (!AppConst.is_show_ad) {
             return
         }
-        WNCDAdCPTwoUtils.init(activity, object : WNCDAdCPTwoUtils.GirdMenuStateListener {
+        AdCPTwoUtils.init(activity, object : AdCPTwoUtils.GirdMenuStateListener {
             override fun onSuccess() {
                 Log.e(tag, "tab cp2 onSuccess")
-                WNCDAdCPTwoUtils.showInterstitialFullAd(activity)
+                AdCPTwoUtils.showInterstitialFullAd(activity)
             }
 
             override fun onError() {
@@ -180,10 +180,10 @@ class LZYADSUtils(val tag: String,val activity: Activity?){
             }
 
         })
-        if (!WNCDAdCPTwoUtils.isReady()) {
-            WNCDAdCPTwoUtils.initPreloading("")
+        if (!AdCPTwoUtils.isReady()) {
+            AdCPTwoUtils.initPreloading("")
         } else {
-            WNCDAdCPTwoUtils.showInterstitialFullAd(activity)
+            AdCPTwoUtils.showInterstitialFullAd(activity)
         }
     }
     fun showAdJL(diaLog: LoadingDiaLog,play:()->Unit) {
@@ -191,7 +191,7 @@ class LZYADSUtils(val tag: String,val activity: Activity?){
             if (!AntiRepeatClickUtils.isFastClickJL()) {
                 return
             }
-            WNCDAdRVUtils.init(object : WNCDAdRVUtils.GirdMenuStateListener {
+            AdRVUtils.init(object : AdRVUtils.GirdMenuStateListener {
                 override fun showVideoClosed() {
                     Log.e(tag, "main jl showVideoClosed")
                     play()
@@ -213,14 +213,14 @@ class LZYADSUtils(val tag: String,val activity: Activity?){
                 override fun onLoadSuccess() {
                     Log.e(tag, "jl onLoadSuccess")
                     diaLog.dismiss()
-                    WNCDAdRVUtils.showRewardAd(activity)
+                    AdRVUtils.showRewardAd(activity)
                 }
             }, activity)
-            Log.e(tag, "激励 进来了GMRVAdUtils.isReady():" + WNCDAdRVUtils.isReady())
-            if (WNCDAdRVUtils.isReady()) {
-                WNCDAdRVUtils.showRewardAd(activity)
+            Log.e(tag, "激励 进来了GMRVAdUtils.isReady():" + AdRVUtils.isReady())
+            if (AdRVUtils.isReady()) {
+                AdRVUtils.showRewardAd(activity)
             } else {
-                WNCDAdRVUtils.initPreloading("")
+                AdRVUtils.initPreloading("")
             }
         } else {
             diaLog.dismiss()
@@ -233,7 +233,7 @@ class LZYADSUtils(val tag: String,val activity: Activity?){
             if (!AntiRepeatClickUtils.isFastClickJL()) {
                 return
             }
-            WNCDAdRVUtils.init(object : WNCDAdRVUtils.GirdMenuStateListener {
+            AdRVUtils.init(object : AdRVUtils.GirdMenuStateListener {
                 override fun showVideoClosed() {
                     Log.e(tag, "main jl showVideoClosed")
                     play()
@@ -254,14 +254,14 @@ class LZYADSUtils(val tag: String,val activity: Activity?){
 
                 override fun onLoadSuccess() {
                     Log.e(tag, "jl onLoadSuccess")
-                    WNCDAdRVUtils.showRewardAd(activity)
+                    AdRVUtils.showRewardAd(activity)
                 }
             }, activity)
-            Log.e(tag, "激励 进来了GMRVAdUtils.isReady():" + WNCDAdRVUtils.isReady())
-            if (WNCDAdRVUtils.isReady()) {
-                WNCDAdRVUtils.showRewardAd(activity)
+            Log.e(tag, "激励 进来了GMRVAdUtils.isReady():" + AdRVUtils.isReady())
+            if (AdRVUtils.isReady()) {
+                AdRVUtils.showRewardAd(activity)
             } else {
-                WNCDAdRVUtils.initPreloading("")
+                AdRVUtils.initPreloading("")
             }
         } else {
             play()
@@ -288,12 +288,12 @@ class LZYADSUtils(val tag: String,val activity: Activity?){
         val currentTimeMillis = System.currentTimeMillis()
         val showTime = UserInfoModel.getShowChapingYynTime()
         if (currentTimeMillis - showTime > 2 * 1000) {
-            Log.e(tag, " showAdCp 进来了 GMCPAdUtils.isReady():" + WNCDAdCPUtils.isReady())
+            Log.e(tag, " showAdCp 进来了 GMCPAdUtils.isReady():" + AdCPUtils.isReady())
             UserInfoModel.setShowChapingYynTime(currentTimeMillis)
-            WNCDAdCPUtils.init(activity, object : WNCDAdCPUtils.GirdMenuStateListener {
+            AdCPUtils.init(activity, object : AdCPUtils.GirdMenuStateListener {
                 override fun onSuccess() {
                     Log.e(tag, "tab cp onSuccess")
-                    WNCDAdCPUtils.showInterstitialFullAd(activity)
+                    AdCPUtils.showInterstitialFullAd(activity)
                 }
 
                 override fun onError() {
@@ -309,10 +309,10 @@ class LZYADSUtils(val tag: String,val activity: Activity?){
                     Log.e(tag, "tab cp onShowError")
                 }
             })
-            if (!WNCDAdCPUtils.isReady()) {
-                WNCDAdCPUtils.initPreloading("")
+            if (!AdCPUtils.isReady()) {
+                AdCPUtils.initPreloading("")
             } else {
-                WNCDAdCPUtils.showInterstitialFullAd(activity)
+                AdCPUtils.showInterstitialFullAd(activity)
             }
         }
     }
@@ -323,12 +323,12 @@ class LZYADSUtils(val tag: String,val activity: Activity?){
         val currentTimeMillis = System.currentTimeMillis()
         val showTime = UserInfoModel.getShowChapingHomeYynTime2()
         if (currentTimeMillis - showTime > 2 * 1000) {
-            Log.e(TAG, " showAdCp2 进来了 GMCPTwoAdUtils.isReady():" + WNCDAdCPTwoUtils.isReady())
+            Log.e(TAG, " showAdCp2 进来了 GMCPTwoAdUtils.isReady():" + AdCPTwoUtils.isReady())
             UserInfoModel.setShowChapingHomeYynTime2(currentTimeMillis)
-            WNCDAdCPTwoUtils.init(activity, object : WNCDAdCPTwoUtils.GirdMenuStateListener {
+            AdCPTwoUtils.init(activity, object : AdCPTwoUtils.GirdMenuStateListener {
                 override fun onSuccess() {
                     Log.e(tag, "tab cp2 onSuccess")
-                    WNCDAdCPTwoUtils.showInterstitialFullAd(activity)
+                    AdCPTwoUtils.showInterstitialFullAd(activity)
                 }
 
                 override fun onError() {
@@ -345,10 +345,10 @@ class LZYADSUtils(val tag: String,val activity: Activity?){
                 }
 
             })
-            if (!WNCDAdCPTwoUtils.isReady()) {
-                WNCDAdCPTwoUtils.initPreloading("")
+            if (!AdCPTwoUtils.isReady()) {
+                AdCPTwoUtils.initPreloading("")
             } else {
-                WNCDAdCPTwoUtils.showInterstitialFullAd(activity)
+                AdCPTwoUtils.showInterstitialFullAd(activity)
             }
         }
     }
@@ -360,12 +360,12 @@ class LZYADSUtils(val tag: String,val activity: Activity?){
     //adv加载信息流---------------------------------------------------start
     fun loadSimpleAd1(fragment: FrameLayout?) {
         if (activity != null && AppConst.is_show_ad) {
-            WNCDAdFSOneUtils.init(activity, object : WNCDAdFSOneUtils.GirdMenuStateListener {
+            AdFeedSimpleOneUtils.init(activity, object : AdFeedSimpleOneUtils.GirdMenuStateListener {
                 override fun onSuccess() {
                     Log.e(TAG, " GMFeedSimpleAdOneUtils onSuccess")
                     if (fragment != null&&activity!=null) {
                         Log.i("tttt","准备刷新视频列表的小信息流")
-                        WNCDAdFSOneUtils.showAd(fragment, activity)
+                        AdFeedSimpleOneUtils.showAd(fragment, activity)
                     }
                 }
 
@@ -373,17 +373,17 @@ class LZYADSUtils(val tag: String,val activity: Activity?){
                     Log.e(TAG, " loadSimpleAdOne onError")
                 }
             })
-            WNCDAdFSOneUtils.initPreloading()
+            AdFeedSimpleOneUtils.initPreloading()
         }
     }
 
     fun loadSimpleAd2(fragment: FrameLayout?) {
         if (activity != null && AppConst.is_show_ad) {
-            WNCDAdFSTwoUtils.init(activity, object : WNCDAdFSTwoUtils.GirdMenuStateListener {
+            AdFeedSimpleTwoUtils.init(activity, object : AdFeedSimpleTwoUtils.GirdMenuStateListener {
                 override fun onSuccess() {
                     Log.e(TAG, " GMFeedSimpleAdTwoUtils onSuccess")
                     if (fragment != null&&activity!=null) {
-                        WNCDAdFSTwoUtils.showAd(fragment, activity)
+                        AdFeedSimpleTwoUtils.showAd(fragment, activity)
                     }
                 }
 
@@ -391,17 +391,17 @@ class LZYADSUtils(val tag: String,val activity: Activity?){
                     Log.e(TAG, " loadSimpleAdOne onError")
                 }
             })
-            WNCDAdFSTwoUtils.initPreloading("")
+            AdFeedSimpleTwoUtils.initPreloading("")
         }
     }
     fun loadSimpleAd1(fragment: FrameLayout?,dip:Int) {
         if (activity != null && AppConst.is_show_ad) {
-            WNCDAdFSOneUtils.init(activity, object : WNCDAdFSOneUtils.GirdMenuStateListener {
+            AdFeedSimpleOneUtils.init(activity, object : AdFeedSimpleOneUtils.GirdMenuStateListener {
                 override fun onSuccess() {
                     Log.e(TAG, " GMFeedSimpleAdOneUtils onSuccess")
                     if (fragment != null&&activity!=null) {
                         Log.i("tttt","准备刷新视频列表的小信息流")
-                        WNCDAdFSOneUtils.showAd(fragment, activity)
+                        AdFeedSimpleOneUtils.showAd(fragment, activity)
                     }
                 }
 
@@ -409,17 +409,17 @@ class LZYADSUtils(val tag: String,val activity: Activity?){
                     Log.e(TAG, " loadSimpleAdOne onError")
                 }
             })
-            WNCDAdFSOneUtils.initPreloading(dip)
+            AdFeedSimpleOneUtils.initPreloading(dip)
         }
     }
 
     fun loadSimpleAd2(fragment: FrameLayout?,dip:Int) {
         if (activity != null && AppConst.is_show_ad) {
-            WNCDAdFSTwoUtils.init(activity, object : WNCDAdFSTwoUtils.GirdMenuStateListener {
+            AdFeedSimpleTwoUtils.init(activity, object : AdFeedSimpleTwoUtils.GirdMenuStateListener {
                 override fun onSuccess() {
                     Log.e(TAG, " GMFeedSimpleAdTwoUtils onSuccess")
                     if (fragment != null&&activity!=null) {
-                        WNCDAdFSTwoUtils.showAd(fragment, activity)
+                        AdFeedSimpleTwoUtils.showAd(fragment, activity)
                     }
                 }
 
@@ -427,7 +427,7 @@ class LZYADSUtils(val tag: String,val activity: Activity?){
                     Log.e(TAG, " loadSimpleAdOne onError")
                 }
             })
-            WNCDAdFSTwoUtils.initPreloading("",dip)
+            AdFeedSimpleTwoUtils.initPreloading("",dip)
         }
     }
     fun loadSimpleAdTurn(fragment: FrameLayout?,dip:Int){

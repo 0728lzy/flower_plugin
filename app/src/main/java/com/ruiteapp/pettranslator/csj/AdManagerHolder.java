@@ -21,7 +21,7 @@ import java.util.Map;
 /**
  * 可以用一个单例来保存TTAdManager实例，在需要初始化sdk的时候调用
  */
-public class WNCDAdManagerHolder {
+public class AdManagerHolder {
 
     private static final String TAG = "TTAdManagerHolder";
 

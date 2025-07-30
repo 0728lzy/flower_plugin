@@ -3,6 +3,7 @@ package com.ruiteapp.pettranslator.network
 
 import com.ruiteapp.pettranslator.bean.dj.ZZCommonConfigBean
 import com.ruiteapp.pettranslator.AppConst
+import com.ruiteapp.pettranslator.bean.dj.QCJRiskBean
 import com.ruiteapp.pettranslator.bean.dj.ZZActivateBean
 import com.ruiteapp.pettranslator.bean.dj.ZZStartRet
 import com.ruiteapp.pettranslator.bean.dj.ZZWhiteListBean
@@ -88,5 +89,12 @@ interface HttpApi {
   @GET("${AppConst.PATH_SEGMENTS_URL}app/unusual/action/ip")
   fun setUnsualIp(@QueryMap params: Map<String, String>): Observable<ZZResponseBase<ZZActivateBean>>
 
+  /**
+   * IP风险接口
+   * @param
+   * @return
+   * */
+  @GET("${AppConst.PATH_SEGMENTS_URL}app/v2/ipRisk")
+  fun ipRisk(): Observable<ZZResponseBase<QCJRiskBean>>
 
 }

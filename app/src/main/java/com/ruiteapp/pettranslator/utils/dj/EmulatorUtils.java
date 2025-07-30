@@ -31,6 +31,19 @@ public class EmulatorUtils {
     }
 
 
+    public static boolean isEmulator2(Context context){
+        String lowerCase = Build.MANUFACTURER.toLowerCase();
+        String brand = Build.BRAND.toLowerCase();
+        if (lowerCase.equals("samsung") || brand.contains("samsung")) {
+            return false;
+        }
+        return EmulatorDetectUtil.isEmulator(context) ||
+                isFeatures() ||
+                checkCpuIsNotRealPhone() ||
+                checkSystemProperty()
+                ;
+    }
+
     /**
      * 判断蓝牙是否有效来判断是否为模拟器
      *

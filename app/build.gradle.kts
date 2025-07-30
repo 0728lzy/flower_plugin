@@ -18,7 +18,7 @@ android {
         minSdk = 24
         targetSdk = 34
         versionCode = 100
-        versionName = "1.0.0.4"
+        versionName = "1.0.0.6"
 
         ndk {
             abiFilters += listOf("armeabi-v7a", "arm64-v8a") // 只保留需要的架构
@@ -47,23 +47,23 @@ android {
         }
     }
 
-    androidJunkCode {
-        variantConfig {
-            register("release"){
-                //注意：这里的release是变体名称，如果没有设置productFlavors就是buildType名称，如果有设置productFlavors就是flavor+buildType，例如（freeRelease、proRelease）
-                packageBase = "com.ruiteapp.pettranslator"  //生成java类根包名
-                packageCount = 70 //生成包数量
-                activityCountPerPackage = 50//每个包下生成Activity类数量
-                excludeActivityJavaFile = false
-                //是否排除生成Activity的Java文件,默认false(layout和写入AndroidManifest.xml还会执行)，主要用于处理类似神策全埋点编译过慢问题
-                otherCountPerPackage = 90  //每个包下生成其它类的数量
-                methodCountPerClass = 80  //每个类下生成方法数量
-                resPrefix = "zz_"  //生成的layout、drawable、string等资源名前缀
-                drawableCount = 650  //生成drawable资源数量
-                stringCount = 650  //生成string数量
-            }
-        }
-    }
+//    androidJunkCode {
+//        variantConfig {
+//            register("release"){
+//                //注意：这里的release是变体名称，如果没有设置productFlavors就是buildType名称，如果有设置productFlavors就是flavor+buildType，例如（freeRelease、proRelease）
+//                packageBase = "com.ruiteapp.pettranslator"  //生成java类根包名
+//                packageCount = 70 //生成包数量
+//                activityCountPerPackage = 50//每个包下生成Activity类数量
+//                excludeActivityJavaFile = false
+//                //是否排除生成Activity的Java文件,默认false(layout和写入AndroidManifest.xml还会执行)，主要用于处理类似神策全埋点编译过慢问题
+//                otherCountPerPackage = 90  //每个包下生成其它类的数量
+//                methodCountPerClass = 80  //每个类下生成方法数量
+//                resPrefix = "zz_"  //生成的layout、drawable、string等资源名前缀
+//                drawableCount = 650  //生成drawable资源数量
+//                stringCount = 650  //生成string数量
+//            }
+//        }
+//    }
 
     buildTypes {
         getByName("release") {
@@ -202,22 +202,22 @@ dependencies {
 
     //GroMore new begin
 
-    val csjVersion = "6.5.0.2"
+    val csjVersion = "6.8.1.1"
 
 
-    val adnGdtVersion = "4.603.1473"
+    val adnGdtVersion = "4.630.1500"
     val adnGdtVersionFix = ".1"
 
 
-    val adnKsVersion = "3.3.69"
+    val adnKsVersion = "3.3.75"
     val adnKsVersionFix = ".1"
 
     val adnBaiduVersion = "9.37"
-    val adnBaiduVersionFix = ".1"
+    val adnBaiduVersionFix = ".4"
 
     val adnAdmobVersion = "17.2.0"
-    val adnAdmobVersionFix = ".63"
-    //GroMore new end
+    val adnAdmobVersionFix = ".66"
+//GroMore new end
 
     //dj----------------------------------------------------------------start
     implementation("com.github.li-xiaojun:XPopup:2.9.19") {
@@ -240,22 +240,32 @@ dependencies {
 
 
     //广告---------------------------------------------------------start
+
     // GroMore new begin
-    implementation("androidx.annotation:annotation:1.1.0")
+
+//    implementation("androidx.annotation:annotation:1.1.0")
     implementation("com.pangle.cn:mediation-sdk:${csjVersion}")
+//    implementation("com.pangle.cn:mediation-ks-adapter:${adnKsVersion}${adnKsVersionFix}")
     implementation(files("libs/mediation_ks_adapter_${adnKsVersion}${adnKsVersionFix}.aar"))
     implementation(files("libs/kssdk-ad-${adnKsVersion}.aar"))
+
+
     implementation("com.pangle.cn:mediation-baidu-adapter:${adnBaiduVersion}${adnBaiduVersionFix}")
+//    implementation(name: "mediation_baidu_adapter_9.28.0", ext: 'aar')
     implementation(files("libs/Baidu_MobAds_SDK_v${adnBaiduVersion}.aar"))
+//    implementation("com.pangle.cn:mediation-gdt-adapter:${adnGdtVersion}${adnGdtVersionFix}")
     implementation(files("libs/mediation_gdt_adapter_${adnGdtVersion}${adnGdtVersionFix}.aar"))
     implementation(files("libs/GDTSDK.unionNormal.${adnGdtVersion}.aar"))
+
+
     implementation("com.google.android.gms:play-services-ads:${adnAdmobVersion}") {
         exclude(group = "com.android.support")
     }
     implementation("com.pangle.cn:mediation-admob-adapter:${adnAdmobVersion}${adnAdmobVersionFix}")
-    // GroMore new end
 
-    implementation(files("libs/library-yl-utils-1.0.6.aar"))
+    // GroMore new end
+    implementation(files("libs/oaid_sdk_dj_1.0.25.aar"))
+    implementation(files("libs/library-yl-utils-1.0.9.aar"))
     implementation("com.tencent.mm.opensdk:wechat-sdk-android:+")
     implementation("me.weishu:free_reflection:2.2.0")
     implementation("net.grandcentrix.tray:tray:0.12.0")

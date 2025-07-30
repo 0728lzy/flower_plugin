@@ -16,7 +16,7 @@ import com.yl.adsdk.YlLib
  * 激励视频
  */
 @SuppressLint("StaticFieldLeak")
-object WNCDAdRVUtils {
+object AdRVUtils {
     private var mAdUnitId = AppConst.GMRDAd_ID_IN
     var mTTRewardVideoAd: TTRewardVideoAd? = null
 
@@ -188,10 +188,8 @@ object WNCDAdRVUtils {
                         Log.i(AppConst.TAG, "onAdShow")
                         var manager = it.mediationManager;
 
-                        YlLib.showIconTips(com.ruiteapp.pettranslator.R.drawable.ic_app_logo,
-                            mContext?.getString(R.string.app_name),
-                            AppConst.showAdHeadTitle,
-                            220)
+                        YlLib.showRewardTip("功能解锁中...请勿退出")
+
 
                         if (manager != null && manager.showEcpm != null) {
                             Log.i(
@@ -287,6 +285,7 @@ object WNCDAdRVUtils {
                         /** 如果使用了Gromore服务端奖励验证功能，可参考AdUtils.kt类中的示例 */
                         Log.i(AppConst.TAG, "onRewardArrived, extra: " + extraInfo?.toString())
                         mListener?.onEarnRewards()
+                        YlLib.hideRewardTip()
 //                        Toast.makeText(
 //                            this@MediationRewardActivity,
 //                            "onRewardArrived",

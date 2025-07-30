@@ -471,4 +471,12 @@
     <color name="purple">#8A2BE2</color>
 
     <color name="demo_bg_color">#FFffffff</color>
+
+
+
+    <color name="public_color_999999">#ff999999</color>
+    <color name="public_color_000000">#ff000000</color>
+    <color name="public_colorF3C25C">#fff3c25c</color>
+    <color name="public_color_white">#ffffffff</color>
+
 </resources>

@@ -15,14 +15,18 @@ import androidx.viewpager2.widget.ViewPager2
 import com.ruiteapp.pettranslator.R
 import com.ruiteapp.pettranslator.base.dj.BaseActivity
 import com.gyf.immersionbar.ImmersionBar
-import com.ruiteapp.pettranslator.csj.WNCDAdCPNoLimitUtils
-import com.ruiteapp.pettranslator.csj.WNCDAdCPUtils
-import com.ruiteapp.pettranslator.csj.WNCDAdCPTwoUtils
+import com.ruiteapp.pettranslator.csj.AdCPNoLimitUtils
+import com.ruiteapp.pettranslator.csj.AdCPUtils
+import com.ruiteapp.pettranslator.csj.AdCPTwoUtils
 import com.ruiteapp.pettranslator.utils.lzy.LZYLog
 import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.core.BasePopupView
 import com.ruiteapp.pettranslator.AppConst
+import com.ruiteapp.pettranslator.csj.lzy.LZYInitCPAdsUtils
 import com.ruiteapp.pettranslator.databinding.ActivityMainBinding
+import com.ruiteapp.pettranslator.dialog.AgreementCancelDialog
+import com.ruiteapp.pettranslator.dialog.AgreementDialog
+import com.ruiteapp.pettranslator.dialog.DialogCallBack
 import com.ruiteapp.pettranslator.event.SimpleEvent
 import com.ruiteapp.pettranslator.ext.thrillClickListener
 import com.ruiteapp.pettranslator.ui.fragment.ZZIndex1Fragment
@@ -30,6 +34,7 @@ import com.ruiteapp.pettranslator.ui.fragment.ZZIndex5Fragment
 import com.ruiteapp.pettranslator.ui.fragment.ZZIndex3Fragment
 import com.ruiteapp.pettranslator.ui.fragment.ZZIndex2Fragment
 import com.ruiteapp.pettranslator.ui.fragment.ZZIndex4Fragment
+import com.ruiteapp.pettranslator.utils.dj.SetListAppHttpUtil
 import com.ruiteapp.pettranslator.utils.dj.UserInfoModel
 import com.ruiteapp.pettranslator.utils.lzy.LZYADSUtils
 import com.ruiteapp.pettranslator.widget.popup.dj.ExitDialogPopup
@@ -46,6 +51,8 @@ class ZZMainActivity : BaseActivity() {
         }
     }
 
+
+    private var isShowYSDialog = false
     override fun getLayoutId() = R.layout.activity_main
 
     lateinit var binding: ActivityMainBinding
@@ -86,14 +93,14 @@ class ZZMainActivity : BaseActivity() {
                     isFirst=false
                 }
                 EventBus.getDefault().post(SimpleEvent(position))
-//                val channelName = AppConst.CHANNEL.uppercase()
-//                LZYLog.i("lzyp","channelName:$channelName")
-//                if (!UserInfoModel.getIsCheckFlag() && (channelName.equals("VIVO"))) {
-//                    LZYLog.i("lzyp","channelName:$channelName")
-//                    Handler().postDelayed({
-//                        SetListAppHttpUtil.setList(this@MainActivity);
-//                    },800)
-//                }
+                val channelName = AppConst.CHANNEL.uppercase()
+                LZYLog.i("lzyp","channelName:$channelName")
+                if (!UserInfoModel.getIsCheckFlag() && (channelName.equals("VIVO"))) {
+                    LZYLog.i("lzyp","channelName:$channelName")
+                    Handler().postDelayed({
+                        SetListAppHttpUtil.setList(this@ZZMainActivity);
+                    },800)
+                }
             }
         })
 
@@ -182,6 +189,7 @@ class ZZMainActivity : BaseActivity() {
 
         if (AppConst.splashInfoShowMainCP) {
             AppConst.splashInfoShowMainCP = false
+            isShowYSDialog = false
             showAdCpOne()
         }
     }
@@ -189,10 +197,10 @@ class ZZMainActivity : BaseActivity() {
     //首页广告
     private fun showAdCpOne() {
         if(!UserInfoModel.getIsCheckFlag() || AppConst.is_show_ad) {
-            WNCDAdCPNoLimitUtils.init(this, object : WNCDAdCPNoLimitUtils.GirdMenuStateListener {
+            AdCPNoLimitUtils.init(this, object : AdCPNoLimitUtils.GirdMenuStateListener {
                 override fun onSuccess() {
                     LZYLog.e(this@ZZMainActivity, "first one cp onSuccess")
-                    WNCDAdCPNoLimitUtils.showInterstitialFullAd(this@ZZMainActivity)
+                    AdCPNoLimitUtils.showInterstitialFullAd(this@ZZMainActivity)
                 }
 
                 override fun onError() {
@@ -201,25 +209,24 @@ class ZZMainActivity : BaseActivity() {
                 }
 
                 override fun showVideoClosed() {
+                    firstShowAdDialog()
 
-                    if(AppConst.is_show_ad  && !AppConst.isWaked){
-                        if(WNCDAdCPTwoUtils.isReady()) {
-                            WNCDAdCPTwoUtils.showInterstitialFullAd(this@ZZMainActivity)
-                        }
-                    }
                 }
 
                 override fun onShowError() {
+                    firstShowAdDialog()
 
                 }
             })
-            if (!WNCDAdCPNoLimitUtils.isReady()) {
-                WNCDAdCPNoLimitUtils.initPreloading("")
+            if (!AdCPNoLimitUtils.isReady()) {
+                AdCPNoLimitUtils.initPreloading("")
             } else {
-                WNCDAdCPNoLimitUtils.showInterstitialFullAd(this)
+                AdCPNoLimitUtils.showInterstitialFullAd(this)
             }
-            if (AppConst.is_show_ad && !AppConst.isWaked){
-                showAdCpTwo()
+            if(!UserInfoModel.getIsFirstNormal()) {
+                if (AppConst.is_show_ad && !AppConst.isWaked) {
+                    showAdCpTwo()
+                }
             }
 
         }
@@ -227,11 +234,47 @@ class ZZMainActivity : BaseActivity() {
 
     }
 
+
+    private fun firstShowAdDialog() {
+        if(UserInfoModel.getIsFirstNormal() && !isShowYSDialog){
+            isShowYSDialog = true
+            AppConst.is_show_ad = UserInfoModel.getIsShowAd()
+            AgreementDialog.showDialog(this, object : DialogCallBack {
+                override fun buAgree() {
+                    UserInfoModel.setIsFirstNormal(false)
+                    LZYInitCPAdsUtils.showAdCpTurnNormal(this@ZZMainActivity)
+                }
+                override fun disagree() {
+                    firstShowAd2Dialog()
+                }
+            })
+        }
+
+    }
+
+
+
+
+
+    private fun firstShowAd2Dialog() {
+        AppConst.is_show_ad = UserInfoModel.getIsShowAd()
+        AgreementCancelDialog.showDialog(this, object : DialogCallBack {
+            override fun buAgree() {
+                UserInfoModel.setIsFirstNormal(false)
+                LZYInitCPAdsUtils.showAdCpTurnNormal(this@ZZMainActivity)
+            }
+            override fun disagree() {
+                finish()
+            }
+        })
+    }
+
     private fun showAdCpTwo() {
         AppConst.isWaked=false
-        WNCDAdCPTwoUtils.init(this, object : WNCDAdCPTwoUtils.GirdMenuStateListener {
+        AdCPTwoUtils.init(this, object : AdCPTwoUtils.GirdMenuStateListener {
             override fun onSuccess() {
                 LZYLog.e(this@ZZMainActivity, "first two cp onSuccess")
+                AdCPTwoUtils.showInterstitialFullAd(this@ZZMainActivity)
             }
 
             override fun onError() {
@@ -249,12 +292,12 @@ class ZZMainActivity : BaseActivity() {
 
             }
         })
-        if(!WNCDAdCPTwoUtils.isReady()) {
-            Handler().postDelayed({
+        if(!AdCPTwoUtils.isReady()) {
+
                 if (AppConst.is_show_ad) {
-                    WNCDAdCPTwoUtils.initPreloading("")
+                    AdCPTwoUtils.initPreloading("")
                 }
-            }, 1000)
+
         }
 
     }
@@ -315,7 +358,7 @@ class ZZMainActivity : BaseActivity() {
 
 
     private fun initExitCpAdData() {
-        WNCDAdCPUtils.init(this, object : WNCDAdCPUtils.GirdMenuStateListener {
+        AdCPUtils.init(this, object : AdCPUtils.GirdMenuStateListener {
             override fun onError() {
 
             }
@@ -337,14 +380,14 @@ class ZZMainActivity : BaseActivity() {
 
             }
         }) //初始化插全屏广告
-        if(!WNCDAdCPUtils.isReady()) {
-            WNCDAdCPUtils.initPreloading(AppConst.GMCPAd_ID_IN) //显示插屏广告
+        if(!AdCPUtils.isReady()) {
+            AdCPUtils.initPreloading(AppConst.GMCPAd_ID_IN) //显示插屏广告
         }
     }
 
     fun showExitCpAdData() {
-        if (WNCDAdCPUtils.isReady()) {
-            WNCDAdCPUtils.showInterstitialFullAd(this) //显示插屏广告
+        if (AdCPUtils.isReady()) {
+            AdCPUtils.showInterstitialFullAd(this) //显示插屏广告
         } else {
             if (isExitApp) {
                 moveTaskToBack(true)

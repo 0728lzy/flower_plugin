@@ -18,7 +18,7 @@ import com.ruiteapp.pettranslator.utils.dj.GetHttpDataUtil
  * 开屏
  * */
 @SuppressLint("StaticFieldLeak")
-object WNCDAdSPUtils {
+object AdSPUtils {
 
     private var mAdUnitId = AppConst.GMSPAd_ID
     private var mContext: Activity? = null

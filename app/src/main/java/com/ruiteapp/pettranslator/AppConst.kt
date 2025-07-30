@@ -9,7 +9,7 @@ import com.ruiteapp.pettranslator.entity.LanguageEntity
 object AppConst {
 
     //----------------------------模板常量（常修改）----------------------------start
-    const val CHANNEL = "HUAWEI" //CSJ HUAWEI BAIDU OPPO
+    const val CHANNEL = "HONOR" //CSJ HUAWEI BAIDU OPPO
     const val DJ_APP_ID = "a92c610a98359d1894113456448f2234fd5bbe41fabce2b4e0ca74c535ca07"
     const val UM_APP_ID = "66f79ecb61c3b13bde90b57a"  //沿用 猫狗交流翻译器
     const val TAG = "ad_log"
@@ -17,13 +17,32 @@ object AppConst {
     const val Ad_ID = "5647555" //穿山甲广告APP ID
     const val GMCPAd_ID_IN = "103322116" //插屏应用内
     const val GMCPAd_ID_IN_TWO = "103319569" //插屏应用内2
+    const val GMCPAd_ID_IN_THREE = "103573179" //插屏应用内3
+    const val GMCPAd_ID_IN_FOUR = "103575724" //插屏应用内4
+
+
     const val FEEDSIMPLE_ID_ONE = "103320918" //信息流首页1
     const val FEEDSIMPLE_ID_TWO = "103320159" //信息流首页2
+    const val FEEDSIMPLE_ID_THREE= "103572793" //信息流首页3
     const val GMSPAd_ID = "103321002" //开屏ID
     const val GMDDAd_ID = "890617141" //快报兜底开屏id
     const val GMSPAd_TWO_ID = "103321926" //开屏ID 2
     const val GMDDAd_TWO_ID = "890617138" //快报兜底开屏id 2
     const val GMRDAd_ID_IN = "103319295" //激励视频
+
+
+    @JvmField
+    var adsJLFlag=0
+
+    @JvmField
+    var adsCPTabFlag=0
+    @JvmField
+    var adsCPNormalFlag=0
+
+    var oaid = ""
+    var oaid_u = ""
+    var oaid_h = ""
+
     //用户协议和隐私政策
     const val APP_HOST = "众知"  //建议每次修改协议时，同时修改这里的主体名，这样就可以保证出包主体不会错！
     const val URL_USER_AGREEMENT =
@@ -80,7 +99,6 @@ object AppConst {
     var is_motivationVideo = false //首次激励视频
     lateinit var BAIDU_APP_ID: String // 保存接口返回的baidu_appid
 
-    var oaid = ""
     var is_show_ad = false //是否显示广告
     var is_curr_channel = "0" //当前安装渠道，0：自然量、1：巨量引擎、2：磁力引擎
     var is_adDelay = false

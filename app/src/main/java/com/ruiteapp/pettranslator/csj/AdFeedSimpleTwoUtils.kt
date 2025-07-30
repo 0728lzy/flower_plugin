@@ -24,7 +24,7 @@ import com.qq.e.ads.cfg.VideoOption
 
 
 @SuppressLint("StaticFieldLeak")
-object WNCDAdFSTwoUtils {
+object AdFeedSimpleTwoUtils {
 
     private var mAdUnitId = AppConst.FEEDSIMPLE_ID_TWO
     var mTTFeedAd: TTFeedAd? = null

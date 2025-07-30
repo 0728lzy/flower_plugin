@@ -17,12 +17,11 @@ import com.ruiteapp.pettranslator.AppConst
 import com.ruiteapp.pettranslator.utils.dj.GetHttpDataUtil
 import com.ruiteapp.pettranslator.utils.dj.GetHttpDataUtil.reportAdReport
 import com.google.android.gms.ads.formats.NativeAdOptions
-import com.ruiteapp.pettranslator.utils.lzy.ScreenUtils
 import com.qq.e.ads.cfg.DownAPPConfirmPolicy
 import com.qq.e.ads.cfg.VideoOption
 
 @SuppressLint("StaticFieldLeak")
-object WNCDAdFSOneUtils {
+object AdFeedSimpleOneNoLimitUtils {
 
     private var mAdUnitId =  AppConst.FEEDSIMPLE_ID_ONE
     var mTTFeedAd: TTFeedAd? = null
@@ -47,9 +46,7 @@ object WNCDAdFSOneUtils {
     }
 
     fun initPreloading(){
-        if (!AppConst.is_show_ad) {
-            return
-        }
+
         val admobNaitveAdOptions =  NativeAdOptions.Builder().build()
         //baidu 百度请求参数
         val baiduRequestParameters = RequestParameters.Builder().build()
@@ -64,105 +61,6 @@ object WNCDAdFSOneUtils {
 //            .setImageAcceptedSize(DisplayUtil.getWindowWidth(mContext)-60,0) ////自渲染使用尺寸单位px
 //            .setImageAcceptedSize(UISimpleUtils.getScreenWidthInPx(mContext), UISimpleUtils.dp2px(mContext, 340F)) // 单位px
             .setImageAcceptedSize(UISimpleUtils.getScreenWidthInPx(mContext) -90,0) // 单位px
-//                .setExpressViewAcceptedSize(2000f,3000f)//模板使用尺寸单位dp
-            .setAdCount(1)
-            .setUserID("1234")
-            .setOrientation(TTAdConstant.VERTICAL)
-            .setMediationAdSlot(
-                MediationAdSlot.Builder()
-                    .setExtraObject(MediationConstant.ADN_PANGLE, "pangle media_extra")
-                    .setExtraObject(MediationConstant.ADN_GDT, "gdt custom data")
-                    .setExtraObject(MediationConstant.ADN_KS, "ks custom data")
-                    .setExtraObject(
-                        MediationConstant.CUSTOM_DATA_KEY_GROMORE_EXTRA,
-                        "gromore serverside verify extra data"
-                    )
-                    .setExtraObject(MediationConstant.KEY_ADMOB_NATIVE_OPTIONS,admobNaitveAdOptions)
-//                        .setExtraObject(MediationConstant.KEY_BAIDU_APPSID,"appsid")
-                    .setExtraObject(MediationConstant.KEY_BAIDU_CACHE_VIDEO_ONLY_WIFI,true)
-                    .setExtraObject(MediationConstant.KEY_BAIDU_REQUEST_PARAMETERS,baiduRequestParameters)
-                    .setExtraObject(MediationConstant.KEY_BAIDU_NATIVE_SMART_OPT_STYLE_PARAMS,baiduSmartOptStyleParams)
-                    .setExtraObject(MediationConstant.KEY_GDT_MIN_VIDEO_DURATION,1000)
-                    .setExtraObject(MediationConstant.KEY_GDT_MAX_VIDEO_DURATION,2000)
-                    .setExtraObject(MediationConstant.KEY_GDT_VIDEO_OPTION,gdtVideoOption)
-                    .setExtraObject(MediationConstant.KEY_GDT_DOWN_APP_CONFIG_POLICY,gdtDownAppConfirmPolicy)
-                    .setMuted(true)
-                    .setVolume(0.7f)
-                    .setUseSurfaceView(true)
-                    .setBidNotify(true)
-                    .setScenarioId("scenarioid")
-                    .setSplashShakeButton(true)
-                    .setSplashPreLoad(true)
-                    .setRewardName("rewardname")
-                    .setRewardAmount(500)
-                    .setAllowShowCloseBtn(true)
-                    .build()
-            )
-            .build()
-//            flContent.removeAllViews()
-        adNativeLoader.loadFeedAd(adslot, object : TTAdNative.FeedAdListener {
-            override fun onError(code: Int, message: String?) {
-                Log.i(AppConst.TAG, "onError code = ${code} msg = ${message}")
-                mListener?.onError()
-
-            }
-
-            override fun onFeedAdLoad(ads: MutableList<TTFeedAd>?) {
-                Log.i(AppConst.TAG, "onFeedAdLoad list.size = ${ads?.size}")
-                ads?.let {
-                    if (it.size > 0) {
-                        mTTFeedAd = it[0]
-                        mTTFeedAd?.let {
-                            PrintUtil.printLoadInfo(it.mediationManager)
-                        }
-                    }
-                    mListener?.onSuccess()
-                    reportAdReport(
-                        AppConst.REPORT_TYPE_REQUEST_OK,
-                        "GroMore",
-                        "",
-                        mAdUnitId,
-                        AppConst.XINGXINLIU,
-                        "",
-                        AppConst.IAPP_SCENE,
-                        "0",
-                        "0"
-                    )
-
-                }
-            }
-        })
-
-        reportAdReport(
-            AppConst.REPORT_TYPE_REQUEST,
-            "GroMore",
-            "",
-            mAdUnitId,
-            AppConst.XINGXINLIU,
-            "",
-            AppConst.IAPP_SCENE,
-            "0",
-            "0"
-        )
-    }
-    fun initPreloading(dip:Int){
-        if (!AppConst.is_show_ad && AppConst.CHANNEL != "BAIDU") {
-            return
-        }
-        val admobNaitveAdOptions =  NativeAdOptions.Builder().build()
-        //baidu 百度请求参数
-        val baiduRequestParameters = RequestParameters.Builder().build()
-        //baidu 百度智能优选支持自定义视图样式，可以通过StyleParams来配置相关UI参数。
-        val baiduSmartOptStyleParams = StyleParams.Builder().build()
-        val gdtVideoOption = VideoOption.Builder().build()
-        val gdtDownAppConfirmPolicy = DownAPPConfirmPolicy.NOConfirm
-
-        val adNativeLoader = TTAdSdk.getAdManager().createAdNative(mContext)
-        val adslot = AdSlot.Builder()
-            .setCodeId(mAdUnitId)
-//            .setImageAcceptedSize(DisplayUtil.getWindowWidth(mContext)-60,0) ////自渲染使用尺寸单位px
-//            .setImageAcceptedSize(UISimpleUtils.getScreenWidthInPx(mContext), UISimpleUtils.dp2px(mContext, 340F)) // 单位px
-            .setImageAcceptedSize(ScreenUtils.dip2px(dip, mContext),0) // 单位px
 //                .setExpressViewAcceptedSize(2000f,3000f)//模板使用尺寸单位dp
             .setAdCount(1)
             .setUserID("1234")

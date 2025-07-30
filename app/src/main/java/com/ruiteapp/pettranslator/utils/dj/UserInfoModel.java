@@ -874,4 +874,25 @@ public class UserInfoModel {
     public static void setDjid(String count) {
         SPUtils.getInstance().setString(DJID, count);
     }
+
+    private final static String IS_FIRST_NORMAL= "is_first_normal";
+
+    public static void setIsFirstNormal(boolean isFirstNormal) {
+        SPUtils.getInstance().setBoolean(IS_FIRST_NORMAL, isFirstNormal);
+    }
+
+    public static Boolean getIsFirstNormal() {
+        return SPUtils.getInstance().getBoolean(IS_FIRST_NORMAL, true);
+    }
+
+
+    private final static String SHOW_KP_YYN_TIME = "show_kp_time";
+
+    public static long getShowKpYynTime() {
+        return SPUtils.getInstance().getLong(SHOW_KP_YYN_TIME);
+    }
+
+    public static void setShowKpYynTime(long ts) {
+        SPUtils.getInstance().setLong(SHOW_KP_YYN_TIME, ts);
+    }
 }

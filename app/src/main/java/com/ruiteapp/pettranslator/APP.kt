@@ -10,6 +10,7 @@ import android.os.Handler
 import android.text.TextUtils
 import android.util.Log
 import android.webkit.WebView
+import androidx.appcompat.app.AppCompatDelegate
 import com.baidu.mobads.sdk.api.MobadsPermissionSettings
 import com.drake.net.NetConfig
 import com.drake.net.interceptor.LogRecordInterceptor
@@ -20,9 +21,11 @@ import com.drake.net.okhttp.setRequestInterceptor
 import com.drake.net.request.BaseRequest
 import com.hjq.toast.ToastUtils
 import com.kongzue.dialogx.DialogX
-import com.ruiteapp.pettranslator.csj.WNCDAdCPNoLimitUtils
-import com.ruiteapp.pettranslator.csj.WNCDAdCPTwoUtils
-import com.ruiteapp.pettranslator.csj.WNCDAdManagerHolder
+import com.ruiteapp.pettranslator.csj.lzy.LZYCPCounterHelper
+import com.ruiteapp.pettranslator.csj.AdCPNoLimitUtils
+import com.ruiteapp.pettranslator.csj.AdCPTwoUtils
+import com.ruiteapp.pettranslator.csj.AdManagerHolder
+import com.ruiteapp.pettranslator.csj.lzy.EventCounterHelper
 import com.ruiteapp.pettranslator.db.RoomHelper
 import com.ruiteapp.pettranslator.helper.dj.PushHelper
 import com.ruiteapp.pettranslator.net.GsonConverter
@@ -56,13 +59,15 @@ class APP : Application() {
 
         fun initAdSdk(){
             if(!UserInfoModel.getIsWhiteListState().equals("2")) {
-                WNCDAdManagerHolder.init(instance)
-                MobadsPermissionSettings.setPermissionReadDeviceID(true)
+                if (!UserInfoModel.getIsCheckFlag() || UserInfoModel.getIsShowAd()) {
+                    AdManagerHolder.init(instance)
+                    MobadsPermissionSettings.setPermissionReadDeviceID(true)
+                }
             }
         }
         fun initCp(activity: Activity){
-            if (!WNCDAdCPNoLimitUtils.isReady()) {
-                WNCDAdCPNoLimitUtils.init(activity, object : WNCDAdCPNoLimitUtils.GirdMenuStateListener {
+            if (!AdCPNoLimitUtils.isReady()) {
+                AdCPNoLimitUtils.init(activity, object : AdCPNoLimitUtils.GirdMenuStateListener {
                     override fun onShowError() {
 
                     }
@@ -79,13 +84,13 @@ class APP : Application() {
 
                     }
                 }) //初始化插全屏广告
-                WNCDAdCPNoLimitUtils.initPreloading()
+                AdCPNoLimitUtils.initPreloading()
             }
             if(AppConst.is_show_ad && !AppConst.isWaked){
-                if(!WNCDAdCPTwoUtils.isReady()) {
-                    WNCDAdCPTwoUtils.init(
+                if(!AdCPTwoUtils.isReady()) {
+                    AdCPTwoUtils.init(
                         activity,
-                        object : WNCDAdCPTwoUtils.GirdMenuStateListener {
+                        object : AdCPTwoUtils.GirdMenuStateListener {
                             override fun onSuccess() {
 
                             }
@@ -100,7 +105,7 @@ class APP : Application() {
                             }
                         })
                     Handler().postDelayed({
-                        WNCDAdCPTwoUtils.initPreloading()
+                        AdCPTwoUtils.initPreloading()
                     },1000)
                 }
             }
@@ -152,6 +157,10 @@ class APP : Application() {
             }
             AppConst.BAIDU_APP_ID = SPUtils.getInstance().getString(SPUtils.SP_BAIDU_ID)
             initAutoSize()
+            EventCounterHelper.init(this)
+
+            LZYCPCounterHelper.init(this)
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             //Android 9及以上必须设置 多进程WebView兼容
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                 WebView.setDataDirectorySuffix(currProcessName!!)
@@ -170,7 +179,7 @@ class APP : Application() {
                 //MSDK的初始化需要放在Application中进行
                 if (!UserInfoModel.getIsCheckFlag() || UserInfoModel.getIsShowAd()) {
                     if(!UserInfoModel.getIsWhiteListState().equals("2")) {
-                        WNCDAdManagerHolder.init(this)
+                        AdManagerHolder.init(this)
                         MobadsPermissionSettings.setPermissionReadDeviceID(true)
                     }
                 }

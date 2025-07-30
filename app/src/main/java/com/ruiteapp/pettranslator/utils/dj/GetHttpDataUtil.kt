@@ -2,11 +2,13 @@ package com.ruiteapp.pettranslator.utils.dj
 
 import android.content.Context
 import android.text.TextUtils
+import android.util.Log
 import com.ruiteapp.pettranslator.bean.dj.ZZCommonConfigBean
 import com.google.gson.Gson
 import com.ruiteapp.pettranslator.APP
 import com.ruiteapp.pettranslator.AppConst
 import com.ruiteapp.pettranslator.R
+import com.ruiteapp.pettranslator.bean.dj.QCJRiskBean
 import com.ruiteapp.pettranslator.bean.dj.ZZActivateBean
 import com.ruiteapp.pettranslator.bean.dj.ZZStartRet
 import com.ruiteapp.pettranslator.bean.dj.ZZWhiteListBean
@@ -14,6 +16,7 @@ import com.ruiteapp.pettranslator.bean.dj.ZZHelpQuestionBean
 import com.ruiteapp.pettranslator.bean.dj.ZZInstallBean
 import com.ruiteapp.pettranslator.bean.dj.ZZOpenMemberBean
 import com.ruiteapp.pettranslator.bean.dj.ZZResponseBase
+import com.ruiteapp.pettranslator.event.IpRiskEvent
 import com.ruiteapp.pettranslator.event.dj.ActiveEvent
 import com.ruiteapp.pettranslator.network.RetrofitFactory
 import com.ruiteapp.pettranslator.network.XtmHttp
@@ -105,7 +108,7 @@ object GetHttpDataUtil {
                                 attribition = 0
                             }
 
-                            UserInfoModel.setIsCheckFlag(responseData.checkFlag.equals("1"))
+//                            UserInfoModel.setIsCheckFlag(responseData.checkFlag.equals("1"))
                             UserInfoModel.setBuryingEnable(responseData.buryingEnable.equals("1"))
                             //csj xxl 业务需求
 //                            LZYLog.e("tttt","responseData.csjCheckFlag:"+responseData.csjCheckFlag)
@@ -256,13 +259,9 @@ object GetHttpDataUtil {
         map["mac"] = DeviceInfoUtil.getMacFromHardware(activity)//MAC地址
         map["networkAccess"] = networkAccess//入网类型：0：WIFI、1：4G、2：5G
 
-        val oaid = UserInfoModel.getOaid()
-        val oaidU = UserInfoModel.getOaidU()
-        val oaidH = UserInfoModel.getOaidH()
-        map["oaId"] = UserInfoModel.getOaid()
-        map["oaIdU"] = UserInfoModel.getOaidU()
-        map["oaIdH"] = UserInfoModel.getOaidH()
-        LZYLog.e("LoggingInterceptor","oaId:${oaid},oaIdU:${oaidU},oaIdH:${oaidH}")
+        map["oaId"] = AppConst.oaid//匿名设备标识符
+        map["oaIdU"] = AppConst.oaid_u//匿名设备标识符
+        map["oaIdH"] = AppConst.oaid_h//匿名设备标识符
 
 //        map["openUdid"]= openUdid!!//	Open UDID
 
@@ -326,7 +325,7 @@ object GetHttpDataUtil {
                                 attribition = 0
 
                             }
-                            UserInfoModel.setIsCheckFlag(responseData.checkFlag.equals("1"))
+//                            UserInfoModel.setIsCheckFlag(responseData.checkFlag.equals("1"))
                             UserInfoModel.setBuryingEnable(responseData.buryingEnable.equals("1"))
                             //csj xxl 业务需求
 //                            LZYLog.e("tttt","responseData.csjCheckFlag:"+responseData.csjCheckFlag)
@@ -824,6 +823,39 @@ object GetHttpDataUtil {
 
                 }
             })
+    }
+
+    fun ipRisk() {
+        XtmHttp.toSubscribe(
+            RetrofitFactory.instance.httpApi?.ipRisk()!!,
+            object : XtmObserver<QCJRiskBean>() {
+                override fun onNext(t: ZZResponseBase<QCJRiskBean>) {
+                    super.onNext(t)
+                    if (t.code == 200) {
+                        val responseData = t.data
+                        Log.i("Alex", "ipRisk成功  --ipRisk=${Gson().toJson(responseData)}")
+                        if(responseData.type.equals("1")){
+                            EventBus.getDefault().post(IpRiskEvent(true))
+                        }else{
+                            EventBus.getDefault().post(IpRiskEvent(false))
+                        }
+                    }else{
+                        EventBus.getDefault().post(IpRiskEvent(true))
+                    }
+                }
+
+                override fun onError(e: Throwable) {
+                    super.onError(e)
+                    EventBus.getDefault().post(IpRiskEvent(true))
+                }
+
+                override fun onSubscribe(d: Disposable) {
+                }
+
+                override fun onComplete() {
+                }
+            })
+
     }
 
     interface OnSuccessAndFaultListener {
