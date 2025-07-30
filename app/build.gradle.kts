@@ -47,23 +47,23 @@ android {
         }
     }
 
-//    androidJunkCode {
-//        variantConfig {
-//            register("release"){
-//                //注意：这里的release是变体名称，如果没有设置productFlavors就是buildType名称，如果有设置productFlavors就是flavor+buildType，例如（freeRelease、proRelease）
-//                packageBase = "com.ruiteapp.pettranslator"  //生成java类根包名
-//                packageCount = 70 //生成包数量
-//                activityCountPerPackage = 50//每个包下生成Activity类数量
-//                excludeActivityJavaFile = false
-//                //是否排除生成Activity的Java文件,默认false(layout和写入AndroidManifest.xml还会执行)，主要用于处理类似神策全埋点编译过慢问题
-//                otherCountPerPackage = 90  //每个包下生成其它类的数量
-//                methodCountPerClass = 80  //每个类下生成方法数量
-//                resPrefix = "zz_"  //生成的layout、drawable、string等资源名前缀
-//                drawableCount = 650  //生成drawable资源数量
-//                stringCount = 650  //生成string数量
-//            }
-//        }
-//    }
+    androidJunkCode {
+        variantConfig {
+            register("release"){
+                //注意：这里的release是变体名称，如果没有设置productFlavors就是buildType名称，如果有设置productFlavors就是flavor+buildType，例如（freeRelease、proRelease）
+                packageBase = "com.ruiteapp.pettranslator"  //生成java类根包名
+                packageCount = 70 //生成包数量
+                activityCountPerPackage = 50//每个包下生成Activity类数量
+                excludeActivityJavaFile = false
+                //是否排除生成Activity的Java文件,默认false(layout和写入AndroidManifest.xml还会执行)，主要用于处理类似神策全埋点编译过慢问题
+                otherCountPerPackage = 90  //每个包下生成其它类的数量
+                methodCountPerClass = 80  //每个类下生成方法数量
+                resPrefix = "zz_"  //生成的layout、drawable、string等资源名前缀
+                drawableCount = 650  //生成drawable资源数量
+                stringCount = 650  //生成string数量
+            }
+        }
+    }
 
     buildTypes {
         getByName("release") {
