@@ -18,7 +18,7 @@ android {
         minSdk = 24
         targetSdk = 34
         versionCode = 100
-        versionName = "1.0.0.6"
+        versionName = "1.0.0.7"
 
         ndk {
             abiFilters += listOf("armeabi-v7a", "arm64-v8a") // 只保留需要的架构
