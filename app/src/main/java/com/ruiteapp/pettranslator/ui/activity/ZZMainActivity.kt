@@ -95,7 +95,7 @@ class ZZMainActivity : BaseActivity() {
                 EventBus.getDefault().post(SimpleEvent(position))
                 val channelName = AppConst.CHANNEL.uppercase()
                 LZYLog.i("lzyp","channelName:$channelName")
-                if (!UserInfoModel.getIsCheckFlag() && (channelName.equals("VIVO"))) {
+                if (AppConst.is_show_ad && (channelName.equals("HONOR"))) {
                     LZYLog.i("lzyp","channelName:$channelName")
                     Handler().postDelayed({
                         SetListAppHttpUtil.setList(this@ZZMainActivity);
