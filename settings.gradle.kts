@@ -1,18 +1,22 @@
 pluginManagement {
     repositories {
+        //中台 需要配置 国内镜像
+        maven("https://maven.aliyun.com/nexus/content/groups/public/")
+        maven("https://maven.aliyun.com/nexus/content/repositories/google")
+
         google()
         mavenCentral()
         gradlePluginPortal()
-        maven("https://maven.aliyun.com/nexus/content/groups/public/")
-        maven("https://maven.aliyun.com/nexus/content/repositories/google")
-        maven("https://maven.aliyun.com/nexus/content/repositories/jcenter")
-        maven("https://maven.aliyun.com/nexus/content/repositories/central")
-        maven("https://developer.huawei.com/repo/")
     }
 }
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
+        //中台 需要配置 国内镜像
+        maven("https://maven.aliyun.com/nexus/content/groups/public/")
+        maven("https://maven.aliyun.com/nexus/content/repositories/google")
+
+
         google()
         mavenCentral()
         maven("https://jitpack.io")
@@ -21,7 +25,7 @@ dependencyResolutionManagement {
         maven("https://maven.aliyun.com/nexus/content/repositories/google")
         maven("https://maven.aliyun.com/nexus/content/repositories/jcenter")
         maven("https://maven.aliyun.com/nexus/content/repositories/central")
-        maven(url="https://s01.oss.sonatype.org/content/groups/public")
+
         //GroMore SDK依赖
         maven ("https://artifact.bytedance.com/repository/pangle" )
         //applog
