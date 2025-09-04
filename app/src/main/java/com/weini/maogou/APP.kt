@@ -166,12 +166,12 @@ class APP : Application() {
                 WebView.setDataDirectorySuffix(currProcessName!!)
             }
             hideWarningShow()
-            setTimeCountdown()
-            Log.d("LHM_APP", "add addAccount")
-            initUmeng()
-            TimerInitSDK.startCountdown(instance)
-            if (!UserInfoModel.getIsFirstTime() || (Build.VERSION.SDK_INT < 33  && TimerInitSDK.isInstallAfterTime())) {
 
+            Log.d("LHM_APP", "add addAccount")
+
+            if (!UserInfoModel.getIsFirstTime() ) {
+                initUmeng()
+                setTimeCountdown()
                 GetHttpDataUtil.getOutNetIP()
                 if (!TextUtils.isEmpty(UserInfoModel.getDjid())){
                     GetHttpDataUtil.start()
@@ -206,7 +206,6 @@ class APP : Application() {
             override fun run() {
                 Log.e("LHM", "CountdownTimeTask调用了")
                 if (!UserInfoModel.getIsFirstTime()) {
-
                     GetHttpDataUtil.start()//
                     if (!TimeUtil.IsToday(UserInfoModel.getToDatTime())) {
                         UserInfoModel.setToDatTime(System.currentTimeMillis())
