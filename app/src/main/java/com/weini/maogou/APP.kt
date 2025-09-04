@@ -111,7 +111,7 @@ class APP : Application() {
                 }
             }
             if(UserInfoModel.getIsFirstVip()){
-                LZYADSUtils("APP", activity).initSimpleAd4(activity)
+                LZYADSUtils("APP", activity).initSimpleAd3(activity)
             }
         }
     }

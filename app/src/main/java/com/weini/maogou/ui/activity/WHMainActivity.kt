@@ -206,7 +206,7 @@ class WHMainActivity : BaseActivity() {
     }
     private fun firstShowVipDialog() {
         if (UserInfoModel.getIsFirstNormal()) {
-            LZYADSUtils("APP", this).initSimpleAd3(this@WHMainActivity)
+            LZYADSUtils("APP", this).initSimpleAd4(this@WHMainActivity)
         }
         VipDialog.showDialog(this, object : DialogCallBack {
             override fun buAgree() {
