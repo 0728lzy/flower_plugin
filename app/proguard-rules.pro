@@ -304,9 +304,9 @@
     public static ** valueOf(java.lang.String);
 }
 
--keep public class com.ruiteapp.pettranslator.bean.dj.NoProguard
+-keep public class com.weini.maogou.bean.dj.NoProguard
 
--keep class com.ruiteapp.pettranslator.bean.** { *; }
+-keep class com.weini.maogou.bean.** { *; }
 
  #retrofit2  混淆
  -dontwarn javax.annotation.**

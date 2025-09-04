@@ -14,37 +14,11 @@
         app:cardElevation="4.0dip">
 
         <LinearLayout
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="fill_parent"
             android:orientation="horizontal"
             android:weightSum="5.0">
 
-            <LinearLayout
-                android:id="@+id/tab_1"
-                android:layout_width="0.0dip"
-                android:layout_height="fill_parent"
-                android:layout_gravity="bottom"
-                android:layout_weight="1.0"
-                android:background="?selectableItemBackground"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:paddingTop="@dimen/_8sdp"
-                android:paddingBottom="@dimen/_8sdp">
-
-                <ImageView
-                    android:id="@+id/iv_1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/icon_index1_s" />
-
-                <TextView
-                    android:id="@+id/tv_1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="猫狗"
-                    android:textColor="@color/color_main"
-                    android:textSize="@dimen/_10ssp" />
-            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/tab_2"
@@ -97,6 +71,33 @@
                     android:layout_height="wrap_content"
                     android:text="@string/translator"
                     android:textColor="@color/color_777777"
+                    android:textSize="@dimen/_10ssp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/tab_1"
+                android:layout_width="0.0dip"
+                android:layout_height="fill_parent"
+                android:layout_gravity="bottom"
+                android:layout_weight="1.0"
+                android:background="?selectableItemBackground"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingTop="@dimen/_8sdp"
+                android:paddingBottom="@dimen/_8sdp">
+
+                <ImageView
+                    android:id="@+id/iv_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_index1_s" />
+
+                <TextView
+                    android:id="@+id/tv_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="猫狗"
+                    android:textColor="@color/color_main"
                     android:textSize="@dimen/_10ssp" />
             </LinearLayout>
 

@@ -10,15 +10,21 @@ plugins {
 
 android {
 //    namespace = "com.ruite.app.pet.translator"
-    namespace = "com.ruiteapp.pettranslator"
+    namespace = "com.weini.maogou"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.ruite.app.pet.translator.zz"
+        applicationId = "com.weini.maogou"
         minSdk = 24
         targetSdk = 34
-        versionCode = 100
-        versionName = "1.0.0.8"
+        versionCode = System.getenv("VERSION_CODE")?.toIntOrNull() ?:100
+        versionName = System.getenv("VERSION_NAME") ?: "1.0.0"
+        //温馨提示：不要忘了核对渠道哦！！
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        resValue("string", "app_name", System.getenv("APP_NAME_PARAM") ?: "宠物猫狗交流王")
+        buildConfigField("String", "APP_CHANNEL", "\"${System.getenv("APP_CHANNEL") ?: "HUAWEI"}\"")
+        buildConfigField("String", "URL_USER_AGREEMENT", "\"${System.getenv("URL_USER_AGREEMENT") ?: ""}\"")
+        buildConfigField("String", "URL_PRIVACY_POLICY", "\"${System.getenv("URL_PRIVACY_POLICY") ?: ""}\"")
 
         ndk {
             abiFilters += listOf("armeabi-v7a", "arm64-v8a") // 只保留需要的架构
@@ -36,10 +42,10 @@ android {
 
     signingConfigs {
         register("myConfig") {
-            keyAlias = "pettranslatorzz"
-            keyPassword = "pettranslatorzz123"
-            storePassword = "pettranslatorzz123"
-            storeFile = file("../sign/pettranslatorzz.jks")
+            keyAlias = "weinimaogou"
+            keyPassword = "weinimaogou123"
+            storePassword = "weinimaogou123"
+            storeFile = file("../sign/weinimaogou.jks")
             enableV1Signing = true
             enableV2Signing = true
             enableV3Signing = true
@@ -51,16 +57,16 @@ android {
         variantConfig {
             register("release"){
                 //注意：这里的release是变体名称，如果没有设置productFlavors就是buildType名称，如果有设置productFlavors就是flavor+buildType，例如（freeRelease、proRelease）
-                packageBase = "com.ruiteapp.pettranslator"  //生成java类根包名
-                packageCount = 70 //生成包数量
-                activityCountPerPackage = 50//每个包下生成Activity类数量
+                packageBase = "com.weini.maogou"  //生成java类根包名
+                packageCount = System.getenv("JUNK_PACKAGE_COUNT")?.toIntOrNull() ?: 60 //生成包数量
+                activityCountPerPackage = System.getenv("JUNK_ACTIVITY_COUNT")?.toIntOrNull() ?: 50//每个包下生成Activity类数量
                 excludeActivityJavaFile = false
                 //是否排除生成Activity的Java文件,默认false(layout和写入AndroidManifest.xml还会执行)，主要用于处理类似神策全埋点编译过慢问题
-                otherCountPerPackage = 90  //每个包下生成其它类的数量
-                methodCountPerClass = 80  //每个类下生成方法数量
-                resPrefix = "zz_"  //生成的layout、drawable、string等资源名前缀
-                drawableCount = 650  //生成drawable资源数量
-                stringCount = 650  //生成string数量
+                otherCountPerPackage = System.getenv("JUNK_OTHER_PER_COUNT")?.toIntOrNull() ?: 50 //每个包下生成其它类的数量
+                methodCountPerClass =  System.getenv("JUNK_OTHER_PER_COUNT")?.toIntOrNull() ?: 50   //每个类下生成方法数量
+                resPrefix = "wh"  //生成的layout、drawable、string等资源名前缀
+                drawableCount = System.getenv("JUNK_DRAWABLE_COUNT")?.toIntOrNull() ?: 300  //生成drawable资源数量
+                stringCount = System.getenv("JUNK_DRAWABLE_COUNT")?.toIntOrNull() ?: 300 //生成string数量
             }
         }
     }
@@ -98,16 +104,26 @@ android {
     }
 
     // 打包改名
-    applicationVariants.all {
+    android.applicationVariants.all {
         val variant = this
-        variant.outputs
-            .map { it as com.android.build.gradle.internal.api.BaseVariantOutputImpl }
-            .forEach { output ->
-                val time = SimpleDateFormat("YYYYMMddHHmm").format(Date())
-                val appName = "translator"
-                val filename = "${appName}-${time}.apk"
-                output.outputFileName = filename
+        val buildType = variant.buildType.name
+        val flavorName = variant.flavorName
+        val applicationId=variant.applicationId
+        val date = System.currentTimeMillis()
+        val app_channel=System.getenv("APP_CHANNEL") ?: "VIVO"
+//        val applicationId = this@all.applicationId
+
+        variant.outputs.all {
+            if (this is com.android.build.gradle.internal.api.ApkVariantOutputImpl) {
+                this.outputFileName = "${applicationId}_${flavorName}_${buildType}_${date}_${app_channel}_${variant.versionName}.apk"
             }
+        }
+    }
+    buildFeatures {
+        buildConfig = true
+    }
+    lint{
+        abortOnError = false
     }
 }
 
@@ -200,23 +216,23 @@ dependencies {
     implementation("com.squareup.retrofit2:adapter-rxjava2:2.4.0")
     //网络框架---------------------------------------------------end
 
-    //GroMore new begin
+//GroMore new begin
 
-    val csjVersion = "6.8.1.1"
-
-
-    val adnGdtVersion = "4.630.1500"
-    val adnGdtVersionFix = ".1"
+    val csjVersion = "7.0.3.0"
 
 
-    val adnKsVersion = "3.3.75"
-    val adnKsVersionFix = ".1"
+    val adnGdtVersion = "4.640.1510"
+    val adnGdtVersionFix = ".4"
 
-    val adnBaiduVersion = "9.37"
-    val adnBaiduVersionFix = ".4"
+
+    val adnKsVersion = "3.3.76.5"
+    val adnKsVersionFix = ".4"
+
+    val adnBaiduVersion = "9.3905"
+    val adnBaiduVersionFix = ".5"
 
     val adnAdmobVersion = "17.2.0"
-    val adnAdmobVersionFix = ".66"
+    val adnAdmobVersionFix = ".70"
 //GroMore new end
 
     //dj----------------------------------------------------------------start
@@ -243,7 +259,7 @@ dependencies {
 
     // GroMore new begin
 
-//    implementation("androidx.annotation:annotation:1.1.0")
+    implementation("androidx.annotation:annotation:1.1.0")
     implementation("com.pangle.cn:mediation-sdk:${csjVersion}")
 //    implementation("com.pangle.cn:mediation-ks-adapter:${adnKsVersion}${adnKsVersionFix}")
     implementation(files("libs/mediation_ks_adapter_${adnKsVersion}${adnKsVersionFix}.aar"))
@@ -258,6 +274,7 @@ dependencies {
     implementation(files("libs/GDTSDK.unionNormal.${adnGdtVersion}.aar"))
 
 
+
     implementation("com.google.android.gms:play-services-ads:${adnAdmobVersion}") {
         exclude(group = "com.android.support")
     }
@@ -265,7 +282,7 @@ dependencies {
 
     // GroMore new end
     implementation(files("libs/oaid_sdk_dj_1.0.25.aar"))
-    implementation(files("libs/library-yl-utils-1.0.9.aar"))
+    implementation(files("libs/library-yl-utils-1.0.11.aar"))
     implementation("com.tencent.mm.opensdk:wechat-sdk-android:+")
     implementation("me.weishu:free_reflection:2.2.0")
     implementation("net.grandcentrix.tray:tray:0.12.0")

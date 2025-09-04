@@ -34,16 +34,16 @@
     </queries>
 
     <application
-        android:name="com.ruiteapp.pettranslator.APP"
+        android:name="com.weini.maogou.APP"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@drawable/ic_app_logo"
+        android:icon="@mipmap/ic_app_logo"
         android:label="@string/app_name"
-        android:logo="@drawable/ic_app_logo"
+        android:logo="@mipmap/ic_app_logo"
         android:maxAspectRatio="2.4"
         android:resizeableActivity="true"
-        android:roundIcon="@drawable/ic_app_logo"
+        android:roundIcon="@mipmap/ic_app_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.YYBrowser"
         android:usesCleartextTraffic="true"
@@ -71,7 +71,7 @@
             android:value="640" />
 
         <activity
-            android:name=".ui.activity.ZZLauncherActivity"
+            android:name=".ui.activity.WHLauncherActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
@@ -86,28 +86,28 @@
         </activity>
 
         <activity
-            android:name=".ui.activity.ZZLanguageActivity"
+            android:name=".ui.activity.WHLanguageActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".ui.activity.ZZPermissionActivity"
+            android:name=".ui.activity.WHPermissionActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".ui.activity.ZZGuideActivity"
+            android:name=".ui.activity.WHGuideActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".ui.activity.ZZMainActivity"
+            android:name=".ui.activity.WHMainActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
@@ -115,44 +115,44 @@
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".ui.activity.ZZDetailActivity"
+            android:name=".ui.activity.WHDetailActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".ui.activity.ZZVideoActivity"
+            android:name=".ui.activity.WHVideoActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".ui.activity.ZZSoundActivity"
+            android:name=".ui.activity.WHSoundActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".ui.activity.ZZCallActivity"
+            android:name=".ui.activity.WHCallActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".ui.activity.ZZWebViewActivity"
+            android:name=".ui.activity.WHWebViewActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.ZZContactCustomerServiceActivity"
+            android:name=".ui.activity.WHContactCustomerServiceActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.activity.ZZAboutActivity"
+        <activity android:name=".ui.activity.WHAboutActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait" />
