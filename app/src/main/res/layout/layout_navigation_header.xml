@@ -25,7 +25,7 @@
             <ImageView
                 android:layout_width="@dimen/_70sdp"
                 android:layout_height="@dimen/_70sdp"
-                android:src="@drawable/ic_app_logo" />
+                android:src="@mipmap/ic_app_logo" />
         </androidx.cardview.widget.CardView>
 
         <TextView
