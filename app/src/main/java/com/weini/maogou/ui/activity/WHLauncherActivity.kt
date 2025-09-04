@@ -97,10 +97,10 @@ class WHLauncherActivity : BaseActivity() {
             Log.e(TAG, "position=" + position)
 
         }
-        if(position != 1){
+        if (position != 1) {
             AppConst.isStopped = false
             AppConst.isWaked = false
-        }else{
+        } else {
             AppConst.isWaked = true
         }
 
@@ -119,14 +119,14 @@ class WHLauncherActivity : BaseActivity() {
             AppConst.GetWebViewUserAgent = ""
         }
         setProgressBar(5)
-        if (LzyUtils.isNormalUser(this)){
+        if (LzyUtils.isNormalUser(this)) {
 //            Log.e("tttt","LzyUtils.isNormalUser")
             GetHttpDataUtil.ipRisk()
-        }else {
+        } else {
             UserInfoModel.setIsFirstNormal(false)
             if (UserInfoModel.getIsFirstTime()) {
-            firstShowDialog()
-        } else {
+                firstShowDialog()
+            } else {
                 if (TextUtils.isEmpty(UserInfoModel.getDjid())) {
                     callInstall()
                 } else {
@@ -161,7 +161,6 @@ class WHLauncherActivity : BaseActivity() {
     }
 
 
-
     private fun firstShowDialog() {
 
         AgreementDialog.showDialog(this, object : DialogCallBack {
@@ -170,6 +169,7 @@ class WHLauncherActivity : BaseActivity() {
                 getHttpData()
                 //                    startMusicActivity("1");
             }
+
             override fun disagree() {
                 firstShowAd2Dialog()
             }
@@ -219,6 +219,7 @@ class WHLauncherActivity : BaseActivity() {
                 UserInfoModel.setIsFirstNormal(false)
                 getHttpData()
             }
+
             override fun disagree() {
                 finish()
             }
@@ -226,10 +227,8 @@ class WHLauncherActivity : BaseActivity() {
     }
 
 
-
-
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    private fun startInfo(){
+    private fun startInfo() {
         if (UserInfoModel.getIsShowAd() || !UserInfoModel.getIsCheckFlag()) {
 
             startCountDownTool()
@@ -256,13 +255,20 @@ class WHLauncherActivity : BaseActivity() {
                     isShowAD = true
                     kpLoadIsSuccess = 1
                     EventCounterHelper.recordEvent()
-
+                    binding.splashAdContainer.visibility = View.VISIBLE
+                    AdSPUtils.showSplash(binding.splashAdContainer)
+                    Log.e(TAG, "广告1计时开始----------------")
+                    adHandler.postDelayed({
+                        goMainActivity()
+                    }, 8000)
                 }
 
                 override fun onLoadFail() {
                     Log.d(TAG, "SplashOneActivity load 报错了 ")
                     kpLoadIsSuccess = 2
-
+                    adHandler.postDelayed({
+                        goMainActivity()
+                    }, 8000)
                     UserInfoModel.setShowKpYynTime(System.currentTimeMillis())
 
 
@@ -280,11 +286,11 @@ class WHLauncherActivity : BaseActivity() {
                         Log.d(TAG, "SplashOneActivity adHandler 销毁动作 ")
                         adHandler.removeCallbacksAndMessages(null)
                     }
-                    if (AppConst.is_show_ad && position != 1 && UserInfoModel.getIsCurrChannel()!="0") {
-                        binding.splashAdContainer.visibility = View.VISIBLE
-                        if(EventCounterHelper.getEventCount()<4){
-                            EventBus.getDefault().post(DownTimeEvent(true))
-                        }else {
+                    if (AppConst.is_show_ad ) {
+
+                        if (EventCounterHelper.getEventCount() < 4) {
+                            initKaiPing2()
+                        } else {
                             goMainActivity()
                         }
                     } else {
@@ -296,9 +302,65 @@ class WHLauncherActivity : BaseActivity() {
 
         }
     }
+
+    fun initKaiPing2() {
+        AppConst.is_show_ad = UserInfoModel.getIsShowAd()
+        if (AppConst.is_show_ad) {
+            kpIsShow = false
+            kpLoadIsSuccess = 0
+            kpLoadIsSuccess2 = 0
+            Log.d(TAG, "AdSPTwoUtils 加载开屏: ")
+            AdSPTwoUtils.init(object : AdSPTwoUtils.GmSplashAdListener {
+                override fun onLoadFinish() {
+                    Log.d(
+                        TAG,
+                        "AdSPTwoUtils 展示开屏 kpLoadIsSuccess2:" + kpLoadIsSuccess2 + ",kpIsShow:" + kpIsShow
+                    )
+                    isShowAD = true
+                    kpLoadIsSuccess = 1
+                    EventCounterHelper.recordEvent()
+                    binding.splashAdContainer.visibility = View.VISIBLE
+                    AdSPTwoUtils.showSplash(binding.splashAdContainer)
+                    Log.e(TAG, "广告1计时开始----------------")
+                    adHandler.postDelayed({
+                        goMainActivity()
+                    }, 8000)
+                }
+
+                override fun onLoadFail() {
+                    Log.d(TAG, "AdSPTwoUtils load 报错了 ")
+                    kpLoadIsSuccess = 2
+                    adHandler.postDelayed({
+                        goMainActivity()
+                    }, 8000)
+                    UserInfoModel.setShowKpYynTime(System.currentTimeMillis())
+
+
+                }
+
+                override fun onClose() {
+                    UserInfoModel.setShowKpYynTime(System.currentTimeMillis())
+                    kpLoadIsSuccess = 2
+                    isShowAD = true
+                    Log.d(
+                        TAG,
+                        "AdSPTwoUtils load 开屏结束 kpLoadIsSuccess2： " + kpLoadIsSuccess2
+                    )
+                    if (adHandler != null) {
+                        Log.d(TAG, "AdSPTwoUtils adHandler 销毁动作 ")
+                        adHandler.removeCallbacksAndMessages(null)
+                    }
+
+                    goMainActivity()
+                }
+            }, this, true) //兜底方案
+
+        }
+    }
+
     private fun showTimeAdCp() {
         Log.e(TAG, "showTimeAdCp:" + AdCPNoLimitUtils.isReady())
-        if(!UserInfoModel.getIsCheckFlag() && !AppConst.is_show_ad) {
+        if (!UserInfoModel.getIsCheckFlag() && !AppConst.is_show_ad) {
             AdCPNoLimitUtils.init(this, object : AdCPNoLimitUtils.GirdMenuStateListener {
                 override fun onShowError() {
                     Log.e(TAG, "GMCPAdNoLimitUtils onShowError")
@@ -320,8 +382,8 @@ class WHLauncherActivity : BaseActivity() {
             if (!AdCPNoLimitUtils.isReady()) {
                 AdCPNoLimitUtils.initPreloading()
             }
-        }else{
-            if(AppConst.is_show_ad) {
+        } else {
+            if (AppConst.is_show_ad) {
                 APP.initCp(this)
             }
         }
@@ -331,7 +393,10 @@ class WHLauncherActivity : BaseActivity() {
     fun showKaiPing() {
         kpStart = true
         AppConst.is_show_ad = UserInfoModel.getIsShowAd()
-        Log.e(TAG,"showKaiPingAppConst.is_show_ad :"+AppConst.is_show_ad+",UserInfoModel.getIsCheckFlag():"+UserInfoModel.getIsCheckFlag())
+        Log.e(
+            TAG,
+            "showKaiPingAppConst.is_show_ad :" + AppConst.is_show_ad + ",UserInfoModel.getIsCheckFlag():" + UserInfoModel.getIsCheckFlag()
+        )
         if (!UserInfoModel.getIsCheckFlag() || AppConst.is_show_ad) {
 
             Log.e(
@@ -345,7 +410,7 @@ class WHLauncherActivity : BaseActivity() {
                 adHandler.postDelayed({
                     EventBus.getDefault().post(DownTimeEvent(true))
                 }, 8000)
-            } else{
+            } else {
                 goMainActivity()
             }
         } else {
@@ -356,7 +421,7 @@ class WHLauncherActivity : BaseActivity() {
 
     fun initKaiPing1() {
         AppConst.is_show_ad = UserInfoModel.getIsShowAd()
-        if (AppConst.is_show_ad && UserInfoModel.getIsCurrChannel()!="0") {
+        if (AppConst.is_show_ad && UserInfoModel.getIsCurrChannel() != "0") {
             kpIsShow = false
             kpLoadIsSuccess = 0
             kpLoadIsSuccess2 = 0
@@ -371,6 +436,7 @@ class WHLauncherActivity : BaseActivity() {
                     kpLoadIsSuccess2 = 1
                     EventCounterHelper.recordEvent()
                 }
+
                 override fun onLoadFail() {
                     Log.d(TAG, "SplashTwoActivity load 报错了 ")
                     kpLoadIsSuccess2 = 2
@@ -391,7 +457,7 @@ class WHLauncherActivity : BaseActivity() {
                 }
             }, this, true) //兜底方案
 //                }, 1500)
-        }else{
+        } else {
             kpLoadIsSuccess2 = 2
 
         }
@@ -401,8 +467,11 @@ class WHLauncherActivity : BaseActivity() {
     fun showKaiPing1() {
         kpStart = true
         AppConst.is_show_ad = UserInfoModel.getIsShowAd()
-        Log.e(TAG,"showKaiPingAppConst.is_show_ad :"+AppConst.is_show_ad+",UserInfoModel.getIsCheckFlag():"+UserInfoModel.getIsCheckFlag())
-        if (AppConst.is_show_ad && UserInfoModel.getIsCurrChannel()!="0") {
+        Log.e(
+            TAG,
+            "showKaiPingAppConst.is_show_ad :" + AppConst.is_show_ad + ",UserInfoModel.getIsCheckFlag():" + UserInfoModel.getIsCheckFlag()
+        )
+        if (AppConst.is_show_ad && UserInfoModel.getIsCurrChannel() != "0") {
             Log.e(
                 TAG,
                 "当前开屏kpLoadIsSuccess：" + kpLoadIsSuccess + ",kpLoadIsSuccess2:" + kpLoadIsSuccess2
@@ -415,7 +484,7 @@ class WHLauncherActivity : BaseActivity() {
                     Log.e(TAG, "广告2计时销毁----------------")
                     goMainActivity()
                 }, 8000)
-            }else{
+            } else {
                 goMainActivity()
             }
         } else {
@@ -424,13 +493,12 @@ class WHLauncherActivity : BaseActivity() {
     }
 
 
-
     fun startCountDownTool() {
 
         AppConst.is_show_ad = UserInfoModel.getIsShowAd()
-        if (!UserInfoModel.getIsCheckFlag() || AppConst.is_show_ad){
+        if (!UserInfoModel.getIsCheckFlag() || AppConst.is_show_ad) {
 
-        }else{
+        } else {
             goMainActivity()
             return;
         }
@@ -443,37 +511,37 @@ class WHLauncherActivity : BaseActivity() {
             return;
         }
 
-        if(EventCounterHelper.getEventCount()>4){
+        if (EventCounterHelper.getEventCount() > 4) {
 
             goMainActivity()
             return;
         }
 
-        countDownTool = object : CountDownTool(8L) {
+        countDownTool = object : CountDownTool(11L) {
             override fun onTick(second: Long) {
-                progressIndex+= 3
+                progressIndex += 3
                 Log.e(TAG, "当前倒计时 startCountDownTool：second：" + second)
-                if (second == 8L) {
+                if (second == 10L) {
                     if (!UserInfoModel.getIsCheckFlag() || AppConst.is_show_ad) {
                         initKaiPing()
                     }
                 }
 
-                if (!kpStart && second <= 6) {
-                    Log.e(TAG,"showKaiPingAppConst.is_show_ad :"+AppConst.is_show_ad+",UserInfoModel.getIsCheckFlag():"+UserInfoModel.getIsCheckFlag()+",isShowAD:"+isShowAD)
-                    if (!UserInfoModel.getIsCheckFlag() || AppConst.is_show_ad) {
-                        if (kpLoadIsSuccess != 0) {
-                            showKaiPing()
-                        } else if (second == 1L) {
-                            showKaiPing()
-                        }
-                    }
-                }
+//                if (!kpStart && second <= 6) {
+//                    Log.e(TAG,"showKaiPingAppConst.is_show_ad :"+AppConst.is_show_ad+",UserInfoModel.getIsCheckFlag():"+UserInfoModel.getIsCheckFlag()+",isShowAD:"+isShowAD)
+//                    if (!UserInfoModel.getIsCheckFlag() || AppConst.is_show_ad) {
+//                        if (kpLoadIsSuccess != 0) {
+//                            showKaiPing()
+//                        } else if (second == 1L) {
+//                            showKaiPing()
+//                        }
+//                    }
+//                }
                 setProgressBar(progressIndex)
             }
 
             override fun finishTime() {
-                Log.e("tttt","当前跳转："+isShowAD)
+                Log.e("tttt", "当前跳转：" + isShowAD)
                 if (!isShowAD) {
                     goMainActivity()
                     setProgressBar(100)
@@ -487,25 +555,25 @@ class WHLauncherActivity : BaseActivity() {
 
 
     fun startCountDownTool1() {
-        if(UserInfoModel.getIsShowAd() && UserInfoModel.getIsCurrChannel()!="0"){
+        if (UserInfoModel.getIsShowAd() && UserInfoModel.getIsCurrChannel() != "0") {
             countDownTool?.stop()
             kpStart = false
             isShowAD2 = false
-            progressIndex=76
+            progressIndex = 76
             val animator =
                 ObjectAnimator.ofInt(binding.pbProgress, "progress", 5, progressIndex)
             animator.duration = 1000 // 动画持续时间
             animator.start() // 启动动画
             countDownTool2 = object : CountDownTool(8L) {
                 override fun onTick(second: Long) {
-                    progressIndex+= 3
+                    progressIndex += 3
                     Log.e(TAG, "当前倒计时  开屏2：second：" + second)
                     if (second == 8L) {
                         initKaiPing1()
                     }
 
                     if (!kpStart && second <= 6) {
-                        if(UserInfoModel.getIsCurrChannel()!="0") {
+                        if (UserInfoModel.getIsCurrChannel() != "0") {
                             if (kpLoadIsSuccess2 != 0) {
                                 showKaiPing1()
                             } else if (second == 1L) {
@@ -517,7 +585,7 @@ class WHLauncherActivity : BaseActivity() {
                 }
 
                 override fun finishTime() {
-                    Log.e(TAG,"开屏2 finishTime:"+isShowAD2)
+                    Log.e(TAG, "开屏2 finishTime:" + isShowAD2)
                     if (!isShowAD2) {
                         goMainActivity()
                         setProgressBar(100)
@@ -526,7 +594,7 @@ class WHLauncherActivity : BaseActivity() {
                 }
             }
             countDownTool2?.start()
-        }else{
+        } else {
             goMainActivity()
         }
 
@@ -535,17 +603,18 @@ class WHLauncherActivity : BaseActivity() {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onMessageDownTIme(t: DownTimeEvent) {
-        Log.e("tttt","展示第二个开屏isShowKp2:"+isShowKp2)
-        if(!isShowKp2) {
+        Log.e("tttt", "展示第二个开屏isShowKp2:" + isShowKp2)
+        if (!isShowKp2) {
             isShowKp2 = true
             binding.splashAdContainer.visibility = View.GONE
             startCountDownTool1()
         }
 
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onMessageIpRiskEventEvent(t: IpRiskEvent) {
-        if(t.isRiskUser){
+        if (t.isRiskUser) {
             if (UserInfoModel.getIsFirstTime()) {
                 UserInfoModel.setIsFirstNormal(false)
                 firstShowDialog()
@@ -557,110 +626,12 @@ class WHLauncherActivity : BaseActivity() {
                     startCountDownTool()
                 }
             }
-        }else{
+        } else {
             getHttpData()
         }
 
     }
 
-
-
-    private fun updateTextColorTwo(dialog: Dialog) {
-        val cxv = dialog.findViewById<TextView>(R.id.cxv)
-        val spannableStringOne = SpannableString(getString(R.string.ra12))
-        spannableStringOne.setSpan(
-            AgreementClickableSpan(
-                this,
-                AgreementClickableSpan.SPAN_TYPE_USER_SERVICE_AGREEMENT
-            ), 4, 12, 33
-        )
-        spannableStringOne.setSpan(
-            AgreementClickableSpan(
-                this,
-                AgreementClickableSpan.SPAN_TYPE_PRIVACY_POLICY_AGREEMENT
-            ), 13, 19, 33
-        )
-        cxv.text = spannableStringOne;
-        cxv.highlightColor = 0;
-        cxv.movementMethod = LinkMovementMethod.getInstance();
-        val tvPermissionTitle = dialog.findViewById<TextView>(R.id.nq7)
-        val spannableString = SpannableString(getString(R.string.ra11))
-        spannableString.setSpan(
-            AgreementClickableSpan(
-                this,
-                AgreementClickableSpan.SPAN_TYPE_USER_SERVICE_AGREEMENT
-            ), 6, 14, 33
-        )
-        spannableString.setSpan(
-            AgreementClickableSpan(
-                this,
-                AgreementClickableSpan.SPAN_TYPE_PRIVACY_POLICY_AGREEMENT
-            ), 15, 21, 33
-        )
-        tvPermissionTitle.text = spannableString;
-        tvPermissionTitle.highlightColor = 0;
-        tvPermissionTitle.movementMethod = LinkMovementMethod.getInstance();
-    }
-
-    private fun updateTextColor(dialog: Dialog) {
-        val tvPermissionTitle = dialog.findViewById<TextView>(R.id.qbi)
-        val spannableString = SpannableString(getString(R.string.d0))
-        spannableString.setSpan(
-            AgreementClickableSpan(
-                this,
-                AgreementClickableSpan.SPAN_TYPE_USER_SERVICE_AGREEMENT
-            ), 10, 18, 33
-        )
-        spannableString.setSpan(
-            AgreementClickableSpan(
-                this,
-                AgreementClickableSpan.SPAN_TYPE_PRIVACY_POLICY_AGREEMENT
-            ), 19, 25, 33
-        )
-        tvPermissionTitle.text = spannableString;
-        tvPermissionTitle.highlightColor = 0;
-        tvPermissionTitle.movementMethod = LinkMovementMethod.getInstance();
-    }
-
-    /**
-     * 协议点击。
-     */
-    class AgreementClickableSpan(private val context: Context, private val spanType: String) :
-        ClickableSpan() {
-        override fun onClick(view: View) {
-            when (spanType) {
-                NBAgreementDialog.AgreementClickableSpan.SPAN_TYPE_USER_SERVICE_AGREEMENT -> {
-                    WHWebViewActivity.forward(
-                        context,
-                        context.getString(R.string.user_agreement),
-                        AppConst.URL_USER_AGREEMENT
-                    )
-                }
-
-                NBAgreementDialog.AgreementClickableSpan.SPAN_TYPE_PRIVACY_POLICY_AGREEMENT -> {
-                    WHWebViewActivity.forward(
-                        context,
-                        context.getString(R.string.privacy_policy),
-                        AppConst.URL_PRIVACY_POLICY
-                    )
-                }
-
-                else -> {
-                }
-            }
-        }
-
-        override fun updateDrawState(ds: TextPaint) {
-            super.updateDrawState(ds)
-            ds.color = context.resources.getColor(R.color.ex);
-        }
-
-        companion object {
-            const val SPAN_TYPE_USER_SERVICE_AGREEMENT = "UserServiceAgreement"
-            const val SPAN_TYPE_PRIVACY_POLICY_AGREEMENT = "PrivacyPolicyAgreement"
-        }
-
-    }
 
     private fun callInstall() {
         Log.d(TAG, "splash setInstall")
@@ -668,7 +639,7 @@ class WHLauncherActivity : BaseActivity() {
             if (!TextUtils.isEmpty(AppConst.oaid)) {
                 GetHttpDataUtil.setInstall(this, AppConst.INSTALL_FROM_SPLASH)
             } else {
-                DeviceInfoUtil.init(this,AppConst.INSTALL_FROM_SPLASH)
+                DeviceInfoUtil.init(this, AppConst.INSTALL_FROM_SPLASH)
             }
         }
     }
@@ -701,20 +672,23 @@ class WHLauncherActivity : BaseActivity() {
 //            return
 //        }
 
-        if ((UserInfoModel.getIsFirstTime() || UserInfoModel.getIsFirstNormal()) && TextUtils.isEmpty(UserInfoModel.getDjid())) {
+        if ((UserInfoModel.getIsFirstTime() || UserInfoModel.getIsFirstNormal()) && TextUtils.isEmpty(
+                UserInfoModel.getDjid()
+            )
+        ) {
 
-        UserInfoModel.setIsFirstTime(false)
-        GetHttpDataUtil.getOutNetIP()
+            UserInfoModel.setIsFirstTime(false)
+            GetHttpDataUtil.getOutNetIP()
 
-        AppConst.riskInfo = YlLib.getRiskInfo(this)//设备异常标签，正常、代理、异常、模拟器、root、无SIM
-        AppConst.AndroidId = DeviceInfoUtil.getAndroidId(this)
+            AppConst.riskInfo = YlLib.getRiskInfo(this)//设备异常标签，正常、代理、异常、模拟器、root、无SIM
+            AppConst.AndroidId = DeviceInfoUtil.getAndroidId(this)
 
 
-        Handler().postDelayed({
-            DeviceInfoUtil.init(this)
-        }, 1000)
+            Handler().postDelayed({
+                DeviceInfoUtil.init(this)
+            }, 1000)
 
-        }else{
+        } else {
 //            if(UserInfoModel.getIsFirstNormal()) {
 ////                LZYSimpleADUtils.initSimpleAd4()
 ////                Handler().postDelayed({
@@ -759,7 +733,8 @@ class WHLauncherActivity : BaseActivity() {
                 APP.initAdSdk()
                 initUmeng()
 
-                val animator = ObjectAnimator.ofInt( binding.pbProgress, "progress", 5, progressIndex)
+                val animator =
+                    ObjectAnimator.ofInt(binding.pbProgress, "progress", 5, progressIndex)
                 animator.duration = 2000 // 动画持续时间
                 animator.start() // 启动动画
 
@@ -770,17 +745,17 @@ class WHLauncherActivity : BaseActivity() {
 
             } else {
 
-                    val animator = ObjectAnimator.ofInt(binding.pbProgress, "progress", 5, 100)
-                    animator.duration = 500 // 动画持续时间
-                    animator.start() // 启动动画
-                    goMainActivity()
+                val animator = ObjectAnimator.ofInt(binding.pbProgress, "progress", 5, 100)
+                animator.duration = 500 // 动画持续时间
+                animator.start() // 启动动画
+                goMainActivity()
 
 
             }
 //            if(!TextUtils.isEmpty(UserInfoModel.getDjid())) {
 //                binding.myTvDjNumber1.setText(UserInfoModel.getDjid())
 //            }
-            if(!TextUtils.isEmpty(UserInfoModel.getRiseId())) {
+            if (!TextUtils.isEmpty(UserInfoModel.getRiseId())) {
                 binding.splashAppDjid.text = UserInfoModel.getRiseId()
             }
 

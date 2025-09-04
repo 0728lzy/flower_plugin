@@ -29,6 +29,7 @@ import com.weini.maogou.dialog.AgreementDialog
 import com.weini.maogou.dialog.DialogCallBack
 import com.weini.maogou.event.SimpleEvent
 import com.weini.maogou.ext.thrillClickListener
+import com.weini.maogou.ui.fragment.HomeFragment
 import com.weini.maogou.ui.fragment.WHIndex1Fragment
 import com.weini.maogou.ui.fragment.WHIndex5Fragment
 import com.weini.maogou.ui.fragment.WHIndex3Fragment
@@ -60,17 +61,17 @@ class WHMainActivity : BaseActivity() {
     var isFirst=true
 
     val fragments = listOf<Fragment>(
-        WHIndex1Fragment(),
+        HomeFragment(),
         WHIndex2Fragment(),
         WHIndex3Fragment(),
         WHIndex4Fragment(),
-        WHIndex5Fragment(),
+        WHIndex1Fragment(),
     )
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
         binding = ActivityMainBinding.bind(view)
         lzyadsUtils=LZYADSUtils("MainActivity",this)
-        binding.ivAbout.thrillClickListener {
+        binding.ivAvatar.thrillClickListener {
             WHAboutActivity.forward(this@WHMainActivity)
         }
 
@@ -104,19 +105,28 @@ class WHMainActivity : BaseActivity() {
             }
         })
 
-        binding.bottomBar.tab1.thrillClickListener {
+        binding.bottomBar.tabHome.thrillClickListener {
+            binding.llTop.visibility=View.GONE
             tabChange(0)
         }
         binding.bottomBar.tab2.thrillClickListener {
+            binding.llTop.visibility=View.VISIBLE
+            binding.tvTitle.text="训练文章"
             tabChange(1)
         }
         binding.bottomBar.tab3.thrillClickListener {
+            binding.llTop.visibility=View.VISIBLE
+            binding.tvTitle.text="对话翻译"
             tabChange(2)
         }
         binding.bottomBar.tab4.thrillClickListener {
+            binding.llTop.visibility=View.VISIBLE
+            binding.tvTitle.text="虚拟视频"
             tabChange(3)
         }
         binding.bottomBar.tab5.thrillClickListener {
+            binding.llTop.visibility=View.VISIBLE
+            binding.tvTitle.text="叫声翻译"
             tabChange(4)
         }
 
@@ -126,7 +136,7 @@ class WHMainActivity : BaseActivity() {
 
     }
 
-    private fun tabChange(index: Int) {
+     fun tabChange(index: Int) {
         binding.bottomBar.iv1.setImageResource(R.drawable.icon_index1_n)
         binding.bottomBar.iv2.setImageResource(R.drawable.icon_index4_n)
         binding.bottomBar.iv3.setImageResource(R.drawable.icon_index3_n)
@@ -169,16 +179,11 @@ class WHMainActivity : BaseActivity() {
 
     override fun initStatus() {
         ImmersionBar.with(this)
-            .statusBarDarkFont(true)
-            .statusBarColor(R.color.white)
+            .transparentStatusBar()  //透明状态栏，不写默认透明色
             .init()
     }
 
     override fun onBackPressed() {
-        if (binding.drawerLayout.isOpen) {
-            binding.drawerLayout.closeDrawers()
-            return
-        }
         super.onBackPressed()
 
     }

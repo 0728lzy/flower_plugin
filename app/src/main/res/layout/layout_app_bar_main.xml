@@ -7,7 +7,7 @@
     android:tag="layout/layout_app_bar_main_0">
 
     <ImageView
-        android:id="@id/iv_menu"
+        android:id="@+id/iv_menu"
         android:layout_width="@dimen/_35sdp"
         android:layout_height="@dimen/_35sdp"
         android:layout_centerVertical="true"

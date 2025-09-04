@@ -1,192 +1,185 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="fill_parent"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_alignParentBottom="true"
-    android:orientation="vertical"
-    android:tag="layout/content_bottom_bar_new_0">
+    app:cardElevation="4.0dip">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_5sdp"
-        app:cardElevation="4.0dip">
+        android:layout_height="fill_parent"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:orientation="horizontal"
+        android:weightSum="5.0"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:id="@+id/tab_5"
+            android:layout_width="0.0dip"
             android:layout_height="fill_parent"
-            android:layout_marginTop="@dimen/_20sdp"
-            android:orientation="horizontal"
-            android:weightSum="5.0"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_gravity="bottom"
+            android:layout_weight="1.0"
+            android:background="?selectableItemBackground"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/_8sdp"
+            android:paddingBottom="@dimen/_8sdp">
+
+            <ImageView
+                android:id="@+id/iv_5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_index2_n" />
+
+            <TextView
+                android:id="@+id/tv_5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="叫声"
+                android:textColor="@color/color_777777"
+                android:textSize="@dimen/_10ssp" />
+        </LinearLayout>
 
 
-            <LinearLayout
-                android:id="@+id/tab_2"
-                android:layout_width="0.0dip"
-                android:layout_height="fill_parent"
-                android:layout_gravity="bottom"
-                android:layout_weight="1.0"
-                android:background="?selectableItemBackground"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:paddingTop="@dimen/_5sdp"
-                android:paddingBottom="@dimen/_5sdp">
+        <LinearLayout
+            android:id="@+id/tab_3"
+            android:layout_width="0.0dip"
+            android:layout_height="fill_parent"
+            android:layout_gravity="bottom"
+            android:layout_weight="1.0"
+            android:background="?selectableItemBackground"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/_5sdp"
+            android:paddingBottom="@dimen/_5sdp">
 
-                <ImageView
-                    android:id="@+id/iv_2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/icon_index4_n" />
+            <ImageView
+                android:id="@+id/iv_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_index3_n" />
 
-                <TextView
-                    android:id="@+id/tv_2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/training"
-                    android:textColor="@color/color_777777"
-                    android:textSize="@dimen/_10ssp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/tab_3"
-                android:layout_width="0.0dip"
-                android:layout_height="fill_parent"
-                android:layout_gravity="bottom"
-                android:layout_weight="1.0"
-                android:background="?selectableItemBackground"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:paddingTop="@dimen/_5sdp"
-                android:paddingBottom="@dimen/_5sdp">
-
-                <ImageView
-                    android:id="@+id/iv_3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/icon_index3_n" />
-
-                <TextView
-                    android:id="@+id/tv_3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/translator"
-                    android:textColor="@color/color_777777"
-                    android:textSize="@dimen/_10ssp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/tab_1"
-                android:layout_width="0.0dip"
-                android:layout_height="fill_parent"
-                android:layout_gravity="bottom"
-                android:layout_weight="1.0"
-                android:background="?selectableItemBackground"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:paddingTop="@dimen/_8sdp"
-                android:paddingBottom="@dimen/_8sdp"
-                android:visibility="invisible">
-
-                <ImageView
-                    android:id="@+id/iv_1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/icon_index1_s" />
-
-                <TextView
-                    android:id="@+id/tv_1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="猫狗"
-                    android:textColor="@color/color_main"
-                    android:textSize="@dimen/_10ssp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/tab_4"
-                android:layout_width="0.0dip"
-                android:layout_height="fill_parent"
-                android:layout_gravity="bottom"
-                android:layout_weight="1.0"
-                android:background="?selectableItemBackground"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:paddingTop="@dimen/_5sdp"
-                android:paddingBottom="@dimen/_5sdp">
-
-                <ImageView
-                    android:id="@+id/iv_4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/icon_index5_n" />
-
-                <TextView
-                    android:id="@+id/tv_4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/fake_video"
-                    android:textColor="@color/color_777777"
-                    android:textSize="@dimen/_10ssp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/tab_5"
-                android:layout_width="0.0dip"
-                android:layout_height="fill_parent"
-                android:layout_gravity="bottom"
-                android:layout_weight="1.0"
-                android:background="?selectableItemBackground"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:paddingTop="@dimen/_8sdp"
-                android:paddingBottom="@dimen/_8sdp">
-
-                <ImageView
-                    android:id="@+id/iv_5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/icon_index2_n" />
-
-                <TextView
-                    android:id="@+id/tv_5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="我的"
-                    android:textColor="@color/color_777777"
-                    android:textSize="@dimen/_10ssp" />
-            </LinearLayout>
+            <TextView
+                android:id="@+id/tv_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="对话"
+                android:textColor="@color/color_777777"
+                android:textSize="@dimen/_10ssp" />
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/tab_home"
-            android:layout_width="@dimen/_60sdp"
-            android:layout_height="@dimen/_60sdp"
-            android:background="@drawable/icon_index_home_bg"
+            android:id="@+id/tab_1"
+            android:layout_width="0.0dip"
+            android:layout_height="fill_parent"
+            android:layout_gravity="bottom"
+            android:layout_weight="1.0"
+            android:background="?selectableItemBackground"
             android:gravity="center"
             android:orientation="vertical"
             android:paddingTop="@dimen/_8sdp"
             android:paddingBottom="@dimen/_8sdp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:visibility="invisible">
 
             <ImageView
-                android:padding="@dimen/dk_dp_5"
+                android:id="@+id/iv_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/icon_index_home" />
+                android:src="@drawable/icon_index1_s" />
 
             <TextView
-
+                android:id="@+id/tv_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="首页"
-                android:textColor="@color/white"
+                android:text="猫狗"
+                android:textColor="@color/color_main"
                 android:textSize="@dimen/_10ssp" />
         </LinearLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:id="@+id/tab_2"
+            android:layout_width="0.0dip"
+            android:layout_height="fill_parent"
+            android:layout_gravity="bottom"
+            android:layout_weight="1.0"
+            android:background="?selectableItemBackground"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/_5sdp"
+            android:paddingBottom="@dimen/_5sdp">
 
-</LinearLayout>
+            <ImageView
+                android:id="@+id/iv_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_index4_n" />
+
+            <TextView
+                android:id="@+id/tv_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/training"
+                android:textColor="@color/color_777777"
+                android:textSize="@dimen/_10ssp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/tab_4"
+            android:layout_width="0.0dip"
+            android:layout_height="fill_parent"
+            android:layout_gravity="bottom"
+            android:layout_weight="1.0"
+            android:background="?selectableItemBackground"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/_5sdp"
+            android:paddingBottom="@dimen/_5sdp">
+
+            <ImageView
+                android:id="@+id/iv_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_index5_n" />
+
+            <TextView
+                android:id="@+id/tv_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/fake_video"
+                android:textColor="@color/color_777777"
+                android:textSize="@dimen/_10ssp" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/tab_home"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_50sdp"
+        android:background="@drawable/icon_index_home_bg"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/_8sdp"
+        android:paddingBottom="@dimen/_8sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dk_dp_5"
+            android:src="@drawable/icon_index_home" />
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="首页"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_10ssp" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

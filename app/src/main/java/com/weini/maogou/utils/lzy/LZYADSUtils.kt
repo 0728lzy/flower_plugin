@@ -10,6 +10,10 @@ import com.weini.maogou.csj.AdFeedSimpleOneUtils
 import com.weini.maogou.csj.AdFeedSimpleTwoUtils
 import com.weini.maogou.csj.AdRVUtils
 import com.weini.maogou.AppConst
+import com.weini.maogou.csj.AdCPFourUtils
+import com.weini.maogou.csj.AdCPThreeUtils
+import com.weini.maogou.csj.AdFeedSimpleFourUtils
+import com.weini.maogou.csj.AdFeedSimpleThreeUtils
 import com.weini.maogou.utils.dj.AntiRepeatClickUtils
 import com.weini.maogou.utils.dj.UserInfoModel
 import com.weini.maogou.widget.dialog.LoadingDiaLog
@@ -186,6 +190,62 @@ class LZYADSUtils(val tag: String,val activity: Activity?){
             AdCPTwoUtils.showInterstitialFullAd(activity)
         }
     }
+    fun showAdCp3() {
+        if (!AppConst.is_show_ad) {
+            return
+        }
+        AdCPThreeUtils.init(activity, object : AdCPThreeUtils.GirdMenuStateListener {
+            override fun onSuccess() {
+                Log.e(tag, "tab cp2 onSuccess")
+                AdCPThreeUtils.showInterstitialFullAd(activity)
+            }
+
+            override fun onError() {
+                Log.e(tag, "tab cp2 onError")
+            }
+
+            override fun showVideoClosed() {
+//                initAdCp2()
+            }
+
+            override fun onShowError() {
+            }
+
+        })
+        if (!AdCPThreeUtils.isReady()) {
+            AdCPThreeUtils.initPreloading("")
+        } else {
+            AdCPThreeUtils.showInterstitialFullAd(activity)
+        }
+    }
+    fun showAdCp4() {
+        if (!AppConst.is_show_ad) {
+            return
+        }
+        AdCPFourUtils.init(activity, object : AdCPFourUtils.GirdMenuStateListener {
+            override fun onSuccess() {
+                Log.e(tag, "tab cp2 onSuccess")
+                AdCPFourUtils.showInterstitialFullAd(activity)
+            }
+
+            override fun onError() {
+                Log.e(tag, "tab cp2 onError")
+            }
+
+            override fun showVideoClosed() {
+//                initAdCp2()
+            }
+
+            override fun onShowError() {
+            }
+
+        })
+        if (!AdCPFourUtils.isReady()) {
+            AdCPFourUtils.initPreloading("")
+        } else {
+            AdCPFourUtils.showInterstitialFullAd(activity)
+        }
+    }
     fun showAdJL(diaLog: LoadingDiaLog,play:()->Unit) {
         if (AppConst.is_show_ad&&activity!=null) {
             if (!AntiRepeatClickUtils.isFastClickJL()) {
@@ -275,8 +335,14 @@ class LZYADSUtils(val tag: String,val activity: Activity?){
             1 -> {
                 showAdCp2()
             }
+            2 -> {
+                showAdCp3()
+            }
+            3 -> {
+                showAdCp4()
+            }
         }
-        AppConst.adsFlag = (AppConst.adsFlag + 1) % 2
+        AppConst.adsFlag = (AppConst.adsFlag + 1) % 4
     }
     //adv加载广告---------------------------------------------------end
 
@@ -392,6 +458,40 @@ class LZYADSUtils(val tag: String,val activity: Activity?){
                 }
             })
             AdFeedSimpleTwoUtils.initPreloading("")
+        }
+    }
+    fun loadSimpleAd3(fragment: FrameLayout?) {
+        if (activity != null && AppConst.is_show_ad) {
+            AdFeedSimpleThreeUtils.init(activity, object : AdFeedSimpleThreeUtils.GirdMenuStateListener {
+                override fun onSuccess() {
+                    Log.e(TAG, " GMFeedSimpleAdTwoUtils onSuccess")
+                    if (fragment != null&&activity!=null) {
+                        AdFeedSimpleThreeUtils.showAd(fragment, activity)
+                    }
+                }
+
+                override fun onError() {
+                    Log.e(TAG, " loadSimpleAdOne onError")
+                }
+            })
+            AdFeedSimpleThreeUtils.initPreloading("")
+        }
+    }
+    fun loadSimpleAd4(fragment: FrameLayout?) {
+        if (activity != null && AppConst.is_show_ad) {
+            AdFeedSimpleFourUtils.init(activity, object : AdFeedSimpleFourUtils.GirdMenuStateListener {
+                override fun onSuccess() {
+                    Log.e(TAG, " GMFeedSimpleAdTwoUtils onSuccess")
+                    if (fragment != null&&activity!=null) {
+                        AdFeedSimpleFourUtils.showAd(fragment, activity)
+                    }
+                }
+
+                override fun onError() {
+                    Log.e(TAG, " loadSimpleAdOne onError")
+                }
+            })
+            AdFeedSimpleFourUtils.initPreloading("")
         }
     }
     fun loadSimpleAd1(fragment: FrameLayout?,dip:Int) {

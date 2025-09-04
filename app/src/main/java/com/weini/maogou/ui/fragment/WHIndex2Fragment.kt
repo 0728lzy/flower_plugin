@@ -17,6 +17,11 @@ import com.weini.maogou.ext.thrillClickListener
 import com.weini.maogou.ui.activity.WHDetailActivity
 import com.weini.maogou.utils.lzy.LZYADSUtils
 import com.tbuonomo.viewpagerdotsindicator.setBackgroundCompat
+import com.weini.maogou.event.SimpleEvent
+import com.weini.maogou.utils.lzy.LZYLog
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 
 class WHIndex2Fragment : RootFragment(R.layout.fragment_index_4) {
@@ -28,11 +33,28 @@ class WHIndex2Fragment : RootFragment(R.layout.fragment_index_4) {
     private lateinit var lzyadsUtils: LZYADSUtils
 
     var type = 1
+    override fun onStart() {
+        super.onStart()
+        EventBus.getDefault().register(this)
+    }
 
+    override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().unregister(this)
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onMessageSimpleEvent(message: SimpleEvent) {
+        if(message.simple == 1){
+            LZYLog.e("simple","message simple:${message.simple}")
+//            lzyadsUtils.loadSimpleAd2(binding.feedContainerFragment4)
+        }
+    }
     override fun initView(view: View, savedInstanceState: Bundle?) {
         _binding = view.getBinding()
         lzyadsUtils = LZYADSUtils("Index4Fragment", requireActivity())
         binding.tvDog.thrillClickListener {
+            lzyadsUtils.loadSimpleAd2(binding.feedContainerFragment4)
             binding.tvDog.setBackgroundResource(R.drawable.border_txt_tab_training)
             binding.tvDog.setTextColor(Color.WHITE)
             binding.tvCat.setBackgroundCompat(null)
@@ -47,6 +69,7 @@ class WHIndex2Fragment : RootFragment(R.layout.fragment_index_4) {
             cat()
         }
         binding.rvList.linear().setup {
+            lzyadsUtils.loadSimpleAd2(binding.feedContainerFragment4)
             addType<Index4Entity>(R.layout.item_4)
             onBind {
                 getBinding<Item4Binding>().apply {
@@ -83,7 +106,7 @@ class WHIndex2Fragment : RootFragment(R.layout.fragment_index_4) {
             Index4Entity(R.mipmap.icon_food, getString(R.string.index_4_1), getString(R.string.content_food)),
             Index4Entity(R.mipmap.icon_obedience, getString(R.string.index_4_4), getString(R.string.content_obedience)),
 
-        )
+        ).shuffled()
     }
 
     private fun cat() {
@@ -101,6 +124,6 @@ class WHIndex2Fragment : RootFragment(R.layout.fragment_index_4) {
                 getString(R.string.index_4_9),
                 getString(R.string.content_scratching_needs)
             ),
-        )
+        ).shuffled()
     }
 }

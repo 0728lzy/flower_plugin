@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
     android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     android:background="@color/nav_dead_color">
 
     <LinearLayout
@@ -13,61 +12,42 @@
         android:background="@color/demo_bg_color"
         android:orientation="vertical">
 
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="30dp"
-            android:paddingLeft="@dimen/_5sdp"
-            android:paddingRight="@dimen/_5sdp"
-            android:tag="layout/layout_app_bar_main_0">
+        <!-- 顶部背景渐变 -->
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/ll_top"
+            android:layout_width="match_parent"
+            android:layout_height="96dp"
+            android:background="@drawable/bg_top_gradient"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="58dp"
+            android:paddingEnd="16dp">
 
-            <ImageView
-                android:visibility="gone"
-                android:id="@+id/iv_menu"
-                android:layout_width="@dimen/_35sdp"
-                android:layout_height="@dimen/_35sdp"
-                android:layout_centerVertical="true"
-                android:padding="@dimen/_5sdp"
-                android:src="@drawable/ic_menu" />
-
+            <!-- 标题文字 -->
             <TextView
-                android:visibility="gone"
                 android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_13sdp"
-                android:maxLines="1"
-                android:text="@string/app_name"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_20ssp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="叫声翻译"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
+            <!-- 头像按钮 -->
             <ImageView
-                android:id="@+id/iv_about"
-                android:layout_width="@dimen/_35sdp"
-                android:layout_height="@dimen/_35sdp"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:padding="@dimen/_5sdp"
-                android:layout_marginRight="8dp"
-                android:visibility="gone"
-                android:src="@drawable/icon_aboutus" />
-
-
-
-            <TextView
-                android:id="@+id/splash_app_djid"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:alpha="0.5"
-                android:textSize="12dp"
-                android:textColor="@color/little_gray_2"
-                android:gravity="right"
-                android:layout_marginRight="10dp"
-                />
-        </RelativeLayout>
+                android:id="@+id/iv_avatar"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@drawable/bg_circle_white"
+                android:padding="6dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_avatar" />
+        </LinearLayout>
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:id="@+id/ll_coordinator_content"
@@ -79,7 +59,8 @@
                 android:id="@+id/main_pager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal" />
+                android:orientation="horizontal"
+                android:overScrollMode="never" />
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
@@ -88,28 +69,17 @@
             layout="@layout/layout_content_bottom_bar" />
     </LinearLayout>
 
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/nav_view"
+    <TextView
+        android:id="@+id/splash_app_djid"
         android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
-        android:layout_gravity="start"
-        android:background="@android:color/white"
-        android:fitsSystemWindows="true">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:orientation="vertical"
-            android:tag="binding_3">
-
-            <include
-                android:id="@+id/header_nav"
-                layout="@layout/layout_navigation_header" />
-
-            <include
-                android:id="@+id/content_nav"
-                layout="@layout/layout_navigation_content" />
-        </LinearLayout>
-    </com.google.android.material.navigation.NavigationView>
-
-</androidx.drawerlayout.widget.DrawerLayout>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:layout_marginRight="10dp"
+        android:alpha="0.5"
+        android:gravity="right"
+        android:text=""
+        android:textColor="@color/little_gray_2"
+        android:textSize="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+    <uses-sdk tools:overrideLibrary="com.google.android.gms.ads_base,com.google.android.gms.ads.impl,com.google.android.gms.gass,com.google.android.gms.ads,com.kwad.sdk,com.sigmob.windad,com.unity3d.ads,com.bun.miitmdid     ,com.mbridge.msdk.video,com.mbridge.msdk.mbsignalcommon,com.mbridge.msdk.playercommon,com.mbridge.msdk.reward,com.mbridge.msdk.banner,com.mbridge.msdk.splash ,com.mbridge.msdk.videocommon,com.mbridge.msdk,com.mbridge.msdk.intervideo,com.mbridge.msdk.mbnative,com.mbridge.msdk.nativex,com.mbridge.msdk.advanced,com.mbridge.msdk.interstitial,com.tencent.klevin,com.bytedance.sdk.openadsdk.adhost,com.huawei.hms.framework.common,
+            com.daemon.lib,
+            com.huawei.hms.framework.network.grs,
+            com.huawei.hms.baselegacyapi,
+            com.huawei.hmf.tasks,
+            com.huawei.agconnect.core,
+            com.huawei.hms.log,
+            com.huawei.hms.base.device,
+            com.huawei.hms.base.ui,
+            com.huawei.hms.stats,
+            com.huawei.hms.base.availableupdate,
+            com.huawei.android.hms.base,
+            com.huawei.android.hms.openid,
+            com.huawei.android.hms.push,
+            com.huawei.hms.hatool,
+            com.huawei.hms.framework.network.frameworkcompat,
+            org.android.agoo.oppo,
+            com.vivo.push,
+            org.android.agoo.vivo,
+            org.android.agoo.meizu,
+            org.android.agoo.huawei,
+            com.pushsdk,
+            com.google.firebase.firebase_analytics,
+            com.google.firebase.messaging,
+            com.google.android.gms.measurement.api,
+            com.google.firebase.measurement,
+            com.google.android.gms.measurement.sdk,
+            com.google.android.gms.cloudmessaging,
+            com.google.firebase.measurement_impl,
+            com.google.firebase.analytics.connector,
+            com.google.android.gms.measurement.sdk.api,
+            com.google.android.gms.measurement_base,
+            com.google.android.gms.measurement_base,com.google.android.gms.measurement_base, com.bytedance.msdk.adapter.ks,com.bytedance.msdk.adapter.gdt,
+            com.bytedance.gromore,com.bytedance.msdk.adapter.BaiduMobAds,com.bytedance.msdk.adapter.admob" />
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />

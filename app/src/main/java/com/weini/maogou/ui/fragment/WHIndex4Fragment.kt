@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.widget.doAfterTextChanged
 import com.drake.brv.utils.bindingAdapter
+import com.drake.brv.utils.grid
 import com.drake.brv.utils.linear
 import com.drake.brv.utils.setup
 import com.weini.maogou.R
@@ -33,12 +34,12 @@ class WHIndex4Fragment : RootFragment(R.layout.fragment_index_5) {
         getString(R.string.call_5) to R.mipmap.call_5,
         getString(R.string.call_2) to R.mipmap.call_2,
         getString(R.string.call_4) to R.mipmap.call_4,
-    ) }
+    ).shuffled() }
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
         _binding = view.getBinding()
 
-        binding.rvList.linear().setup {
+        binding.rvList.grid(2).setup {
             addType<Pair<String, Int>>(R.layout.item_5)
             onBind {
                 getBinding<Item5Binding>().apply {
@@ -77,7 +78,7 @@ class WHIndex4Fragment : RootFragment(R.layout.fragment_index_5) {
     fun onMessageSimpleEvent(message: SimpleEvent) {
         if(message.simple == 3){
             LZYLog.e("simple","message simple:${message.simple}")
-            LZYADSUtils("Index5Fragment",requireActivity()).loadSimpleAdTurn(binding.feedContainerFragment5,-1)
+            LZYADSUtils("Index5Fragment",requireActivity()).loadSimpleAd4(binding.feedContainerFragment5)
         }
     }
 }
