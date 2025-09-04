@@ -39,6 +39,7 @@ import com.weini.maogou.utils.dj.UserInfoModel
 import com.weini.maogou.utils.lzy.LZYLog
 import com.umeng.commonsdk.UMConfigure
 import com.umeng.commonsdk.utils.UMUtils
+import com.weini.maogou.utils.lzy.LZYADSUtils
 import com.yl.adsdk.YlLib
 import me.jessyan.autosize.AutoSize
 import me.jessyan.autosize.AutoSizeConfig
@@ -108,6 +109,9 @@ class APP : Application() {
                         AdCPTwoUtils.initPreloading()
                     },1000)
                 }
+            }
+            if(UserInfoModel.getIsFirstVip()){
+                LZYADSUtils("APP", activity).initSimpleAd4(activity)
             }
         }
     }

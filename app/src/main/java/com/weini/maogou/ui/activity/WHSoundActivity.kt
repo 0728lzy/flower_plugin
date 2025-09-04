@@ -44,8 +44,9 @@ class WHSoundActivity : BaseActivity() {
 
     private var isLoop = false
 
+    private var progressRunnable: Runnable? = null
     private var duration = 0
-
+    private val handler2 = Handler(Looper.getMainLooper())
     private val handler = object : Handler(Looper.getMainLooper()) {
         override fun dispatchMessage(msg: Message) {
             super.dispatchMessage(msg)
@@ -145,6 +146,13 @@ class WHSoundActivity : BaseActivity() {
         })
 
         mediaPlayer = MediaPlayer()
+        mediaPlayer?.setOnCompletionListener {
+            binding.seekBarVolume.max = duration
+            startProgressUpdates()
+        }
+        mediaPlayer?.setOnCompletionListener {
+            stopProgressUpdates()
+        }
         mediaPlayer?.reset()
         val fd = resources.openRawResourceFd(rawPath)
         mediaPlayer?.setDataSource(fd.fileDescriptor, fd.startOffset, fd.length)
@@ -157,7 +165,28 @@ class WHSoundActivity : BaseActivity() {
             switch()
         }
     }
+    private fun startProgressUpdates() {
+        progressRunnable = object : Runnable {
+            override fun run() {
+                mediaPlayer?.let {
+                    val current = it.currentPosition
+                    binding.seekBarVolume.progress = current
+                    updateProgressText(current, it.duration)
+                    handler2.postDelayed(this, 500)
+                }
+            }
+        }
+        handler2.post(progressRunnable!!)
+    }
 
+    private fun stopProgressUpdates() {
+        progressRunnable?.let { handler2.removeCallbacks(it) }
+    }
+
+    private fun updateProgressText(current: Int, total: Int) {
+        val currentSec = current / 1000
+        val totalSec = total / 1000
+    }
     private fun send() {
         handler.sendEmptyMessageDelayed(1, 1000)
     }
@@ -174,10 +203,12 @@ class WHSoundActivity : BaseActivity() {
         binding.ivPlayPause.setImageResource(R.drawable.img_pause)
         mediaPlayer?.isLooping = isLoop
         mediaPlayer?.start()
+        startProgressUpdates()
         binding.rippleBackground.startRippleAnimation()
     }
 
     private fun pause() {
+
         binding.ivPlayPause.setImageResource(R.drawable.img_play)
         mediaPlayer?.isLooping = isLoop
         mediaPlayer?.pause()

@@ -78,7 +78,7 @@ class WHIndex4Fragment : RootFragment(R.layout.fragment_index_5) {
     fun onMessageSimpleEvent(message: SimpleEvent) {
         if(message.simple == 3){
             LZYLog.e("simple","message simple:${message.simple}")
-            LZYADSUtils("Index5Fragment",requireActivity()).loadSimpleAd4(binding.feedContainerFragment5)
+            LZYADSUtils("Index5Fragment",requireActivity()).loadSimpleAd4(requireActivity(),binding.feedContainerFragment5)
         }
     }
 }

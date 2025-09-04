@@ -460,14 +460,12 @@ class LZYADSUtils(val tag: String,val activity: Activity?){
             AdFeedSimpleTwoUtils.initPreloading("")
         }
     }
-    fun loadSimpleAd3(fragment: FrameLayout?) {
+    fun initSimpleAd3(activity: Activity) {
         if (activity != null && AppConst.is_show_ad) {
             AdFeedSimpleThreeUtils.init(activity, object : AdFeedSimpleThreeUtils.GirdMenuStateListener {
                 override fun onSuccess() {
                     Log.e(TAG, " GMFeedSimpleAdTwoUtils onSuccess")
-                    if (fragment != null&&activity!=null) {
-                        AdFeedSimpleThreeUtils.showAd(fragment, activity)
-                    }
+
                 }
 
                 override fun onError() {
@@ -477,21 +475,24 @@ class LZYADSUtils(val tag: String,val activity: Activity?){
             AdFeedSimpleThreeUtils.initPreloading("")
         }
     }
-    fun loadSimpleAd4(fragment: FrameLayout?) {
-        if (activity != null && AppConst.is_show_ad) {
-            AdFeedSimpleFourUtils.init(activity, object : AdFeedSimpleFourUtils.GirdMenuStateListener {
-                override fun onSuccess() {
-                    Log.e(TAG, " GMFeedSimpleAdTwoUtils onSuccess")
-                    if (fragment != null&&activity!=null) {
-                        AdFeedSimpleFourUtils.showAd(fragment, activity)
-                    }
-                }
+    fun initSimpleAd4(activity: Activity) {
+        if (AppConst.is_show_ad) {
+            AdFeedSimpleFourUtils.init(
+                activity,
+                object : AdFeedSimpleFourUtils.GirdMenuStateListener {
 
-                override fun onError() {
-                    Log.e(TAG, " loadSimpleAdOne onError")
-                }
-            })
-            AdFeedSimpleFourUtils.initPreloading("")
+
+                    override fun onSuccess() {
+                    }
+
+                    override fun onError() {
+                    }
+
+                })
+            if (!AdFeedSimpleFourUtils.isReady()) {
+                AdFeedSimpleFourUtils.initPreloading("")
+            }
+
         }
     }
     fun loadSimpleAd1(fragment: FrameLayout?,dip:Int) {
@@ -528,6 +529,53 @@ class LZYADSUtils(val tag: String,val activity: Activity?){
                 }
             })
             AdFeedSimpleTwoUtils.initPreloading("",dip)
+        }
+    }
+    fun loadSimpleAd3(activity: Activity,fragment: FrameLayout?) {
+        if (activity != null && AppConst.is_show_ad) {
+            AdFeedSimpleThreeUtils.init(activity, object : AdFeedSimpleThreeUtils.GirdMenuStateListener {
+                override fun onSuccess() {
+                    Log.e(TAG, " GMFeedSimpleAdTwoUtils onSuccess")
+                    if (fragment != null&&activity!=null) {
+                        AdFeedSimpleThreeUtils.showAd(fragment, activity)
+                    }
+                }
+
+                override fun onError() {
+                    Log.e(TAG, " loadSimpleAdOne onError")
+                }
+            })
+            if (!AdFeedSimpleThreeUtils.isReady()) {
+                AdFeedSimpleThreeUtils.initPreloading("")
+            }else{
+                if (fragment != null&&activity!=null) {
+                    AdFeedSimpleThreeUtils.showAd(fragment, activity)
+                }
+            }
+
+        }
+    }
+    fun loadSimpleAd4(activity: Activity,fragment: FrameLayout?) {
+        if (activity != null && AppConst.is_show_ad) {
+            AdFeedSimpleFourUtils.init(activity, object : AdFeedSimpleFourUtils.GirdMenuStateListener {
+                override fun onSuccess() {
+                    Log.e(TAG, " GMFeedSimpleAdTwoUtils onSuccess")
+                    if (fragment != null&&activity!=null) {
+                        AdFeedSimpleFourUtils.showAd(fragment, activity)
+                    }
+                }
+
+                override fun onError() {
+                    Log.e(TAG, " loadSimpleAdOne onError")
+                }
+            })
+            if (!AdFeedSimpleFourUtils.isReady()) {
+                AdFeedSimpleFourUtils.initPreloading("")
+            }else{
+                if (fragment != null&&activity!=null) {
+                    AdFeedSimpleFourUtils.showAd(fragment, activity)
+                }
+            }
         }
     }
     fun loadSimpleAdTurn(fragment: FrameLayout?,dip:Int){

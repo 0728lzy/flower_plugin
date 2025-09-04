@@ -56,7 +56,7 @@ class WHIndex3Fragment : RootFragment(R.layout.fragment_index_3) {
     fun onMessageSimpleEvent(message: SimpleEvent) {
         if(message.simple == 2){
             LZYLog.e("simple","message simple:${message.simple}")
-            lzyadsUtils.loadSimpleAd3(binding.feedContainerFragment3)
+            lzyadsUtils.loadSimpleAd3(requireActivity(),binding.feedContainerFragment3)
         }
     }
 

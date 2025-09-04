@@ -15,6 +15,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.weini.maogou.R
 import com.weini.maogou.base.dj.BaseActivity
 import com.gyf.immersionbar.ImmersionBar
+import com.hjq.toast.ToastUtils
 import com.weini.maogou.csj.AdCPNoLimitUtils
 import com.weini.maogou.csj.AdCPUtils
 import com.weini.maogou.csj.AdCPTwoUtils
@@ -38,6 +39,8 @@ import com.weini.maogou.ui.fragment.WHIndex4Fragment
 import com.weini.maogou.utils.dj.SetListAppHttpUtil
 import com.weini.maogou.utils.dj.UserInfoModel
 import com.weini.maogou.utils.lzy.LZYADSUtils
+import com.weini.maogou.widget.dialog.LoadingDiaLog
+import com.weini.maogou.widget.dialog.dj.VipDialog
 import com.weini.maogou.widget.popup.dj.ExitDialogPopup
 import org.greenrobot.eventbus.EventBus
 
@@ -45,10 +48,9 @@ class WHMainActivity : BaseActivity() {
 
     companion object {
         fun forward(context: BaseActivity) {
+            AppConst.splashInfoShowMainCP=true
             val intent = Intent(context, WHMainActivity::class.java)
-            intent.flags = FLAG_ACTIVITY_NEW_TASK or FLAG_ACTIVITY_CLEAR_TASK
             context.startActivity(intent)
-            context.overridePendingTransition(0, 0)
         }
     }
 
@@ -191,14 +193,71 @@ class WHMainActivity : BaseActivity() {
     override fun onResume() {
         super.onResume()
         LZYLog.e("MainActivity","onResume  AppConst.splashInfoShowMainCP:${AppConst.splashInfoShowMainCP}")
-
         if (AppConst.splashInfoShowMainCP) {
             AppConst.splashInfoShowMainCP = false
             isShowYSDialog = false
-            showAdCpOne()
+            if(UserInfoModel.getIsFirstVip() && AppConst.is_show_ad) {
+                firstShowVipDialog()
+                UserInfoModel.setIsFirstVip(false)
+            }else {
+                showAdCpOne()
+            }
         }
     }
+    private fun firstShowVipDialog() {
+        if (UserInfoModel.getIsFirstNormal()) {
+            LZYADSUtils("APP", this).initSimpleAd3(this@WHMainActivity)
+        }
+        VipDialog.showDialog(this, object : DialogCallBack {
+            override fun buAgree() {
+                val advDiaLog = LoadingDiaLog(this@WHMainActivity, "加载中...")
+                advDiaLog.show()
 
+                LZYADSUtils("APP", this@WHMainActivity).showAdJL(advDiaLog) {
+                    if (UserInfoModel.getIsFirstNormal()){
+                        firstShowAdDialog()
+                    }
+                }
+
+            }
+            override fun disagree() {
+                showAdCpOne1()
+            }
+        })
+    }
+    private fun showAdCpOne1() {
+        if(!UserInfoModel.getIsCheckFlag() || AppConst.is_show_ad) {
+            AdCPNoLimitUtils.init(this, object : AdCPNoLimitUtils.GirdMenuStateListener {
+                override fun onSuccess() {
+                    LZYLog.e(this@WHMainActivity, "first one cp onSuccess")
+                    AdCPNoLimitUtils.showInterstitialFullAd(this@WHMainActivity)
+                }
+
+                override fun onError() {
+                    LZYLog.e(this@WHMainActivity, "first one cp onError")
+
+                }
+
+                override fun showVideoClosed() {
+
+
+                }
+
+                override fun onShowError() {
+                    firstShowAdDialog()
+
+                }
+            })
+            if (!AdCPNoLimitUtils.isReady()) {
+                AdCPNoLimitUtils.initPreloading("")
+            } else {
+                AdCPNoLimitUtils.showInterstitialFullAd(this)
+            }
+
+        }
+
+
+    }
     //首页广告
     private fun showAdCpOne() {
         if(!UserInfoModel.getIsCheckFlag() || AppConst.is_show_ad) {
@@ -214,12 +273,12 @@ class WHMainActivity : BaseActivity() {
                 }
 
                 override fun showVideoClosed() {
-                    firstShowAdDialog()
+
 
                 }
 
                 override fun onShowError() {
-                    firstShowAdDialog()
+
 
                 }
             })
@@ -250,7 +309,8 @@ class WHMainActivity : BaseActivity() {
                     LZYInitCPAdsUtils.showAdCpTurnNormal(this@WHMainActivity)
                 }
                 override fun disagree() {
-                    firstShowAd2Dialog()
+                    UserInfoModel.setIsFirstNormal(false)
+                    LZYInitCPAdsUtils.showAdCpTurnNormal(this@WHMainActivity)
                 }
             })
         }

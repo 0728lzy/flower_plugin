@@ -153,6 +153,12 @@ object AdFeedSimpleFourUtils {
             "0"
         )
     }
+    fun isReady(): Boolean {
+        if (mTTFeedAd != null && mTTFeedAd?.mediationManager != null && mTTFeedAd?.mediationManager!!.isExpress&&!mIsLoadAndShow) {//已经获取到广告且广告未被展示
+            return true
+        }
+        return false
+    }
 
     fun initPreloading(scenarioId :String,dip:Int){
         if (!AppConst.is_show_ad) {

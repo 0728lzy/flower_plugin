@@ -209,7 +209,14 @@ public class UserInfoModel {
     public static String getOaidH() {
         return SPUtils.getInstance().getString(OAIDH,"");
     }
+    private final static String IS_FIRST_VIP= "is_first_vip";
+    public static void setIsFirstVip(boolean isFirstNormal) {
+        SPUtils.getInstance().setBoolean(IS_FIRST_VIP, isFirstNormal);
+    }
 
+    public static Boolean getIsFirstVip() {
+        return SPUtils.getInstance().getBoolean(IS_FIRST_VIP, true);
+    }
     public static void setIsWhiteListState(String state) {
         SPUtils.getInstance().setString(IS_WHITE_LIST_STATE, state);
     }

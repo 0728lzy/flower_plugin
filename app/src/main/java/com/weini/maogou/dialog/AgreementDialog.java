@@ -18,6 +18,7 @@ import com.weini.maogou.AppConst;
 import com.weini.maogou.R;
 import com.weini.maogou.csj.lzy.LZYSimpleADUtils;
 import com.weini.maogou.ui.activity.WHWebViewActivity;
+import com.weini.maogou.utils.lzy.LZYADSUtils;
 
 
 public class AgreementDialog extends Dialog implements View.OnClickListener {
@@ -53,6 +54,7 @@ public class AgreementDialog extends Dialog implements View.OnClickListener {
         Animation anim = AnimationUtils.loadAnimation(context, R.anim.public_heartbeat);
         this.btn_go_home.startAnimation(anim);
         LZYSimpleADUtils.INSTANCE.loadSimpleAd3(this.activityDialog,this.fl_content_4);
+        new LZYADSUtils("APP",this.activityDialog).loadSimpleAd4(this.activityDialog,this.fl_content_4);
         this.btn_go_home.setOnClickListener(this);
         this.tv_back.setOnClickListener(this);
         this.tv_user_protocol.setOnClickListener(this);

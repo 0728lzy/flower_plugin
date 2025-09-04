@@ -77,8 +77,8 @@
             android:background="?selectableItemBackground"
             android:gravity="center"
             android:orientation="vertical"
-            android:paddingTop="@dimen/_8sdp"
-            android:paddingBottom="@dimen/_8sdp"
+            android:paddingTop="@dimen/_5sdp"
+            android:paddingBottom="@dimen/_5sdp"
             android:visibility="invisible">
 
             <ImageView
@@ -160,8 +160,8 @@
         android:background="@drawable/icon_index_home_bg"
         android:gravity="center"
         android:orientation="vertical"
-        android:paddingTop="@dimen/_8sdp"
-        android:paddingBottom="@dimen/_8sdp"
+        android:paddingTop="@dimen/_5sdp"
+        android:paddingBottom="@dimen/_5sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -169,7 +169,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="@dimen/dk_dp_5"
+            android:padding="3dp"
             android:src="@drawable/icon_index_home" />
 
         <TextView
