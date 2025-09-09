@@ -17,8 +17,8 @@ android {
         applicationId = "com.weini.maogou"
         minSdk = 21
         targetSdk = 34
-        versionCode = System.getenv("VERSION_CODE")?.toIntOrNull() ?:200
-        versionName = System.getenv("VERSION_NAME") ?: "2.0.0"
+        versionCode = System.getenv("VERSION_CODE")?.toIntOrNull() ?:100
+        versionName = System.getenv("VERSION_NAME") ?: "1.0.0.5"
         //温馨提示：不要忘了核对渠道哦！！
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         resValue("string", "app_name", System.getenv("APP_NAME_PARAM") ?: "宠物猫狗交流王")
