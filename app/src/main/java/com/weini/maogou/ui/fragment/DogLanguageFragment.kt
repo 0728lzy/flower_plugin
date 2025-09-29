@@ -17,7 +17,7 @@ import com.weini.maogou.AppConst
 import com.weini.maogou.R
 import com.weini.maogou.base.dj.RootFragment
 import com.weini.maogou.csj.AdFeedSimpleOneNoLimitUtils
-import com.weini.maogou.databinding.FragmentCatLanguageBinding
+import com.weini.maogou.databinding.FragmentDogLanguageBinding
 import com.weini.maogou.databinding.ItemDogBinding
 import com.weini.maogou.entity.Index1Entity
 import com.weini.maogou.entity.Index3Entity
@@ -38,12 +38,12 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import java.util.Formatter
 
-class CatLanguageFragment : RootFragment(R.layout.fragment_cat_language) {
+class DogLanguageFragment : RootFragment(R.layout.fragment_dog_language) {
 
-    var _binding: FragmentCatLanguageBinding? = null
+    var _binding: FragmentDogLanguageBinding? = null
     private lateinit var lzyadsUtils: LZYADSUtils
     private var isRecording = false
-    private var recordingType = 0 // 0: 未录音, 1: 人话录音, 2: 喵语录音
+    private var recordingType = 0 // 0: 未录音, 1: 人话录音, 2: 狗语录音
     private var record: com.weini.maogou.utils.AudioRecordUtil? = null
     private lateinit var myDiaLog: LoadingDiaLog
     private var job: Job? = null
@@ -62,9 +62,9 @@ class CatLanguageFragment : RootFragment(R.layout.fragment_cat_language) {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onMessageSimpleEvent(message: SimpleEvent) {
-        if (message.simple == 5) { // 使用新的事件ID避免冲突
-            LZYLog.e("simple", "CatLanguageFragment message simple:${message.simple}")
-            loadSimpleAd(binding.feedContainerCatLanguage)
+        if (message.simple == 6) { // 使用新的事件ID避免冲突
+            LZYLog.e("simple", "DogLanguageFragment message simple:${message.simple}")
+            loadSimpleAd(binding.feedContainerDogLanguage)
         }
     }
 
@@ -75,7 +75,7 @@ class CatLanguageFragment : RootFragment(R.layout.fragment_cat_language) {
                 object : AdFeedSimpleOneNoLimitUtils.GirdMenuStateListener {
                     override fun onSuccess() {
                         if (fragment != null && requireActivity() != null) {
-                            Log.i("tttt", "准备刷新CatLanguageFragment的广告")
+                            Log.i("tttt", "准备刷新DogLanguageFragment的广告")
                             AdFeedSimpleOneNoLimitUtils.showAd(fragment, requireActivity())
                         }
                     }
@@ -89,26 +89,26 @@ class CatLanguageFragment : RootFragment(R.layout.fragment_cat_language) {
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
         _binding = view.getBinding()
-        lzyadsUtils = LZYADSUtils("CatLanguageFragment", requireActivity())
+        lzyadsUtils = LZYADSUtils("DogLanguageFragment", requireActivity())
 
         // 初始化录音按钮点击事件
         initRecordButtons()
         
-        // 初始化常见喵语列表
+        // 初始化常见狗语列表
         initCommonSoundsList()
         
         // 加载广告
-        lzyadsUtils.loadSimpleAdTurn(binding.feedContainerCatLanguage, -1)
+        lzyadsUtils.loadSimpleAdTurn(binding.feedContainerDogLanguage, -1)
     }
 
     private fun initRecordButtons() {
-        // 人话录音按钮（人话 -> 喵语）
+        // 人话录音按钮（人话 -> 狗语）
         binding.btnHumanRecord.thrillClickListener {
             handleRecordClick(1)
         }
 
-        // 喵语录音按钮（喵语 -> 人话）
-        binding.btnCatRecord.thrillClickListener {
+        // 狗语录音按钮（狗语 -> 人话）
+        binding.btnDogRecord.thrillClickListener {
             handleRecordClick(2)
         }
     }
@@ -129,7 +129,7 @@ class CatLanguageFragment : RootFragment(R.layout.fragment_cat_language) {
         ) {
             if (binding.lottie.isAnimating) {
                 // 停止录音并展示结果
-                val entity = catList.random()
+                val entity = dogList.random()
                 binding.lottie.cancelAnimation()
                 record?.stopRecord()
                 job?.cancel()
@@ -147,7 +147,7 @@ class CatLanguageFragment : RootFragment(R.layout.fragment_cat_language) {
 
                 // 恢复按钮样式
                 binding.ivHumanMic.setBackgroundResource(R.drawable.bg_record_button_red)
-                binding.ivCatMic.setBackgroundResource(R.drawable.bg_record_button_red)
+                binding.ivDogMic.setBackgroundResource(R.drawable.bg_record_button_red)
                 isRecording = false
                 recordingType = 0
             } else {
@@ -171,8 +171,8 @@ class CatLanguageFragment : RootFragment(R.layout.fragment_cat_language) {
                         binding.tvRecordHint.text = "正在录制人话..."
                     }
                     2 -> {
-                        binding.ivCatMic.setBackgroundResource(R.drawable.bg_record_button_active)
-                        binding.tvRecordHint.text = "正在录制喵语..."
+                        binding.ivDogMic.setBackgroundResource(R.drawable.bg_record_button_active)
+                        binding.tvRecordHint.text = "正在录制狗语..."
                     }
                 }
 
@@ -206,21 +206,21 @@ class CatLanguageFragment : RootFragment(R.layout.fragment_cat_language) {
                     ivThumb.setImageResource(item.icon)
                     tvName.text = item.title
                     root.thrillClickListener {
-                        // 播放猫咪声音，type=2表示猫
-                        WHSoundActivity.show(requireContext(), false, modelPosition)
+                        // 播放狗狗声音，type=1表示狗
+                        WHSoundActivity.show(requireContext(), true, modelPosition)
                     }
                 }
             }
         }
         
-        // 加载猫咪声音数据
-        loadCatSounds()
+        // 加载狗狗声音数据
+        loadDogSounds()
     }
 
-    private fun loadCatSounds() {
-        // 获取猫咪声音列表并随机排序，只显示前6个
-        val catSounds = AppConst.catSoundList(requireContext()).shuffled().take(6)
-        binding.rvCommonSounds.bindingAdapter.models = catSounds
+    private fun loadDogSounds() {
+        // 获取狗狗声音列表并随机排序，只显示前6个
+        val dogSounds = AppConst.dogSoundList(requireContext()).shuffled().take(6)
+        binding.rvCommonSounds.bindingAdapter.models = dogSounds
     }
 
     // 创建录音按钮激活状态的drawable（如果不存在）
@@ -234,28 +234,28 @@ class CatLanguageFragment : RootFragment(R.layout.fragment_cat_language) {
         _binding = null
     }
 
-    // 与 WHIndex3Fragment 一致的猫咪资源列表，用于结果弹窗展示
-    private val catList by lazy {
+    // 与 WHIndex3Fragment 一致的狗狗资源列表，用于结果弹窗展示
+    private val dogList by lazy {
         listOf(
-            Index3Entity("", "cat_images/cat_01.webp", "cat_sounds/cat_01.wav"),
-            Index3Entity("", "cat_images/cat_02.webp", "cat_sounds/cat_02.wav"),
-            Index3Entity("", "cat_images/cat_03.webp", "cat_sounds/cat_03.wav"),
-            Index3Entity("", "cat_images/cat_04.webp", "cat_sounds/cat_04.wav"),
-            Index3Entity("", "cat_images/cat_05.webp", "cat_sounds/cat_05.wav"),
-            Index3Entity("", "cat_images/cat_06.webp", "cat_sounds/cat_06.wav"),
-            Index3Entity("", "cat_images/cat_07.webp", "cat_sounds/cat_07.wav"),
-            Index3Entity("", "cat_images/cat_08.webp", "cat_sounds/cat_08.wav"),
-            Index3Entity("", "cat_images/cat_09.webp", "cat_sounds/cat_09.wav"),
-            Index3Entity("", "cat_images/cat_10.webp", "cat_sounds/cat_10.wav"),
-            Index3Entity("", "cat_images/cat_11.webp", "cat_sounds/cat_11.wav"),
-            Index3Entity("", "cat_images/cat_12.webp", "cat_sounds/cat_12.wav"),
-            Index3Entity("", "cat_images/cat_13.webp", "cat_sounds/cat_13.wav"),
-            Index3Entity("", "cat_images/cat_14.webp", "cat_sounds/cat_14.wav"),
-            Index3Entity("", "cat_images/cat_15.webp", "cat_sounds/cat_15.wav"),
-            Index3Entity("", "cat_images/cat_16.webp", "cat_sounds/cat_16.wav"),
-            Index3Entity("", "cat_images/cat_17.webp", "cat_sounds/cat_17.wav"),
-            Index3Entity("", "cat_images/cat_18.webp", "cat_sounds/cat_18.wav"),
-            Index3Entity("", "cat_images/cat_19.webp", "cat_sounds/cat_19.wav")
+            Index3Entity("", "dog_images/dog_01.webp", "dog_sounds/dog_01.wav"),
+            Index3Entity("", "dog_images/dog_02.webp", "dog_sounds/dog_02.wav"),
+            Index3Entity("", "dog_images/dog_03.webp", "dog_sounds/dog_03.wav"),
+            Index3Entity("", "dog_images/dog_04.webp", "dog_sounds/dog_04.wav"),
+            Index3Entity("", "dog_images/dog_05.webp", "dog_sounds/dog_05.wav"),
+            Index3Entity("", "dog_images/dog_06.webp", "dog_sounds/dog_06.wav"),
+            Index3Entity("", "dog_images/dog_07.webp", "dog_sounds/dog_07.wav"),
+            Index3Entity("", "dog_images/dog_08.webp", "dog_sounds/dog_08.wav"),
+            Index3Entity("", "dog_images/dog_09.webp", "dog_sounds/dog_09.wav"),
+            Index3Entity("", "dog_images/dog_10.webp", "dog_sounds/dog_10.wav"),
+            Index3Entity("", "dog_images/dog_11.webp", "dog_sounds/dog_11.wav"),
+            Index3Entity("", "dog_images/dog_12.webp", "dog_sounds/dog_12.wav"),
+            Index3Entity("", "dog_images/dog_13.webp", "dog_sounds/dog_13.wav"),
+            Index3Entity("", "dog_images/dog_14.webp", "dog_sounds/dog_14.wav"),
+            Index3Entity("", "dog_images/dog_15.webp", "dog_sounds/dog_15.wav"),
+            Index3Entity("", "dog_images/dog_16.webp", "dog_sounds/dog_16.wav"),
+            Index3Entity("", "dog_images/dog_17.webp", "dog_sounds/dog_17.wav"),
+            Index3Entity("", "dog_images/dog_18.webp", "dog_sounds/dog_18.wav"),
+            Index3Entity("", "dog_images/dog_19.webp", "dog_sounds/dog_19.wav")
         )
     }
 }

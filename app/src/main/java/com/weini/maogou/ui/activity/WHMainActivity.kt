@@ -31,6 +31,7 @@ import com.weini.maogou.dialog.DialogCallBack
 import com.weini.maogou.event.SimpleEvent
 import com.weini.maogou.ext.thrillClickListener
 import com.weini.maogou.ui.fragment.CatLanguageFragment
+import com.weini.maogou.ui.fragment.DogLanguageFragment
 import com.weini.maogou.ui.fragment.WHIndex1Fragment
 import com.weini.maogou.ui.fragment.WHIndex5Fragment
 import com.weini.maogou.ui.fragment.WHIndex3Fragment
@@ -64,7 +65,7 @@ class WHMainActivity : BaseActivity() {
 
     val fragments = listOf<Fragment>(
         CatLanguageFragment(),
-        WHIndex2Fragment(),
+        DogLanguageFragment(),
         WHIndex3Fragment(),
         WHIndex4Fragment(),
         WHIndex1Fragment(),

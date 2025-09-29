@@ -45,6 +45,14 @@
     <color name="color_999999">#FF999999</color>  <!-- 浅色文字 -->
     <color name="color_E3F2FD">#FFE3F2FD</color>  <!-- 浅蓝色圆角背景 -->
 
+    <!-- DogLanguageFragment 颜色 -->
+    <color name="color_FFF3E0">#FFFFF3E0</color>  <!-- 浅橙色背景 -->
+    <color name="color_FFF8F0">#FFFFF8F0</color>  <!-- 音频波形背景 -->
+    <color name="color_FFE0B2">#FFFFE0B2</color>  <!-- 音频波形边框 -->
+    <color name="color_FF9800">#FFFF9800</color>  <!-- 橙色主题色 -->
+    <color name="color_F57C00">#FFF57C00</color>  <!-- 深橙色 -->
+    <color name="color_FFF2E0">#FFFFF2E0</color>  <!-- 浅橙色圆角背景 -->
+
     <color name="ripple_color">#82B9FF</color>
     <color name="red">#ffb10000</color>
     <color name="abc_decor_view_status_guard">#ff000000</color>

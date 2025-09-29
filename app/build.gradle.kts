@@ -291,4 +291,6 @@ dependencies {
 
     implementation("com.huawei.hms:ads-identifier:3.4.62.300")
     implementation("com.huawei.hms:ads-installreferrer:3.4.62.300")
+
+    implementation("org.litepal.guolindev:core:3.2.3")
 }

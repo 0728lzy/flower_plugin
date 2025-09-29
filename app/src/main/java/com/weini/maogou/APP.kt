@@ -45,6 +45,7 @@ import me.jessyan.autosize.AutoSize
 import me.jessyan.autosize.AutoSizeConfig
 import me.jessyan.autosize.onAdaptListener
 import me.jessyan.autosize.utils.AutoSizeLog
+import org.litepal.LitePal
 import java.io.BufferedReader
 import java.io.File
 import java.io.FileReader
@@ -170,7 +171,7 @@ class APP : Application() {
                 WebView.setDataDirectorySuffix(currProcessName!!)
             }
             hideWarningShow()
-
+            LitePal.initialize(this)
             Log.d("LHM_APP", "add addAccount")
 
             if (!UserInfoModel.getIsFirstTime() ) {
