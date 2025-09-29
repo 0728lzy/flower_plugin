@@ -21,6 +21,7 @@
 
             <!-- 标题区域 -->
             <LinearLayout
+                android:layout_marginTop="@dimen/_20sdp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -31,7 +32,7 @@
                     android:layout_height="wrap_content"
                     android:text="宠物管理"
                     android:textColor="@color/color_9C27B0"
-                    android:textSize="28sp"
+                    android:textSize="@dimen/_25sdp"
                     android:textStyle="bold"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginBottom="8dp" />

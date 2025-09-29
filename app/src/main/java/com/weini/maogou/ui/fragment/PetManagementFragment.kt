@@ -2,7 +2,8 @@ package com.weini.maogou.ui.fragment
 
 import android.os.Bundle
 import android.view.View
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
+import com.lxj.xpopup.XPopup
 import com.weini.maogou.R
 import com.weini.maogou.base.dj.RootFragment
 import com.weini.maogou.databinding.FragmentPetManagementBinding
@@ -53,7 +54,7 @@ class PetManagementFragment : RootFragment(R.layout.fragment_pet_management) {
         }
         
         binding.rvPets.apply {
-            layoutManager = LinearLayoutManager(context)
+            layoutManager = GridLayoutManager(context, 2) // 2列网格布局
             adapter = petAdapter
         }
 
@@ -110,7 +111,9 @@ class PetManagementFragment : RootFragment(R.layout.fragment_pet_management) {
         val dialog = AddPetDialog(requireContext()) { pet ->
             addPet(pet)
         }
-        dialog.show()
+        XPopup.Builder(requireContext())
+            .asCustom(dialog)
+            .show()
     }
 
     /**
@@ -120,7 +123,9 @@ class PetManagementFragment : RootFragment(R.layout.fragment_pet_management) {
         val dialog = AddPetDialog(requireContext(), pet) { updatedPet ->
             updatePet(updatedPet)
         }
-        dialog.show()
+        XPopup.Builder(requireContext())
+            .asCustom(dialog)
+            .show()
     }
 
     /**
