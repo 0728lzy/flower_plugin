@@ -34,6 +34,16 @@
     <color name="tab_profile_selected">#FFEDE7F6</color>  <!-- 紫色 -->
     <color name="tab_default_background">#FFF5F5F5</color>  <!-- 默认灰色 -->
 
+    <!-- CatLanguageFragment 颜色 -->
+    <color name="color_E8F4FF">#FFE8F4FF</color>  <!-- 浅蓝色背景 -->
+    <color name="color_F5F8FF">#FFF5F8FF</color>  <!-- 音频波形背景 -->
+    <color name="color_E0E8FF">#FFE0E8FF</color>  <!-- 音频波形边框 -->
+    <color name="color_FF6B6B">#FFFF6B6B</color>  <!-- 录音按钮红色 -->
+    <color name="color_4A90E2">#FF4A90E2</color>  <!-- 蓝色主题色 -->
+    <color name="color_333333">#FF333333</color>  <!-- 深色文字 -->
+    <color name="color_666666">#FF666666</color>  <!-- 中等色文字 -->
+    <color name="color_999999">#FF999999</color>  <!-- 浅色文字 -->
+    <color name="color_E3F2FD">#FFE3F2FD</color>  <!-- 浅蓝色圆角背景 -->
 
     <color name="ripple_color">#82B9FF</color>
     <color name="red">#ffb10000</color>

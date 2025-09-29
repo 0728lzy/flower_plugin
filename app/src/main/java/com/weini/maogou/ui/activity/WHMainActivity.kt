@@ -30,7 +30,7 @@ import com.weini.maogou.dialog.AgreementDialog
 import com.weini.maogou.dialog.DialogCallBack
 import com.weini.maogou.event.SimpleEvent
 import com.weini.maogou.ext.thrillClickListener
-import com.weini.maogou.ui.fragment.HomeFragment
+import com.weini.maogou.ui.fragment.CatLanguageFragment
 import com.weini.maogou.ui.fragment.WHIndex1Fragment
 import com.weini.maogou.ui.fragment.WHIndex5Fragment
 import com.weini.maogou.ui.fragment.WHIndex3Fragment
@@ -63,7 +63,7 @@ class WHMainActivity : BaseActivity() {
     var isFirst=true
 
     val fragments = listOf<Fragment>(
-        HomeFragment(),
+        CatLanguageFragment(),
         WHIndex2Fragment(),
         WHIndex3Fragment(),
         WHIndex4Fragment(),

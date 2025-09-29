@@ -3,7 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="@dimen/dp_10"
+    android:padding="@dimen/dp_10"
     android:gravity="center"
+    android:background="@drawable/bg_lottie_area"
     android:orientation="vertical"
     android:tag="layout/item_sounds_0">
 
