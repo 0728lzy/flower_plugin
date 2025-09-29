@@ -32,6 +32,7 @@ import com.weini.maogou.event.SimpleEvent
 import com.weini.maogou.ext.thrillClickListener
 import com.weini.maogou.ui.fragment.CatLanguageFragment
 import com.weini.maogou.ui.fragment.DogLanguageFragment
+import com.weini.maogou.ui.fragment.PetManagementFragment
 import com.weini.maogou.ui.fragment.WHIndex1Fragment
 import com.weini.maogou.ui.fragment.WHIndex5Fragment
 import com.weini.maogou.ui.fragment.WHIndex3Fragment
@@ -66,7 +67,7 @@ class WHMainActivity : BaseActivity() {
     val fragments = listOf<Fragment>(
         CatLanguageFragment(),
         DogLanguageFragment(),
-        WHIndex3Fragment(),
+        PetManagementFragment(),
         WHIndex4Fragment(),
         WHIndex1Fragment(),
     )
@@ -74,9 +75,7 @@ class WHMainActivity : BaseActivity() {
     override fun initView(view: View, savedInstanceState: Bundle?) {
         binding = ActivityMainBinding.bind(view)
         lzyadsUtils=LZYADSUtils("MainActivity",this)
-        binding.ivAvatar.thrillClickListener {
-            WHAboutActivity.forward(this@WHMainActivity)
-        }
+
 
         binding.mainPager.adapter = object : FragmentStateAdapter(this@WHMainActivity) {
 
@@ -109,28 +108,23 @@ class WHMainActivity : BaseActivity() {
         })
 
         binding.bottomBar.tabCatLanguage.thrillClickListener {
-            binding.llTop.visibility=View.VISIBLE
-            binding.tvTitle.text="喵语翻译"
+
             tabChange(0)
         }
         binding.bottomBar.tabDogLanguage.thrillClickListener {
-            binding.llTop.visibility=View.VISIBLE
-            binding.tvTitle.text="汪语翻译"
+
             tabChange(1)
         }
         binding.bottomBar.tabPetManagement.thrillClickListener {
-            binding.llTop.visibility=View.VISIBLE
-            binding.tvTitle.text="宠物管理"
+
             tabChange(2)
         }
         binding.bottomBar.tabCuteVideo.thrillClickListener {
-            binding.llTop.visibility=View.VISIBLE
-            binding.tvTitle.text="萌宠视频"
+
             tabChange(3)
         }
         binding.bottomBar.tabProfile.thrillClickListener {
-            binding.llTop.visibility=View.VISIBLE
-            binding.tvTitle.text="我的"
+
             tabChange(4)
         }
 

@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="2dp"
+    app:cardBackgroundColor="@color/color_F8F4FF"
+    android:foreground="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:gravity="center_vertical">
+
+        <!-- 宠物头像 -->
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_pet_avatar"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/ic_pets_purple"
+            app:civ_border_width="2dp"
+            app:civ_border_color="@color/color_9C27B0"
+            android:layout_marginEnd="16dp" />
+
+        <!-- 宠物信息 -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <!-- 宠物名称和类型 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="4dp">
+
+                <TextView
+                    android:id="@+id/tv_pet_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="毛毛"
+                    android:textColor="@color/color_333333"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    tools:text="毛毛" />
+
+                <TextView
+                    android:id="@+id/tv_pet_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="猫咪"
+                    android:textColor="@color/color_9C27B0"
+                    android:textSize="12sp"
+                    android:background="@drawable/bg_tag_purple"
+                    android:paddingHorizontal="8dp"
+                    android:paddingVertical="2dp"
+                    tools:text="猫咪" />
+
+            </LinearLayout>
+
+            <!-- 品种和性别 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="4dp">
+
+                <TextView
+                    android:id="@+id/tv_pet_breed"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="英国短毛猫"
+                    android:textColor="@color/color_666666"
+                    android:textSize="14sp"
+                    tools:text="英国短毛猫" />
+
+                <TextView
+                    android:id="@+id/tv_pet_gender"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="公"
+                    android:textColor="@color/color_666666"
+                    android:textSize="14sp"
+                    tools:text="公" />
+
+            </LinearLayout>
+
+            <!-- 年龄和体重 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="年龄: "
+                        android:textColor="@color/color_999999"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tvPetAge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2岁"
+                        android:textColor="@color/color_666666"
+                        android:textSize="12sp"
+                        android:layout_marginTop="2dp"
+                        android:drawableStart="@drawable/ic_cake"
+                        android:drawablePadding="4dp"
+                        android:gravity="center_vertical" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="体重: "
+                        android:textColor="@color/color_999999"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tv_pet_weight"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="4.2kg"
+                        android:textColor="@color/color_9C27B0"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        tools:text="4.2kg" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- 更多操作按钮 -->
+        <ImageView
+            android:id="@+id/iv_more_options"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_more_vert_purple"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="4dp"
+            android:layout_marginStart="8dp" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

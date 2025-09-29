@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- 标题 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="添加宠物"
+            android:textColor="@color/color_9C27B0"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:padding="16dp"
+            android:background="@color/color_F3E5F5" />
+
+        <!-- 基本信息 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="基本信息"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/color_333333"
+            android:layout_marginBottom="12dp" />
+
+        <!-- 宠物名称 -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            app:boxStrokeColor="@color/color_9C27B0"
+            app:hintTextColor="@color/color_9C27B0">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="宠物名称"
+                android:maxLength="20" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- 宠物类型 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="宠物类型"
+            android:textSize="14sp"
+            android:textColor="@color/color_666666"
+            android:layout_marginBottom="4dp" />
+
+        <Spinner
+            android:id="@+id/spinner_type"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginBottom="12dp" />
+
+        <!-- 品种 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="品种"
+            android:textSize="14sp"
+            android:textColor="@color/color_666666"
+            android:layout_marginBottom="4dp" />
+
+        <Spinner
+            android:id="@+id/spinner_breed"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginBottom="12dp" />
+
+        <!-- 年龄和体重 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="12dp">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                app:boxStrokeColor="@color/color_9C27B0"
+                app:hintTextColor="@color/color_9C27B0">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_age"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="年龄(岁)"
+                    android:inputType="number" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                app:boxStrokeColor="@color/color_9C27B0"
+                app:hintTextColor="@color/color_9C27B0">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_weight"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="体重(kg)"
+                    android:inputType="numberDecimal" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+        <!-- 性别 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="性别"
+            android:textSize="14sp"
+            android:textColor="@color/color_666666"
+            android:layout_marginBottom="4dp" />
+
+        <Spinner
+            android:id="@+id/spinner_gender"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginBottom="12dp" />
+
+        <!-- 颜色 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="颜色"
+            android:textSize="14sp"
+            android:textColor="@color/color_666666"
+            android:layout_marginBottom="4dp" />
+
+        <Spinner
+            android:id="@+id/spinner_color"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- 重要日期 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="重要日期"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/color_333333"
+            android:layout_marginBottom="12dp" />
+
+        <!-- 生日 -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            app:boxStrokeColor="@color/color_9C27B0"
+            app:hintTextColor="@color/color_9C27B0">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_birthday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="生日 (yyyy-MM-dd)"
+                android:focusable="false"
+                android:clickable="true" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- 领养日期 -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:boxStrokeColor="@color/color_9C27B0"
+            app:hintTextColor="@color/color_9C27B0">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_adoption_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="领养日期 (yyyy-MM-dd)"
+                android:focusable="false"
+                android:clickable="true" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- 健康信息 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="健康信息"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/color_333333"
+            android:layout_marginBottom="12dp" />
+
+        <!-- 是否绝育 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="12dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="是否绝育"
+                android:textSize="14sp"
+                android:textColor="@color/color_666666" />
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/switch_neutered"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                app:thumbTint="@color/color_9C27B0"
+                app:trackTint="@color/color_E1BEE7" />
+        </LinearLayout>
+
+        <!-- 疫苗状态 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="疫苗状态"
+            android:textSize="14sp"
+            android:textColor="@color/color_666666"
+            android:layout_marginBottom="4dp" />
+
+        <Spinner
+            android:id="@+id/spinner_vaccine_status"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginBottom="12dp" />
+
+        <!-- 健康状态 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="健康状态"
+            android:textSize="14sp"
+            android:textColor="@color/color_666666"
+            android:layout_marginBottom="4dp" />
+
+        <Spinner
+            android:id="@+id/spinner_health_status"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- 其他信息 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="其他信息"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/color_333333"
+            android:layout_marginBottom="12dp" />
+
+        <!-- 喜欢的食物 -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            app:boxStrokeColor="@color/color_9C27B0"
+            app:hintTextColor="@color/color_9C27B0">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_favorite_food"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="喜欢的食物" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- 喜欢的活动 -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            app:boxStrokeColor="@color/color_9C27B0"
+            app:hintTextColor="@color/color_9C27B0">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_favorite_activity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="喜欢的活动" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- 描述 -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            app:boxStrokeColor="@color/color_9C27B0"
+            app:hintTextColor="@color/color_9C27B0">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="描述"
+                android:minLines="3"
+                android:maxLines="5"
+                android:gravity="top"
+                android:inputType="textMultiLine" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- 备注 -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:boxStrokeColor="@color/color_9C27B0"
+            app:hintTextColor="@color/color_9C27B0">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_notes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="备注"
+                android:minLines="2"
+                android:maxLines="3"
+                android:gravity="top"
+                android:inputType="textMultiLine" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+</ScrollView>
