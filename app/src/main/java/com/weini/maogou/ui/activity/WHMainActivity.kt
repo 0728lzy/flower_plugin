@@ -107,28 +107,29 @@ class WHMainActivity : BaseActivity() {
             }
         })
 
-        binding.bottomBar.tabHome.thrillClickListener {
-            binding.llTop.visibility=View.GONE
+        binding.bottomBar.tabCatLanguage.thrillClickListener {
+            binding.llTop.visibility=View.VISIBLE
+            binding.tvTitle.text="喵语翻译"
             tabChange(0)
         }
-        binding.bottomBar.tab2.thrillClickListener {
+        binding.bottomBar.tabDogLanguage.thrillClickListener {
             binding.llTop.visibility=View.VISIBLE
-            binding.tvTitle.text="训练文章"
+            binding.tvTitle.text="汪语翻译"
             tabChange(1)
         }
-        binding.bottomBar.tab3.thrillClickListener {
+        binding.bottomBar.tabPetManagement.thrillClickListener {
             binding.llTop.visibility=View.VISIBLE
-            binding.tvTitle.text="对话翻译"
+            binding.tvTitle.text="宠物管理"
             tabChange(2)
         }
-        binding.bottomBar.tab4.thrillClickListener {
+        binding.bottomBar.tabCuteVideo.thrillClickListener {
             binding.llTop.visibility=View.VISIBLE
-            binding.tvTitle.text="虚拟视频"
+            binding.tvTitle.text="萌宠视频"
             tabChange(3)
         }
-        binding.bottomBar.tab5.thrillClickListener {
+        binding.bottomBar.tabProfile.thrillClickListener {
             binding.llTop.visibility=View.VISIBLE
-            binding.tvTitle.text="叫声翻译"
+            binding.tvTitle.text="我的"
             tabChange(4)
         }
 
@@ -139,41 +140,56 @@ class WHMainActivity : BaseActivity() {
     }
 
      fun tabChange(index: Int) {
-        binding.bottomBar.iv1.setImageResource(R.drawable.icon_index1_n)
-        binding.bottomBar.iv2.setImageResource(R.drawable.icon_index4_n)
-        binding.bottomBar.iv3.setImageResource(R.drawable.icon_index3_n)
-        binding.bottomBar.iv4.setImageResource(R.drawable.icon_index5_n)
-        binding.bottomBar.iv5.setImageResource(R.drawable.icon_index2_n)
-        binding.bottomBar.tv1.setTextColor(ContextCompat.getColor(this, R.color.color_777777))
-        binding.bottomBar.tv2.setTextColor(ContextCompat.getColor(this, R.color.color_777777))
-        binding.bottomBar.tv3.setTextColor(ContextCompat.getColor(this, R.color.color_777777))
-        binding.bottomBar.tv4.setTextColor(ContextCompat.getColor(this, R.color.color_777777))
-        binding.bottomBar.tv5.setTextColor(ContextCompat.getColor(this, R.color.color_777777))
+        // 重置所有选项的背景色为默认灰色
+        binding.bottomBar.tabCatLanguage.setBackgroundColor(ContextCompat.getColor(this, R.color.tab_default_background))
+        binding.bottomBar.tabDogLanguage.setBackgroundColor(ContextCompat.getColor(this, R.color.tab_default_background))
+        binding.bottomBar.tabPetManagement.setBackgroundColor(ContextCompat.getColor(this, R.color.tab_default_background))
+        binding.bottomBar.tabCuteVideo.setBackgroundColor(ContextCompat.getColor(this, R.color.tab_default_background))
+        binding.bottomBar.tabProfile.setBackgroundColor(ContextCompat.getColor(this, R.color.tab_default_background))
+        
+        // 重置所有图标和文字颜色
+        binding.bottomBar.ivCatLanguage.setImageResource(R.drawable.icon_index1_n)
+        binding.bottomBar.ivDogLanguage.setImageResource(R.drawable.icon_index2_n)
+        binding.bottomBar.ivPetManagement.setImageResource(R.drawable.icon_index3_n)
+        binding.bottomBar.ivCuteVideo.setImageResource(R.drawable.icon_index4_n)
+        binding.bottomBar.ivProfile.setImageResource(R.drawable.icon_index5_n)
+        
+        binding.bottomBar.tvCatLanguage.setTextColor(ContextCompat.getColor(this, R.color.color_777777))
+        binding.bottomBar.tvDogLanguage.setTextColor(ContextCompat.getColor(this, R.color.color_777777))
+        binding.bottomBar.tvPetManagement.setTextColor(ContextCompat.getColor(this, R.color.color_777777))
+        binding.bottomBar.tvCuteVideo.setTextColor(ContextCompat.getColor(this, R.color.color_777777))
+        binding.bottomBar.tvProfile.setTextColor(ContextCompat.getColor(this, R.color.color_777777))
 
+        // 根据选中的索引设置对应的背景色、图标和文字颜色
         when (index) {
             0 -> {
-                binding.bottomBar.tv1.setTextColor(ContextCompat.getColor(this, R.color.color_main))
-                binding.bottomBar.iv1.setImageResource(R.drawable.icon_index1_s)
+                binding.bottomBar.tabCatLanguage.setBackgroundColor(ContextCompat.getColor(this, R.color.tab_cat_language_selected))
+                binding.bottomBar.ivCatLanguage.setImageResource(R.drawable.icon_index1_s)
+                binding.bottomBar.tvCatLanguage.setTextColor(ContextCompat.getColor(this, R.color.color_main_tab_1))
             }
 
             1 -> {
-                binding.bottomBar.tv2.setTextColor(ContextCompat.getColor(this, R.color.color_main))
-                binding.bottomBar.iv2.setImageResource(R.drawable.icon_index4_s)
+                binding.bottomBar.tabDogLanguage.setBackgroundColor(ContextCompat.getColor(this, R.color.tab_dog_language_selected))
+                binding.bottomBar.ivDogLanguage.setImageResource(R.drawable.icon_index2_s)
+                binding.bottomBar.tvDogLanguage.setTextColor(ContextCompat.getColor(this, R.color.color_main_tab_2))
             }
 
             2 -> {
-                binding.bottomBar.tv3.setTextColor(ContextCompat.getColor(this, R.color.color_main))
-                binding.bottomBar.iv3.setImageResource(R.drawable.icon_index3_s)
+                binding.bottomBar.tabPetManagement.setBackgroundColor(ContextCompat.getColor(this, R.color.tab_pet_management_selected))
+                binding.bottomBar.ivPetManagement.setImageResource(R.drawable.icon_index3_s)
+                binding.bottomBar.tvPetManagement.setTextColor(ContextCompat.getColor(this, R.color.color_main_tab_3))
             }
 
             3 -> {
-                binding.bottomBar.tv4.setTextColor(ContextCompat.getColor(this, R.color.color_main))
-                binding.bottomBar.iv4.setImageResource(R.drawable.icon_index5_s)
+                binding.bottomBar.tabCuteVideo.setBackgroundColor(ContextCompat.getColor(this, R.color.tab_cute_video_selected))
+                binding.bottomBar.ivCuteVideo.setImageResource(R.drawable.icon_index4_s)
+                binding.bottomBar.tvCuteVideo.setTextColor(ContextCompat.getColor(this, R.color.color_main_tab_4))
             }
 
             4 -> {
-                binding.bottomBar.tv5.setTextColor(ContextCompat.getColor(this, R.color.color_main))
-                binding.bottomBar.iv5.setImageResource(R.drawable.icon_index2_s)
+                binding.bottomBar.tabProfile.setBackgroundColor(ContextCompat.getColor(this, R.color.tab_profile_selected))
+                binding.bottomBar.ivProfile.setImageResource(R.drawable.icon_index5_s)
+                binding.bottomBar.tvProfile.setTextColor(ContextCompat.getColor(this, R.color.color_main_tab_5))
             }
         }
         binding.mainPager.currentItem = index

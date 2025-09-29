@@ -13,172 +13,156 @@
         android:weightSum="5.0"
         app:layout_constraintTop_toTopOf="parent">
 
+        <!-- 喵语 -->
         <LinearLayout
-            android:id="@+id/tab_5"
+            android:id="@+id/tab_cat_language"
             android:layout_width="0.0dip"
             android:layout_height="fill_parent"
-            android:layout_gravity="bottom"
             android:layout_weight="1.0"
-            android:background="?selectableItemBackground"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:paddingTop="@dimen/_8sdp"
-            android:paddingBottom="@dimen/_8sdp">
-
-            <ImageView
-                android:id="@+id/iv_5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/icon_index2_n" />
-
-            <TextView
-                android:id="@+id/tv_5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="叫声"
-                android:textColor="@color/color_777777"
-                android:textSize="@dimen/_10ssp" />
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:id="@+id/tab_3"
-            android:layout_width="0.0dip"
-            android:layout_height="fill_parent"
-            android:layout_gravity="bottom"
-            android:layout_weight="1.0"
-            android:background="?selectableItemBackground"
+            android:background="@color/tab_default_background"
+            android:clickable="true"
+            android:focusable="true"
             android:gravity="center"
             android:orientation="vertical"
             android:paddingTop="@dimen/_5sdp"
             android:paddingBottom="@dimen/_5sdp">
 
             <ImageView
-                android:id="@+id/iv_3"
+                android:id="@+id/iv_cat_language"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/icon_index3_n" />
-
-            <TextView
-                android:id="@+id/tv_3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="对话"
-                android:textColor="@color/color_777777"
-                android:textSize="@dimen/_10ssp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/tab_1"
-            android:layout_width="0.0dip"
-            android:layout_height="fill_parent"
-            android:layout_gravity="bottom"
-            android:layout_weight="1.0"
-            android:background="?selectableItemBackground"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:paddingTop="@dimen/_5sdp"
-            android:paddingBottom="@dimen/_5sdp"
-            android:visibility="invisible">
-
-            <ImageView
-                android:id="@+id/iv_1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:padding="5dp"
                 android:src="@drawable/icon_index1_s" />
 
             <TextView
-                android:id="@+id/tv_1"
+                android:id="@+id/tv_cat_language"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="猫狗"
-                android:textColor="@color/color_main"
+                android:text="喵语"
+                android:textColor="@color/color_777777"
                 android:textSize="@dimen/_10ssp" />
         </LinearLayout>
 
+        <!-- 汪语 -->
         <LinearLayout
-            android:id="@+id/tab_2"
+            android:id="@+id/tab_dog_language"
             android:layout_width="0.0dip"
             android:layout_height="fill_parent"
-            android:layout_gravity="bottom"
             android:layout_weight="1.0"
-            android:background="?selectableItemBackground"
+            android:background="@color/tab_default_background"
+            android:clickable="true"
+            android:focusable="true"
             android:gravity="center"
             android:orientation="vertical"
             android:paddingTop="@dimen/_5sdp"
             android:paddingBottom="@dimen/_5sdp">
 
             <ImageView
-                android:id="@+id/iv_2"
+                android:id="@+id/iv_dog_language"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:src="@drawable/icon_index2_n" />
+
+            <TextView
+                android:id="@+id/tv_dog_language"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="汪语"
+                android:textColor="@color/color_777777"
+                android:textSize="@dimen/_10ssp" />
+        </LinearLayout>
+
+        <!-- 宠物管理 -->
+        <LinearLayout
+            android:id="@+id/tab_pet_management"
+            android:layout_width="0.0dip"
+            android:layout_height="fill_parent"
+            android:layout_weight="1.0"
+            android:background="@color/tab_default_background"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/_5sdp"
+            android:paddingBottom="@dimen/_5sdp">
+
+            <ImageView
+                android:id="@+id/iv_pet_management"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:src="@drawable/icon_index3_n" />
+
+            <TextView
+                android:id="@+id/tv_pet_management"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="宠物管理"
+                android:textColor="@color/color_777777"
+                android:textSize="@dimen/_10ssp" />
+        </LinearLayout>
+
+        <!-- 萌宠视频 -->
+        <LinearLayout
+            android:id="@+id/tab_cute_video"
+            android:layout_width="0.0dip"
+            android:layout_height="fill_parent"
+            android:layout_weight="1.0"
+            android:background="@color/tab_default_background"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/_5sdp"
+            android:paddingBottom="@dimen/_5sdp">
+
+            <ImageView
+                android:id="@+id/iv_cute_video"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
                 android:src="@drawable/icon_index4_n" />
 
             <TextView
-                android:id="@+id/tv_2"
+                android:id="@+id/tv_cute_video"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/training"
+                android:text="萌宠视频"
                 android:textColor="@color/color_777777"
                 android:textSize="@dimen/_10ssp" />
         </LinearLayout>
 
+        <!-- 我的 -->
         <LinearLayout
-            android:id="@+id/tab_4"
+            android:id="@+id/tab_profile"
             android:layout_width="0.0dip"
             android:layout_height="fill_parent"
-            android:layout_gravity="bottom"
             android:layout_weight="1.0"
-            android:background="?selectableItemBackground"
+            android:background="@color/tab_default_background"
+            android:clickable="true"
+            android:focusable="true"
             android:gravity="center"
             android:orientation="vertical"
             android:paddingTop="@dimen/_5sdp"
             android:paddingBottom="@dimen/_5sdp">
 
             <ImageView
-                android:id="@+id/iv_4"
+                android:id="@+id/iv_profile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:padding="5dp"
                 android:src="@drawable/icon_index5_n" />
 
             <TextView
-                android:id="@+id/tv_4"
+                android:id="@+id/tv_profile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/fake_video"
+                android:text="我的"
                 android:textColor="@color/color_777777"
                 android:textSize="@dimen/_10ssp" />
         </LinearLayout>
 
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/tab_home"
-        android:layout_width="@dimen/_50sdp"
-        android:layout_height="@dimen/_50sdp"
-        android:background="@drawable/icon_index_home_bg"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:paddingTop="@dimen/_5sdp"
-        android:paddingBottom="@dimen/_5sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="3dp"
-            android:src="@drawable/icon_index_home" />
-
-        <TextView
-
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="首页"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_10ssp" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

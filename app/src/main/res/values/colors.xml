@@ -25,6 +25,14 @@
     <color name="color_settings_item">#ff5f5f5f</color>
     <color name="color_text_update_content">#ff434343</color>
     <color name="colorindicator">#ff068abf</color>
+    
+    <!-- 底部导航栏选中状态背景颜色 -->
+    <color name="tab_cat_language_selected">#FFE3F2FD</color>  <!-- 浅蓝色 -->
+    <color name="tab_dog_language_selected">#FFFFE0B2</color>  <!-- 橙色 -->
+    <color name="tab_pet_management_selected">#FFF3E5F5</color>  <!-- 浅紫色 -->
+    <color name="tab_cute_video_selected">#FFE8F5E8</color>  <!-- 绿色 -->
+    <color name="tab_profile_selected">#FFEDE7F6</color>  <!-- 紫色 -->
+    <color name="tab_default_background">#FFF5F5F5</color>  <!-- 默认灰色 -->
 
 
     <color name="ripple_color">#82B9FF</color>
@@ -478,5 +486,9 @@
     <color name="public_color_000000">#ff000000</color>
     <color name="public_colorF3C25C">#fff3c25c</color>
     <color name="public_color_white">#ffffffff</color>
-
+    <color name="color_main_tab_1">#0288D1</color>
+    <color name="color_main_tab_2">#FF9800</color>
+    <color name="color_main_tab_3">#9C27B0</color>
+    <color name="color_main_tab_4">#4CAF50</color>
+    <color name="color_main_tab_5">#9C27B0</color>
 </resources>
