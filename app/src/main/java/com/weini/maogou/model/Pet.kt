@@ -61,6 +61,13 @@ data class Pet(
         val HEALTH_STATUS = listOf(
             "健康", "轻微不适", "需要关注", "治疗中"
         )
+        
+        /**
+         * 获取所有宠物列表
+         */
+        fun getAllPets(): List<Pet> {
+            return org.litepal.LitePal.findAll(Pet::class.java)
+        }
     }
 
     /**

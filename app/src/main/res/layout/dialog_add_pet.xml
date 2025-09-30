@@ -37,23 +37,72 @@
     <!-- 宠物姓名 -->
 
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="选择宠物"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
     <EditText
         android:id="@+id/et_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
         android:background="@drawable/spinner_background"
         android:hint="请输入宠物姓名"
         android:maxLength="20" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:text="选择类型"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold" />
     <!-- 宠物类型 -->
     <Spinner
-        android:layout_marginTop="16dp"
         android:id="@+id/spinner_type"
         android:layout_width="match_parent"
         android:layout_height="48dp"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/spinner_background" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_weight="1"
+
+            android:text="年龄"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="10dp"
+            android:layout_height="1dp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_weight="1"
+            android:text="体重"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+    </LinearLayout>
     <!-- 年龄和体重 -->
     <LinearLayout
         android:layout_width="match_parent"
@@ -86,33 +135,42 @@
     </LinearLayout>
 
     <!-- 宠物品种 -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:text="品种"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/et_breed"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
         android:background="@drawable/spinner_background"
         android:hint="请输入宠物品种"
         android:inputType="text" />
 
     <!-- 底部按钮 -->
     <LinearLayout
-        android:layout_marginTop="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:gravity="end"
         android:orientation="horizontal">
 
         <TextView
             android:id="@+id/btn_cancel"
-            android:paddingLeft="@dimen/_30sdp"
-            android:paddingRight="@dimen/_30sdp"
-            android:paddingTop="@dimen/dp_10"
-            android:paddingBottom="@dimen/dp_10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="12dp"
             android:background="@drawable/bg_button_add_pet_1"
+            android:paddingLeft="@dimen/_30sdp"
+            android:paddingTop="@dimen/dp_10"
+            android:paddingRight="@dimen/_30sdp"
+            android:paddingBottom="@dimen/dp_10"
             android:text="取消"
             android:textColor="@color/color_333333" />
 
@@ -121,11 +179,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_button_add_pet"
-            android:text="保存"
             android:paddingLeft="@dimen/_30sdp"
-            android:paddingRight="@dimen/_30sdp"
             android:paddingTop="@dimen/dp_10"
+            android:paddingRight="@dimen/_30sdp"
             android:paddingBottom="@dimen/dp_10"
+            android:text="保存"
             android:textColor="@android:color/white" />
     </LinearLayout>
 

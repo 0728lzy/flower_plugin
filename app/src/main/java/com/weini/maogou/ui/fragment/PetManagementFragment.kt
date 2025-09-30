@@ -8,6 +8,7 @@ import com.weini.maogou.R
 import com.weini.maogou.base.dj.RootFragment
 import com.weini.maogou.databinding.FragmentPetManagementBinding
 import com.weini.maogou.model.Pet
+import com.weini.maogou.ui.activity.PetNotesActivity
 import com.weini.maogou.ui.activity.PetPhotosActivity
 import com.weini.maogou.ui.adapter.PetAdapter
 import com.weini.maogou.ui.dialog.AddPetDialog
@@ -79,7 +80,13 @@ class PetManagementFragment : RootFragment(R.layout.fragment_pet_management) {
         }
 
         binding.layoutPetNotes.setOnClickListener {
-            ToastUtils.show("记事本功能开发中...")
+            if (petList.isEmpty()) {
+                ToastUtils.show("请先添加宠物")
+                return@setOnClickListener
+            }
+
+            // 如果只有一只宠物，直接跳转到该宠物的相册
+            PetNotesActivity.forward(requireContext())
         }
 
         binding.layoutBathRecord.setOnClickListener {

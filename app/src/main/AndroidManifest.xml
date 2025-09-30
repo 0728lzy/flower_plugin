@@ -196,7 +196,10 @@
             android:exported="true"
             android:screenOrientation="portrait" />
 
-
+        <activity android:name=".ui.activity.PetNotesActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait" />
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-3940256099942544~3347511713" /><!-- This meta-data tag is required to use Google Play Services. -->
