@@ -6,5 +6,6 @@
 
     <list>
         <mapping class="com.weini.maogou.model.Pet" />
+        <mapping class="com.weini.maogou.model.PetPhoto" />
     </list>
 </litepal>

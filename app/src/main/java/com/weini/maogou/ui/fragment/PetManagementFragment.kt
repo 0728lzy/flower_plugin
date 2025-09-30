@@ -8,6 +8,7 @@ import com.weini.maogou.R
 import com.weini.maogou.base.dj.RootFragment
 import com.weini.maogou.databinding.FragmentPetManagementBinding
 import com.weini.maogou.model.Pet
+import com.weini.maogou.ui.activity.PetPhotosActivity
 import com.weini.maogou.ui.adapter.PetAdapter
 import com.weini.maogou.ui.dialog.AddPetDialog
 import com.weini.maogou.utils.ToastUtils
@@ -22,10 +23,10 @@ class PetManagementFragment : RootFragment(R.layout.fragment_pet_management) {
 
     private var _binding: FragmentPetManagementBinding? = null
     private val binding get() = _binding!!
-    
+
     private lateinit var petAdapter: PetAdapter
     private val petList = mutableListOf<Pet>()
-    
+
     private val fragmentScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
@@ -42,17 +43,19 @@ class PetManagementFragment : RootFragment(R.layout.fragment_pet_management) {
                     // 点击宠物卡片，显示详情
                     showPetDetail(pet)
                 }
+
                 PetAdapter.ACTION_EDIT -> {
                     // 编辑宠物
                     showEditPetDialog(pet)
                 }
+
                 PetAdapter.ACTION_DELETE -> {
                     // 删除宠物
                     showDeleteConfirmDialog(pet)
                 }
             }
         }
-        
+
         binding.rvPets.apply {
             layoutManager = GridLayoutManager(context, 2) // 2列网格布局
             adapter = petAdapter
@@ -65,7 +68,14 @@ class PetManagementFragment : RootFragment(R.layout.fragment_pet_management) {
 
         // 管理功能点击事件
         binding.layoutPetAlbum.setOnClickListener {
-            ToastUtils.show("宠物相册功能开发中...")
+            if (petList.isEmpty()) {
+                ToastUtils.show("请先添加宠物")
+                return@setOnClickListener
+            }
+
+            // 如果只有一只宠物，直接跳转到该宠物的相册
+            PetPhotosActivity.forward(requireContext())
+
         }
 
         binding.layoutPetNotes.setOnClickListener {
@@ -82,19 +92,19 @@ class PetManagementFragment : RootFragment(R.layout.fragment_pet_management) {
      */
     private fun loadPets() {
         showLoading(true)
-        
+
         fragmentScope.launch {
             try {
                 val pets = withContext(Dispatchers.IO) {
                     LitePal.findAll(Pet::class.java)
                 }
-                
+
                 petList.clear()
                 petList.addAll(pets)
                 petAdapter.notifyDataSetChanged()
-                
+
                 updateEmptyState()
-                
+
             } catch (e: Exception) {
                 e.printStackTrace()
                 ToastUtils.show("加载宠物列表失败: ${e.message}")
@@ -143,11 +153,24 @@ class PetManagementFragment : RootFragment(R.layout.fragment_pet_management) {
     }
 
     /**
+     * 显示宠物选择对话框
+     */
+    private fun showPetSelectionDialog() {
+        val petNames = petList.map { it.name }.toTypedArray()
+
+        XPopup.Builder(requireContext())
+            .asBottomList("选择宠物", petNames) { position, text ->
+                com.weini.maogou.ui.activity.PetPhotosActivity.forward(requireContext())
+            }
+            .show()
+    }
+
+    /**
      * 显示宠物详情
      */
     private fun showPetDetail(pet: Pet) {
-        // TODO: 实现宠物详情页面
-        ToastUtils.show("宠物详情页面开发中...")
+        // 点击宠物卡片跳转到宠物相册
+        com.weini.maogou.ui.activity.PetPhotosActivity.forward(requireContext())
     }
 
     /**
@@ -159,7 +182,7 @@ class PetManagementFragment : RootFragment(R.layout.fragment_pet_management) {
                 val success = withContext(Dispatchers.IO) {
                     pet.save()
                 }
-                
+
                 if (success) {
                     petList.add(pet)
                     petAdapter.notifyItemInserted(petList.size - 1)
@@ -168,7 +191,7 @@ class PetManagementFragment : RootFragment(R.layout.fragment_pet_management) {
                 } else {
                     ToastUtils.show("添加宠物失败")
                 }
-                
+
             } catch (e: Exception) {
                 e.printStackTrace()
                 ToastUtils.show("添加宠物失败: ${e.message}")
@@ -186,7 +209,7 @@ class PetManagementFragment : RootFragment(R.layout.fragment_pet_management) {
                     pet.updateTimestamp()
                     pet.save()
                 }
-                
+
                 if (success) {
                     val index = petList.indexOfFirst { it.id == pet.id }
                     if (index != -1) {
@@ -197,7 +220,7 @@ class PetManagementFragment : RootFragment(R.layout.fragment_pet_management) {
                 } else {
                     ToastUtils.show("更新宠物信息失败")
                 }
-                
+
             } catch (e: Exception) {
                 e.printStackTrace()
                 ToastUtils.show("更新宠物信息失败: ${e.message}")
@@ -214,7 +237,7 @@ class PetManagementFragment : RootFragment(R.layout.fragment_pet_management) {
                 val success = withContext(Dispatchers.IO) {
                     LitePal.delete(Pet::class.java, pet.id)
                 }
-                
+
                 if (success > 0) {
                     val index = petList.indexOfFirst { it.id == pet.id }
                     if (index != -1) {
@@ -226,7 +249,7 @@ class PetManagementFragment : RootFragment(R.layout.fragment_pet_management) {
                 } else {
                     ToastUtils.show("删除宠物失败")
                 }
-                
+
             } catch (e: Exception) {
                 e.printStackTrace()
                 ToastUtils.show("删除宠物失败: ${e.message}")

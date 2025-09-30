@@ -191,6 +191,10 @@
             android:screenOrientation="portrait" />
 
 
+        <activity android:name=".ui.activity.PetPhotosActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait" />
 
 
         <meta-data

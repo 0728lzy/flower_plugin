@@ -293,4 +293,7 @@ dependencies {
     implementation("com.huawei.hms:ads-installreferrer:3.4.62.300")
 
     implementation("org.litepal.guolindev:core:3.2.3")
+
+    implementation("com.github.dhaval2404:imagepicker:2.1")
+
 }

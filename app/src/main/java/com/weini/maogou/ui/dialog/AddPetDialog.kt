@@ -68,6 +68,7 @@ class AddPetDialog(
     private fun fillExistingData(pet: Pet) {
         with(binding) {
             etName.setText(pet.name)
+            // 正确映射宠物类型：cat=0(猫咪), dog=1(狗狗)
             spinnerType.setSelection(if (pet.type == Pet.TYPE_CAT) 0 else 1)
             etBreed.setText(pet.breed)
             etAge.setText(pet.age.toInt().toString())

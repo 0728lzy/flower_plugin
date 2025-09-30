@@ -72,11 +72,41 @@ class PetAdapter(
                 // 设置体重数字（去掉"kg"字）
                 tvPetWeightNumber.text = pet.weight.toString()
 
-                // 卡片点击事件
+                // 卡片点击事件 - 点击跳转到宠物相册
                 root.setOnClickListener {
                     onItemAction(pet, ACTION_CLICK)
                 }
+                
+                // 长按显示菜单（编辑、删除）
+                root.setOnLongClickListener {
+                    showPopupMenu(it, pet)
+                    true
+                }
             }
+        }
+
+        /**
+         * 显示弹出菜单
+         */
+        private fun showPopupMenu(view: View, pet: Pet) {
+            val popupMenu = PopupMenu(view.context, view)
+            popupMenu.menuInflater.inflate(R.menu.menu_pet_actions, popupMenu.menu)
+            
+            popupMenu.setOnMenuItemClickListener { menuItem ->
+                when (menuItem.itemId) {
+                    R.id.action_edit -> {
+                        onItemAction(pet, ACTION_EDIT)
+                        true
+                    }
+                    R.id.action_delete -> {
+                        onItemAction(pet, ACTION_DELETE)
+                        true
+                    }
+                    else -> false
+                }
+            }
+            
+            popupMenu.show()
         }
 
 
