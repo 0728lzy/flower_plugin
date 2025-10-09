@@ -1,16 +1,16 @@
 package com.qingchu.wangmiao.network
 
 
-import com.qingchu.wangmiao.bean.dj.WHCommonConfigBean
+import com.qingchu.wangmiao.bean.dj.QCCommonConfigBean
 import com.qingchu.wangmiao.AppConst
 import com.qingchu.wangmiao.bean.dj.QCJRiskBean
-import com.qingchu.wangmiao.bean.dj.WHActivateBean
-import com.qingchu.wangmiao.bean.dj.WHStartRet
-import com.qingchu.wangmiao.bean.dj.WHWhiteListBean
-import com.qingchu.wangmiao.bean.dj.WHHelpQuestionBean
-import com.qingchu.wangmiao.bean.dj.WHInstallBean
-import com.qingchu.wangmiao.bean.dj.WHOpenMemberBean
-import com.qingchu.wangmiao.bean.dj.WHResponseBase
+import com.qingchu.wangmiao.bean.dj.QCActivateBean
+import com.qingchu.wangmiao.bean.dj.QCStartRet
+import com.qingchu.wangmiao.bean.dj.QCWhiteListBean
+import com.qingchu.wangmiao.bean.dj.QCHelpQuestionBean
+import com.qingchu.wangmiao.bean.dj.QCInstallBean
+import com.qingchu.wangmiao.bean.dj.QCOpenMemberBean
+import com.qingchu.wangmiao.bean.dj.QCResponseBase
 import io.reactivex.Observable
 import okhttp3.RequestBody
 import retrofit2.http.*
@@ -24,19 +24,19 @@ interface HttpApi {
    * */
   @GET("${AppConst.PATH_SEGMENTS_URL}app/config")
   fun getConfigInit( @Query("pkgName") pkgName: String,
-                     @Query("version") version: String,@Query("channel") channel: String): Observable<WHResponseBase<WHStartRet>>
+                     @Query("version") version: String,@Query("channel") channel: String): Observable<QCResponseBase<QCStartRet>>
 
   //Map形式
 
   @GET("${AppConst.PATH_SEGMENTS_URL}app/v2/config")
-  fun getAppConfig(@QueryMap params: Map<String, String>): Observable<WHResponseBase<WHStartRet>>
+  fun getAppConfig(@QueryMap params: Map<String, String>): Observable<QCResponseBase<QCStartRet>>
   /**
    * 获取初始化信息
    * @param
    * @return
    * */
   @POST("${AppConst.PATH_SEGMENTS_URL}app/v2/install")
-  fun setInstallHttp(@Body requestBody: RequestBody): Observable<WHResponseBase<WHStartRet>>
+  fun setInstallHttp(@Body requestBody: RequestBody): Observable<QCResponseBase<QCStartRet>>
 
   /**
    * 设备设置为白名单
@@ -44,10 +44,10 @@ interface HttpApi {
    * @return
    * */
   @POST("${AppConst.PATH_SEGMENTS_URL}app/v2/addWhiteList")
-  fun setWhiteList(@Body requestBody: RequestBody): Observable<WHResponseBase<WHWhiteListBean>>
+  fun setWhiteList(@Body requestBody: RequestBody): Observable<QCResponseBase<QCWhiteListBean>>
 
   @GET("${AppConst.PATH_SEGMENTS_URL}vip/commonConfig")
-  fun getCommonConfig(@QueryMap params: Map<String, String>): Observable<WHResponseBase<ArrayList<WHCommonConfigBean>>>
+  fun getCommonConfig(@QueryMap params: Map<String, String>): Observable<QCResponseBase<ArrayList<QCCommonConfigBean>>>
 
   /**
    * Vip通用配置
@@ -55,7 +55,7 @@ interface HttpApi {
    * @return
    * */
   @GET("${AppConst.PATH_SEGMENTS_URL}vip/issuesList")
-  fun issuesList(@QueryMap params: Map<String, String>): Observable<WHResponseBase<ArrayList<WHHelpQuestionBean>>>
+  fun issuesList(@QueryMap params: Map<String, String>): Observable<QCResponseBase<ArrayList<QCHelpQuestionBean>>>
 
   /**
    *售后服务表单
@@ -63,7 +63,7 @@ interface HttpApi {
    * @return
    * */
   @POST("${AppConst.PATH_SEGMENTS_URL}vip/afterSalesForm")
-  fun afterSalesForm(@Body requestBody: RequestBody): Observable<WHResponseBase<WHOpenMemberBean>>
+  fun afterSalesForm(@Body requestBody: RequestBody): Observable<QCResponseBase<QCOpenMemberBean>>
 
   /**
    *设备扩展信息
@@ -71,7 +71,7 @@ interface HttpApi {
    * @return
    * */
   @POST("${AppConst.PATH_SEGMENTS_URL}app/v2/deviceInfoExtend")
-  fun deviceInfoExtend(@Body requestBody: RequestBody): Observable<WHResponseBase<WHOpenMemberBean>>
+  fun deviceInfoExtend(@Body requestBody: RequestBody): Observable<QCResponseBase<QCOpenMemberBean>>
 
   /**
    * 用户行为上报
@@ -79,7 +79,7 @@ interface HttpApi {
    * @return
    * */
   @POST("${AppConst.PATH_SEGMENTS_URL}app/v2/report")
-  fun reportingBehavior(@Body requestBody: RequestBody): Observable<WHResponseBase<WHInstallBean>>
+  fun reportingBehavior(@Body requestBody: RequestBody): Observable<QCResponseBase<QCInstallBean>>
 
   /**
    * 设置选项日志
@@ -87,7 +87,7 @@ interface HttpApi {
    * @return
    * */
   @GET("${AppConst.PATH_SEGMENTS_URL}app/unusual/action/ip")
-  fun setUnsualIp(@QueryMap params: Map<String, String>): Observable<WHResponseBase<WHActivateBean>>
+  fun setUnsualIp(@QueryMap params: Map<String, String>): Observable<QCResponseBase<QCActivateBean>>
 
   /**
    * IP风险接口
@@ -95,6 +95,6 @@ interface HttpApi {
    * @return
    * */
   @GET("${AppConst.PATH_SEGMENTS_URL}app/v2/ipRisk")
-  fun ipRisk(): Observable<WHResponseBase<QCJRiskBean>>
+  fun ipRisk(): Observable<QCResponseBase<QCJRiskBean>>
 
 }

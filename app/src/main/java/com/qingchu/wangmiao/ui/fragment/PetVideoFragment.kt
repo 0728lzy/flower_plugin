@@ -1,19 +1,22 @@
 package com.qingchu.wangmiao.ui.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.FrameLayout
 import com.drake.brv.utils.bindingAdapter
 import com.drake.brv.utils.grid
 import com.drake.brv.utils.setup
+import com.qingchu.wangmiao.AppConst
 import com.qingchu.wangmiao.R
 import com.qingchu.wangmiao.base.dj.RootFragment
+import com.qingchu.wangmiao.csj.AdFeedSimpleFourUtils
 import com.qingchu.wangmiao.databinding.FragmentPetVideoBinding
 import com.qingchu.wangmiao.databinding.ItemPetVideoBinding
 import com.qingchu.wangmiao.event.SimpleEvent
 import com.qingchu.wangmiao.ext.getBinding
 import com.qingchu.wangmiao.ext.thrillClickListener
-import com.qingchu.wangmiao.ui.activity.WHVideoActivity
-import com.qingchu.wangmiao.utils.lzy.LZYADSUtils
+import com.qingchu.wangmiao.ui.activity.QCVideoActivity
 import com.qingchu.wangmiao.utils.lzy.LZYLog
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -75,7 +78,7 @@ class PetVideoFragment : RootFragment(R.layout.fragment_pet_video) {
                         
                         // 使用映射关系获取正确的索引
                         val index = nameToIndexMap[item.first] ?: 1
-                        WHVideoActivity.show(requireContext(), index)
+                        QCVideoActivity.show(requireContext(), index)
                     }
                 }
             }
@@ -96,9 +99,27 @@ class PetVideoFragment : RootFragment(R.layout.fragment_pet_video) {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onMessageSimpleEvent(message: SimpleEvent) {
-        if(message.simple == 4){
+        if(message.simple ==3){
             LZYLog.e("simple","message simple:${message.simple}")
-            LZYADSUtils("PetVideoFragment",requireActivity()).loadSimpleAd4(requireActivity(),binding.feedContainerPetVideo)
+            loadSimpleAd(binding.feedContainerPetVideo)
+        }
+    }
+    fun loadSimpleAd(fragment: FrameLayout?) {
+        if (requireActivity() != null && AppConst.is_show_ad) {
+            AdFeedSimpleFourUtils.init(
+                requireActivity(),
+                object : AdFeedSimpleFourUtils.GirdMenuStateListener {
+                    override fun onSuccess() {
+                        if (fragment != null && requireActivity() != null) {
+                            Log.i("tttt", "准备刷新DogLanguageFragment的广告")
+                            AdFeedSimpleFourUtils.showAd(fragment, requireActivity())
+                        }
+                    }
+
+                    override fun onError() {
+                    }
+                })
+            AdFeedSimpleFourUtils.initPreloading("")
         }
     }
 }

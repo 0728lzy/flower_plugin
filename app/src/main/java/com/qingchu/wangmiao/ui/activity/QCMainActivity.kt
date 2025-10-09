@@ -40,12 +40,12 @@ import com.qingchu.wangmiao.widget.dialog.dj.VipDialog
 import com.qingchu.wangmiao.widget.popup.dj.ExitDialogPopup
 import org.greenrobot.eventbus.EventBus
 
-class WHMainActivity : BaseActivity() {
+class QCMainActivity : BaseActivity() {
 
     companion object {
         fun forward(context: BaseActivity) {
             AppConst.splashInfoShowMainCP=true
-            val intent = Intent(context, WHMainActivity::class.java)
+            val intent = Intent(context, QCMainActivity::class.java)
             context.startActivity(intent)
         }
     }
@@ -71,7 +71,7 @@ class WHMainActivity : BaseActivity() {
         lzyadsUtils=LZYADSUtils("MainActivity",this)
 
 
-        binding.mainPager.adapter = object : FragmentStateAdapter(this@WHMainActivity) {
+        binding.mainPager.adapter = object : FragmentStateAdapter(this@QCMainActivity) {
 
             override fun getItemCount() = fragments.size
 
@@ -95,7 +95,7 @@ class WHMainActivity : BaseActivity() {
                 if (AppConst.is_show_ad && (channelName.equals("HONOR"))) {
                     LZYLog.i("lzyp","channelName:$channelName")
                     Handler().postDelayed({
-                        SetListAppHttpUtil.setList(this@WHMainActivity);
+                        SetListAppHttpUtil.setList(this@QCMainActivity);
                     },800)
                 }
             }
@@ -211,14 +211,14 @@ class WHMainActivity : BaseActivity() {
     }
     private fun firstShowVipDialog() {
         if (UserInfoModel.getIsFirstNormal()) {
-            LZYADSUtils("APP", this).initSimpleAd4(this@WHMainActivity)
+            LZYADSUtils("APP", this).initSimpleAd4(this@QCMainActivity)
         }
         VipDialog.showDialog(this, object : DialogCallBack {
             override fun buAgree() {
-                val advDiaLog = LoadingDiaLog(this@WHMainActivity, "加载中...")
+                val advDiaLog = LoadingDiaLog(this@QCMainActivity, "加载中...")
                 advDiaLog.show()
 
-                LZYADSUtils("APP", this@WHMainActivity).showAdJL(advDiaLog) {
+                LZYADSUtils("APP", this@QCMainActivity).showAdJL(advDiaLog) {
                     if (UserInfoModel.getIsFirstNormal()){
                         firstShowAdDialog()
                     }
@@ -234,12 +234,12 @@ class WHMainActivity : BaseActivity() {
         if(!UserInfoModel.getIsCheckFlag() || AppConst.is_show_ad) {
             AdCPNoLimitUtils.init(this, object : AdCPNoLimitUtils.GirdMenuStateListener {
                 override fun onSuccess() {
-                    LZYLog.e(this@WHMainActivity, "first one cp onSuccess")
-                    AdCPNoLimitUtils.showInterstitialFullAd(this@WHMainActivity)
+                    LZYLog.e(this@QCMainActivity, "first one cp onSuccess")
+                    AdCPNoLimitUtils.showInterstitialFullAd(this@QCMainActivity)
                 }
 
                 override fun onError() {
-                    LZYLog.e(this@WHMainActivity, "first one cp onError")
+                    LZYLog.e(this@QCMainActivity, "first one cp onError")
 
                 }
 
@@ -268,12 +268,12 @@ class WHMainActivity : BaseActivity() {
         if(!UserInfoModel.getIsCheckFlag() || AppConst.is_show_ad) {
             AdCPNoLimitUtils.init(this, object : AdCPNoLimitUtils.GirdMenuStateListener {
                 override fun onSuccess() {
-                    LZYLog.e(this@WHMainActivity, "first one cp onSuccess")
-                    AdCPNoLimitUtils.showInterstitialFullAd(this@WHMainActivity)
+                    LZYLog.e(this@QCMainActivity, "first one cp onSuccess")
+                    AdCPNoLimitUtils.showInterstitialFullAd(this@QCMainActivity)
                 }
 
                 override fun onError() {
-                    LZYLog.e(this@WHMainActivity, "first one cp onError")
+                    LZYLog.e(this@QCMainActivity, "first one cp onError")
 
                 }
 
@@ -311,11 +311,11 @@ class WHMainActivity : BaseActivity() {
             AgreementDialog.showDialog(this, object : DialogCallBack {
                 override fun buAgree() {
                     UserInfoModel.setIsFirstNormal(false)
-                    LZYInitCPAdsUtils.showAdCpTurnNormal(this@WHMainActivity)
+                    LZYInitCPAdsUtils.showAdCpTurnNormal(this@QCMainActivity)
                 }
                 override fun disagree() {
                     UserInfoModel.setIsFirstNormal(false)
-                    LZYInitCPAdsUtils.showAdCpTurnNormal(this@WHMainActivity)
+                    LZYInitCPAdsUtils.showAdCpTurnNormal(this@QCMainActivity)
                 }
             })
         }
@@ -331,7 +331,7 @@ class WHMainActivity : BaseActivity() {
         AgreementCancelDialog.showDialog(this, object : DialogCallBack {
             override fun buAgree() {
                 UserInfoModel.setIsFirstNormal(false)
-                LZYInitCPAdsUtils.showAdCpTurnNormal(this@WHMainActivity)
+                LZYInitCPAdsUtils.showAdCpTurnNormal(this@QCMainActivity)
             }
             override fun disagree() {
                 finish()
@@ -343,17 +343,17 @@ class WHMainActivity : BaseActivity() {
         AppConst.isWaked=false
         AdCPTwoUtils.init(this, object : AdCPTwoUtils.GirdMenuStateListener {
             override fun onSuccess() {
-                LZYLog.e(this@WHMainActivity, "first two cp onSuccess")
-                AdCPTwoUtils.showInterstitialFullAd(this@WHMainActivity)
+                LZYLog.e(this@QCMainActivity, "first two cp onSuccess")
+                AdCPTwoUtils.showInterstitialFullAd(this@QCMainActivity)
             }
 
             override fun onError() {
-                LZYLog.e(this@WHMainActivity, "first two cp onError")
+                LZYLog.e(this@QCMainActivity, "first two cp onError")
 
             }
 
             override fun showVideoClosed() {
-                LZYLog.e(this@WHMainActivity, "first one cp showVideoClosedisShowTwoAd")
+                LZYLog.e(this@QCMainActivity, "first one cp showVideoClosedisShowTwoAd")
 
 
             }

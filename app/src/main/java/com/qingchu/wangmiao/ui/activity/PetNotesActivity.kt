@@ -16,6 +16,7 @@ import com.qingchu.wangmiao.ui.dialog.AddEditNoteDialog
 import com.gyf.immersionbar.ImmersionBar
 import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.core.BasePopupView
+import com.qingchu.wangmiao.utils.lzy.LZYADSUtils
 
 class PetNotesActivity : BaseActivity() {
 
@@ -27,7 +28,7 @@ class PetNotesActivity : BaseActivity() {
     }
 
     override fun getLayoutId() = R.layout.activity_pet_notes
-
+    private lateinit var lzyadsUtils: LZYADSUtils
     private lateinit var binding: ActivityPetNotesBinding
     private lateinit var notesAdapter: PetNotesAdapter
     private var notesList = mutableListOf<PetNote>()
@@ -56,6 +57,9 @@ class PetNotesActivity : BaseActivity() {
         binding.btnAddNote.setOnClickListener {
             showAddEditNoteDialog()
         }
+        lzyadsUtils=LZYADSUtils("PetNotesActivity",this@PetNotesActivity)
+        lzyadsUtils.showAdCpTurn()
+        lzyadsUtils.loadSimpleAdTurn(binding.feedContainer,-1)
     }
 
     private fun setupRecyclerView() {
@@ -163,6 +167,7 @@ class PetNotesActivity : BaseActivity() {
                         // 重新加载所有数据
                         loadAllNotes()
                         val message = if (note.id == 0L) "记录添加成功" else "记录更新成功"
+                        lzyadsUtils.showAdCpTurn()
                         Toast.makeText(this@PetNotesActivity, message, Toast.LENGTH_SHORT).show()
                     } else {
                         Toast.makeText(this@PetNotesActivity, "保存失败", Toast.LENGTH_SHORT).show()
@@ -189,6 +194,7 @@ class PetNotesActivity : BaseActivity() {
                 Toast.makeText(this, "记录删除成功", Toast.LENGTH_SHORT).show()
                 // 重新加载所有数据
                 loadAllNotes()
+                lzyadsUtils.showAdCpTurn()
             } else {
                 Toast.makeText(this, "记录删除失败", Toast.LENGTH_SHORT).show()
             }
@@ -215,7 +221,7 @@ class PetNotesActivity : BaseActivity() {
                 if (position != -1) {
                     notesAdapter.notifyItemChanged(position)
                 }
-                
+                lzyadsUtils.showAdCpTurn()
                 val message = if (note.isCompleted) "已标记为完成" else "已标记为未完成"
                 Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
             } else {

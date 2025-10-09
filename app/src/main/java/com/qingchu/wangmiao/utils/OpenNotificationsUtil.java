@@ -22,7 +22,7 @@ import java.util.Set;
 
 import com.qingchu.wangmiao.R;
 import com.qingchu.wangmiao.base.dj.RootActivity;
-import com.qingchu.wangmiao.ui.activity.WHMainActivity;
+import com.qingchu.wangmiao.ui.activity.QCMainActivity;
 
 public class OpenNotificationsUtil {
 
@@ -121,7 +121,7 @@ public class OpenNotificationsUtil {
             // category = Notification.CATEGORY_STATUS;
         }
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        Intent nfIntent = new Intent(context, WHMainActivity.class);
+        Intent nfIntent = new Intent(context, QCMainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, nfIntent, PendingIntent.FLAG_IMMUTABLE);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelId)
                 .setContentIntent(pendingIntent) // 设置PendingIntent

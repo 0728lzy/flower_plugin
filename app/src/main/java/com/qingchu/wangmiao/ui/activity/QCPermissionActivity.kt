@@ -14,11 +14,11 @@ import com.qingchu.wangmiao.base.dj.BaseActivity
 import com.qingchu.wangmiao.databinding.ActivityPermissionBinding
 import com.qingchu.wangmiao.ext.thrillClickListener
 
-class WHPermissionActivity : BaseActivity() {
+class QCPermissionActivity : BaseActivity() {
 
     companion object {
         fun forward(context: Context) {
-            context.startActivity(Intent(context, WHPermissionActivity::class.java))
+            context.startActivity(Intent(context, QCPermissionActivity::class.java))
         }
     }
 
@@ -33,7 +33,7 @@ class WHPermissionActivity : BaseActivity() {
 
         binding.trCheck.thrillClickListener {
             if (ContextCompat.checkSelfPermission(
-                    this@WHPermissionActivity,
+                    this@QCPermissionActivity,
                     Manifest.permission.RECORD_AUDIO
                 ) != PackageManager.PERMISSION_GRANTED
             ) {
@@ -45,13 +45,13 @@ class WHPermissionActivity : BaseActivity() {
         }
         binding.btnContinue2.thrillClickListener {
             if (ContextCompat.checkSelfPermission(
-                    this@WHPermissionActivity,
+                    this@QCPermissionActivity,
                     Manifest.permission.RECORD_AUDIO
                 ) != PackageManager.PERMISSION_GRANTED
             ) {
                 return@thrillClickListener
             }
-            WHMainActivity.forward(this@WHPermissionActivity)
+            QCMainActivity.forward(this@QCPermissionActivity)
         }
     }
 

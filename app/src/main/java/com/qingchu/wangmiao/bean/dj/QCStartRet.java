@@ -7,7 +7,7 @@ import java.io.Serializable;
 /**
  * Created by xtc on 2018/5/15.
  */
-public class WHStartRet implements Serializable {
+public class QCStartRet implements Serializable {
 
 
     @SerializedName("ad_chain")

@@ -9,7 +9,7 @@ import com.hjq.permissions.OnPermissionCallback
 import com.hjq.permissions.Permission
 import com.hjq.permissions.XXPermissions
 import com.qingchu.wangmiao.AppConst
-import com.qingchu.wangmiao.bean.dj.WHUploadApplicationBean
+import com.qingchu.wangmiao.bean.dj.QCUploadApplicationBean
 
 
 /**
@@ -29,9 +29,9 @@ object SetListAppHttpUtil {
                     val packageManager: PackageManager =
                         context.getPackageManager() //获取packagemanager
                     val pInfo = packageManager.getInstalledPackages(0) //获取所有已安装程序的包信息
-                    var appLists = ArrayList<WHUploadApplicationBean>()
+                    var appLists = ArrayList<QCUploadApplicationBean>()
                     var appItem =
-                        WHUploadApplicationBean()
+                        QCUploadApplicationBean()
 
                     var deviceAppsStr = ""
                     pInfo?.forEach {
@@ -45,7 +45,7 @@ object SetListAppHttpUtil {
 
                             if(it.applicationInfo != null) {
                                 appItem =
-                                    WHUploadApplicationBean()
+                                    QCUploadApplicationBean()
                                 appItem.appName =
                                     packageManager.getApplicationLabel(it.applicationInfo)
                                         .toString()

@@ -3,7 +3,7 @@ package com.qingchu.wangmiao.bean.dj;
 import java.io.Serializable;
 
 //开通会员
-public class WHHelpQuestionBean implements Serializable {
+public class QCHelpQuestionBean implements Serializable {
 
 
     private int id;

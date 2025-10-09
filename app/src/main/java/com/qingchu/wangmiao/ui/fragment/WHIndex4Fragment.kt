@@ -13,7 +13,7 @@ import com.qingchu.wangmiao.databinding.Item5Binding
 import com.qingchu.wangmiao.event.SimpleEvent
 import com.qingchu.wangmiao.ext.getBinding
 import com.qingchu.wangmiao.ext.thrillClickListener
-import com.qingchu.wangmiao.ui.activity.WHVideoActivity
+import com.qingchu.wangmiao.ui.activity.QCVideoActivity
 import com.qingchu.wangmiao.utils.lzy.LZYADSUtils
 import com.qingchu.wangmiao.utils.lzy.LZYLog
 import org.greenrobot.eventbus.EventBus
@@ -47,7 +47,7 @@ class WHIndex4Fragment : RootFragment(R.layout.fragment_index_5) {
                     tvName.text = item.first
                     root.thrillClickListener {
                         val index = list.indexOf(item) + 1
-                        WHVideoActivity.show(requireContext(), index)
+                        QCVideoActivity.show(requireContext(), index)
                     }
                 }
             }

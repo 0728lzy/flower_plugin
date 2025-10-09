@@ -331,18 +331,15 @@ class LZYADSUtils(val tag: String,val activity: Activity?){
         when(AppConst.adsFlag){
             0 -> {
                 showAdCp1()
-            }
-            1 -> {
                 showAdCp2()
             }
-            2 -> {
+            1 -> {
                 showAdCp3()
-            }
-            3 -> {
                 showAdCp4()
             }
+
         }
-        AppConst.adsFlag = (AppConst.adsFlag + 1) % 4
+        AppConst.adsFlag = (AppConst.adsFlag + 1) % 2
     }
     //adv加载广告---------------------------------------------------end
 

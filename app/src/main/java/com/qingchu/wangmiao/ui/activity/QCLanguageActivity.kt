@@ -14,11 +14,11 @@ import com.qingchu.wangmiao.databinding.ItemLanguageBinding
 import com.qingchu.wangmiao.entity.LanguageEntity
 import com.qingchu.wangmiao.utils.LanguageUtils
 
-class WHLanguageActivity : BaseActivity() {
+class QCLanguageActivity : BaseActivity() {
 
     companion object {
         fun forward(context: Context, isFirst: Boolean) {
-            context.startActivity(Intent(context, WHLanguageActivity::class.java).apply {
+            context.startActivity(Intent(context, QCLanguageActivity::class.java).apply {
                 putExtra("isFirst", isFirst)
             })
         }
@@ -48,9 +48,9 @@ class WHLanguageActivity : BaseActivity() {
         binding.rclLanguage.bindingAdapter.models = com.qingchu.wangmiao.AppConst.languageList
         LanguageUtils.setIndex(0)
         if (isFirst) {
-            WHGuideActivity.forward(this)
+            QCGuideActivity.forward(this)
         } else {
-            WHMainActivity.forward(this)
+            QCMainActivity.forward(this)
         }
         finish()
     }

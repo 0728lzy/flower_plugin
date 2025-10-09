@@ -19,11 +19,11 @@ import com.qingchu.wangmiao.widget.dj.NewWebView
 import com.yl.adsdk.YlLib
 
 
-class WHWebViewActivity : BaseActivity() {
+class QCWebViewActivity : BaseActivity() {
     companion object {
 
         fun forward(context: Context, title: String, url: String) {
-            context.startActivity(Intent(context, WHWebViewActivity::class.java).apply {
+            context.startActivity(Intent(context, QCWebViewActivity::class.java).apply {
                 putExtra("url", url)
                 putExtra("title", title)
             })

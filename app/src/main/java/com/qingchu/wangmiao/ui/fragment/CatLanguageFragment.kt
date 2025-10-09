@@ -22,7 +22,7 @@ import com.qingchu.wangmiao.event.SimpleEvent
 import com.qingchu.wangmiao.ext.countDown
 import com.qingchu.wangmiao.ext.getBinding
 import com.qingchu.wangmiao.ext.thrillClickListener
-import com.qingchu.wangmiao.ui.activity.WHSoundActivity
+import com.qingchu.wangmiao.ui.activity.QCSoundActivity
 import com.qingchu.wangmiao.ui.dialog.ResultDialog
 import com.qingchu.wangmiao.utils.dj.UserInfoModel
 import com.qingchu.wangmiao.utils.lzy.LZYADSUtils
@@ -59,7 +59,7 @@ class CatLanguageFragment : RootFragment(R.layout.fragment_cat_language) {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onMessageSimpleEvent(message: SimpleEvent) {
-        if (message.simple == 5) { // 使用新的事件ID避免冲突
+        if (message.simple == 0) { // 使用新的事件ID避免冲突
             LZYLog.e("simple", "CatLanguageFragment message simple:${message.simple}")
             loadSimpleAd(binding.feedContainerCatLanguage)
         }
@@ -93,9 +93,14 @@ class CatLanguageFragment : RootFragment(R.layout.fragment_cat_language) {
         
         // 初始化常见喵语列表
         initCommonSoundsList()
-        
-        // 加载广告
-        lzyadsUtils.loadSimpleAdTurn(binding.feedContainerCatLanguage, -1)
+        if (AppConst.is_show_ad){
+            binding.tvTop.visibility=View.GONE
+        }else{
+            binding.tvTop.visibility=View.VISIBLE
+        }
+        Handler().postDelayed({
+            loadSimpleAd(binding.feedContainerCatLanguage)
+        },500)
     }
 
     private fun initRecordButtons() {
@@ -204,7 +209,7 @@ class CatLanguageFragment : RootFragment(R.layout.fragment_cat_language) {
                     tvName.text = item.title
                     root.thrillClickListener {
                         // 播放猫咪声音，type=2表示猫
-                        WHSoundActivity.show(requireContext(), false, modelPosition)
+                        QCSoundActivity.show(requireContext(), false, modelPosition)
                     }
                 }
             }
@@ -216,7 +221,7 @@ class CatLanguageFragment : RootFragment(R.layout.fragment_cat_language) {
 
     private fun loadCatSounds() {
         // 获取猫咪声音列表并随机排序，只显示前6个
-        val catSounds = AppConst.catSoundList(requireContext()).shuffled().take(6)
+        val catSounds = AppConst.catSoundList(requireContext()).shuffled()
         binding.rvCommonSounds.bindingAdapter.models = catSounds
     }
 

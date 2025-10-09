@@ -1,12 +1,18 @@
 package com.qingchu.wangmiao.ui.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.FrameLayout
 import androidx.recyclerview.widget.GridLayoutManager
 import com.lxj.xpopup.XPopup
+import com.qingchu.wangmiao.AppConst
 import com.qingchu.wangmiao.R
 import com.qingchu.wangmiao.base.dj.RootFragment
+import com.qingchu.wangmiao.csj.AdFeedSimpleThreeUtils
+import com.qingchu.wangmiao.csj.AdFeedSimpleTwoUtils
 import com.qingchu.wangmiao.databinding.FragmentPetManagementBinding
+import com.qingchu.wangmiao.event.SimpleEvent
 import com.qingchu.wangmiao.model.Pet
 import com.qingchu.wangmiao.ui.activity.PetBathActivity
 import com.qingchu.wangmiao.ui.activity.PetNotesActivity
@@ -14,8 +20,13 @@ import com.qingchu.wangmiao.ui.activity.PetPhotosActivity
 import com.qingchu.wangmiao.ui.adapter.PetAdapter
 import com.qingchu.wangmiao.ui.dialog.AddPetDialog
 import com.qingchu.wangmiao.utils.ToastUtils
+import com.qingchu.wangmiao.utils.lzy.LZYADSUtils
+import com.qingchu.wangmiao.utils.lzy.LZYLog
 import org.litepal.LitePal
 import kotlinx.coroutines.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 /**
  * 宠物管理Fragment
@@ -28,7 +39,7 @@ class PetManagementFragment : RootFragment(R.layout.fragment_pet_management) {
 
     private lateinit var petAdapter: PetAdapter
     private val petList = mutableListOf<Pet>()
-
+    private lateinit var lzyadsUtils: LZYADSUtils
     private val fragmentScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
@@ -38,6 +49,8 @@ class PetManagementFragment : RootFragment(R.layout.fragment_pet_management) {
     }
 
     private fun initViews() {
+        lzyadsUtils= LZYADSUtils("SoundActivity",requireActivity())
+
         // 初始化RecyclerView
         petAdapter = PetAdapter(petList) { pet, action ->
             when (action) {
@@ -91,7 +104,6 @@ class PetManagementFragment : RootFragment(R.layout.fragment_pet_management) {
         }
 
         binding.layoutBathRecord.setOnClickListener {
-            ToastUtils.show("洗澡记录功能开发中...")
             if (petList.isEmpty()) {
                 ToastUtils.show("请先添加宠物")
                 return@setOnClickListener
@@ -203,6 +215,7 @@ class PetManagementFragment : RootFragment(R.layout.fragment_pet_management) {
                     petAdapter.notifyItemInserted(petList.size - 1)
                     updateEmptyState()
                     ToastUtils.show("添加宠物成功")
+                    lzyadsUtils.showAdCpTurn()
                 } else {
                     ToastUtils.show("添加宠物失败")
                 }
@@ -231,6 +244,7 @@ class PetManagementFragment : RootFragment(R.layout.fragment_pet_management) {
                         petList[index] = pet
                         petAdapter.notifyItemChanged(index)
                         ToastUtils.show("更新宠物信息成功")
+                        lzyadsUtils.showAdCpTurn()
                     }
                 } else {
                     ToastUtils.show("更新宠物信息失败")
@@ -260,6 +274,7 @@ class PetManagementFragment : RootFragment(R.layout.fragment_pet_management) {
                         petAdapter.notifyItemRemoved(index)
                         updateEmptyState()
                         ToastUtils.show("删除宠物成功")
+                        lzyadsUtils.showAdCpTurn()
                     }
                 } else {
                     ToastUtils.show("删除宠物失败")
@@ -296,6 +311,42 @@ class PetManagementFragment : RootFragment(R.layout.fragment_pet_management) {
         super.onDestroyView()
         fragmentScope.cancel()
         _binding = null
+    }
+    override fun onStart() {
+        super.onStart()
+        EventBus.getDefault().register(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().unregister(this)
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onMessageSimpleEvent(message: SimpleEvent) {
+        if (message.simple == 2) { // 使用新的事件ID避免冲突
+            LZYLog.e("simple", "DogLanguageFragment message simple:${message.simple}")
+            loadSimpleAd(binding.feedContainerMg)
+        }
+    }
+
+    fun loadSimpleAd(fragment: FrameLayout?) {
+        if (requireActivity() != null && AppConst.is_show_ad) {
+            AdFeedSimpleThreeUtils.init(
+                requireActivity(),
+                object : AdFeedSimpleThreeUtils.GirdMenuStateListener {
+                    override fun onSuccess() {
+                        if (fragment != null && requireActivity() != null) {
+                            Log.i("tttt", "准备刷新DogLanguageFragment的广告")
+                            AdFeedSimpleThreeUtils.showAd(fragment, requireActivity())
+                        }
+                    }
+
+                    override fun onError() {
+                    }
+                })
+            AdFeedSimpleThreeUtils.initPreloading("")
+        }
     }
 
     companion object {

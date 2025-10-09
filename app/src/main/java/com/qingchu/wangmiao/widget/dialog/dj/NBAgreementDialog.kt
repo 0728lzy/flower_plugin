@@ -12,7 +12,7 @@ import com.qingchu.wangmiao.R
 import com.qingchu.wangmiao.base.dj.BaseDialog
 import com.qingchu.wangmiao.databinding.DialogAgreementBinding
 import com.qingchu.wangmiao.ext.dj.thrillClickListener
-import com.qingchu.wangmiao.ui.activity.WHWebViewActivity
+import com.qingchu.wangmiao.ui.activity.QCWebViewActivity
 import com.qingchu.wangmiao.utils.dj.SharedPreferencesDelegate
 
 
@@ -120,7 +120,7 @@ class NBAgreementDialog(val activity: Activity) : BaseDialog() {
         override fun onClick(view: View) {
             when (spanType) {
                 SPAN_TYPE_USER_SERVICE_AGREEMENT -> {
-                    WHWebViewActivity.forward(
+                    QCWebViewActivity.forward(
                         context,
                         AppConst.URL_USER_AGREEMENT,
                         context.getString(R.string.user_agreement)
@@ -128,7 +128,7 @@ class NBAgreementDialog(val activity: Activity) : BaseDialog() {
                 }
 
                 SPAN_TYPE_PRIVACY_POLICY_AGREEMENT -> {
-                    WHWebViewActivity.forward(
+                    QCWebViewActivity.forward(
                         context,
                         AppConst.URL_PRIVACY_POLICY,
                         context.getString(R.string.privacy_policy)

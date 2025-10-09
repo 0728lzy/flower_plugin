@@ -29,7 +29,7 @@ import com.qingchu.wangmiao.csj.lzy.EventCounterHelper
 import com.qingchu.wangmiao.db.RoomHelper
 import com.qingchu.wangmiao.helper.dj.PushHelper
 import com.qingchu.wangmiao.net.GsonConverter
-import com.qingchu.wangmiao.ui.activity.WHLauncherActivity
+import com.qingchu.wangmiao.ui.activity.QCLauncherActivity
 import com.qingchu.wangmiao.utils.dj.CountdownTimeTask
 import com.qingchu.wangmiao.utils.dj.GetHttpDataUtil
 import com.qingchu.wangmiao.utils.dj.SPUtils
@@ -285,7 +285,7 @@ class APP : Application() {
             }
 
             override fun onActivityStarted(activity: Activity) {
-                if (AppConst.is_show_ad||activity is WHLauncherActivity) {
+                if (AppConst.is_show_ad||activity is QCLauncherActivity) {
                     Log.e(TAG, "onActivityStarted: ")
                     appount++
                     if (appount == 1 && !isBackground) {
@@ -294,7 +294,7 @@ class APP : Application() {
                         Log.e(TAG, "AppConst.isFront:${AppConst.isFront},isStarted:${isStarted}")
                         if (!AppConst.isFront && isStarted &&AppConst.is_show_ad) {
                             AppConst.isStopped = true
-                            val intent = Intent(this@APP, WHLauncherActivity::class.java)
+                            val intent = Intent(this@APP, QCLauncherActivity::class.java)
                             intent.putExtra("position", 1)
                             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                             startActivity(intent)
@@ -317,7 +317,7 @@ class APP : Application() {
             }
 
             override fun onActivityStopped(activity: Activity) {
-                if (AppConst.is_show_ad||activity is WHLauncherActivity) {
+                if (AppConst.is_show_ad||activity is QCLauncherActivity) {
                     Log.e(TAG, "onActivityStopped: ")
                     appount--
                     if (appount === 0 && AppConst.isStopBoolen && AppConst.isSuspendedBoolen) {

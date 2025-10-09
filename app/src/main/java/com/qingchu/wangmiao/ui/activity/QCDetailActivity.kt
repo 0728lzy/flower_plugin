@@ -12,11 +12,11 @@ import com.qingchu.wangmiao.ext.getBinding
 import com.qingchu.wangmiao.ext.thrillClickListener
 import com.qingchu.wangmiao.utils.lzy.LZYADSUtils
 
-class WHDetailActivity : BaseActivity() {
+class QCDetailActivity : BaseActivity() {
 
     companion object {
         fun show(context: Context, index: Int) {
-            context.startActivity(Intent(context, WHDetailActivity::class.java).apply { putExtra("index", index) })
+            context.startActivity(Intent(context, QCDetailActivity::class.java).apply { putExtra("index", index) })
         }
     }
 

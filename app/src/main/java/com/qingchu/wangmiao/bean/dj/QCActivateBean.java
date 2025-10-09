@@ -1,6 +1,6 @@
 package com.qingchu.wangmiao.bean.dj;
 
-public class WHActivateBean {
+public class QCActivateBean {
 
     private String source;
 

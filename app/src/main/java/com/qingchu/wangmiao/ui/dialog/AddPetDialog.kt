@@ -186,7 +186,6 @@ class AddPetDialog(
             if (existingPet == null) {
                 pet.updateTimestamp()
             }
-            
             onPetSaved(pet)
             dismiss()
         }

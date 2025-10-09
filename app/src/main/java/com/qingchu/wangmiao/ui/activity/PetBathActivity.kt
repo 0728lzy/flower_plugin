@@ -13,6 +13,7 @@ import com.qingchu.wangmiao.model.Pet
 import com.qingchu.wangmiao.model.PetBathRecord
 import com.qingchu.wangmiao.ui.adapter.PetBathRecordAdapter
 import com.qingchu.wangmiao.ui.dialog.AddEditBathRecordDialog
+import com.qingchu.wangmiao.utils.lzy.LZYADSUtils
 import org.litepal.LitePal
 
 /**
@@ -25,6 +26,7 @@ class PetBathActivity : AppCompatActivity() {
     private lateinit var adapter: PetBathRecordAdapter
     private val bathRecords = mutableListOf<PetBathRecord>()
     private var selectedPetId: Long = -1
+    private lateinit var lzyadsUtils: LZYADSUtils
     companion object {
         fun forward(context: Context) {
             val intent = Intent(context, PetBathActivity::class.java)
@@ -35,8 +37,9 @@ class PetBathActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityPetBathBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-
+        lzyadsUtils=LZYADSUtils("PetBathActivity",this@PetBathActivity)
+        lzyadsUtils.showAdCpTurn()
+        lzyadsUtils.loadSimpleAdTurn(binding.feedContainer,-1)
 
         initViews()
         setupRecyclerView()
@@ -139,12 +142,14 @@ class PetBathActivity : AppCompatActivity() {
                         bathRecords.add(0, updatedRecord)
                         adapter.notifyItemInserted(0)
                         binding.rvBathRecords.scrollToPosition(0)
+                        lzyadsUtils.showAdCpTurn()
                     } else {
                         // 更新现有记录
                         val index = bathRecords.indexOf(record)
                         if (index != -1) {
                             bathRecords[index] = updatedRecord
                             adapter.notifyItemChanged(index)
+                            lzyadsUtils.showAdCpTurn()
                         }
                     }
                     updateEmptyState()
@@ -178,7 +183,7 @@ class PetBathActivity : AppCompatActivity() {
                         bathRecords.removeAt(index)
                         adapter.notifyItemRemoved(index)
                     }
-                    
+                    lzyadsUtils.showAdCpTurn()
                     updateEmptyState()
                 } catch (e: Exception) {
                     e.printStackTrace()

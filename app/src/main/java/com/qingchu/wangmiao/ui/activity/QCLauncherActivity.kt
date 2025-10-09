@@ -12,6 +12,7 @@ import android.view.View
 import android.webkit.WebView
 import androidx.annotation.RequiresApi
 import com.google.gson.Gson
+import com.gyf.immersionbar.ImmersionBar
 import com.qingchu.wangmiao.csj.AdCPNoLimitUtils
 import com.qingchu.wangmiao.csj.AdSPUtils
 import com.qingchu.wangmiao.csj.AdSPTwoUtils
@@ -49,7 +50,7 @@ import org.greenrobot.eventbus.ThreadMode
  * author:  DengZhiYang
  * desc:    something
  */
-class WHLauncherActivity : BaseActivity() {
+class QCLauncherActivity : BaseActivity() {
 
     private lateinit var binding: ActivityLauncherBinding
     var TAG = "SplashActivity"
@@ -152,7 +153,6 @@ class WHLauncherActivity : BaseActivity() {
 
     }
 
-
     private fun firstShowDialog() {
 
         AgreementDialog.showDialog(this, object : DialogCallBack {
@@ -166,41 +166,7 @@ class WHLauncherActivity : BaseActivity() {
                 firstShowAd2Dialog()
             }
         })
-//        val dialog = Dialog(this, R.style.MyDialog)
-//        dialog.setCancelable(false)
-//        dialog.setCanceledOnTouchOutside(false)
-//        dialog.setContentView(R.layout.dialog_first_install_permission_splash);
-//        updateTextColor(dialog)
-//        dialog.window?.setLayout(
-//            ViewGroup.LayoutParams.MATCH_PARENT,
-//            ViewGroup.LayoutParams.WRAP_CONTENT
-//        )
-//        //底部弹出的Dialog
-//        dialog.window?.setGravity(Gravity.CENTER);
-//        val ref_title = dialog.findViewById<TextView>(R.id.ref_title)
-//        val spannableString = SpannableString("欢迎使用${getString(R.string.app_name)}")
-//        spannableString.setSpan(
-//            AgreementClickableSpan(
-//                this,
-//                AgreementClickableSpan.SPAN_TYPE_USER_SERVICE_AGREEMENT
-//            ), 4, spannableString.length, 33
-//        )
-//        ref_title.text = spannableString;
-//        dialog.findViewById<TextView>(R.id.htl).setOnClickListener {
-////            firstShowDialogTwo(dialog)
-//            android.os.Process.killProcess(android.os.Process.myPid());
-//        }
-//
-//        dialog.findViewById<View>(R.id.y1u).setOnClickListener {
-//            dialog.cancel()
-//            UserInfoModel.setIsFirstTime(false)
-//            getHttpData()
-//
-//
-//        }
-//        if ((!isFinishing)) {
-//            dialog.show()
-//        }
+
     }
 
 
@@ -645,7 +611,7 @@ class WHLauncherActivity : BaseActivity() {
             isShowAD = true
             mHandler.postDelayed(Runnable {
                 LanguageUtils.setIndex(1)
-                WHMainActivity.forward(this)
+                QCMainActivity.forward(this)
                 finish()
             }, 500)
         }
@@ -707,9 +673,9 @@ class WHLauncherActivity : BaseActivity() {
     }
 
     override fun initStatus() {
-//        ImmersionBar.with(this)
-//            .fullScreen(true)
-//            .init()
+        ImmersionBar.with(this)
+            .transparentStatusBar()  //透明状态栏，不写默认透明色
+            .init()
         EventBus.getDefault().register(this)
     }
 

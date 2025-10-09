@@ -26,6 +26,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import com.gyf.immersionbar.ImmersionBar
 import com.lxj.xpopup.core.BasePopupView
+import com.qingchu.wangmiao.utils.lzy.LZYADSUtils
 
 class PetPhotosActivity : BaseActivity() {
 
@@ -39,7 +40,7 @@ class PetPhotosActivity : BaseActivity() {
     }
 
     override fun getLayoutId() = R.layout.activity_pet_photos
-
+    private lateinit var lzyadsUtils: LZYADSUtils
     private lateinit var binding: ActivityPetPhotosBinding
     private lateinit var photosAdapter: PetPhotosAdapter
     private var photosList = mutableListOf<PetPhoto>()
@@ -69,6 +70,9 @@ class PetPhotosActivity : BaseActivity() {
         binding.btnUploadPhoto.setOnClickListener {
             showUploadPhotoDialog()
         }
+        lzyadsUtils=LZYADSUtils("PetNotesActivity",this@PetPhotosActivity)
+        lzyadsUtils.showAdCpTurn()
+        lzyadsUtils.loadSimpleAdTurn(binding.feedContainer,-1)
     }
 
     private fun setupRecyclerView() {
@@ -164,6 +168,7 @@ class PetPhotosActivity : BaseActivity() {
             if (petPhoto.save()) {
                 Toast.makeText(this, "照片保存成功", Toast.LENGTH_SHORT).show()
                 loadPhotos() // 重新加载照片列表
+                lzyadsUtils.showAdCpTurn()
             } else {
                 Toast.makeText(this, "照片保存失败", Toast.LENGTH_SHORT).show()
             }
@@ -186,6 +191,7 @@ class PetPhotosActivity : BaseActivity() {
             if (photo.delete() > 0) {
                 Toast.makeText(this, "照片删除成功", Toast.LENGTH_SHORT).show()
                 loadPhotos() // 重新加载照片列表
+                lzyadsUtils.showAdCpTurn()
             } else {
                 Toast.makeText(this, "照片删除失败", Toast.LENGTH_SHORT).show()
             }

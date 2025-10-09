@@ -22,11 +22,11 @@ import com.qingchu.wangmiao.utils.lzy.LZYADSUtils
 import java.math.BigDecimal
 import java.math.RoundingMode
 
-class WHSoundActivity : BaseActivity() {
+class QCSoundActivity : BaseActivity() {
 
     companion object {
         fun show(context: Context, isDog: Boolean, index: Int) {
-            context.startActivity(Intent(context, WHSoundActivity::class.java).apply {
+            context.startActivity(Intent(context, QCSoundActivity::class.java).apply {
                 putExtra("index", index)
                 putExtra("isDog", isDog)
             })
@@ -66,7 +66,7 @@ class WHSoundActivity : BaseActivity() {
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
         binding = ActivitySoundDetailBinding.bind(view)
-        lzyadsUtils=LZYADSUtils("SoundActivity",this@WHSoundActivity)
+        lzyadsUtils=LZYADSUtils("SoundActivity",this@QCSoundActivity)
         lzyadsUtils.showAdCpTurn()
         lzyadsUtils.loadSimpleAdTurn(binding.feedContainerActivitySound,-1)
         binding.toolbar.ivMenu.setImageResource(R.drawable.ic_arrow_back_24)

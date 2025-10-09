@@ -16,11 +16,11 @@ import com.qingchu.wangmiao.base.dj.BaseActivity
 import com.qingchu.wangmiao.databinding.ActivityGuideBinding
 import com.qingchu.wangmiao.ui.fragment.WHGuideFragment
 
-class WHGuideActivity : BaseActivity() {
+class QCGuideActivity : BaseActivity() {
 
     companion object {
         fun forward(context: Context) {
-            context.startActivity(Intent(context, WHGuideActivity::class.java))
+            context.startActivity(Intent(context, QCGuideActivity::class.java))
         }
     }
 
@@ -61,9 +61,9 @@ class WHGuideActivity : BaseActivity() {
             ) != PackageManager.PERMISSION_GRANTED
         ) {
             SPUtils.getInstance().put("first_permission", false)
-            WHPermissionActivity.forward(this)
+            QCPermissionActivity.forward(this)
         } else {
-            WHMainActivity.forward(this)
+            QCMainActivity.forward(this)
             finish()
         }
     }

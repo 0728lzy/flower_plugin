@@ -14,7 +14,7 @@ import com.qingchu.wangmiao.databinding.Item4Binding
 import com.qingchu.wangmiao.entity.Index4Entity
 import com.qingchu.wangmiao.ext.getBinding
 import com.qingchu.wangmiao.ext.thrillClickListener
-import com.qingchu.wangmiao.ui.activity.WHDetailActivity
+import com.qingchu.wangmiao.ui.activity.QCDetailActivity
 import com.qingchu.wangmiao.utils.lzy.LZYADSUtils
 import com.tbuonomo.viewpagerdotsindicator.setBackgroundCompat
 import com.qingchu.wangmiao.event.SimpleEvent
@@ -88,7 +88,7 @@ class WHIndex2Fragment : RootFragment(R.layout.fragment_index_4) {
                         if (type == 2) {
                             index += 5
                         }
-                        WHDetailActivity.show(requireContext(), index)
+                        QCDetailActivity.show(requireContext(), index)
                     }
                 }
             }

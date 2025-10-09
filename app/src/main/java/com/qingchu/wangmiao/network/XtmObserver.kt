@@ -1,7 +1,7 @@
 package com.qingchu.wangmiao.network
 
 import android.util.Log
-import com.qingchu.wangmiao.bean.dj.WHResponseBase
+import com.qingchu.wangmiao.bean.dj.QCResponseBase
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
 
@@ -12,7 +12,7 @@ import io.reactivex.disposables.Disposable
  * Description:观察者，传入泛型即可
  */
 abstract class XtmObserver<T>(
-) : Observer<WHResponseBase<T>> {
+) : Observer<QCResponseBase<T>> {
 
     override fun onError(e: Throwable) {
         e?.printStackTrace()
@@ -20,7 +20,7 @@ abstract class XtmObserver<T>(
     }
 
 
-    override fun onNext(t: WHResponseBase<T>) {
+    override fun onNext(t: QCResponseBase<T>) {
         Log.i("confiInit", "Response=${t.code}")
 
     }

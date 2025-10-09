@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class WHInstallBean implements Serializable {
+public class QCInstallBean implements Serializable {
 
     private String djId;
 

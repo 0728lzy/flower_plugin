@@ -18,11 +18,11 @@ import java.math.BigDecimal
 import java.math.RoundingMode
 
 
-class WHVideoActivity : BaseActivity() {
+class QCVideoActivity : BaseActivity() {
 
     companion object {
         fun show(context: Context, index: Int) {
-            context.startActivity(Intent(context, WHVideoActivity::class.java).apply {
+            context.startActivity(Intent(context, QCVideoActivity::class.java).apply {
                 putExtra("index", index)
             })
         }
@@ -35,7 +35,7 @@ class WHVideoActivity : BaseActivity() {
     private var index = 0
 
     private var total = 0
-
+    private lateinit var lzyadsUtils: LZYADSUtils
     private var duration = 0
 
     private val handler = object : Handler(Looper.getMainLooper()) {
@@ -56,7 +56,9 @@ class WHVideoActivity : BaseActivity() {
         binding = ActivityOverviewCallBinding.bind(view)
         binding.toolbar.ivMenu.setImageResource(R.drawable.ic_arrow_back_24)
         binding.toolbar.ivMenu.thrillClickListener { onBackPressed() }
-        LZYADSUtils("VideoActivity",this).showAdCpTurn()
+        lzyadsUtils=LZYADSUtils("WHVideoActivity",this@QCVideoActivity)
+        lzyadsUtils.showAdCpTurn()
+        lzyadsUtils.loadSimpleAdTurn(binding.feedContainer,-1)
         index = intent.getIntExtra("index", 1)
         var name = ""
         var icon = 0
@@ -200,7 +202,7 @@ class WHVideoActivity : BaseActivity() {
     private fun goCall() {
         stopTime()
         reset()
-        WHCallActivity.show(this, index)
+        QCCallActivity.show(this, index)
     }
 
 }

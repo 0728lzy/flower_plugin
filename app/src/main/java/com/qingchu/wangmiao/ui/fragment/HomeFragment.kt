@@ -7,7 +7,7 @@ import com.qingchu.wangmiao.base.dj.RootFragment
 import com.qingchu.wangmiao.databinding.FragmentHomeBinding
 import com.qingchu.wangmiao.event.SimpleEvent
 import com.qingchu.wangmiao.ext.getBinding
-import com.qingchu.wangmiao.ui.activity.WHMainActivity
+import com.qingchu.wangmiao.ui.activity.QCMainActivity
 import com.qingchu.wangmiao.utils.dj.UserInfoModel
 import com.qingchu.wangmiao.utils.lzy.LZYADSUtils
 import com.qingchu.wangmiao.utils.lzy.LZYLog
@@ -55,25 +55,25 @@ class HomeFragment : RootFragment(R.layout.fragment_home) {
         binding.llSoundTranslate.setOnClickListener {
 
             // 这里可以添加跳转逻辑
-            (requireActivity() as WHMainActivity).tabChange(4)
+            (requireActivity() as QCMainActivity).tabChange(4)
         }
 
         // 对话翻译卡片点击事件
         binding.llDialogTranslate.setOnClickListener {
-            (requireActivity() as WHMainActivity).tabChange(2)
+            (requireActivity() as QCMainActivity).tabChange(2)
             // 这里可以添加跳转逻辑
         }
 
         // 训练文章卡片点击事件
         binding.llTrainingArticles.setOnClickListener {
-            (requireActivity() as WHMainActivity).tabChange(1)
+            (requireActivity() as QCMainActivity).tabChange(1)
             // 这里可以添加跳转逻辑
         }
 
         // 虚拟视频卡片点击事件
         binding.llVirtualVideo.setOnClickListener {
             // 这里可以添加跳转逻辑
-            (requireActivity() as WHMainActivity).tabChange(3)
+            (requireActivity() as QCMainActivity).tabChange(3)
         }
     }
 

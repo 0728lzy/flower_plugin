@@ -17,9 +17,9 @@ import com.qingchu.wangmiao.databinding.FragmentIndex2Binding
 import com.qingchu.wangmiao.event.SimpleEvent
 import com.qingchu.wangmiao.ext.getBinding
 import com.qingchu.wangmiao.ext.thrillClickListener
-import com.qingchu.wangmiao.ui.activity.WHMainActivity
-import com.qingchu.wangmiao.ui.activity.WHContactCustomerServiceActivity
-import com.qingchu.wangmiao.ui.activity.WHWebViewActivity
+import com.qingchu.wangmiao.ui.activity.QCMainActivity
+import com.qingchu.wangmiao.ui.activity.QCContactCustomerServiceActivity
+import com.qingchu.wangmiao.ui.activity.QCWebViewActivity
 import com.qingchu.wangmiao.utils.dj.DeviceUtils
 import com.qingchu.wangmiao.utils.dj.GetHttpDataUtil
 import com.qingchu.wangmiao.utils.dj.UserInfoModel
@@ -43,7 +43,7 @@ class WHIndex5Fragment : RootFragment(R.layout.fragment_index_2) {
 
     var _binding: FragmentIndex2Binding? = null
     private lateinit var lzyadsUtils: LZYADSUtils
-    private lateinit var myActivity: WHMainActivity
+    private lateinit var myActivity: QCMainActivity
     private lateinit var mineLinearLayout: LinearLayout
     private lateinit var privacyLinearLayout: LinearLayout
     private lateinit var userProLinearLayout: LinearLayout
@@ -77,7 +77,7 @@ class WHIndex5Fragment : RootFragment(R.layout.fragment_index_2) {
     override fun initView(view: View, savedInstanceState: Bundle?) {
         _binding = view.getBinding()
         lzyadsUtils = LZYADSUtils("Index2Fragment", requireActivity())
-        myActivity = requireActivity() as WHMainActivity
+        myActivity = requireActivity() as QCMainActivity
         mineLinearLayout = binding.mineLin
         privacyLinearLayout = binding.mineLinPrivacy
         userProLinearLayout = binding.mineLinUserPro
@@ -98,21 +98,21 @@ class WHIndex5Fragment : RootFragment(R.layout.fragment_index_2) {
         }
         mineLinearLayout.clipToOutline = true
         privacyLinearLayout.thrillClickListener {
-            WHWebViewActivity.forward(
+            QCWebViewActivity.forward(
                 requireContext(),
                 getString(R.string.privacy_policy),
                 AppConst.URL_PRIVACY_POLICY
             )
         }
         userProLinearLayout.thrillClickListener {
-            WHWebViewActivity.forward(
+            QCWebViewActivity.forward(
                 requireContext(),
                 getString(R.string.user_agreement),
                 AppConst.URL_USER_AGREEMENT
             )
         }
         feedbackLinearLayout.thrillClickListener {
-            WHContactCustomerServiceActivity.show(requireContext())
+            QCContactCustomerServiceActivity.show(requireContext())
         }
         binding.mineAppImg.setOnClickListener {
             stat++

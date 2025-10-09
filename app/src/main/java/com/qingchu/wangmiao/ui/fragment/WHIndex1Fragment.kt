@@ -19,7 +19,7 @@ import com.qingchu.wangmiao.entity.Index1Entity
 import com.qingchu.wangmiao.event.SimpleEvent
 import com.qingchu.wangmiao.ext.getBinding
 import com.qingchu.wangmiao.ext.thrillClickListener
-import com.qingchu.wangmiao.ui.activity.WHSoundActivity
+import com.qingchu.wangmiao.ui.activity.QCSoundActivity
 import com.qingchu.wangmiao.utils.dj.UserInfoModel
 import com.qingchu.wangmiao.utils.lzy.LZYADSUtils
 import com.qingchu.wangmiao.utils.lzy.LZYLog
@@ -113,7 +113,7 @@ class WHIndex1Fragment : RootFragment(R.layout.fragment_index_1) {
                     ivThumb.setImageResource(item.icon)
                     tvName.text = item.title
                     root.thrillClickListener {
-                        WHSoundActivity.show(requireContext(), type == 1, modelPosition)
+                        QCSoundActivity.show(requireContext(), type == 1, modelPosition)
                     }
                 }
             }

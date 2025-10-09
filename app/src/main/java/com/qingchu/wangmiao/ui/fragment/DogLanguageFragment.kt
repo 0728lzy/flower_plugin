@@ -13,7 +13,7 @@ import com.hjq.permissions.Permission
 import com.qingchu.wangmiao.AppConst
 import com.qingchu.wangmiao.R
 import com.qingchu.wangmiao.base.dj.RootFragment
-import com.qingchu.wangmiao.csj.AdFeedSimpleOneNoLimitUtils
+import com.qingchu.wangmiao.csj.AdFeedSimpleTwoUtils
 import com.qingchu.wangmiao.databinding.FragmentDogLanguageBinding
 import com.qingchu.wangmiao.databinding.ItemDogBinding
 import com.qingchu.wangmiao.entity.Index1Entity
@@ -22,9 +22,8 @@ import com.qingchu.wangmiao.event.SimpleEvent
 import com.qingchu.wangmiao.ext.countDown
 import com.qingchu.wangmiao.ext.getBinding
 import com.qingchu.wangmiao.ext.thrillClickListener
-import com.qingchu.wangmiao.ui.activity.WHSoundActivity
+import com.qingchu.wangmiao.ui.activity.QCSoundActivity
 import com.qingchu.wangmiao.ui.dialog.ResultDialog
-import com.qingchu.wangmiao.utils.dj.UserInfoModel
 import com.qingchu.wangmiao.utils.lzy.LZYADSUtils
 import com.qingchu.wangmiao.utils.lzy.LZYLog
 import com.qingchu.wangmiao.utils.lzy.PermissionUtils
@@ -59,28 +58,28 @@ class DogLanguageFragment : RootFragment(R.layout.fragment_dog_language) {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onMessageSimpleEvent(message: SimpleEvent) {
-        if (message.simple == 6) { // 使用新的事件ID避免冲突
+        if (message.simple == 1) { // 使用新的事件ID避免冲突
             LZYLog.e("simple", "DogLanguageFragment message simple:${message.simple}")
             loadSimpleAd(binding.feedContainerDogLanguage)
         }
     }
 
     fun loadSimpleAd(fragment: FrameLayout?) {
-        if (requireActivity() != null && (!UserInfoModel.getIsCheckFlag() || AppConst.is_show_ad)) {
-            AdFeedSimpleOneNoLimitUtils.init(
+        if (requireActivity() != null && AppConst.is_show_ad) {
+            AdFeedSimpleTwoUtils.init(
                 requireActivity(),
-                object : AdFeedSimpleOneNoLimitUtils.GirdMenuStateListener {
+                object : AdFeedSimpleTwoUtils.GirdMenuStateListener {
                     override fun onSuccess() {
                         if (fragment != null && requireActivity() != null) {
                             Log.i("tttt", "准备刷新DogLanguageFragment的广告")
-                            AdFeedSimpleOneNoLimitUtils.showAd(fragment, requireActivity())
+                            AdFeedSimpleTwoUtils.showAd(fragment, requireActivity())
                         }
                     }
 
                     override fun onError() {
                     }
                 })
-            AdFeedSimpleOneNoLimitUtils.initPreloading()
+            AdFeedSimpleTwoUtils.initPreloading("")
         }
     }
 
@@ -93,7 +92,11 @@ class DogLanguageFragment : RootFragment(R.layout.fragment_dog_language) {
         
         // 初始化常见狗语列表
         initCommonSoundsList()
-        
+        if (AppConst.is_show_ad){
+            binding.tvTop.visibility=View.GONE
+        }else{
+            binding.tvTop.visibility=View.VISIBLE
+        }
         // 加载广告
         lzyadsUtils.loadSimpleAdTurn(binding.feedContainerDogLanguage, -1)
     }
@@ -204,7 +207,7 @@ class DogLanguageFragment : RootFragment(R.layout.fragment_dog_language) {
                     tvName.text = item.title
                     root.thrillClickListener {
                         // 播放狗狗声音，type=1表示狗
-                        WHSoundActivity.show(requireContext(), true, modelPosition)
+                        QCSoundActivity.show(requireContext(), true, modelPosition)
                     }
                 }
             }
@@ -216,7 +219,7 @@ class DogLanguageFragment : RootFragment(R.layout.fragment_dog_language) {
 
     private fun loadDogSounds() {
         // 获取狗狗声音列表并随机排序，只显示前6个
-        val dogSounds = AppConst.dogSoundList(requireContext()).shuffled().take(6)
+        val dogSounds = AppConst.dogSoundList(requireContext()).shuffled()
         binding.rvCommonSounds.bindingAdapter.models = dogSounds
     }
 

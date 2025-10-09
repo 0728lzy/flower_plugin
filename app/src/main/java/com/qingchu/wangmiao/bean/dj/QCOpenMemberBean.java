@@ -3,7 +3,7 @@ package com.qingchu.wangmiao.bean.dj;
 import java.io.Serializable;
 
 //开通会员
-public class WHOpenMemberBean implements Serializable {
+public class QCOpenMemberBean implements Serializable {
 
     private int id;  //商品原价
     private int type;  //商品类型，0：普通商品、1：续费商品、2：试用产品
@@ -13,14 +13,14 @@ public class WHOpenMemberBean implements Serializable {
     private String description;//商品描述
     private boolean isSelected;
 
-    private WHOpenMemberBean renewGoodsVO;
+    private QCOpenMemberBean renewGoodsVO;
 
 
-    public WHOpenMemberBean getRenewGoodsVO() {
+    public QCOpenMemberBean getRenewGoodsVO() {
         return renewGoodsVO;
     }
 
-    public void setRenewGoodsVO(WHOpenMemberBean renewGoodsVO) {
+    public void setRenewGoodsVO(QCOpenMemberBean renewGoodsVO) {
         this.renewGoodsVO = renewGoodsVO;
     }
 

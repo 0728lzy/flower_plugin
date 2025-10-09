@@ -20,8 +20,8 @@ import com.qingchu.wangmiao.databinding.FragmentAboutBinding
 import com.qingchu.wangmiao.event.SimpleEvent
 import com.qingchu.wangmiao.ext.getBinding
 import com.qingchu.wangmiao.ext.thrillClickListener
-import com.qingchu.wangmiao.ui.activity.WHContactCustomerServiceActivity
-import com.qingchu.wangmiao.ui.activity.WHWebViewActivity
+import com.qingchu.wangmiao.ui.activity.QCContactCustomerServiceActivity
+import com.qingchu.wangmiao.ui.activity.QCWebViewActivity
 import com.qingchu.wangmiao.utils.dj.DeviceUtils
 import com.qingchu.wangmiao.utils.dj.UserInfoModel
 import com.qingchu.wangmiao.utils.lzy.LZYADSUtils
@@ -78,7 +78,7 @@ class AboutFragment : RootFragment(R.layout.fragment_about) {
         mineLinearLayout.clipToOutline = true
         
         privacyLinearLayout.thrillClickListener {
-            WHWebViewActivity.forward(
+            QCWebViewActivity.forward(
                 requireActivity() as com.qingchu.wangmiao.base.dj.BaseActivity,
                 getString(R.string.privacy_policy),
                 AppConst.URL_PRIVACY_POLICY
@@ -86,7 +86,7 @@ class AboutFragment : RootFragment(R.layout.fragment_about) {
         }
         
         userProLinearLayout.thrillClickListener {
-            WHWebViewActivity.forward(
+            QCWebViewActivity.forward(
                 requireActivity() as com.qingchu.wangmiao.base.dj.BaseActivity,
                 getString(R.string.user_agreement),
                 AppConst.URL_USER_AGREEMENT
@@ -94,7 +94,7 @@ class AboutFragment : RootFragment(R.layout.fragment_about) {
         }
         
         feedbackLinearLayout.thrillClickListener {
-            WHContactCustomerServiceActivity.show(requireActivity() as com.qingchu.wangmiao.base.dj.BaseActivity)
+            QCContactCustomerServiceActivity.show(requireActivity() as com.qingchu.wangmiao.base.dj.BaseActivity)
         }
         
         binding.mineAppImg.setOnClickListener {

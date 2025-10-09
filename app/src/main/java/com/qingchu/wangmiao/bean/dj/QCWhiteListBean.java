@@ -1,6 +1,6 @@
 package com.qingchu.wangmiao.bean.dj;
 
-public class WHWhiteListBean {
+public class QCWhiteListBean {
 
     private String status;
 

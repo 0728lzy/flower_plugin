@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.qingchu.wangmiao.R
 import com.qingchu.wangmiao.ext.thrillClickListener
-import com.qingchu.wangmiao.ui.activity.WHGuideActivity
+import com.qingchu.wangmiao.ui.activity.QCGuideActivity
 
 class WHGuideFragment(val index: Int) : Fragment() {
 
@@ -26,7 +26,7 @@ class WHGuideFragment(val index: Int) : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         view.findViewById<TextView>(R.id.tv_start).thrillClickListener {
-            (requireActivity() as? WHGuideActivity)?.next()
+            (requireActivity() as? QCGuideActivity)?.next()
         }
     }
 
