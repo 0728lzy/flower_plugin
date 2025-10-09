@@ -5,7 +5,9 @@
     android:layout_height="wrap_content"
     android:background="@drawable/beizi_custom_dialog_shape"
     android:orientation="vertical"
-    android:padding="24dp">
+    android:padding="24dp"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
 
     <!-- 标题栏 -->
     <LinearLayout

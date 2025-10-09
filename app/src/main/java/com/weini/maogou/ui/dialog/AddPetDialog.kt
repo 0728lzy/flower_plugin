@@ -33,6 +33,9 @@ class AddPetDialog(
         binding = DialogAddPetBinding.bind(popupImplView)
         setupViews()
         existingPet?.let { fillExistingData(it) }
+        
+        // 防止软键盘自动弹出
+        clearFocusFromEditTexts()
     }
 
     private fun setupViews() {
@@ -61,6 +64,19 @@ class AddPetDialog(
                 savePet()
             }
         }
+    }
+
+    /**
+     * 清除所有 EditText 的焦点，防止软键盘自动弹出
+     */
+    private fun clearFocusFromEditTexts() {
+        binding.etName.clearFocus()
+        binding.etAge.clearFocus()
+        binding.etWeight.clearFocus()
+        binding.etBreed.clearFocus()
+        
+        // 将焦点设置到根布局，确保没有 EditText 获得焦点
+        popupImplView.requestFocus()
     }
 
 

@@ -35,6 +35,9 @@ class AddEditNoteDialog(
         super.onCreate()
         binding = DialogAddEditNoteBinding.bind(popupImplView)
         setupViews()
+        
+        // 防止软键盘自动弹出
+        clearFocusFromEditTexts()
     }
 
     private fun setupViews() {
@@ -49,6 +52,17 @@ class AddEditNoteDialog(
         setupSpinners()
         setupClickListeners()
         fillDataIfEditing()
+    }
+
+    /**
+     * 清除所有 EditText 的焦点，防止软键盘自动弹出
+     */
+    private fun clearFocusFromEditTexts() {
+        binding.etTitle.clearFocus()
+        binding.etContent.clearFocus()
+        
+        // 将焦点设置到根布局，确保没有 EditText 获得焦点
+        popupImplView.requestFocus()
     }
 
     private fun setupSpinners() {

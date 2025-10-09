@@ -33,6 +33,7 @@ import com.weini.maogou.ext.thrillClickListener
 import com.weini.maogou.ui.fragment.CatLanguageFragment
 import com.weini.maogou.ui.fragment.DogLanguageFragment
 import com.weini.maogou.ui.fragment.PetManagementFragment
+import com.weini.maogou.ui.fragment.PetVideoFragment
 import com.weini.maogou.ui.fragment.WHIndex1Fragment
 import com.weini.maogou.ui.fragment.WHIndex5Fragment
 import com.weini.maogou.ui.fragment.WHIndex3Fragment
@@ -68,7 +69,7 @@ class WHMainActivity : BaseActivity() {
         CatLanguageFragment(),
         DogLanguageFragment(),
         PetManagementFragment(),
-        WHIndex4Fragment(),
+        PetVideoFragment(),
         WHIndex1Fragment(),
     )
 

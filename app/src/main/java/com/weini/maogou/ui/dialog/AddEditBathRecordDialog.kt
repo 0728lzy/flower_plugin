@@ -41,6 +41,9 @@ class AddEditBathRecordDialog(
         binding = DialogAddEditBathRecordBinding.bind(popupImplView)
         loadPets()
         setupViews()
+        
+        // 防止软键盘自动弹出
+        clearFocusFromEditTexts()
     }
 
     private fun loadPets() {
@@ -65,6 +68,19 @@ class AddEditBathRecordDialog(
         setupSpinners()
         setupClickListeners()
         fillDataIfEditing()
+    }
+
+    /**
+     * 清除所有 EditText 的焦点，防止软键盘自动弹出
+     */
+    private fun clearFocusFromEditTexts() {
+        binding.etWaterTemperature.clearFocus()
+        binding.etBathDuration.clearFocus()
+        binding.etShampoo.clearFocus()
+        binding.etNotes.clearFocus()
+        
+        // 将焦点设置到根布局，确保没有 EditText 获得焦点
+        popupImplView.requestFocus()
     }
 
     private fun setupSpinners() {

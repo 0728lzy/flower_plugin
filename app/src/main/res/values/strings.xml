@@ -42,6 +42,12 @@
     <string name="call_4">毛毛</string>
     <string name="call_5">波波</string>
 
+    <string name="pet_video_1">毛毛</string>
+    <string name="pet_video_2">发财</string>
+    <string name="pet_video_3">二哈</string>
+    <string name="pet_video_4">小白</string>
+    <string name="pet_video_5">嘟嘟</string>
+
 
     <string name="let_me_recommend">让我向你推荐这个应用程序</string>
     <string name="content_food">为了给您的狗提供适当的营养，请考虑 4 个因素：喂食时间、食物份量、食物种类以及如何喂食。</string>
