@@ -10,7 +10,7 @@ plugins {
 
 android {
 //    namespace = "com.ruite.app.pet.translator"
-    namespace = "com.weini.maogou"
+    namespace = "com.qingchu.wangmiao"
     compileSdk = 34
 
     defaultConfig {
@@ -57,7 +57,7 @@ android {
         variantConfig {
             register("release"){
                 //注意：这里的release是变体名称，如果没有设置productFlavors就是buildType名称，如果有设置productFlavors就是flavor+buildType，例如（freeRelease、proRelease）
-                packageBase = "com.weini.maogou"  //生成java类根包名
+                packageBase = "com.qingchu.wangmiao"  //生成java类根包名
                 packageCount = System.getenv("JUNK_PACKAGE_COUNT")?.toIntOrNull() ?: 60 //生成包数量
                 activityCountPerPackage = System.getenv("JUNK_ACTIVITY_COUNT")?.toIntOrNull() ?: 50//每个包下生成Activity类数量
                 excludeActivityJavaFile = false
