@@ -206,8 +206,11 @@ class DogLanguageFragment : RootFragment(R.layout.fragment_dog_language) {
                     ivThumb.setImageResource(item.icon)
                     tvName.text = item.title
                     root.thrillClickListener {
-                        // 播放狗狗声音，type=1表示狗
-                        QCSoundActivity.show(requireContext(), true, modelPosition)
+                        // 获取原始数据列表中的正确索引
+                        val originalList = AppConst.dogSoundList(requireContext())
+                        val originalIndex = originalList.indexOfFirst { it.title == item.title && it.icon == item.icon }
+                        // 播放狗狗声音，type=1表示狗，传递原始索引
+                        QCSoundActivity.show(requireContext(), true, originalIndex)
                     }
                 }
             }

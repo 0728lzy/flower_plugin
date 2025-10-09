@@ -208,8 +208,11 @@ class CatLanguageFragment : RootFragment(R.layout.fragment_cat_language) {
                     ivThumb.setImageResource(item.icon)
                     tvName.text = item.title
                     root.thrillClickListener {
-                        // 播放猫咪声音，type=2表示猫
-                        QCSoundActivity.show(requireContext(), false, modelPosition)
+                        // 获取原始数据列表中的正确索引
+                        val originalList = AppConst.catSoundList(requireContext())
+                        val originalIndex = originalList.indexOfFirst { it.title == item.title && it.icon == item.icon }
+                        // 播放猫咪声音，type=2表示猫，传递原始索引
+                        QCSoundActivity.show(requireContext(), false, originalIndex)
                     }
                 }
             }
