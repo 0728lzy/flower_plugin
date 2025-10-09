@@ -129,7 +129,7 @@ class DogLanguageFragment : RootFragment(R.layout.fragment_dog_language) {
         ) {
             if (binding.lottie.isAnimating) {
                 // 停止录音并展示结果
-                val entity = dogList.random()
+                val entity = if (type==1) dogList.random() else person2Dog.random()
                 binding.lottie.cancelAnimation()
                 record?.stopRecord()
                 job?.cancel()
@@ -240,25 +240,245 @@ class DogLanguageFragment : RootFragment(R.layout.fragment_dog_language) {
     // 与 WHIndex3Fragment 一致的狗狗资源列表，用于结果弹窗展示
     private val dogList by lazy {
         listOf(
-            Index3Entity("", "dog_images/dog_01.webp", "dog_sounds/dog_01.wav"),
-            Index3Entity("", "dog_images/dog_02.webp", "dog_sounds/dog_02.wav"),
-            Index3Entity("", "dog_images/dog_03.webp", "dog_sounds/dog_03.wav"),
-            Index3Entity("", "dog_images/dog_04.webp", "dog_sounds/dog_04.wav"),
-            Index3Entity("", "dog_images/dog_05.webp", "dog_sounds/dog_05.wav"),
-            Index3Entity("", "dog_images/dog_06.webp", "dog_sounds/dog_06.wav"),
-            Index3Entity("", "dog_images/dog_07.webp", "dog_sounds/dog_07.wav"),
-            Index3Entity("", "dog_images/dog_08.webp", "dog_sounds/dog_08.wav"),
-            Index3Entity("", "dog_images/dog_09.webp", "dog_sounds/dog_09.wav"),
-            Index3Entity("", "dog_images/dog_10.webp", "dog_sounds/dog_10.wav"),
-            Index3Entity("", "dog_images/dog_11.webp", "dog_sounds/dog_11.wav"),
-            Index3Entity("", "dog_images/dog_12.webp", "dog_sounds/dog_12.wav"),
-            Index3Entity("", "dog_images/dog_13.webp", "dog_sounds/dog_13.wav"),
-            Index3Entity("", "dog_images/dog_14.webp", "dog_sounds/dog_14.wav"),
-            Index3Entity("", "dog_images/dog_15.webp", "dog_sounds/dog_15.wav"),
-            Index3Entity("", "dog_images/dog_16.webp", "dog_sounds/dog_16.wav"),
-            Index3Entity("", "dog_images/dog_17.webp", "dog_sounds/dog_17.wav"),
-            Index3Entity("", "dog_images/dog_18.webp", "dog_sounds/dog_18.wav"),
-            Index3Entity("", "dog_images/dog_19.webp", "dog_sounds/dog_19.wav")
+            Index3Entity(
+                getString(R.string.result_dog_1),
+                "dog_images/dog_angry.jpeg",
+                "dog_sounds/dog_angry.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_2),
+                "dog_images/dog_yes.jpeg",
+                "dog_sounds/dog_yes.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_3),
+                "dog_images/dog_shy.jpeg",
+                "dog_sounds/dog_shy.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_4),
+                "dog_images/dog_dance.jpeg",
+                "dog_sounds/dog_dance.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_5),
+                "dog_images/dog_happy.jpeg",
+                "dog_sounds/dog_happy.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_6),
+                "dog_images/dog_soft_angry.jpeg",
+                "dog_sounds/dog_soft_angry.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_7),
+                "dog_images/dog_handclap.jpeg",
+                "dog_sounds/dog_handclap.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_8),
+                "dog_images/dog_lie.jpeg",
+                "dog_sounds/dog_lie.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_9),
+                "dog_images/dog_raise_hand.jpeg",
+                "dog_sounds/dog_raise_hand.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_10),
+                "dog_images/dog_pet.jpeg",
+                "dog_sounds/dog_pet.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_11),
+                "dog_images/dog_scared.jpeg",
+                "dog_sounds/dog_scared.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_12),
+                "dog_images/dog_hi.jpeg",
+                "dog_sounds/dog_hi.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_13),
+                "dog_images/dog_love.jpeg",
+                "dog_sounds/dog_love.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_14),
+                "dog_images/dog_happy_walk.jpeg",
+                "dog_sounds/dog_happy_walk.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_15),
+                "dog_images/dog_sad.jpeg",
+                "dog_sounds/dog_sad.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_16),
+                "dog_images/dog_exhausted.jpeg",
+                "dog_sounds/dog_exhausted.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_17),
+                "dog_images/dog_begging.jpeg",
+                "dog_sounds/dog_begging.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_18),
+                "dog_images/dog_cry_lying.jpeg",
+                "dog_sounds/dog_cry_lying.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_19),
+                "dog_images/dog_super_angry.jpeg",
+                "dog_sounds/dog_super_angry.m4a"
+            ),
+        )
+    }
+    private val person2Dog by lazy {
+        listOf(
+            Index3Entity(
+                getString(R.string.result_dog_2_1),
+                "dog_images/dog_yes.jpeg",
+                "dog_sounds/dog_yes.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_2_2),
+                "dog_images/dog_wow.jpeg",
+                "dog_sounds/dog_wow.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_2_3),
+                "dog_images/dog_wonder.jpeg",
+                "dog_sounds/dog_wonder.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_2_4),
+                "dog_images/dog_hungry.jpeg",
+                "dog_sounds/dog_hungry.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_2_5),
+                "dog_images/dog_agree.jpeg",
+                "dog_sounds/dog_agree.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_2_6),
+                "dog_images/dog_happy.jpeg",
+                "dog_sounds/dog_happy.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_2_7),
+                "dog_images/dog_scratch.jpeg",
+                "dog_sounds/dog_scratch.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_2_8),
+                "dog_images/dog_raise_hand.jpeg",
+                "dog_sounds/dog_raise_hand.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_2_9),
+                "dog_images/dog_exhausted.jpeg",
+                "dog_sounds/dog_exhausted.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_2_10),
+                "dog_images/dog_cry.jpeg",
+                "dog_sounds/dog_cry.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_2_11),
+                "dog_images/dog_angry.jpeg",
+                "dog_sounds/dog_angry.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_2_12),
+                "dog_images/dog_cry_lying.jpeg",
+                "dog_sounds/dog_cry_lying.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_2_13),
+                "dog_images/dog_dance.jpeg",
+                "dog_sounds/dog_dance.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_2_14),
+                "dog_images/dog_handclap.jpeg",
+                "dog_sounds/dog_handclap.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_2_15),
+                "dog_images/dog_happy_walk.jpeg",
+                "dog_sounds/dog_happy_walk.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_2_16),
+                "dog_images/dog_hi.jpeg",
+                "dog_sounds/dog_hi.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_2_17),
+                "dog_images/dog_hi_fence.jpeg",
+                "dog_sounds/dog_hi_fence.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_2_18),
+                "dog_images/dog_lie.jpeg",
+                "dog_sounds/dog_lie.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_2_19),
+                "dog_images/dog_love.jpeg",
+                "dog_sounds/dog_love.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_2_20),
+                "dog_images/dog_no.jpeg",
+                "dog_sounds/dog_no.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_2_21),
+                "dog_images/dog_pet.jpeg",
+                "dog_sounds/dog_pet.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_2_22),
+                "dog_images/dog_sad.jpeg",
+                "dog_sounds/dog_sad.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_2_23),
+                "dog_images/dog_scared.jpeg",
+                "dog_sounds/dog_scared.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_2_24),
+                "dog_images/dog_shy.jpeg",
+                "dog_sounds/dog_shy.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_2_25),
+                "dog_images/dog_soft_angry.jpeg",
+                "dog_sounds/dog_soft_angry.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_2_26),
+                "dog_images/dog_soft_begging.jpeg",
+                "dog_sounds/dog_soft_begging.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_2_27),
+                "dog_images/dog_super_angry.jpeg",
+                "dog_sounds/dog_super_angry.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_2_28),
+                "dog_images/dog_yeah.jpeg",
+                "dog_sounds/dog_yeah.m4a"
+            ),
         )
     }
 }

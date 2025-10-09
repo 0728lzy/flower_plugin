@@ -12,7 +12,7 @@ object AppConst {
     //----------------------------模板常量（常修改）----------------------------start
     @JvmField
     var CHANNEL = BuildConfig.APP_CHANNEL//用户协议MK
-    const val DJ_APP_ID = "a92c610a9d259d02981138475bc63d24"
+    const val DJ_APP_ID = "a92c610a9b299a0b9257200843c03c36e41cab5c"
     const val UM_APP_ID = "66f79ecb61c3b13bde90b57a"  //沿用 猫狗交流翻译器
     const val TAG = "ad_log"
 
@@ -143,32 +143,6 @@ object AppConst {
     const val REPORT_TYPE_REQUEST_OK = 3
     //----------------------------模板常量（不常修改）----------------------------end
 
-    /**
-     * 要申请的权限字段
-     */
-    enum class PERMISSONURL constructor(val value: String, val errorMsg: String) {
-        WRITE_EXTERNAL(
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            "你已拒绝存储权限，请在设置或安全中心里开启"
-        ), // 写入权限
-        READ_EXTERNAL(
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            "你已拒绝存储权限，请在设置或安全中心里开启"
-        ), //读取权限
-        READ_PHONE(
-            Manifest.permission.READ_PHONE_STATE,
-            "你已拒绝获取手机设备信息权限，请在设置或安全中心里开启"
-        ), //获取设备号权限
-        LOCATION(
-            "android.permission.ACCESS_COARSE_LOCATION",
-            "你已拒绝定位权限，请在设置或安全中心里开启"
-        ), //摄像头权限
-        FINE_LOCATION(
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            "你已拒绝定位权限，请在设置或安全中心里开启"
-        ), //摄像头权限
-        CAMERA(Manifest.permission.CAMERA, "你已拒绝拍照权限，请在设置或安全中心里开启"), //摄像头权限
-    }
 
     val languageList = listOf(
         LanguageEntity("Portuguese", com.qingchu.wangmiao.R.drawable.ic_portugal),

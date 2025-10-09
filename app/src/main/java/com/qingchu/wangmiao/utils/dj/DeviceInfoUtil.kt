@@ -707,47 +707,6 @@ object DeviceInfoUtil {
         return versionCodes
     }
 
-    /**
-     * 得到全局唯一UUID,有权限时
-     * @param context NameActivity.this
-     * @return 返回UUID字符串
-     */
-    @SuppressLint("MissingPermission")
-    fun getUniqueID(context: Context): String? {
-        try {
-            var perms =
-                arrayOf<String>(
-                    AppConst.PERMISSONURL.WRITE_EXTERNAL.value,
-                    AppConst.PERMISSONURL.READ_EXTERNAL.value,
-                    AppConst.PERMISSONURL.READ_PHONE.value
-                )
-            if (XXPermissions.isGranted(context, perms)) {
-                val tm = context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-                val tmDevice: String
-                val tmSerial: String
-                val androidId: String
-                tmDevice = "" + tm.deviceId
-                tmSerial = "" + tm.simSerialNumber
-                androidId =
-                    "" + Settings.Secure.getString(
-                        context.contentResolver,
-                        Settings.Secure.ANDROID_ID
-                    )
-                val deviceUuid = UUID(
-                    androidId.hashCode().toLong(),
-                    tmDevice.hashCode().toLong() shl 32 or tmSerial.hashCode()
-                        .toLong()
-                )
-                return deviceUuid.toString()
-            }
-            return ""
-        } catch (ex: java.lang.Exception) {
-            LZYLog.e("IP Address", ex.toString())
-        }
-        return ""
-    }
-
-
     //ipv6
     fun getLocalIpV6(): String {
         try {
