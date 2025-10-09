@@ -14,7 +14,7 @@
         android:layout_marginRight="15.0dip"
         android:orientation="horizontal">
 
-        <com.weini.maogou.widget.dj.SmoothCheckBox
+        <com.qingchu.wangmiao.widget.dj.SmoothCheckBox
             android:id="@+id/buAgree_ico"
             android:layout_width="15.0dip"
             android:layout_height="15.0dip"
