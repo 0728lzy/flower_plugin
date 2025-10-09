@@ -30,17 +30,27 @@ class PetVideoFragment : RootFragment(R.layout.fragment_pet_video) {
 
     private var selectedPosition = -1
 
-    val list by lazy {  listOf(
-        getString(R.string.pet_video_1) to R.drawable.ic_pets_purple,
-        getString(R.string.pet_video_2) to R.drawable.ic_pets_purple,
-        getString(R.string.pet_video_3) to R.drawable.ic_pets_purple,
-        getString(R.string.pet_video_4) to R.drawable.ic_pets_purple,
-        getString(R.string.pet_video_5) to R.drawable.ic_pets_purple,
-    ).shuffled() }
+
+    // 创建名称到索引的映射关系
+
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
         _binding = view.getBinding()
 
+        val list by lazy {  listOf(
+            requireActivity().getString(R.string.pet_video_1) to R.drawable.ic_pets_purple, // 毛毛 -> index 5
+            requireActivity().getString(R.string.pet_video_2) to R.drawable.ic_pets_purple, // 发财 -> index 1
+            requireActivity().getString(R.string.pet_video_3) to R.drawable.ic_pets_purple, // 二哈 -> index 2
+            requireActivity().getString(R.string.pet_video_4) to R.drawable.ic_pets_purple, // 小白 -> index 4
+            requireActivity().getString(R.string.pet_video_5) to R.drawable.ic_pets_purple, // 嘟嘟 -> index 3 (映射到波波)
+        ) }
+        val nameToIndexMap = mapOf(
+            requireActivity().getString(R.string.pet_video_1) to 5, // 毛毛 -> call_4
+            requireActivity().getString(R.string.pet_video_2) to 1, // 发财 -> call_3
+            requireActivity().getString(R.string.pet_video_3) to 2, // 二哈 -> call_1
+            requireActivity().getString(R.string.pet_video_4) to 4, // 小白 -> call_2
+            requireActivity().getString(R.string.pet_video_5) to 3  // 嘟嘟 -> call_5 (波波)
+        )
         binding.rvList.grid(2).setup {
             addType<Pair<String, Int>>(R.layout.item_pet_video)
             onBind {
@@ -65,7 +75,8 @@ class PetVideoFragment : RootFragment(R.layout.fragment_pet_video) {
                             binding.rvList.bindingAdapter.notifyItemChanged(selectedPosition)
                         }
                         
-                        val index = list.indexOf(item) + 1
+                        // 使用映射关系获取正确的索引
+                        val index = nameToIndexMap[item.first] ?: 1
                         WHVideoActivity.show(requireContext(), index)
                     }
                 }

@@ -30,6 +30,7 @@ import com.weini.maogou.dialog.AgreementDialog
 import com.weini.maogou.dialog.DialogCallBack
 import com.weini.maogou.event.SimpleEvent
 import com.weini.maogou.ext.thrillClickListener
+import com.weini.maogou.ui.fragment.AboutFragment
 import com.weini.maogou.ui.fragment.CatLanguageFragment
 import com.weini.maogou.ui.fragment.DogLanguageFragment
 import com.weini.maogou.ui.fragment.PetManagementFragment
@@ -70,7 +71,7 @@ class WHMainActivity : BaseActivity() {
         DogLanguageFragment(),
         PetManagementFragment(),
         PetVideoFragment(),
-        WHIndex1Fragment(),
+        AboutFragment(),
     )
 
     override fun initView(view: View, savedInstanceState: Bundle?) {

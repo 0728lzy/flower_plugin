@@ -45,6 +45,10 @@
     <color name="color_999999">#FF999999</color>  <!-- 浅色文字 -->
     <color name="color_E3F2FD">#FFE3F2FD</color>  <!-- 浅蓝色圆角背景 -->
 
+    <!-- AboutFragment 颜色 -->
+    <color name="purple_main">#C855C8</color>  <!-- 紫色主色调 -->
+    <color name="gray_light">#CCCCCC</color>  <!-- 浅灰色 -->
+
     <!-- DogLanguageFragment 颜色 -->
     <color name="color_FFF3E0">#FFFFF3E0</color>  <!-- 浅橙色背景 -->
     <color name="color_FFF8F0">#FFFFF8F0</color>  <!-- 音频波形背景 -->
