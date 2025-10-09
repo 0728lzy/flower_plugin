@@ -17,23 +17,21 @@ object AppConst {
     const val TAG = "ad_log"
 
     //GroMore
-    const val Ad_ID = "5738089" //穿山甲广告APP ID
-    const val GMCPAd_ID_IN = "103620444" //插屏应用内
-    const val GMCPAd_ID_IN_TWO = "103620727" //插屏应用内2
-    const val GMCPAd_ID_IN_THREE = "103620728" //插屏应用内3
-    const val GMCPAd_ID_IN_FOUR = "103621645" //插屏应用内4
-
-
-    const val FEEDSIMPLE_ID_ONE = "103619470" //信息流首页1
-    const val FEEDSIMPLE_ID_TWO = "103619471" //信息流首页2
-    const val FEEDSIMPLE_ID_THREE = "103619861" //信息流首页3
-    const val FEEDSIMPLE_ID_FOUR = "103619860" //信息流首页4
-    const val GMSPAd_ID = "103621644" //开屏ID
-    const val GMDDAd_ID = "" //快报兜底开屏id
-    const val GMSPAd_TWO_ID = "103620052" //开屏ID 2
-    const val GMDDAd_TWO_ID = "" //快报兜底开屏id 2
-    const val GMRDAd_ID_IN = "103620345" //激励视频
-    const val GMRDAd_ID_TWO = "103620344" //激励视频
+    @JvmField var  Ad_ID = "" //穿山甲广告APP ID
+    @JvmField var  GMCPAd_ID_IN = "" //插屏应用内
+    @JvmField var  GMCPAd_ID_IN_TWO = "" //插屏应用内2
+    @JvmField var  GMCPAd_THREE_ID_IN = "" //插屏应用内 3
+    @JvmField var  GMCPAd_FOUR_ID_IN = "" //插屏应用内 4
+    @JvmField var  FEEDSIMPLE_ID_ONE = "" //信息流首页1
+    @JvmField var  FEEDSIMPLE_ID_TWO = "" //信息流首页2
+    @JvmField var  FEEDSIMPLE_ID_THREE = "" //信息流首页3
+    @JvmField var  FEEDSIMPLE_ID_FOUR = "" //信息流首页4
+    @JvmField var  GMSPAd_ID = "" //开屏ID
+    @JvmField var  GMDDAd_ID = "" //快报兜底开屏id
+    @JvmField var  GMSPAd_TWO_ID = "" //开屏ID 2
+    @JvmField var  GMDDAd_TWO_ID = "" //快报兜底开屏id 2
+    @JvmField var  GMRDAd_ID_IN = "" //激励视频
+    @JvmField var  GMRDAd_ID_TWO = "" //激励视频
 
 
     @JvmField

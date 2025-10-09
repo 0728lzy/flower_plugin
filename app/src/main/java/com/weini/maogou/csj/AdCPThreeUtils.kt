@@ -12,7 +12,7 @@ import com.weini.maogou.utils.dj.GetHttpDataUtil
 
 @SuppressLint("StaticFieldLeak")
 object AdCPThreeUtils {
-    private var mAdUnitId = AppConst.GMCPAd_ID_IN_THREE
+    private var mAdUnitId = AppConst.GMCPAd_THREE_ID_IN
     private var mContext: Activity? = null
     var mTTFullScreenVideoAd: TTFullScreenVideoAd? = null
 

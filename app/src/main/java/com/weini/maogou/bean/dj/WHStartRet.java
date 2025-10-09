@@ -66,7 +66,17 @@ public class WHStartRet implements Serializable {
 
     @SerializedName("riseId")
     private Long riseId;
+    @SerializedName("adUnitList")
+    private String adUnitList;
 
+
+    public String getAdUnitList() {
+        return adUnitList;
+    }
+
+    public void setAdUnitList(String adUnitList) {
+        this.adUnitList = adUnitList;
+    }
     public Long getRiseId() {
         return riseId;
     }

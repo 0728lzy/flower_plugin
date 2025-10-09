@@ -36,7 +36,6 @@ class WHContactCustomerServiceActivity : BaseActivity(){
 
 
 
-
     private var questionList = ArrayList<WHHelpQuestionBean>()
     private var subErrorType = ""   //用于提交反馈类型
 
@@ -58,6 +57,7 @@ class WHContactCustomerServiceActivity : BaseActivity(){
     lateinit var contact_tv_mobile: TextView
     lateinit var contact_et_backfeed: EditText
     lateinit var contact_et_mobile_or_qq: EditText
+    lateinit var contact_et_email_new: EditText
 
     override fun getLayoutId(): Int = R.layout.activity_contact_customer_service_xx
 
@@ -75,7 +75,7 @@ class WHContactCustomerServiceActivity : BaseActivity(){
         contact_tv_mobile = view.findViewById(R.id.contact_tv_mobile)
         contact_et_backfeed = view.findViewById(R.id.contact_et_backfeed)
         contact_et_mobile_or_qq = view.findViewById(R.id.contact_et_mobile_or_qq)
-
+        contact_et_email_new = view.findViewById(R.id.contact_et_email)
 
 
 
@@ -157,10 +157,10 @@ class WHContactCustomerServiceActivity : BaseActivity(){
             val cm: ClipboardManager =
                 getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
             // 创建普通字符型ClipData
-           if(TextUtils.isEmpty(contact_tv_email.text)){
-               ToastUtils.show("暂无信息")
-               return@setOnClickListener
-           }
+            if(TextUtils.isEmpty(contact_tv_email.text)){
+                ToastUtils.show("暂无信息")
+                return@setOnClickListener
+            }
             val mClipData: ClipData = ClipData.newPlainText("Label", contact_tv_email.text)
             // 将ClipData内容放到系统剪贴板里。
             cm.setPrimaryClip(mClipData)
@@ -238,10 +238,15 @@ class WHContactCustomerServiceActivity : BaseActivity(){
     fun submitInfo(){
         val contactBackfeed = contact_et_backfeed.text.toString().trim()
         val contactMobileOrQQ = contact_et_mobile_or_qq.text.toString().trim()
+        val contactEmail= contact_et_email_new.text.toString().trim()
         if(TextUtils.isEmpty(contactBackfeed)){
             ToastUtils.show("请输入描述您的问题")
-        }else if(TextUtils.isEmpty(contactMobileOrQQ)){
-            ToastUtils.show("请输入您的联系方式")
+        }else if(TextUtils.isEmpty(contactMobileOrQQ)&&TextUtils.isEmpty(contactEmail)){
+            ToastUtils.show("请输入您的联系方式:手机号或者邮箱")
+        }else if(!isValidPhoneNumber(contactMobileOrQQ)&& !TextUtils.isEmpty(contactMobileOrQQ)){
+            ToastUtils.show("手机号非法，请检查~")
+        }else if (!isValidEmail(contactEmail)&& !TextUtils.isEmpty(contactEmail)){
+            ToastUtils.show("邮箱格式有误，请检查~")
         }else if(TextUtils.isEmpty(subErrorType)){
             ToastUtils.show("未知错误类型")
         }else{
@@ -250,9 +255,10 @@ class WHContactCustomerServiceActivity : BaseActivity(){
                 .dismissOnTouchOutside(false)
                 .asLoading()
             loadingPopupView?.show()
-            GetHttpDataUtil.uploadAfterSalesForm(contactMobileOrQQ,contactBackfeed,subErrorType,object : GetHttpDataUtil.OnSuccessAndFaultListener{
+            GetHttpDataUtil.uploadAfterSalesForm(contactMobileOrQQ,contactBackfeed,subErrorType,contactEmail,object : GetHttpDataUtil.OnSuccessAndFaultListener{
                 override fun onSuccess(t: Any) {
                     loadingPopupView?.dismiss()
+                    ToastUtils.show("提交成功~")
                     finish()
 
                 }
@@ -265,6 +271,21 @@ class WHContactCustomerServiceActivity : BaseActivity(){
         }
     }
 
+    fun isValidPhoneNumber(phone: String): Boolean {
+        val regex = Regex("^1[3-9]\\d{9}$")
+        return regex.matches(phone)
+    }
+
+    fun isValidEmail(email: String): Boolean {
+        val regex = Regex(
+            "^(?!.*\\.\\.)" +                     // 不允许连续点
+                    "[A-Za-z0-9+_.-]+(?<!\\.)" +         // 用户名部分，不以点结尾
+                    "@" +
+                    "([A-Za-z0-9-]+\\.)+" +              // 域名部分，可以有子域名
+                    "[A-Za-z]{2,}$"                       // 顶级域名，至少 2 个字母
+        )
+        return regex.matches(email)
+    }
 
 
 }

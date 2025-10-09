@@ -39,6 +39,7 @@ import com.weini.maogou.utils.dj.UserInfoModel
 import com.weini.maogou.utils.lzy.LZYLog
 import com.umeng.commonsdk.UMConfigure
 import com.umeng.commonsdk.utils.UMUtils
+import com.weini.maogou.utils.dj.AdDynamicUtils
 import com.weini.maogou.utils.lzy.LZYADSUtils
 import com.yl.adsdk.YlLib
 import me.jessyan.autosize.AutoSize
@@ -163,7 +164,7 @@ class APP : Application() {
             AppConst.BAIDU_APP_ID = SPUtils.getInstance().getString(SPUtils.SP_BAIDU_ID)
             initAutoSize()
             EventCounterHelper.init(this)
-
+            AdDynamicUtils.getAdInto()
             LZYCPCounterHelper.init(this)
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             //Android 9及以上必须设置 多进程WebView兼容

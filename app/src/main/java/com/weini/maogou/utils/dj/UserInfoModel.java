@@ -217,6 +217,15 @@ public class UserInfoModel {
     public static Boolean getIsFirstVip() {
         return SPUtils.getInstance().getBoolean(IS_FIRST_VIP, true);
     }
+    private final static String SAVE_AD_JSON = "save_ad_json";
+
+    public static String getSaveAdJson() {
+        return StrUtil.null2Str(SPUtils.getInstance().getString(SAVE_AD_JSON));
+    }
+
+    public static void setSaveAdJson(String adJson) {
+        SPUtils.getInstance().setString(SAVE_AD_JSON, adJson);
+    }
     public static void setIsWhiteListState(String state) {
         SPUtils.getInstance().setString(IS_WHITE_LIST_STATE, state);
     }

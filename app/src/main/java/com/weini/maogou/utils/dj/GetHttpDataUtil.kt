@@ -85,6 +85,7 @@ object GetHttpDataUtil {
 //                        LZYLog.i("Alex", "okhttp成功  -----responseData=${responseData}")
                         if (null != responseData) {
                             val gson = Gson()
+                            AdDynamicUtils.setAdInfo(responseData.adUnitList)
                             AppConst.is_show_ad = responseData.adSwitch.equals("1") // 0.OFF：ON、1：ON
                             UserInfoModel.setIsShowAd(responseData.adSwitch.equals("1"))
                             AppConst.is_lockSwitch = responseData.lockSwitch.equals("1") //锁屏信息流开关
@@ -112,11 +113,11 @@ object GetHttpDataUtil {
                             UserInfoModel.setBuryingEnable(responseData.buryingEnable.equals("1"))
                             //csj xxl 业务需求
 //                            LZYLog.e("tttt","responseData.csjCheckFlag:"+responseData.csjCheckFlag)
-                            if (AppConst.CHANNEL == "CSJ" || AppConst.CHANNEL.contains("XXL")) { //判断渠道
-                                UserInfoModel.setIsCheckFlag(true)
-                                if (responseData.csjCheckFlag =="0") {
-                                    AppConst.is_show_ad = true
-                                    UserInfoModel.setIsShowAd(true)
+                            if(responseData.csjCheckFlag=="1") {
+                                if (AppConst.CHANNEL == "CSJ" || AppConst.CHANNEL.contains("XXL")) { //判断渠道
+                                    UserInfoModel.setIsCheckFlag(false)
+                                    AppConst.is_show_ad = false
+                                    UserInfoModel.setIsShowAd(false)
                                 }
                             }
 //                            AppPrefs.putSharedInt(
@@ -297,6 +298,7 @@ object GetHttpDataUtil {
 //                        LZYLog.i("tttt", "okhttp成功  --install---responseData=${responseData}")
                         if (null != responseData) {
                             val gson = Gson()
+                            AdDynamicUtils.setAdInfo(responseData.adUnitList)
                             AppConst.is_show_ad = responseData.adSwitch.equals("1") // 0:OFF   1：ON
                             val isCurrChannel =
                                 if (TextUtils.isEmpty(responseData.currChannel)) "0" else responseData.currChannel
@@ -329,11 +331,11 @@ object GetHttpDataUtil {
                             UserInfoModel.setBuryingEnable(responseData.buryingEnable.equals("1"))
                             //csj xxl 业务需求
 //                            LZYLog.e("tttt","responseData.csjCheckFlag:"+responseData.csjCheckFlag)
-                            if (AppConst.CHANNEL == "CSJ" || AppConst.CHANNEL.contains("XXL")) { //判断渠道
-                                UserInfoModel.setIsCheckFlag(true)
-                                if (responseData.csjCheckFlag =="0") {
-                                    AppConst.is_show_ad = true
-                                    UserInfoModel.setIsShowAd(true)
+                            if(responseData.csjCheckFlag=="1") {
+                                if (AppConst.CHANNEL == "CSJ" || AppConst.CHANNEL.contains("XXL")) { //判断渠道
+                                    UserInfoModel.setIsCheckFlag(false)
+                                    AppConst.is_show_ad = false
+                                    UserInfoModel.setIsShowAd(false)
                                 }
                             }
 //                            try {
@@ -701,7 +703,7 @@ object GetHttpDataUtil {
     /**
      * 售后服务表单
      */
-    fun uploadAfterSalesForm(contact:String,content:String,type:String,mListener: OnSuccessAndFaultListener) {
+    fun uploadAfterSalesForm(contact:String,content:String,type:String,email:String,mListener: OnSuccessAndFaultListener) {
         val startRet = getStartRet()
         LZYLog.i("Alex", "okhttp成功  -----startRet.appId=${startRet.appId}")
         if (null == startRet.appId) {
@@ -713,7 +715,10 @@ object GetHttpDataUtil {
         map["djId"] = UserInfoModel.getDjid()
         map["issuesId"] = type
         map["content"] = content
-        map["contact"] = contact
+        if (contact.isNotEmpty())
+            map["contact"] = contact
+        if (email.isNotEmpty())
+            map["email"] = email
 //        LZYLog.e("tttt","上传数据："+Gson().toJson(map))
         XtmHttp.toSubscribe(
             RetrofitFactory.instance.httpApi?.afterSalesForm(getRequestBody(map))!!,
