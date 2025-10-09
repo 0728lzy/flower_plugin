@@ -26,6 +26,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.gyf.immersionbar.ImmersionBar
+import com.lxj.xpopup.core.BasePopupView
 
 class PetPhotosActivity : BaseActivity() {
 
@@ -110,8 +111,11 @@ class PetPhotosActivity : BaseActivity() {
             binding.layoutEmpty.visibility=View.GONE
         }
     }
-
+    var inputPopupView: BasePopupView? = null
     private fun showUploadPhotoDialog() {
+        if (inputPopupView?.isShow == true) {
+            return
+        }
         val dialog = UploadPhotoDialog(this) { description, selectedImageUri, selectedPet ->
             if (selectedImageUri != null && selectedPet != null) {
                 savePhotoToDatabase(selectedImageUri, description, selectedPet)
@@ -119,8 +123,12 @@ class PetPhotosActivity : BaseActivity() {
         }
         
         currentUploadDialog = dialog
-        
-        XPopup.Builder(this)
+
+        inputPopupView = XPopup.Builder(this@PetPhotosActivity)
+            .autoOpenSoftInput(false)
+            .autoDismiss(false)
+            .dismissOnBackPressed(false)
+            .dismissOnTouchOutside(false)
             .asCustom(dialog)
             .show()
     }

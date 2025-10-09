@@ -2,11 +2,12 @@
 <litepal>
     <dbname value="mobanglist"></dbname>
 
-    <version value="3"></version>
+    <version value="4"></version>
 
     <list>
         <mapping class="com.weini.maogou.model.Pet" />
         <mapping class="com.weini.maogou.model.PetPhoto" />
         <mapping class="com.weini.maogou.model.PetNote" />
+        <mapping class="com.weini.maogou.model.PetBathRecord" />
     </list>
 </litepal>

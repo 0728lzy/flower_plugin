@@ -15,6 +15,7 @@ import com.weini.maogou.ui.adapter.PetNotesAdapter
 import com.weini.maogou.ui.dialog.AddEditNoteDialog
 import com.gyf.immersionbar.ImmersionBar
 import com.lxj.xpopup.XPopup
+import com.lxj.xpopup.core.BasePopupView
 
 class PetNotesActivity : BaseActivity() {
 
@@ -135,11 +136,14 @@ class PetNotesActivity : BaseActivity() {
             binding.rvNotes.visibility = View.VISIBLE
         }
     }
-
+    var inputPopupView: BasePopupView? = null
     /**
      * 显示添加/编辑记录对话框
      */
     private fun showAddEditNoteDialog(note: PetNote? = null) {
+        if (inputPopupView?.isShow == true) {
+            return
+        }
         // 获取所有宠物列表
         val pets = Pet.getAllPets()
         
@@ -166,8 +170,12 @@ class PetNotesActivity : BaseActivity() {
                 }
             }
         )
-        
-        XPopup.Builder(this)
+
+        inputPopupView = XPopup.Builder(this@PetNotesActivity)
+            .autoOpenSoftInput(false)
+            .autoDismiss(false)
+            .dismissOnBackPressed(false)
+            .dismissOnTouchOutside(false)
             .asCustom(dialog)
             .show()
     }

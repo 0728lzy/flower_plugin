@@ -192,12 +192,17 @@
 
 
         <activity android:name=".ui.activity.PetPhotosActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:windowSoftInputMode="stateHidden|adjustResize"
             android:exported="true"
             android:screenOrientation="portrait" />
 
         <activity android:name=".ui.activity.PetNotesActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".ui.activity.PetBathActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize"
             android:exported="true"
             android:screenOrientation="portrait" />
         <meta-data
