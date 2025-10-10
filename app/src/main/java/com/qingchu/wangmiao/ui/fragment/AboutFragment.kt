@@ -4,8 +4,10 @@ import android.graphics.Outline
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import android.view.ViewOutlineProvider
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -16,6 +18,8 @@ import com.qingchu.wangmiao.APP
 import com.qingchu.wangmiao.AppConst
 import com.qingchu.wangmiao.R
 import com.qingchu.wangmiao.base.dj.RootFragment
+import com.qingchu.wangmiao.csj.AdFeedSimpleOneNoLimitUtils
+import com.qingchu.wangmiao.csj.AdFeedSimpleOneUtils
 import com.qingchu.wangmiao.databinding.FragmentAboutBinding
 import com.qingchu.wangmiao.event.SimpleEvent
 import com.qingchu.wangmiao.ext.getBinding
@@ -47,15 +51,10 @@ class AboutFragment : RootFragment(R.layout.fragment_about) {
     private lateinit var appLogoImageView: ImageView
     private var stat = 0
 
-    private lateinit var lzyAdsUtils: LZYADSUtils
-
     override fun initView(view: View, savedInstanceState: Bundle?) {
         binding = view.getBinding()
-        
-        lzyAdsUtils = LZYADSUtils("AboutFragment", requireActivity())
-        lzyAdsUtils.showAdCpTurn()
-        lzyAdsUtils.loadSimpleAdTurn(binding.feedContainerFragmentAbout, -1)
-        
+
+
         mineLinearLayout = binding.mineLin
         privacyLinearLayout = binding.mineLinPrivacy
         userProLinearLayout = binding.mineLinUserPro
@@ -172,7 +171,26 @@ class AboutFragment : RootFragment(R.layout.fragment_about) {
     fun onMessageSimpleEvent(message: SimpleEvent) {
         if(message.simple == 4){
             LZYLog.e("simple","message simple:${message.simple}")
-            LZYADSUtils("PetVideoFragment",requireActivity()).loadSimpleAd4(requireActivity(),binding.feedContainerAbout)
+            loadSimpleAd(binding.feedContainerAbout)
         }
     }
+    fun loadSimpleAd(fragment: FrameLayout?) {
+        if (requireActivity() != null && (!UserInfoModel.getIsCheckFlag() || AppConst.is_show_ad)) {
+            AdFeedSimpleOneUtils.init(
+                requireActivity(),
+                object : AdFeedSimpleOneUtils.GirdMenuStateListener {
+                    override fun onSuccess() {
+                        if (fragment != null && requireActivity() != null) {
+                            Log.i("tttt", "准备刷新CatLanguageFragment的广告")
+                            AdFeedSimpleOneUtils.showAd(fragment, requireActivity())
+                        }
+                    }
+
+                    override fun onError() {
+                    }
+                })
+            AdFeedSimpleOneUtils.initPreloading()
+        }
+    }
+
 }

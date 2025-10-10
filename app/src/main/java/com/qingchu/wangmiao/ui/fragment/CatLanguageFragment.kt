@@ -66,7 +66,7 @@ class CatLanguageFragment : RootFragment(R.layout.fragment_cat_language) {
     }
 
     fun loadSimpleAd(fragment: FrameLayout?) {
-        if (requireActivity() != null && (!UserInfoModel.getIsCheckFlag() || AppConst.is_show_ad)) {
+        if (requireActivity() != null &&  AppConst.is_show_ad) {
             AdFeedSimpleOneNoLimitUtils.init(
                 requireActivity(),
                 object : AdFeedSimpleOneNoLimitUtils.GirdMenuStateListener {
