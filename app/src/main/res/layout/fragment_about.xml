@@ -19,7 +19,7 @@
             android:paddingBottom="40dp">
             <TextView
 
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="40dp"
                 android:textColor="@color/black"
                 android:textSize="24dp"
                 android:layout_marginLeft="20dp"
@@ -40,18 +40,18 @@
 
                 <!-- 圆形头像背景 -->
                 <FrameLayout
-                    android:layout_marginTop="20dp"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:background="@drawable/bg_circle_avatar"
                     android:layout_marginBottom="20dp">
 
                     <ImageView
                         android:id="@+id/mine_app_img"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
                         android:layout_gravity="center"
-                        android:src="@drawable/ic_person_white"
+                        android:src="@mipmap/ic_app_logo"
                         android:scaleType="centerInside" />
                 </FrameLayout>
 
@@ -63,7 +63,7 @@
                     android:layout_height="wrap_content"
                     android:text="猫狗翻译官"
                     android:textColor="@color/black"
-                    android:textSize="22dp"
+                    android:textSize="18dp"
                     android:textStyle="bold" />
 
                 <TextView

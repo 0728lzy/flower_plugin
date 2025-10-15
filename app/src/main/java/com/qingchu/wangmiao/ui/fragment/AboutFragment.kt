@@ -12,6 +12,9 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.blankj.utilcode.util.ToastUtils
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.core.BasePopupView
 import com.qingchu.wangmiao.APP
@@ -110,6 +113,10 @@ class AboutFragment : RootFragment(R.layout.fragment_about) {
         
         binding.mineDjId.text = UserInfoModel.getDjid()
         binding.mineAppVersion.text = DeviceUtils.getVersionName(APP.instance)
+        Glide.with(this)
+            .load(R.mipmap.ic_app_logo)
+            .transform(CenterCrop(),RoundedCorners(ScreenUtils.dip2px(50,requireContext())))
+            .into(binding.mineAppImg)
     }
 
     var inputPopupView: BasePopupView? = null
