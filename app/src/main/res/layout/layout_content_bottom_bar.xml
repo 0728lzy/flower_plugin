@@ -38,7 +38,7 @@
                 android:id="@+id/tv_cat_language"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="喵语"
+                android:text="汪语"
                 android:textColor="@color/color_777777"
                 android:textSize="@dimen/_10ssp" />
         </LinearLayout>
@@ -68,7 +68,7 @@
                 android:id="@+id/tv_dog_language"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="汪语"
+                android:text="喵语"
                 android:textColor="@color/color_777777"
                 android:textSize="@dimen/_10ssp" />
         </LinearLayout>

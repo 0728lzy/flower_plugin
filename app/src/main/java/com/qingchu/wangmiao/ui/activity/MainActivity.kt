@@ -59,8 +59,8 @@ class MainActivity : BaseActivity() {
     var isFirst=true
 
     val fragments = listOf<Fragment>(
-        CatLanguageFragment(),
         DogLanguageFragment(),
+        CatLanguageFragment(),
         PetManagementFragment(),
         PetVideoFragment(),
         AboutFragment(),
