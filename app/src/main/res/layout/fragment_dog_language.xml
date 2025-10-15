@@ -12,11 +12,16 @@
         android:orientation="vertical"
         android:gravity="center_horizontal">
         <!-- 顶部标题区域 -->
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="@dimen/_50sdp"
+            android:src="@mipmap/ym_img_dog"/>
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_50sdp"
+            android:layout_marginTop="12dp"
             android:text="汪语翻译官"
             android:textColor="#E60076"
             android:textSize="@dimen/_25sdp"
