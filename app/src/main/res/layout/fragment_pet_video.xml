@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E3F3E4"
+    android:background="#FFF7EE"
     android:fillViewport="true">
 
     <LinearLayout
@@ -22,7 +22,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="虚拟视频"
-                android:textColor="#6BBD6E"
+                android:textColor="#9810FA"
                 android:textSize="@dimen/_25sdp"
                 android:textStyle="bold"
                 android:layout_gravity="center_horizontal"
@@ -39,8 +39,7 @@
         </LinearLayout>
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_16sdp">
+            android:layout_height="wrap_content">
 
             <FrameLayout
                 android:id="@+id/feed_container_pet_video"
@@ -56,7 +55,7 @@
             android:id="@+id/rv_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_16sdp"
+            android:layout_marginHorizontal="1dp"
             android:layout_marginTop="@dimen/_16sdp"
             android:layout_marginBottom="@dimen/_16sdp"
             android:nestedScrollingEnabled="false"

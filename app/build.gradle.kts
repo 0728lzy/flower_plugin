@@ -21,7 +21,7 @@ android {
         versionName = System.getenv("VERSION_NAME") ?: "1.0.0"
         //温馨提示：不要忘了核对渠道哦！！
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        resValue("string", "app_name", System.getenv("APP_NAME_PARAM") ?: "猫狗宠物汪喵翻译伴侣")
+        resValue("string", "app_name", System.getenv("APP_NAME_PARAM") ?: "猫狗翻译官")
         buildConfigField("String", "APP_CHANNEL", "\"${System.getenv("APP_CHANNEL") ?: "BAIDU"}\"")
         buildConfigField("String", "URL_USER_AGREEMENT", "\"${System.getenv("URL_USER_AGREEMENT") ?: ""}\"")
         buildConfigField("String", "URL_PRIVACY_POLICY", "\"${System.getenv("URL_PRIVACY_POLICY") ?: ""}\"")

@@ -39,11 +39,11 @@ class PetVideoFragment : RootFragment(R.layout.fragment_pet_video) {
         _binding = view.getBinding()
 
         val list by lazy {  listOf(
-            requireActivity().getString(R.string.pet_video_1) to R.drawable.ic_pets_purple, // 毛毛 -> index 5
-            requireActivity().getString(R.string.pet_video_2) to R.drawable.ic_pets_purple, // 发财 -> index 1
-            requireActivity().getString(R.string.pet_video_3) to R.drawable.ic_pets_purple, // 二哈 -> index 2
-            requireActivity().getString(R.string.pet_video_4) to R.drawable.ic_pets_purple, // 小白 -> index 4
-            requireActivity().getString(R.string.pet_video_5) to R.drawable.ic_pets_purple, // 嘟嘟 -> index 3 (映射到波波)
+            requireActivity().getString(R.string.pet_video_1) to R.drawable.maoamo2_tab4 to R.drawable.maomao_tab4, // 毛毛 -> index 5
+            requireActivity().getString(R.string.pet_video_2) to R.drawable.fa_cai_tab4 to R.drawable.fa_cai2_tab4, // 发财 -> index 1
+            requireActivity().getString(R.string.pet_video_3) to R.drawable.er_ha_tab4 to R.drawable.er_ha2_tab4, // 二哈 -> index 2
+            requireActivity().getString(R.string.pet_video_4) to R.drawable.xiao_bai_tab4 to R.drawable.xiao_abi2_tab4, // 小白 -> index 4
+            requireActivity().getString(R.string.pet_video_5) to R.drawable.bo_bo_tab4 to R.drawable.bo_bo2_tab4, // 波波 -> index 3 (映射到波波)
         ) }
         val nameToIndexMap = mapOf(
             requireActivity().getString(R.string.pet_video_1) to 5, // 毛毛 -> call_4
@@ -52,17 +52,17 @@ class PetVideoFragment : RootFragment(R.layout.fragment_pet_video) {
             requireActivity().getString(R.string.pet_video_4) to 4, // 小白 -> call_2
             requireActivity().getString(R.string.pet_video_5) to 3  // 嘟嘟 -> call_5 (波波)
         )
-        binding.rvList.grid(2).setup {
-            addType<Pair<String, Int>>(R.layout.item_pet_video)
+        binding.rvList.grid(1).setup {
+            addType< Pair<Pair<String,Int>,Int>>(R.layout.item_pet_video)
             onBind {
                 getBinding<ItemPetVideoBinding>().apply {
-                    val item = getModel<Pair<String, Int>>()
-                    ivAvatar.setImageResource(item.second)
-                    tvName.text = item.first
+                    val item = getModel< Pair<Pair<String,Int>,Int>>()
+                    ivAvatar.setImageResource(item.first.second)
+                    tvName.text = item.first.first
                     
                     // 设置选中状态
                     root.isSelected = (modelPosition == selectedPosition)
-                    
+                    beis.setImageResource(item.second)
                     root.thrillClickListener {
                         // 更新选中状态
                         val oldPosition = selectedPosition
@@ -77,7 +77,7 @@ class PetVideoFragment : RootFragment(R.layout.fragment_pet_video) {
                         }
                         
                         // 使用映射关系获取正确的索引
-                        val index = nameToIndexMap[item.first] ?: 1
+                        val index = nameToIndexMap[item.first.first] ?: 1
                         QCVideoActivity.show(requireContext(), index)
                     }
                 }
