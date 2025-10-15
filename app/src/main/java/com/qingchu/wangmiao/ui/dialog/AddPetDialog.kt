@@ -1,13 +1,25 @@
 package com.qingchu.wangmiao.ui.dialog
 
+import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Context
+import android.net.Uri
+import android.view.View
 import android.widget.ArrayAdapter
+import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.github.dhaval2404.imagepicker.ImagePicker
 import com.qingchu.wangmiao.R
 import com.qingchu.wangmiao.databinding.DialogAddPetBinding
 import com.qingchu.wangmiao.model.Pet
 import com.qingchu.wangmiao.utils.ToastUtils
 import com.lxj.xpopup.core.CenterPopupView
+import com.qingchu.wangmiao.utils.lzy.ScreenUtils
+import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -16,12 +28,14 @@ import java.util.*
  */
 class AddPetDialog(
     context: Context,
+    private val hostFragment:Fragment,
     private val existingPet: Pet? = null,
     private val onPetSaved: (Pet) -> Unit
 ) : CenterPopupView(context) {
 
     private lateinit var binding: DialogAddPetBinding
     private val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+    private var headpic=""
 
     override fun getImplLayoutId(): Int {
         return R.layout.dialog_add_pet
@@ -52,16 +66,16 @@ class AddPetDialog(
             dismiss()
         }
 
-        // 设置取消按钮点击事件
-        binding.btnCancel.setOnClickListener {
-            dismiss()
-        }
 
         // 设置保存按钮点击事件
         binding.btnSave.setOnClickListener {
             if (validateInput()) {
                 savePet()
             }
+        }
+
+        binding.uploadPic.setOnClickListener {
+            openImagePicker()
         }
     }
 
@@ -154,6 +168,59 @@ class AddPetDialog(
         }
     }
 
+    private fun openImagePicker() {
+        ImagePicker.with(hostFragment)
+            .crop()                    // 启用裁剪功能
+            .compress(1024)            // 压缩到1MB以下
+            .maxResultSize(1080, 1080) // 最大分辨率
+            .galleryOnly()             // 只从相册选择
+            .start()
+    }
+
+    fun setSelectedImage(uri: Uri) {
+//        selectedImageUri = uri
+        headpic=saveUriToPrivateDir(context,uri)?:""
+        showImagePreview(uri)
+    }
+
+    fun saveUriToPrivateDir(context: Context, uri: Uri): String? {
+        return try {
+            val inputStream: InputStream? = context.contentResolver.openInputStream(uri)
+            inputStream?.use { input ->
+                // 目标文件路径：/Android/data/<包名>/files/images/
+                val dir = File(context.getExternalFilesDir(null), "images")
+                if (!dir.exists()) dir.mkdirs()
+
+                // 生成唯一文件名
+                val file = File(dir, "pet_${System.currentTimeMillis()}.jpg")
+                FileOutputStream(file).use { output ->
+                    input.copyTo(output)
+                }
+
+                file.absolutePath // 返回路径
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
+
+    private fun showImagePreview(uri: Uri) {
+        try {
+            // 使用Glide加载图片预览
+            Glide.with(context)
+                .load(uri)
+                .placeholder(R.mipmap.dialog_add_pet_headpic)
+                .error(R.mipmap.dialog_add_pet_headpic)
+                .transform(CenterCrop(),RoundedCorners(ScreenUtils.dip2px(40,context)))
+                .into(binding.headPic)
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+            ToastUtils.show("图片预览失败")
+        }
+    }
+
     private fun savePet() {
         with(binding) {
             val pet = existingPet ?: Pet()
@@ -173,6 +240,7 @@ class AddPetDialog(
             // 设置默认值
             pet.gender = Pet.GENDER_MALE
             pet.color = Pet.COLORS[0]
+            pet.avatar=headpic
             pet.birthday = ""
             pet.adoptionDate = ""
             pet.description = ""

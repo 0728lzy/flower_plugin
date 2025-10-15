@@ -6,9 +6,12 @@ import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.qingchu.wangmiao.R
 import com.qingchu.wangmiao.databinding.ItemPetCardBinding
 import com.qingchu.wangmiao.model.Pet
+import com.qingchu.wangmiao.utils.lzy.ScreenUtils
 
 /**
  * 宠物列表适配器
@@ -49,12 +52,14 @@ class PetAdapter(
                 if (pet.type=="dog"){
                     Glide.with(itemView.context)
                         .load(pet.avatar.ifEmpty { pet.getDefaultAvatar() })
+                        .transform(CenterCrop(),RoundedCorners(ScreenUtils.dip2px(50,itemView.context)))
                         .placeholder(R.drawable.icon_index2_n)
                         .placeholder(R.drawable.icon_index2_n)
                         .into(ivPetAvatar)
                 }else{
                     Glide.with(itemView.context)
                         .load(pet.avatar.ifEmpty { pet.getDefaultAvatar() })
+                        .transform(CenterCrop(),RoundedCorners(ScreenUtils.dip2px(50,itemView.context)))
                         .placeholder(R.drawable.icon_index1_n)
                         .placeholder(R.drawable.icon_index1_n)
                         .into(ivPetAvatar)
@@ -63,13 +68,13 @@ class PetAdapter(
 
                 // 设置宠物信息
                 tvPetName.text = pet.name
-                tvPetType.text = pet.breed
-                
+                tvPetBreed.text = "品种：${pet.breed}"
+                tvPetType.text = "类型：${pet.type}"
                 // 设置年龄数字（去掉"岁"字）
-                tvPetAgeNumber.text = pet.age.toString()
+                tvPetAgeNumber.text = "年龄：${pet.age.toInt()}岁"
                 
                 // 设置体重数字（去掉"kg"字）
-                tvPetWeightNumber.text = pet.weight.toString()
+                tvPetWeightNumber.text = "体重：${pet.weight}kg"
 
                 // 卡片点击事件 - 点击跳转到宠物相册
                 root.setOnClickListener {

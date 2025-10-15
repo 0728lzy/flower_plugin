@@ -1,10 +1,13 @@
 package com.qingchu.wangmiao.ui.fragment
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.FrameLayout
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.lxj.xpopup.XPopup
 import com.qingchu.wangmiao.AppConst
 import com.qingchu.wangmiao.R
@@ -42,6 +45,8 @@ class PetManagementFragment : RootFragment(R.layout.fragment_pet_management) {
     private lateinit var lzyadsUtils: LZYADSUtils
     private val fragmentScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
 
+    private lateinit var dialog: AddPetDialog
+
     override fun initView(view: View, savedInstanceState: Bundle?) {
         _binding = FragmentPetManagementBinding.bind(view)
         initViews()
@@ -72,12 +77,16 @@ class PetManagementFragment : RootFragment(R.layout.fragment_pet_management) {
         }
 
         binding.rvPets.apply {
-            layoutManager = GridLayoutManager(context, 2) // 2列网格布局
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL,false) // 2列网格布局
             adapter = petAdapter
         }
 
         // 添加宠物按钮点击事件
         binding.btnAddPet.setOnClickListener {
+            showAddPetDialog()
+        }
+
+        binding.ymAddDangan.setOnClickListener{
             showAddPetDialog()
         }
 
@@ -145,7 +154,7 @@ class PetManagementFragment : RootFragment(R.layout.fragment_pet_management) {
      * 显示添加宠物对话框
      */
     private fun showAddPetDialog() {
-        val dialog = AddPetDialog(requireContext()) { pet ->
+        dialog = AddPetDialog(requireContext(),this) { pet ->
             addPet(pet)
         }
         XPopup.Builder(requireContext())
@@ -157,7 +166,7 @@ class PetManagementFragment : RootFragment(R.layout.fragment_pet_management) {
      * 显示编辑宠物对话框
      */
     private fun showEditPetDialog(pet: Pet) {
-        val dialog = AddPetDialog(requireContext(), pet) { updatedPet ->
+        dialog = AddPetDialog(requireContext(),this, pet) { updatedPet ->
             updatePet(updatedPet)
         }
         XPopup.Builder(requireContext())
@@ -354,4 +363,16 @@ class PetManagementFragment : RootFragment(R.layout.fragment_pet_management) {
             return PetManagementFragment()
         }
     }
+
+    @Deprecated("Deprecated in Java")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK && data != null) {
+            val uri = data.data
+            if (uri != null) {
+                dialog.setSelectedImage(uri)
+            }
+        }
+    }
+
 }

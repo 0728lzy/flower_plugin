@@ -515,10 +515,12 @@
     <color name="color_main_tab_5">#9C27B0</color>
     
     <!-- 宠物管理界面颜色 -->
-    <color name="color_9C27B0">#9C27B0</color>
+    <color name="color_9C27B0">#AD46FF</color>
     <color name="color_F3E5F5">#F3E5F5</color>
     <color name="color_E1BEE7">#E1BEE7</color>
     <color name="color_F8F4FF">#F8F4FF</color>
     <color name="color_CCCCCC">#CCCCCC</color>
     <color name="color_F44336">#F44336</color>
+
+    <color name="color_demo_main_bg">#FFF7ED</color>
 </resources>

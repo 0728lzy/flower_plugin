@@ -1,130 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    app:cardCornerRadius="16dp"
-    app:cardElevation="4dp"
-    app:cardBackgroundColor="@color/color_F8F4FF"
-    android:foreground="?attr/selectableItemBackground"
+    android:layout_margin="6dp"
+    android:padding="12dp"
+    android:background="@drawable/bg_item_pet_mine_word"
     android:clickable="true"
     android:focusable="true">
-
+    <ImageView
+        android:id="@+id/iv_pet_avatar"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:scaleType="centerCrop"
+        android:contentDescription="@string/app_name"
+        tools:src="@drawable/icon_index1_n"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+    <ImageView
+        android:id="@+id/iv_arrow"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@drawable/ic_chevron_right"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/color_999999" />
+    <TextView
+        android:id="@+id/tv_pet_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="8dp"
+        android:text="小橘"
+        android:textColor="@color/color_333333"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toRightOf="@id/iv_pet_avatar"
+        app:layout_constraintRight_toLeftOf="@id/iv_arrow"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="小橘" />
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="16dp"
-        android:gravity="center">
+        android:id="@+id/ll_row1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintLeft_toRightOf="@id/iv_pet_avatar"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_pet_name">
 
-        <!-- 宠物头像 -->
-        <LinearLayout
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:background="@drawable/circle_purple_bg"
-            android:gravity="center"
-            android:layout_marginBottom="12dp">
-
-            <ImageView
-                android:id="@+id/iv_pet_avatar"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:src="@drawable/icon_index1_n"
-                android:tint="@color/white"
-                android:scaleType="centerInside" />
-
-        </LinearLayout>
-
-        <!-- 宠物名称 -->
-        <TextView
-            android:id="@+id/tv_pet_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="发财"
-            android:textColor="@color/color_333333"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="4dp"
-            android:gravity="center"
-            tools:text="发财" />
-
-        <!-- 宠物类型 -->
         <TextView
             android:id="@+id/tv_pet_type"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="金毛犬"
+            android:layout_weight="1"
+            android:text="类型：猫"
             android:textColor="@color/color_666666"
-            android:textSize="12sp"
-            android:layout_marginBottom="12dp"
-            android:gravity="center"
-            tools:text="金毛犬" />
+            android:textSize="13dp"
+            tools:text="类型：猫" />
 
-        <!-- 年龄和体重信息 -->
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/tv_pet_age_number"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center">
-
-            <!-- 年龄 -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:gravity="center">
-
-                <TextView
-                    android:id="@+id/tv_pet_age_number"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="3"
-                    android:textColor="@color/color_9C27B0"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    tools:text="3" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="岁"
-                    android:textColor="@color/color_999999"
-                    android:textSize="10sp" />
-
-            </LinearLayout>
-
-            <!-- 体重 -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:gravity="center">
-
-                <TextView
-                    android:id="@+id/tv_pet_weight_number"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="28"
-                    android:textColor="@color/color_9C27B0"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    tools:text="28" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="kg"
-                    android:textColor="@color/color_999999"
-                    android:textSize="10sp" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
+            android:layout_weight="1"
+            android:text="年龄：1岁5个月"
+            android:textColor="@color/color_666666"
+            android:textSize="13dp"
+            tools:text="年龄：1岁5个月" />
     </LinearLayout>
 
-</androidx.cardview.widget.CardView>
+    <LinearLayout
+        android:id="@+id/ll_row2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintLeft_toRightOf="@id/iv_pet_avatar"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ll_row1"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <TextView
+            android:id="@+id/tv_pet_weight_number"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="体重：4.5kg"
+            android:textColor="@color/color_666666"
+            android:textSize="13dp"
+            tools:text="体重：4.5kg" />
+
+        <TextView
+            android:id="@+id/tv_pet_breed"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="品种：橘猫"
+            android:textColor="@color/color_666666"
+            android:textSize="13dp"
+            tools:text="品种：橘猫" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
