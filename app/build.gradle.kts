@@ -42,10 +42,10 @@ android {
 
     signingConfigs {
         register("myConfig") {
-            keyAlias = "qcwangmiao"
-            keyPassword = "qcwangmiao123"
-            storePassword = "qcwangmiao123"
-            storeFile = file("../sign/qcwangmiao.jks")
+            keyAlias = "csltmaogoufanyi"
+            keyPassword = "csltmaogoufanyi123"
+            storePassword = "csltmaogoufanyi123"
+            storeFile = file("../sign/csltmaogoufanyi.jks")
             enableV1Signing = true
             enableV2Signing = true
             enableV3Signing = true
