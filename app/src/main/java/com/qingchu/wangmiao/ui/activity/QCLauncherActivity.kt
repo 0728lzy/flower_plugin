@@ -611,7 +611,7 @@ class QCLauncherActivity : BaseActivity() {
             isShowAD = true
             mHandler.postDelayed(Runnable {
                 LanguageUtils.setIndex(1)
-                QCMainActivity.forward(this)
+                MainActivity.forward(this)
                 finish()
             }, 500)
         }

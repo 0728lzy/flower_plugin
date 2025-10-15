@@ -141,7 +141,7 @@
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".ui.activity.QCMainActivity"
+            android:name=".ui.activity.MainActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"

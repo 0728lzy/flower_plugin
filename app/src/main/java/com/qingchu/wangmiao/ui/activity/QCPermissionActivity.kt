@@ -51,7 +51,7 @@ class QCPermissionActivity : BaseActivity() {
             ) {
                 return@thrillClickListener
             }
-            QCMainActivity.forward(this@QCPermissionActivity)
+            MainActivity.forward(this@QCPermissionActivity)
         }
     }
 

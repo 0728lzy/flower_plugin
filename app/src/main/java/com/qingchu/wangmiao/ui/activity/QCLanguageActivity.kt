@@ -50,7 +50,7 @@ class QCLanguageActivity : BaseActivity() {
         if (isFirst) {
             QCGuideActivity.forward(this)
         } else {
-            QCMainActivity.forward(this)
+            MainActivity.forward(this)
         }
         finish()
     }

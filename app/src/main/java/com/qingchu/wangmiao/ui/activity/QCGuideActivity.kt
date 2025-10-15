@@ -63,7 +63,7 @@ class QCGuideActivity : BaseActivity() {
             SPUtils.getInstance().put("first_permission", false)
             QCPermissionActivity.forward(this)
         } else {
-            QCMainActivity.forward(this)
+            MainActivity.forward(this)
             finish()
         }
     }
