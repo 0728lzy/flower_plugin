@@ -1,10 +1,10 @@
 package com.qingchu.wangmiao.utils;
 
-
 import android.annotation.SuppressLint;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
+import android.util.Log;
 
 public class AudioRecordUtil {
 
@@ -16,21 +16,25 @@ public class AudioRecordUtil {
 
     private int sample_rate = 44100;
 
+    // 新增字段：是否检测到声音
+    private volatile boolean hasVoice = false;
+
     @SuppressLint("MissingPermission")
     public AudioRecordUtil() {
         bufferSize = AudioRecord.getMinBufferSize(
                 sample_rate,
                 AudioFormat.CHANNEL_IN_STEREO,
                 AudioFormat.ENCODING_PCM_16BIT);
-        audioRecord = new AudioRecord(MediaRecorder.AudioSource.MIC,
+        audioRecord = new AudioRecord(
+                MediaRecorder.AudioSource.MIC,
                 sample_rate,
                 AudioFormat.CHANNEL_IN_STEREO,
                 AudioFormat.ENCODING_PCM_16BIT,
-                bufferSize);
+                bufferSize
+        );
     }
 
     private OnRecordListener onRecordListener;
-
     private OnCompleteListener onCompleteListener;
 
     public void setOnRecordListener(OnRecordListener onRecordListener) {
@@ -52,40 +56,59 @@ public class AudioRecordUtil {
     }
 
     /**
-     * 开始
+     * 开始录音
      */
     public void startRecord() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
+        new Thread(() -> {
+            isStart = true;
+            hasVoice = false; // 每次开始时重置
+            audioRecord.startRecording();
 
-                isStart = true;
-                audioRecord.startRecording();
-                byte[] audioData = new byte[bufferSize];
-                if (onRecordListener != null) {
-                    onRecordListener.isStart();
-                }
-                while (isStart) {
-                    readSize = audioRecord.read(audioData, 0, bufferSize);
+            byte[] audioData = new byte[bufferSize];
+            if (onRecordListener != null) {
+                onRecordListener.isStart();
+            }
+
+            while (isStart) {
+                readSize = audioRecord.read(audioData, 0, bufferSize);
+                if (readSize > 0) {
+                    // 检测是否有声音
+                    if (detectVoice(audioData, readSize)) {
+                        hasVoice = true;
+                    }
+
                     if (onRecordListener != null) {
                         onRecordListener.readByte(audioData, readSize);
                     }
                 }
-                // 释放
-                audioRecord.stop();
-                audioRecord.release();
-                audioRecord = null;
-                if (onCompleteListener != null) {
-                    onCompleteListener.onComplete();
-                }
+            }
+
+            // 释放资源
+            audioRecord.stop();
+            audioRecord.release();
+            audioRecord = null;
+
+            if (onCompleteListener != null) {
+                onCompleteListener.onComplete();
             }
         }).start();
     }
-
-    /**
-     * 停止
-     */
-    public void stopRecord() {
+    public boolean stopRecord() {
         isStart = false;
+        return hasVoice;
+    }
+    private boolean detectVoice(byte[] buffer, int size) {
+        long totalEnergy = 0;
+        // 16bit PCM => 每两个字节一个采样
+        for (int i = 0; i < size; i += 2) {
+            short sample = (short) ((buffer[i] & 0xFF) | (buffer[i + 1] << 8));
+            totalEnergy += Math.abs(sample);
+        }
+        double average = totalEnergy / (size / 2.0);
+        boolean hasSound = average > 1200;
+        if (hasSound) {
+            Log.d(TAG, "检测到声音, 平均幅度=" + average);
+        }
+        return hasSound;
     }
 }

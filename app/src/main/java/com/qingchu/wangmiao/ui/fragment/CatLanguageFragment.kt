@@ -5,9 +5,12 @@ import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.widget.FrameLayout
+import android.widget.LinearLayout
+import android.widget.Toast
 import com.blankj.utilcode.util.ThreadUtils.runOnUiThread
 import com.drake.brv.utils.bindingAdapter
 import com.drake.brv.utils.grid
+import com.drake.brv.utils.linear
 import com.drake.brv.utils.setup
 import com.hjq.permissions.Permission
 import com.qingchu.wangmiao.AppConst
@@ -104,13 +107,8 @@ class CatLanguageFragment : RootFragment(R.layout.fragment_cat_language) {
     }
 
     private fun initRecordButtons() {
-        // 人话录音按钮（人话 -> 喵语）
-        binding.btnHumanRecord.thrillClickListener {
-            handleRecordClick(1)
-        }
-
         // 喵语录音按钮（喵语 -> 人话）
-        binding.btnCatRecord.thrillClickListener {
+        binding.ivCatMic.thrillClickListener {
             handleRecordClick(2)
         }
     }
@@ -129,26 +127,26 @@ class CatLanguageFragment : RootFragment(R.layout.fragment_cat_language) {
             1,
             "权限被拒绝，无法使用该功能"
         ) {
-            if (binding.lottie.isAnimating) {
+            if (isRecording) {
                 // 停止录音并展示结果
                 val entity =  catList.random()
-                binding.lottie.cancelAnimation()
-                record?.stopRecord()
+                val result=record?.stopRecord()
                 job?.cancel()
-
                 myDiaLog = LoadingDiaLog(requireContext())
                 myDiaLog.show()
                 lzyadsUtils.showAdJL(myDiaLog) {
                     Handler().postDelayed({
                         runOnUiThread {
-                            ResultDialog(entity).show(requireRootActivity())
-                            binding.tvRecordHint.text = "点击麦克风开始录音翻译..."
+                            if (result==null||!result)
+                                Toast.makeText(requireContext(),"请发出足够大的声音以保证能被识别翻译~", Toast.LENGTH_SHORT).show()
+                            else
+                                ResultDialog(entity).show(requireRootActivity())
+                            binding.tvRecordHint.text = "点击按钮开始录音"
                         }
                     }, 600)
                 }
 
                 // 恢复按钮样式
-                binding.ivHumanMic.setBackgroundResource(R.drawable.bg_record_button_red)
                 binding.ivCatMic.setBackgroundResource(R.drawable.bg_record_button_red)
                 isRecording = false
                 recordingType = 0
@@ -156,8 +154,6 @@ class CatLanguageFragment : RootFragment(R.layout.fragment_cat_language) {
                 // 开始录音
                 isRecording = true
                 recordingType = type
-
-                binding.lottie.playAnimation()
                 if (record == null) {
                     record = com.qingchu.wangmiao.utils.AudioRecordUtil()
                     record?.setOnCompleteListener {
@@ -169,7 +165,6 @@ class CatLanguageFragment : RootFragment(R.layout.fragment_cat_language) {
                 // 按钮激活状态与提示文案
                 when (type) {
                     1 -> {
-                        binding.ivHumanMic.setBackgroundResource(R.drawable.bg_record_button_active)
                         binding.tvRecordHint.text = "正在录制人话..."
                     }
                     2 -> {
@@ -199,7 +194,7 @@ class CatLanguageFragment : RootFragment(R.layout.fragment_cat_language) {
     }
 
     private fun initCommonSoundsList() {
-        binding.rvCommonSounds.grid(2).setup {
+        binding.rvCommonSounds.linear(LinearLayout.VERTICAL).setup {
             addType<Index1Entity>(R.layout.item_dog)
 
             onBind {
@@ -238,250 +233,106 @@ class CatLanguageFragment : RootFragment(R.layout.fragment_cat_language) {
         super.onDestroy()
         _binding = null
     }
-    private val person2Dog by lazy {
-        listOf(
-            Index3Entity(
-                getString(R.string.result_dog_2_1),
-                "dog_images/dog_yes.jpeg",
-                "dog_sounds/dog_yes.m4a"
-            ),
-            Index3Entity(
-                getString(R.string.result_dog_2_2),
-                "dog_images/dog_wow.jpeg",
-                "dog_sounds/dog_wow.m4a"
-            ),
-            Index3Entity(
-                getString(R.string.result_dog_2_3),
-                "dog_images/dog_wonder.jpeg",
-                "dog_sounds/dog_wonder.m4a"
-            ),
-            Index3Entity(
-                getString(R.string.result_dog_2_4),
-                "dog_images/dog_hungry.jpeg",
-                "dog_sounds/dog_hungry.m4a"
-            ),
-            Index3Entity(
-                getString(R.string.result_dog_2_5),
-                "dog_images/dog_agree.jpeg",
-                "dog_sounds/dog_agree.m4a"
-            ),
-            Index3Entity(
-                getString(R.string.result_dog_2_6),
-                "dog_images/dog_happy.jpeg",
-                "dog_sounds/dog_happy.m4a"
-            ),
-            Index3Entity(
-                getString(R.string.result_dog_2_7),
-                "dog_images/dog_scratch.jpeg",
-                "dog_sounds/dog_scratch.m4a"
-            ),
-            Index3Entity(
-                getString(R.string.result_dog_2_8),
-                "dog_images/dog_raise_hand.jpeg",
-                "dog_sounds/dog_raise_hand.m4a"
-            ),
-            Index3Entity(
-                getString(R.string.result_dog_2_9),
-                "dog_images/dog_exhausted.jpeg",
-                "dog_sounds/dog_exhausted.m4a"
-            ),
-            Index3Entity(
-                getString(R.string.result_dog_2_10),
-                "dog_images/dog_cry.jpeg",
-                "dog_sounds/dog_cry.m4a"
-            ),
-            Index3Entity(
-                getString(R.string.result_dog_2_11),
-                "dog_images/dog_angry.jpeg",
-                "dog_sounds/dog_angry.m4a"
-            ),
-            Index3Entity(
-                getString(R.string.result_dog_2_12),
-                "dog_images/dog_cry_lying.jpeg",
-                "dog_sounds/dog_cry_lying.m4a"
-            ),
-            Index3Entity(
-                getString(R.string.result_dog_2_13),
-                "dog_images/dog_dance.jpeg",
-                "dog_sounds/dog_dance.m4a"
-            ),
-            Index3Entity(
-                getString(R.string.result_dog_2_14),
-                "dog_images/dog_handclap.jpeg",
-                "dog_sounds/dog_handclap.m4a"
-            ),
-            Index3Entity(
-                getString(R.string.result_dog_2_15),
-                "dog_images/dog_happy_walk.jpeg",
-                "dog_sounds/dog_happy_walk.m4a"
-            ),
-            Index3Entity(
-                getString(R.string.result_dog_2_16),
-                "dog_images/dog_hi.jpeg",
-                "dog_sounds/dog_hi.m4a"
-            ),
-            Index3Entity(
-                getString(R.string.result_dog_2_17),
-                "dog_images/dog_hi_fence.jpeg",
-                "dog_sounds/dog_hi_fence.m4a"
-            ),
-            Index3Entity(
-                getString(R.string.result_dog_2_18),
-                "dog_images/dog_lie.jpeg",
-                "dog_sounds/dog_lie.m4a"
-            ),
-            Index3Entity(
-                getString(R.string.result_dog_2_19),
-                "dog_images/dog_love.jpeg",
-                "dog_sounds/dog_love.m4a"
-            ),
-            Index3Entity(
-                getString(R.string.result_dog_2_20),
-                "dog_images/dog_no.jpeg",
-                "dog_sounds/dog_no.m4a"
-            ),
-            Index3Entity(
-                getString(R.string.result_dog_2_21),
-                "dog_images/dog_pet.jpeg",
-                "dog_sounds/dog_pet.m4a"
-            ),
-            Index3Entity(
-                getString(R.string.result_dog_2_22),
-                "dog_images/dog_sad.jpeg",
-                "dog_sounds/dog_sad.m4a"
-            ),
-            Index3Entity(
-                getString(R.string.result_dog_2_23),
-                "dog_images/dog_scared.jpeg",
-                "dog_sounds/dog_scared.m4a"
-            ),
-            Index3Entity(
-                getString(R.string.result_dog_2_24),
-                "dog_images/dog_shy.jpeg",
-                "dog_sounds/dog_shy.m4a"
-            ),
-            Index3Entity(
-                getString(R.string.result_dog_2_25),
-                "dog_images/dog_soft_angry.jpeg",
-                "dog_sounds/dog_soft_angry.m4a"
-            ),
-            Index3Entity(
-                getString(R.string.result_dog_2_26),
-                "dog_images/dog_soft_begging.jpeg",
-                "dog_sounds/dog_soft_begging.m4a"
-            ),
-            Index3Entity(
-                getString(R.string.result_dog_2_27),
-                "dog_images/dog_super_angry.jpeg",
-                "dog_sounds/dog_super_angry.m4a"
-            ),
-            Index3Entity(
-                getString(R.string.result_dog_2_28),
-                "dog_images/dog_yeah.jpeg",
-                "dog_sounds/dog_yeah.m4a"
-            ),
-        )
-    }
     // 与 WHIndex3Fragment 一致的猫咪资源列表，用于结果弹窗展示
     private val catList by lazy {
         listOf(
             Index3Entity(
-                "",
+                "我好担心啊",
                 "cat_images/cat_01.webp",
                 "cat_sounds/cat_01.wav"
             ),
             Index3Entity(
-                "",
+                "你确定吗",
                 "cat_images/cat_02.webp",
                 "cat_sounds/cat_02.wav"
             ),
             Index3Entity(
-                "",
+                "这太让猫窒息了",
                 "cat_images/cat_03.webp",
                 "cat_sounds/cat_03.wav"
             ),
             Index3Entity(
-                "",
+                "好饿啊",
                 "cat_images/cat_04.webp",
                 "cat_sounds/cat_04.wav"
             ),
             Index3Entity(
-                "",
+                "饿了",
                 "cat_images/cat_05.webp",
                 "cat_sounds/cat_05.wav"
             ),
             Index3Entity(
-                "",
+                "有一点点恐怖",
                 "cat_images/cat_06.webp",
                 "cat_sounds/cat_06.wav"
             ),
             Index3Entity(
-                "",
+                "我想吃点东西了",
                 "cat_images/cat_07.webp",
                 "cat_sounds/cat_07.wav"
             ),
             Index3Entity(
-                "",
+                "这一天天的",
                 "cat_images/cat_08.webp",
                 "cat_sounds/cat_08.wav"
             ),
             Index3Entity(
-                "",
+                "可怜可怜我",
                 "cat_images/cat_09.webp",
                 "cat_sounds/cat_09.wav"
             ),
             Index3Entity(
-                "",
+                "我好伤心",
                 "cat_images/cat_10.webp",
                 "cat_sounds/cat_10.wav"
             ),
             Index3Entity(
-                "",
+                "什么",
                 "cat_images/cat_11.webp",
                 "cat_sounds/cat_11.wav"
             ),
             Index3Entity(
-                "",
+                "啊？",
                 "cat_images/cat_11.webp",
                 "cat_sounds/cat_11.wav"
             ),
             Index3Entity(
-                "",
+                "悄咪咪的",
                 "cat_images/cat_12.webp",
                 "cat_sounds/cat_12.wav"
             ),
             Index3Entity(
-                "",
+                "哈哈哈哈",
                 "cat_images/cat_13.webp",
                 "cat_sounds/cat_13.wav"
             ),
             Index3Entity(
-                "",
+                "等一下",
                 "cat_images/cat_14.webp",
                 "cat_sounds/cat_14.wav"
             ),
             Index3Entity(
-                "",
+                "生气了",
                 "cat_images/cat_15.webp",
                 "cat_sounds/cat_15.wav"
             ),
             Index3Entity(
-                "",
+                "喵~",
                 "cat_images/cat_16.webp",
                 "cat_sounds/cat_16.wav"
             ),
             Index3Entity(
-                "",
+                "真的吗",
                 "cat_images/cat_17.webp",
                 "cat_sounds/cat_17.wav"
             ),
             Index3Entity(
-                "",
+                "嗯？疑惑",
                 "cat_images/cat_18.webp",
                 "cat_sounds/cat_18.wav"
             ),
             Index3Entity(
-                "",
+                "好吧",
                 "cat_images/cat_19.webp",
                 "cat_sounds/cat_19.wav"
             ),
