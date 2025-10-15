@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_demo_main_bg"
+    android:background="@drawable/bg_demo_gradient"
     android:fillViewport="true">
 
     <LinearLayout
@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_50sdp"
-            android:text="喵语翻译"
+            android:text="喵语翻译官"
             android:textColor="#F54900"
             android:textSize="@dimen/_25sdp"
             android:textStyle="bold"
@@ -92,8 +92,7 @@
                     android:textColor="@color/color_999999"
                     android:textSize="14dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/layout_record_buttons" />
+                    app:layout_constraintStart_toStartOf="parent" />
                 </LinearLayout>
 
         </androidx.cardview.widget.CardView>
@@ -122,7 +121,7 @@
             android:id="@+id/tv_common_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="常见喵语"
+            android:text="常用喵语"
             android:textColor="@color/color_333333"
             android:textSize="@dimen/_16ssp"
             app:layout_constraintTop_toBottomOf="@id/card_translation"

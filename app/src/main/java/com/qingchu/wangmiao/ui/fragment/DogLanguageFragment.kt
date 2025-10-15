@@ -5,9 +5,12 @@ import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.widget.FrameLayout
+import android.widget.LinearLayout
+import android.widget.Toast
 import com.blankj.utilcode.util.ThreadUtils.runOnUiThread
 import com.drake.brv.utils.bindingAdapter
 import com.drake.brv.utils.grid
+import com.drake.brv.utils.linear
 import com.drake.brv.utils.setup
 import com.hjq.permissions.Permission
 import com.qingchu.wangmiao.AppConst
@@ -103,12 +106,7 @@ class DogLanguageFragment : RootFragment(R.layout.fragment_dog_language) {
 
     private fun initRecordButtons() {
         // 人话录音按钮（人话 -> 狗语）
-        binding.btnHumanRecord.thrillClickListener {
-            handleRecordClick(1)
-        }
-
-        // 狗语录音按钮（狗语 -> 人话）
-        binding.btnDogRecord.thrillClickListener {
+        binding.ivDogMic.thrillClickListener {
             handleRecordClick(2)
         }
     }
@@ -127,11 +125,10 @@ class DogLanguageFragment : RootFragment(R.layout.fragment_dog_language) {
             1,
             "权限被拒绝，无法使用该功能"
         ) {
-            if (binding.lottie.isAnimating) {
+            if (isRecording) {
                 // 停止录音并展示结果
                 val entity = if (type==1) dogList.random() else person2Dog.random()
-                binding.lottie.cancelAnimation()
-                record?.stopRecord()
+                val result=record?.stopRecord()
                 job?.cancel()
 
                 myDiaLog = LoadingDiaLog(requireContext())
@@ -139,14 +136,16 @@ class DogLanguageFragment : RootFragment(R.layout.fragment_dog_language) {
                 lzyadsUtils.showAdJL(myDiaLog) {
                     Handler().postDelayed({
                         runOnUiThread {
-                            ResultDialog(entity).show(requireRootActivity())
-                            binding.tvRecordHint.text = "点击麦克风开始录音翻译..."
+                            if (result==null||!result)
+                                Toast.makeText(requireContext(),"请发出足够大的声音以保证能被识别翻译~", Toast.LENGTH_SHORT).show()
+                            else
+                                ResultDialog(entity).show(requireRootActivity())
+                            binding.tvRecordHint.text = "点击按钮开始录音"
                         }
                     }, 600)
                 }
 
                 // 恢复按钮样式
-                binding.ivHumanMic.setBackgroundResource(R.drawable.bg_record_button_red)
                 binding.ivDogMic.setBackgroundResource(R.drawable.bg_record_button_red)
                 isRecording = false
                 recordingType = 0
@@ -155,7 +154,6 @@ class DogLanguageFragment : RootFragment(R.layout.fragment_dog_language) {
                 isRecording = true
                 recordingType = type
 
-                binding.lottie.playAnimation()
                 if (record == null) {
                     record = com.qingchu.wangmiao.utils.AudioRecordUtil()
                     record?.setOnCompleteListener {
@@ -167,7 +165,6 @@ class DogLanguageFragment : RootFragment(R.layout.fragment_dog_language) {
                 // 按钮激活状态与提示文案
                 when (type) {
                     1 -> {
-                        binding.ivHumanMic.setBackgroundResource(R.drawable.bg_record_button_active)
                         binding.tvRecordHint.text = "正在录制人话..."
                     }
                     2 -> {
@@ -197,7 +194,7 @@ class DogLanguageFragment : RootFragment(R.layout.fragment_dog_language) {
     }
 
     private fun initCommonSoundsList() {
-        binding.rvCommonSounds.grid(2).setup {
+        binding.rvCommonSounds.linear(LinearLayout.VERTICAL).setup {
             addType<Index1Entity>(R.layout.item_dog)
 
             onBind {
