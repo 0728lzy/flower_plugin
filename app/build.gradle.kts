@@ -10,7 +10,7 @@ plugins {
 
 android {
 //    namespace = "com.ruite.app.pet.translator"
-    namespace = "com.qingchu.wangmiao"
+    namespace = "com.cslt.maogoufanyi"
     compileSdk = 34
 
     defaultConfig {
