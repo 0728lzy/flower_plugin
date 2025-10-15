@@ -12,7 +12,7 @@ object AppConst {
     //----------------------------模板常量（常修改）----------------------------start
     @JvmField
     var CHANNEL = BuildConfig.APP_CHANNEL//用户协议MK
-    const val DJ_APP_ID = "a92c610a9b299a0b9257200843c03c36e41cab5c"
+    const val DJ_APP_ID = "a92c610a89339818df52344953ce2737e81bb35a"
     const val UM_APP_ID = "66f79ecb61c3b13bde90b57a"  //沿用 猫狗交流翻译器
     const val TAG = "ad_log"
 
@@ -48,11 +48,11 @@ object AppConst {
     var oaid_h = ""
 
     //用户协议和隐私政策
-    const val APP_HOST = "众知"  //建议每次修改协议时，同时修改这里的主体名，这样就可以保证出包主体不会错！
+    const val APP_HOST = "长沙链塔"  //建议每次修改协议时，同时修改这里的主体名，这样就可以保证出包主体不会错！
     const val URL_USER_AGREEMENT1 =
-        "https://app.dingjiwangluo.com/protocol/mould/agreement/bd2b046e-d3e1-468d-a9da-3b3820ce34f4.html"//用户协议MK
+        "https://app.dingjiwangluo.com/protocol/mould/agreement/67038f52-fc9e-468b-bb1e-bce3c82187aa.html"//用户协议MK
     const val URL_PRIVACY_POLICY1 =
-        "https://app.dingjiwangluo.com/protocol/mould/privacy/08ac8276-9024-4838-9444-8c4603f4bad2.html"//隐私政策 MK
+        "https://app.dingjiwangluo.com/protocol/mould/privacy/0a40429f-8ed6-4d3e-8c51-75355b99a8e5.html"//隐私政策 MK
 
     @JvmField
     var URL_USER_AGREEMENT =
