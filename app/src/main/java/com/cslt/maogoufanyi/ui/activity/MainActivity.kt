@@ -49,7 +49,7 @@ class MainActivity : BaseActivity() {
             context.startActivity(intent)
         }
     }
-
+//犹如神挡杀神，佛挡杀佛，天下无敌，无敌于天下
 
     private var isShowYSDialog = false
     override fun getLayoutId() = R.layout.activity_main
