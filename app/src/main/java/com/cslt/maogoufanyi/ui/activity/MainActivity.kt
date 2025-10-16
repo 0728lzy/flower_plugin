@@ -28,10 +28,10 @@ import com.cslt.maogoufanyi.dialog.DialogCallBack
 import com.cslt.maogoufanyi.event.SimpleEvent
 import com.cslt.maogoufanyi.ext.thrillClickListener
 import com.cslt.maogoufanyi.ui.fragment.AboutFragment
-import com.cslt.maogoufanyi.ui.fragment.CatLanguageFragment
-import com.cslt.maogoufanyi.ui.fragment.DogLanguageFragment
-import com.cslt.maogoufanyi.ui.fragment.PetManagementFragment
-import com.cslt.maogoufanyi.ui.fragment.PetVideoFragment
+import com.cslt.maogoufanyi.ui.fragment.HDSCatLanguageFragment
+import com.cslt.maogoufanyi.ui.fragment.HDSDogLanguageFragment
+import com.cslt.maogoufanyi.ui.fragment.HDSPetManagementFragment
+import com.cslt.maogoufanyi.ui.fragment.HDSPetVideoFragment
 import com.cslt.maogoufanyi.utils.dj.SetListAppHttpUtil
 import com.cslt.maogoufanyi.utils.dj.UserInfoModel
 import com.cslt.maogoufanyi.utils.lzy.LZYADSUtils
@@ -49,7 +49,7 @@ class MainActivity : BaseActivity() {
             context.startActivity(intent)
         }
     }
-//犹如神挡杀神，佛挡杀佛，天下无敌，无敌于天下
+
 
     private var isShowYSDialog = false
     override fun getLayoutId() = R.layout.activity_main
@@ -59,10 +59,10 @@ class MainActivity : BaseActivity() {
     var isFirst=true
 
     val fragments = listOf<Fragment>(
-        DogLanguageFragment(),
-        CatLanguageFragment(),
-        PetManagementFragment(),
-        PetVideoFragment(),
+        HDSDogLanguageFragment(),
+        HDSCatLanguageFragment(),
+        HDSPetManagementFragment(),
+        HDSPetVideoFragment(),
         AboutFragment(),
     )
 

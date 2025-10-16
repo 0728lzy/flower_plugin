@@ -17,7 +17,7 @@ import androidx.annotation.NonNull;
 import com.cslt.maogoufanyi.AppConst;
 import com.cslt.maogoufanyi.R;
 import com.cslt.maogoufanyi.csj.lzy.LZYSimpleADUtils;
-import com.cslt.maogoufanyi.ui.activity.QCWebViewActivity;
+import com.cslt.maogoufanyi.ui.activity.HDSWebViewActivity;
 
 
 public class AgreementCancelDialog extends Dialog implements View.OnClickListener {
@@ -82,7 +82,7 @@ public class AgreementCancelDialog extends Dialog implements View.OnClickListene
              }
             else   if (v.getId()==  R.id.tv_user_protocol){
 
-                QCWebViewActivity.Companion.forward(
+                HDSWebViewActivity.Companion.forward(
                         getContext(),
                         getContext().getString(R.string.user_agreement),
                         AppConst.URL_USER_AGREEMENT
@@ -94,7 +94,7 @@ public class AgreementCancelDialog extends Dialog implements View.OnClickListene
             else   if (v.getId()==  R.id.tv_user_policy){
 
 
-                QCWebViewActivity.Companion.forward(
+                HDSWebViewActivity.Companion.forward(
                         getContext(),
                         getContext().getString(R.string.privacy_policy),
                         AppConst.URL_PRIVACY_POLICY

@@ -1,7 +1,7 @@
 package com.cslt.maogoufanyi.network
 
 import android.util.Log
-import com.cslt.maogoufanyi.bean.dj.QCResponseBase
+import com.cslt.maogoufanyi.bean.dj.HDSResponseBase
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
 
@@ -12,7 +12,7 @@ import io.reactivex.disposables.Disposable
  * Description:观察者，传入泛型即可
  */
 abstract class XtmObserver<T>(
-) : Observer<QCResponseBase<T>> {
+) : Observer<HDSResponseBase<T>> {
 
     override fun onError(e: Throwable) {
         e?.printStackTrace()
@@ -20,7 +20,7 @@ abstract class XtmObserver<T>(
     }
 
 
-    override fun onNext(t: QCResponseBase<T>) {
+    override fun onNext(t: HDSResponseBase<T>) {
         Log.i("confiInit", "Response=${t.code}")
 
     }

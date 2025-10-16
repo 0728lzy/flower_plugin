@@ -105,7 +105,7 @@
             android:value="640" />
 
         <activity
-            android:name=".ui.activity.QCLauncherActivity"
+            android:name=".ui.activity.HDSLauncherActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
@@ -120,21 +120,21 @@
         </activity>
 
         <activity
-            android:name=".ui.activity.QCLanguageActivity"
+            android:name=".ui.activity.LanguageActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".ui.activity.QCPermissionActivity"
+            android:name=".ui.activity.HDSPermissionActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".ui.activity.QCGuideActivity"
+            android:name=".ui.activity.HDSGuideActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
@@ -148,60 +148,60 @@
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".ui.activity.QCDetailActivity"
+            android:name=".ui.activity.HDSDetailActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".ui.activity.QCVideoActivity"
+            android:name=".ui.activity.HDSVideoActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".ui.activity.QCSoundActivity"
+            android:name=".ui.activity.HDSSoundActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".ui.activity.QCCallActivity"
+            android:name=".ui.activity.HDSCallActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".ui.activity.QCWebViewActivity"
+            android:name=".ui.activity.HDSWebViewActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.QCContactCustomerServiceActivity"
+            android:name=".ui.activity.HDSContactCustomerServiceActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.activity.QCAboutActivity"
+        <activity android:name=".ui.activity.HDSAboutActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait" />
 
 
-        <activity android:name=".ui.activity.PetPhotosActivity"
+        <activity android:name=".ui.activity.HDSPetPhotosActivity"
             android:windowSoftInputMode="stateHidden|adjustResize"
             android:exported="true"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".ui.activity.PetNotesActivity"
+        <activity android:name=".ui.activity.HDSPetNotesActivity"
             android:windowSoftInputMode="stateHidden|adjustResize"
             android:exported="true"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".ui.activity.PetBathActivity"
+        <activity android:name=".ui.activity.HDSPetBathActivity"
             android:windowSoftInputMode="stateHidden|adjustResize"
             android:exported="true"
             android:screenOrientation="portrait" />

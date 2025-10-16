@@ -1,47 +1,45 @@
-package com.cslt.maogoufanyi.ui.fragment
+package com.cslt.maogoufanyi.ui.activity
 
+import android.content.Intent
 import android.graphics.Outline
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.text.TextUtils
-import android.util.Log
 import android.view.View
 import android.view.ViewOutlineProvider
-import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.blankj.utilcode.util.ToastUtils
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.core.BasePopupView
 import com.cslt.maogoufanyi.APP
 import com.cslt.maogoufanyi.AppConst
 import com.cslt.maogoufanyi.R
-import com.cslt.maogoufanyi.base.dj.RootFragment
-import com.cslt.maogoufanyi.csj.AdFeedSimpleOneUtils
-import com.cslt.maogoufanyi.databinding.FragmentAboutBinding
-import com.cslt.maogoufanyi.event.SimpleEvent
+import com.cslt.maogoufanyi.base.dj.BaseActivity
+import com.cslt.maogoufanyi.databinding.ActivityAboutBinding
 import com.cslt.maogoufanyi.ext.getBinding
 import com.cslt.maogoufanyi.ext.thrillClickListener
-import com.cslt.maogoufanyi.ui.activity.HDSContactCustomerServiceActivity
-import com.cslt.maogoufanyi.ui.activity.HDSWebViewActivity
 import com.cslt.maogoufanyi.utils.dj.DeviceUtils
+import com.cslt.maogoufanyi.utils.dj.GetHttpDataUtil
 import com.cslt.maogoufanyi.utils.dj.UserInfoModel
+import com.cslt.maogoufanyi.utils.lzy.LZYADSUtils
 import com.cslt.maogoufanyi.utils.lzy.LZYLog
 import com.cslt.maogoufanyi.utils.lzy.ScreenUtils
 import com.cslt.maogoufanyi.widget.popup.dj.QNInputPasswordDialogPopup
-import com.cslt.maogoufanyi.utils.dj.GetHttpDataUtil
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
 
-class AboutFragment : RootFragment(R.layout.fragment_about) {
+class HDSAboutActivity : BaseActivity() {
 
+    companion object {
+        fun forward(context: BaseActivity) {
+            val intent = Intent(context, HDSAboutActivity::class.java)
+            context.startActivity(intent)
+        }
+    }
 
-    private lateinit var binding: FragmentAboutBinding
+    override fun getLayoutId() = R.layout.activity_about
+
+    private lateinit var binding: ActivityAboutBinding
 
     private lateinit var mineLinearLayout: LinearLayout
     private lateinit var privacyLinearLayout: LinearLayout
@@ -52,10 +50,19 @@ class AboutFragment : RootFragment(R.layout.fragment_about) {
     private lateinit var appLogoImageView: ImageView
     private var stat = 0
 
+    private lateinit var lzyAdsUtils: LZYADSUtils
+
+
     override fun initView(view: View, savedInstanceState: Bundle?) {
         binding = view.getBinding()
-
-
+        binding.toolbar.ivMenu.setImageResource(R.drawable.ic_arrow_back_24)
+        binding.toolbar.tvTitle.text="个人中心"
+        binding.toolbar.ivMenu.thrillClickListener {
+            finish()
+        }
+        lzyAdsUtils=LZYADSUtils("MineFragment",this)
+        lzyAdsUtils.showAdCpTurn()
+        lzyAdsUtils.loadSimpleAdTurn(binding.feedContainerActivityAbout,-1)
         mineLinearLayout = binding.mineLin
         privacyLinearLayout = binding.mineLinPrivacy
         userProLinearLayout = binding.mineLinUserPro
@@ -63,7 +70,6 @@ class AboutFragment : RootFragment(R.layout.fragment_about) {
         versionTextView = binding.mineAppVersion
         djIdTextView = binding.mineDjId
         appLogoImageView = binding.mineAppImg
-        
         mineLinearLayout.outlineProvider = object : ViewOutlineProvider() {
             override fun getOutline(view: View, outline: Outline?) {
                 outline?.setRoundRect(
@@ -71,32 +77,28 @@ class AboutFragment : RootFragment(R.layout.fragment_about) {
                     0,
                     view.width,
                     view.height,
-                    ScreenUtils.dip2px(15, requireContext()).toFloat()
+                    ScreenUtils.dip2px(15, this@HDSAboutActivity).toFloat()
                 )
             }
         }
         mineLinearLayout.clipToOutline = true
-        
         privacyLinearLayout.thrillClickListener {
             HDSWebViewActivity.forward(
-                requireActivity() as com.cslt.maogoufanyi.base.dj.BaseActivity,
+                this@HDSAboutActivity,
                 getString(R.string.privacy_policy),
                 AppConst.URL_PRIVACY_POLICY
             )
         }
-        
         userProLinearLayout.thrillClickListener {
             HDSWebViewActivity.forward(
-                requireActivity() as com.cslt.maogoufanyi.base.dj.BaseActivity,
+                this@HDSAboutActivity,
                 getString(R.string.user_agreement),
                 AppConst.URL_USER_AGREEMENT
             )
         }
-        
         feedbackLinearLayout.thrillClickListener {
-            HDSContactCustomerServiceActivity.show(requireActivity() as com.cslt.maogoufanyi.base.dj.BaseActivity)
+            HDSContactCustomerServiceActivity.show(this@HDSAboutActivity)
         }
-        
         binding.mineAppImg.setOnClickListener {
             stat++
             LZYLog.i("countDownTimerstat", "$stat")
@@ -108,13 +110,8 @@ class AboutFragment : RootFragment(R.layout.fragment_about) {
                 showInputPasswordDialog()
             }
         }
-        
         binding.mineDjId.text = UserInfoModel.getDjid()
         binding.mineAppVersion.text = DeviceUtils.getVersionName(APP.instance)
-        Glide.with(this)
-            .load(R.mipmap.ic_app_logo)
-            .transform(CenterCrop(),RoundedCorners(ScreenUtils.dip2px(50,requireContext())))
-            .into(binding.mineAppImg)
     }
 
     var inputPopupView: BasePopupView? = null
@@ -123,7 +120,7 @@ class AboutFragment : RootFragment(R.layout.fragment_about) {
             return
         }
         val customPopup =
-            QNInputPasswordDialogPopup(requireActivity())
+            QNInputPasswordDialogPopup(this@HDSAboutActivity)
         customPopup.listener = object : QNInputPasswordDialogPopup.OnInputPasswordListener {
             override fun cancel() {
             }
@@ -137,7 +134,7 @@ class AboutFragment : RootFragment(R.layout.fragment_about) {
                 }
             }
         }
-        inputPopupView = XPopup.Builder(requireActivity())
+        inputPopupView = XPopup.Builder(this@HDSAboutActivity)
             .autoOpenSoftInput(false)
             .autoDismiss(false)
             .dismissOnBackPressed(false)
@@ -162,40 +159,4 @@ class AboutFragment : RootFragment(R.layout.fragment_about) {
         super.onDestroy()
         countDownTimer.cancel()
     }
-    override fun onStart() {
-        super.onStart()
-        EventBus.getDefault().register(this)
-    }
-
-    override fun onStop() {
-        super.onStop()
-        EventBus.getDefault().unregister(this)
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onMessageSimpleEvent(message: SimpleEvent) {
-        if(message.simple == 4){
-            LZYLog.e("simple","message simple:${message.simple}")
-            loadSimpleAd(binding.feedContainerAbout)
-        }
-    }
-    fun loadSimpleAd(fragment: FrameLayout?) {
-        if (requireActivity() != null && (!UserInfoModel.getIsCheckFlag() || AppConst.is_show_ad)) {
-            AdFeedSimpleOneUtils.init(
-                requireActivity(),
-                object : AdFeedSimpleOneUtils.GirdMenuStateListener {
-                    override fun onSuccess() {
-                        if (fragment != null && requireActivity() != null) {
-                            Log.i("tttt", "准备刷新CatLanguageFragment的广告")
-                            AdFeedSimpleOneUtils.showAd(fragment, requireActivity())
-                        }
-                    }
-
-                    override fun onError() {
-                    }
-                })
-            AdFeedSimpleOneUtils.initPreloading()
-        }
-    }
-
 }

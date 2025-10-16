@@ -2,7 +2,7 @@ package com.cslt.maogoufanyi.network
 
 
 
-import com.cslt.maogoufanyi.bean.dj.QCResponseBase
+import com.cslt.maogoufanyi.bean.dj.HDSResponseBase
 import io.reactivex.Observable
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -13,7 +13,7 @@ import io.reactivex.schedulers.Schedulers
  * Description:
  */
 object XtmHttp {
-    fun <T> toSubscribe(o: Observable<QCResponseBase<T>>, b: XtmObserver<T>, delayMILLISECONDS: Long = 0L) {
+    fun <T> toSubscribe(o: Observable<HDSResponseBase<T>>, b: XtmObserver<T>, delayMILLISECONDS: Long = 0L) {
         o.subscribeOn(Schedulers.io())
             .unsubscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

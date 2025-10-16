@@ -3,19 +3,19 @@ package com.cslt.maogoufanyi.utils.dj
 import android.content.Context
 import android.text.TextUtils
 import android.util.Log
-import com.cslt.maogoufanyi.bean.dj.QCCommonConfigBean
+import com.cslt.maogoufanyi.bean.dj.HDSCommonConfigBean
 import com.google.gson.Gson
 import com.cslt.maogoufanyi.APP
 import com.cslt.maogoufanyi.AppConst
 import com.cslt.maogoufanyi.R
-import com.cslt.maogoufanyi.bean.dj.QCJRiskBean
-import com.cslt.maogoufanyi.bean.dj.QCActivateBean
-import com.cslt.maogoufanyi.bean.dj.QCStartRet
-import com.cslt.maogoufanyi.bean.dj.QCWhiteListBean
-import com.cslt.maogoufanyi.bean.dj.QCHelpQuestionBean
-import com.cslt.maogoufanyi.bean.dj.QCInstallBean
-import com.cslt.maogoufanyi.bean.dj.QCOpenMemberBean
-import com.cslt.maogoufanyi.bean.dj.QCResponseBase
+import com.cslt.maogoufanyi.bean.dj.HDSJRiskBean
+import com.cslt.maogoufanyi.bean.dj.HDSActivateBean
+import com.cslt.maogoufanyi.bean.dj.HDSStartRet
+import com.cslt.maogoufanyi.bean.dj.HDSWhiteListBean
+import com.cslt.maogoufanyi.bean.dj.HDSHelpQuestionBean
+import com.cslt.maogoufanyi.bean.dj.HDSInstallBean
+import com.cslt.maogoufanyi.bean.dj.HDSOpenMemberBean
+import com.cslt.maogoufanyi.bean.dj.HDSResponseBase
 import com.cslt.maogoufanyi.event.IpRiskEvent
 import com.cslt.maogoufanyi.event.dj.ActiveEvent
 import com.cslt.maogoufanyi.network.RetrofitFactory
@@ -40,7 +40,7 @@ object GetHttpDataUtil {
     var defaultJson = getDefJsonStr()
 
     fun getDefJsonStr():String{
-        var data = QCStartRet()
+        var data = HDSStartRet()
         data.id = "1"
         data.upgrade = "1.0.0"
         data.appId = AppConst.DJ_APP_ID
@@ -77,8 +77,8 @@ object GetHttpDataUtil {
             RetrofitFactory.instance.httpApi?.getAppConfig(
                 map
             )!!,
-            object : XtmObserver<QCStartRet>() {
-                override fun onNext(t: QCResponseBase<QCStartRet>) {
+            object : XtmObserver<HDSStartRet>() {
+                override fun onNext(t: HDSResponseBase<HDSStartRet>) {
                     super.onNext(t)
                     if (t.code == 200) {
                         val responseData = t.data
@@ -179,15 +179,15 @@ object GetHttpDataUtil {
 
     }
 
-    fun getStartRet(): QCStartRet {
+    fun getStartRet(): HDSStartRet {
         val gson = Gson()
         val httpRespon = UserInfoModel.getStartHttpRespon();
         if (!TextUtils.isEmpty(httpRespon)) {
-            return gson.fromJson(httpRespon, QCStartRet::class.java)
+            return gson.fromJson(httpRespon, HDSStartRet::class.java)
         } else {
-            return gson.fromJson(defaultJson, QCStartRet::class.java)
+            return gson.fromJson(defaultJson, HDSStartRet::class.java)
         }
-        return QCStartRet()
+        return HDSStartRet()
     }
 
     fun setInstall(activity: Context,source:Int) {
@@ -289,8 +289,8 @@ object GetHttpDataUtil {
 //        LZYLog.i("Alex", "umengZID=${umengZID}")
         XtmHttp.toSubscribe(
             RetrofitFactory.instance.httpApi?.setInstallHttp(getRequestBody(map))!!,
-            object : XtmObserver<QCStartRet>() {
-                override fun onNext(t: QCResponseBase<QCStartRet>) {
+            object : XtmObserver<HDSStartRet>() {
+                override fun onNext(t: HDSResponseBase<HDSStartRet>) {
                     super.onNext(t)
 
                     if (t.code == 200) {
@@ -567,8 +567,8 @@ object GetHttpDataUtil {
 
         XtmHttp.toSubscribe(
             RetrofitFactory.instance.httpApi?.reportingBehavior(getRequestBody(map))!!,
-            object : XtmObserver<QCInstallBean>() {
-                override fun onNext(t: QCResponseBase<QCInstallBean>) {
+            object : XtmObserver<HDSInstallBean>() {
+                override fun onNext(t: HDSResponseBase<HDSInstallBean>) {
                     super.onNext(t)
 //                    if(actionType == 0) {
 //                        LZYLog.e("tttt", "report返回参数${placementId}------------："+Gson().toJson(t))
@@ -605,8 +605,8 @@ object GetHttpDataUtil {
         map["appVersion"] = DeviceUtils.getVersionName(APP.instance)
         XtmHttp.toSubscribe(
             RetrofitFactory.instance.httpApi?.setWhiteList(getRequestBody(map))!!,
-            object : XtmObserver<QCWhiteListBean>() {
-                override fun onNext(t: QCResponseBase<QCWhiteListBean>) {
+            object : XtmObserver<HDSWhiteListBean>() {
+                override fun onNext(t: HDSResponseBase<HDSWhiteListBean>) {
                     super.onNext(t)
                     if (t.code == 200) {
                         if (t.data.status == "0") {
@@ -645,8 +645,8 @@ object GetHttpDataUtil {
         var map = HashMap<String, String>()
         XtmHttp.toSubscribe(
             RetrofitFactory.instance.httpApi?.getCommonConfig(map)!!,
-            object : XtmObserver<ArrayList<QCCommonConfigBean>>() {
-                override fun onNext(t: QCResponseBase<ArrayList<QCCommonConfigBean>>) {
+            object : XtmObserver<ArrayList<HDSCommonConfigBean>>() {
+                override fun onNext(t: HDSResponseBase<ArrayList<HDSCommonConfigBean>>) {
                     super.onNext(t)
                     val gson  = Gson()
                     if (t.code == 200) {
@@ -676,8 +676,8 @@ object GetHttpDataUtil {
         var map = HashMap<String, String>()
         XtmHttp.toSubscribe(
             RetrofitFactory.instance.httpApi?.issuesList(map)!!,
-            object : XtmObserver<ArrayList<QCHelpQuestionBean>>() {
-                override fun onNext(t: QCResponseBase<ArrayList<QCHelpQuestionBean>>) {
+            object : XtmObserver<ArrayList<HDSHelpQuestionBean>>() {
+                override fun onNext(t: HDSResponseBase<ArrayList<HDSHelpQuestionBean>>) {
                     super.onNext(t)
                     val gson  = Gson()
                     if (t.code == 200) {
@@ -722,8 +722,8 @@ object GetHttpDataUtil {
 //        LZYLog.e("tttt","上传数据："+Gson().toJson(map))
         XtmHttp.toSubscribe(
             RetrofitFactory.instance.httpApi?.afterSalesForm(getRequestBody(map))!!,
-            object : XtmObserver<QCOpenMemberBean>() {
-                override fun onNext(t: QCResponseBase<QCOpenMemberBean>) {
+            object : XtmObserver<HDSOpenMemberBean>() {
+                override fun onNext(t: HDSResponseBase<HDSOpenMemberBean>) {
                     super.onNext(t)
 
                     val gson  = Gson()
@@ -771,8 +771,8 @@ object GetHttpDataUtil {
         }
         XtmHttp.toSubscribe(
             RetrofitFactory.instance.httpApi?.deviceInfoExtend(getRequestBody(map))!!,
-            object : XtmObserver<QCOpenMemberBean>() {
-                override fun onNext(t: QCResponseBase<QCOpenMemberBean>) {
+            object : XtmObserver<HDSOpenMemberBean>() {
+                override fun onNext(t: HDSResponseBase<HDSOpenMemberBean>) {
                     super.onNext(t)
 //                    LZYLog.e("tttt","上传应用列表返回："+Gson().toJson(t))
                     if (t.code == 200) {
@@ -808,8 +808,8 @@ object GetHttpDataUtil {
         map["appVersion"] = DeviceUtils.getVersionName(APP.instance)
         XtmHttp.toSubscribe(
             RetrofitFactory.instance.httpApi?.setUnsualIp(map)!!,
-            object : XtmObserver<QCActivateBean>() {
-                override fun onNext(t: QCResponseBase<QCActivateBean>) {
+            object : XtmObserver<HDSActivateBean>() {
+                override fun onNext(t: HDSResponseBase<HDSActivateBean>) {
                     super.onNext(t)
                     if (t.code == 200) {
 
@@ -833,8 +833,8 @@ object GetHttpDataUtil {
     fun ipRisk() {
         XtmHttp.toSubscribe(
             RetrofitFactory.instance.httpApi?.ipRisk()!!,
-            object : XtmObserver<QCJRiskBean>() {
-                override fun onNext(t: QCResponseBase<QCJRiskBean>) {
+            object : XtmObserver<HDSJRiskBean>() {
+                override fun onNext(t: HDSResponseBase<HDSJRiskBean>) {
                     super.onNext(t)
                     if (t.code == 200) {
                         val responseData = t.data
