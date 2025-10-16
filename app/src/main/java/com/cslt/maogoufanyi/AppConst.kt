@@ -118,6 +118,10 @@ object AppConst {
     @JvmField
     var isFront = false //判断首页是不是在前台
     var GetWebViewUserAgent = ""  //getWebViewUserAgent(instance) 因在install接口报错，所以提前进行获取
+    const val SWITCH_LEAVE_RETURN_LAUNCH_NORMAL=true
+    @JvmField
+    var photoExitFlag=false
+
     //----------------------------模板变量----------------------------end
 
 

@@ -52,9 +52,11 @@ class HDSCallActivity : BaseActivity() {
     private var index = 0
     private var path = ""
 
+    private var nowVolume=0f
+    private var isQuiet=false
+
     override fun initView(view: View, savedInstanceState: Bundle?) {
         binding = ActivityIncomingCallBinding.bind(view)
-
 
         index = intent.getIntExtra("index", 1)
         var name = ""
@@ -98,6 +100,19 @@ class HDSCallActivity : BaseActivity() {
 
         binding.ivCloseIncoming.thrillClickListener {
             onBackPressed()
+        }
+        binding.ivQuiet.thrillClickListener {
+            if (!isQuiet) {
+                nowVolume=player?.volume?:1.0f
+                player?.volume = 0f
+                //这里改变为静音的图片
+                binding.ivQuiet.setImageResource(R.drawable.ic_voice_call_false)
+            }
+            else {
+                player?.volume = nowVolume
+                binding.ivQuiet.setImageResource(R.drawable.ic_voice_call)
+            }
+            isQuiet=!isQuiet
         }
         binding.ivAnswerIncoming.thrillClickListener {
             PermissionUtils.tryToDoSomethingWithCheckPermissionAndCode(

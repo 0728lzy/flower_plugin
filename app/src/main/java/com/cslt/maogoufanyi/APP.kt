@@ -281,26 +281,24 @@ class APP : Application() {
         //注册activitys的生命周期的回调,对activity的生命周期进行管理
         registerActivityLifecycleCallbacks(object : ActivityLifecycleCallbacks {
             override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
-                Log.e(TAG, "onActivityCreated: ")
+                LZYLog.e(TAG, "onActivityCreated: ")
             }
 
             override fun onActivityStarted(activity: Activity) {
-                if (AppConst.is_show_ad||activity is LauncherActivity) {
-                    Log.e(TAG, "onActivityStarted: ")
+                if ((AppConst.is_show_ad&&!AppConst.photoExitFlag)||activity is LauncherActivity||!AppConst.SWITCH_LEAVE_RETURN_LAUNCH_NORMAL) {
+                    LZYLog.e(TAG, "onActivityStarted: ")
                     appount++
                     if (appount == 1 && !isBackground) {
-                        Log.e(TAG, "进入前台------------- startRet")
+                        LZYLog.e(TAG, "进入前台------------- startRet")
                         isBackground = true
-                        Log.e(TAG, "AppConst.isFront:${AppConst.isFront},isStarted:${isStarted}")
-                        if (!AppConst.isFront && isStarted &&AppConst.is_show_ad) {
+                        LZYLog.e(TAG, "AppConst.isFront:${AppConst.isFront},isStarted:${isStarted}")
+                        if (!AppConst.isFront && isStarted) {
                             AppConst.isStopped = true
                             val intent = Intent(this@APP, LauncherActivity::class.java)
                             intent.putExtra("position", 1)
                             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                             startActivity(intent)
-//                        AppConst.splashBackgroundReturn = 1
-                            Log.e(TAG, "跳转开屏页")
-
+                            LZYLog.e(TAG, "跳转开屏页")
                         }
 
                         AppConst.isFront = true
@@ -309,32 +307,29 @@ class APP : Application() {
             }
 
             override fun onActivityResumed(activity: Activity) {
-                Log.e(TAG, "onActivityResumed: ")
+                LZYLog.e(TAG, "onActivityResumed: ")
             }
 
             override fun onActivityPaused(activity: Activity) {
-                Log.e(TAG, "onActivityPaused: ")
+                LZYLog.e(TAG, "onActivityPaused: ")
             }
 
             override fun onActivityStopped(activity: Activity) {
-                if (AppConst.is_show_ad||activity is LauncherActivity) {
-                    Log.e(TAG, "onActivityStopped: ")
+                if ((AppConst.is_show_ad&&!AppConst.photoExitFlag)||activity is LauncherActivity||!AppConst.SWITCH_LEAVE_RETURN_LAUNCH_NORMAL) {
+                    LZYLog.e(TAG, "onActivityStopped: ")
                     appount--
                     if (appount === 0 && AppConst.isStopBoolen && AppConst.isSuspendedBoolen) {
-                        Log.e(TAG, "切入后台------------- startRet")
-//                    if (!AppConst.isPowerUninstalled) {
-//                        AliasUtils.setAlias(activity)
-//                    }
+                        LZYLog.e(TAG, "切入后台------------- startRet")
                     }
                     if (appount == 0 && isBackground) {
-                        Log.e(TAG, "切入后台------------- startRet")
+                        LZYLog.e(TAG, "切入后台------------- startRet")
                         AppConst.isFront = false
                         isBackground = false
-                        Log.e(TAG, "isBackground:${isBackground},isStarted:${isStarted}")
+                        LZYLog.e(TAG, "isBackground:${isBackground},isStarted:${isStarted}")
                         android.os.Handler().postDelayed({
                             if (!isBackground) {
                                 isStarted = true
-                                Log.e(TAG, "4秒一到 isStarted:${isStarted}")
+                                LZYLog.e(TAG, "4秒一到 isStarted:${isStarted}")
                             }
                         }, 1000)
                     }
@@ -342,11 +337,11 @@ class APP : Application() {
             }
 
             override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {
-                Log.e(TAG, "onActivitySaveInstanceState:")
+                LZYLog.e(TAG, "onActivitySaveInstanceState:")
             }
 
             override fun onActivityDestroyed(activity: Activity) {
-                Log.e(TAG, "onActivityDestroyed: ")
+                LZYLog.e(TAG, "onActivityDestroyed: ")
             }
         })
     }
