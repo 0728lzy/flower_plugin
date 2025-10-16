@@ -14,21 +14,22 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.cslt.maogoufanyi.bean.dj.HDSCommonConfigBean
-
-import com.google.gson.Gson
-import com.gyf.immersionbar.ImmersionBar
-import com.hjq.toast.ToastUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.cslt.maogoufanyi.R
 import com.cslt.maogoufanyi.adapter.dj.RBHelpQuestionAdapter
 import com.cslt.maogoufanyi.adapter.dj.base.ItemClickListener
 import com.cslt.maogoufanyi.adapter.dj.utils.GridRec
 import com.cslt.maogoufanyi.base.dj.BaseActivity
+import com.cslt.maogoufanyi.bean.dj.HDSCommonConfigBean
 import com.cslt.maogoufanyi.bean.dj.HDSHelpQuestionBean
 import com.cslt.maogoufanyi.utils.dj.GetHttpDataUtil
 import com.cslt.maogoufanyi.utils.dj.IntentUtil
+
+import com.google.gson.Gson
+import com.gyf.immersionbar.ImmersionBar
 import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.impl.LoadingPopupView
+
 
 
 @SuppressLint("NonConstantResourceId")
@@ -36,8 +37,9 @@ class HDSContactCustomerServiceActivity : BaseActivity(){
 
 
 
+
     private var questionList = ArrayList<HDSHelpQuestionBean>()
-    private var subErrorType = ""   //用于提交反馈类型
+    private var subErrorType = ""   //用于提交反馈类型  
 
     private val mAdapter by lazy {
         RBHelpQuestionAdapter(
@@ -83,7 +85,7 @@ class HDSContactCustomerServiceActivity : BaseActivity(){
         initActionBar("联系客服")
 
         recycler_view.layoutManager = GridLayoutManager(this,3)
-        // 设置边距
+        // 设置边距  
         recycler_view.addItemDecoration(GridRec(15));
         recycler_view.adapter = mAdapter
 
@@ -113,15 +115,15 @@ class HDSContactCustomerServiceActivity : BaseActivity(){
             }
         })
 
-//        contact_tv_pull_qq.setOnClickListener {
-//            toQQ()
-//        }
+//        contact_tv_pull_qq.setOnClickListener {  
+//            toQQ()  
+//        }  
 
-//        contact_tv_dial.setOnClickListener {
-//
-//            addPhoneCall()
-//
-//        }
+//        contact_tv_dial.setOnClickListener {  
+//  
+//            addPhoneCall()  
+//  
+//        }  
 
         contact_btn_submit_info.setOnClickListener {
 
@@ -132,12 +134,12 @@ class HDSContactCustomerServiceActivity : BaseActivity(){
         getCommonConfig()
     }
 
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        super.setContentView(R.layout.activity_contact_customer_service_xx)
-//
-//
-//    }
+//    override fun onCreate(savedInstanceState: Bundle?) {  
+//        super.onCreate(savedInstanceState)  
+//        super.setContentView(R.layout.activity_contact_customer_service_xx)  
+//  
+//  
+//    }  
 
 
     companion object {
@@ -156,15 +158,15 @@ class HDSContactCustomerServiceActivity : BaseActivity(){
         contact_tv_copy_email.setOnClickListener {
             val cm: ClipboardManager =
                 getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
-            // 创建普通字符型ClipData
+            // 创建普通字符型ClipData  
             if(TextUtils.isEmpty(contact_tv_email.text)){
-                ToastUtils.show("暂无信息")
+                ToastUtils.showLong("暂无信息")
                 return@setOnClickListener
             }
             val mClipData: ClipData = ClipData.newPlainText("Label", contact_tv_email.text)
-            // 将ClipData内容放到系统剪贴板里。
+            // 将ClipData内容放到系统剪贴板里。  
             cm.setPrimaryClip(mClipData)
-            ToastUtils.show("复制成功")
+            ToastUtils.showLong("复制成功")
         }
 
 
@@ -175,7 +177,7 @@ class HDSContactCustomerServiceActivity : BaseActivity(){
 
     var commonConfigs = ArrayList<HDSCommonConfigBean>()
 
-    //获取Vip通用配置
+    //获取Vip通用配置  
     fun getCommonConfig(){
         GetHttpDataUtil.getCommonConfig(object : GetHttpDataUtil.OnSuccessAndFaultListener{
             override fun onSuccess(t: Any) {
@@ -191,7 +193,7 @@ class HDSContactCustomerServiceActivity : BaseActivity(){
     }
 
 
-    //获取客服问题标签列表
+    //获取客服问题标签列表  
     fun getIssuesList(){
         GetHttpDataUtil.getIssuesList(object : GetHttpDataUtil.OnSuccessAndFaultListener{
             override fun onSuccess(t: Any) {
@@ -240,15 +242,15 @@ class HDSContactCustomerServiceActivity : BaseActivity(){
         val contactMobileOrQQ = contact_et_mobile_or_qq.text.toString().trim()
         val contactEmail= contact_et_email_new.text.toString().trim()
         if(TextUtils.isEmpty(contactBackfeed)){
-            ToastUtils.show("请输入描述您的问题")
+            ToastUtils.showLong("请输入描述您的问题")
         }else if(TextUtils.isEmpty(contactMobileOrQQ)&&TextUtils.isEmpty(contactEmail)){
-            ToastUtils.show("请输入您的联系方式:手机号或者邮箱")
+            ToastUtils.showLong("请输入您的联系方式:手机号或者邮箱")
         }else if(!isValidPhoneNumber(contactMobileOrQQ)&& !TextUtils.isEmpty(contactMobileOrQQ)){
-            ToastUtils.show("手机号非法，请检查~")
+            ToastUtils.showLong("手机号非法，请检查~")
         }else if (!isValidEmail(contactEmail)&& !TextUtils.isEmpty(contactEmail)){
-            ToastUtils.show("邮箱格式有误，请检查~")
+            ToastUtils.showLong("邮箱格式有误，请检查~")
         }else if(TextUtils.isEmpty(subErrorType)){
-            ToastUtils.show("未知错误类型")
+            ToastUtils.showLong("未知错误类型")
         }else{
             loadingPopupView = XPopup.Builder(this)
                 .isDestroyOnDismiss(true)
@@ -258,7 +260,7 @@ class HDSContactCustomerServiceActivity : BaseActivity(){
             GetHttpDataUtil.uploadAfterSalesForm(contactMobileOrQQ,contactBackfeed,subErrorType,contactEmail,object : GetHttpDataUtil.OnSuccessAndFaultListener{
                 override fun onSuccess(t: Any) {
                     loadingPopupView?.dismiss()
-                    ToastUtils.show("提交成功~")
+                    ToastUtils.showLong("提交成功~")
                     finish()
 
                 }
@@ -278,14 +280,12 @@ class HDSContactCustomerServiceActivity : BaseActivity(){
 
     fun isValidEmail(email: String): Boolean {
         val regex = Regex(
-            "^(?!.*\\.\\.)" +                     // 不允许连续点
-                    "[A-Za-z0-9+_.-]+(?<!\\.)" +         // 用户名部分，不以点结尾
+            "^(?!.*\\.\\.)" +                     // 不允许连续点  
+                    "[A-Za-z0-9+_.-]+(?<!\\.)" +         // 用户名部分，不以点结尾  
                     "@" +
-                    "([A-Za-z0-9-]+\\.)+" +              // 域名部分，可以有子域名
-                    "[A-Za-z]{2,}$"                       // 顶级域名，至少 2 个字母
+                    "([A-Za-z0-9-]+\\.)+" +              // 域名部分，可以有子域名  
+                    "[A-Za-z]{2,}$"                       // 顶级域名，至少 2 个字母  
         )
         return regex.matches(email)
     }
-
-
 }

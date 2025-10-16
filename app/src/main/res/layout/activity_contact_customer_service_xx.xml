@@ -8,16 +8,14 @@
     android:background="@color/white">
 
 
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
+    <androidx.core.widget.NestedScrollView        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
         android:paddingTop="80dp"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="50dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <LinearLayout            android:layout_width="match_parent"
             android:layout_height="match_parent"
 
             android:layout_marginBottom="50dp"
@@ -26,31 +24,27 @@
             android:orientation="vertical"
             android:padding="15dp">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <TextView                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="您的意见是我们前进的动力！"
                 android:textColor="@color/black"
                 android:textSize="17dp"
                 android:textStyle="bold" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <LinearLayout                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:visibility="gone"
                 android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:visibility="gone">
+                android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <TextView                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="客服邮箱"
                     android:textColor="@color/colorA9A9A9"
                     android:textSize="16dp" />
 
-                <TextView
-                    android:id="@+id/contact_tv_email"
+                <TextView                    android:id="@+id/contact_tv_email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
@@ -58,8 +52,7 @@
                     android:textColor="@color/color_65c1ff"
                     android:textSize="16dp" />
 
-                <TextView
-                    android:id="@+id/contact_tv_copy_email"
+                <TextView                    android:id="@+id/contact_tv_copy_email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -70,24 +63,20 @@
                     android:textSize="16dp" />
             </LinearLayout>
 
-
-            <LinearLayout
-                android:layout_width="match_parent"
+            <LinearLayout                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:visibility="gone"
                 android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:visibility="gone">
+                android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <TextView                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="QQ客服"
                     android:textColor="@color/colorA9A9A9"
                     android:textSize="16dp" />
 
-                <TextView
-                    android:id="@+id/contact_tv_qq"
+                <TextView                    android:id="@+id/contact_tv_qq"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
@@ -95,8 +84,7 @@
                     android:textColor="@color/color_65c1ff"
                     android:textSize="16dp" />
 
-                <TextView
-                    android:id="@+id/contact_tv_pull_qq"
+                <TextView                    android:id="@+id/contact_tv_pull_qq"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -106,24 +94,20 @@
                     android:textColor="@color/color_65c1ff"
                     android:textSize="16dp" />
             </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
+            <LinearLayout                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:visibility="gone"
                 android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:visibility="gone">
+                android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <TextView                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="手机客服"
                     android:textColor="@color/colorA9A9A9"
                     android:textSize="16dp" />
 
-                <TextView
-                    android:id="@+id/contact_tv_mobile"
+                <TextView                    android:id="@+id/contact_tv_mobile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
@@ -131,8 +115,7 @@
                     android:textColor="@color/color_65c1ff"
                     android:textSize="16dp" />
 
-                <TextView
-                    android:id="@+id/contact_tv_dial"
+                <TextView                    android:id="@+id/contact_tv_dial"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -142,9 +125,7 @@
                     android:textColor="@color/color_65c1ff"
                     android:textSize="16dp" />
             </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
+            <TextView                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="15dp"
@@ -153,23 +134,21 @@
                 android:textSize="17dp" />
 
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_view"
+            <androidx.recyclerview.widget.RecyclerView                android:id="@+id/recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/white"
                 android:layoutAnimation="@anim/anim_acc_layout_animation_qlj" />
 
 
-            <RelativeLayout
-                android:layout_width="match_parent"
+
+            <RelativeLayout                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:background="@drawable/bg_radius_10_line_gray"
                 android:padding="8dp">
 
-                <EditText
-                    android:id="@+id/contact_et_backfeed"
+                <EditText                    android:id="@+id/contact_et_backfeed"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@null"
@@ -182,9 +161,7 @@
                     android:textSize="16dp" />
 
             </RelativeLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
+            <TextView                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="15dp"
@@ -192,8 +169,7 @@
                 android:textColor="@color/colorA9A9A9"
                 android:textSize="17dp" />
 
-            <EditText
-                android:id="@+id/contact_et_mobile_or_qq"
+            <EditText                android:id="@+id/contact_et_mobile_or_qq"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_radius_10_line_gray"
@@ -204,8 +180,7 @@
                 android:textColorHint="@color/colorA9A9A9"
                 android:textSize="16dp" />
 
-            <TextView
-                android:layout_width="wrap_content"
+            <TextView                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="15dp"
@@ -213,8 +188,7 @@
                 android:textColor="@color/colorA9A9A9"
                 android:textSize="17dp" />
 
-            <EditText
-                android:id="@+id/contact_et_email"
+            <EditText                android:id="@+id/contact_et_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_radius_10_line_gray"
@@ -225,8 +199,7 @@
                 android:textColorHint="@color/colorA9A9A9"
                 android:textSize="16dp" />
 
-            <TextView
-                android:layout_width="wrap_content"
+            <TextView                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="15dp"
@@ -235,19 +208,16 @@
                 android:textSize="17dp" />
 
 
-            <Button
-                android:id="@+id/contact_btn_submit_info"
+            <Button                android:id="@+id/contact_btn_submit_info"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="#01b949"
                 android:gravity="center"
-                android:text="提交"
                 android:textColor="@color/white"
+                android:text="提交"
                 android:textSize="18dp" />
 
 
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
-
+        </LinearLayout>    </androidx.core.widget.NestedScrollView>
     <include layout="@layout/toolbar_black" />
 </androidx.constraintlayout.widget.ConstraintLayout>
