@@ -137,6 +137,7 @@ object GetHttpDataUtil {
                             )//存储数据储存时间
 
 
+
                             if(!TextUtils.isEmpty(responseData.isWhiteList)) {
                                 UserInfoModel.setIsWhiteListState(responseData.isWhiteList)
                             }

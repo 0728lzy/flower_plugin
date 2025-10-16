@@ -15,6 +15,7 @@ object AppConst {
     const val UM_APP_ID = "66f79ecb61c3b13bde90b57a"  //沿用 猫狗交流翻译器
     const val TAG = "ad_log"
 
+
     //GroMore
     @JvmField var  Ad_ID = "" //穿山甲广告APP ID
     @JvmField var  GMCPAd_ID_IN = "" //插屏应用内
