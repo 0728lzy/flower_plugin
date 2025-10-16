@@ -406,7 +406,7 @@ class MainActivity : BaseActivity() {
             }
 
             override fun ok() {
-                isExitApp = true
+                isExitApp = false
                 showExitCpAdData()
             }
 
@@ -415,7 +415,6 @@ class MainActivity : BaseActivity() {
         exitPopupView = XPopup.Builder(this)
             .autoOpenSoftInput(false)
             .autoDismiss(false)
-//            .enableDrag(false)
             .dismissOnBackPressed(false)
             .dismissOnTouchOutside(false)
             .asCustom(customPopup)
