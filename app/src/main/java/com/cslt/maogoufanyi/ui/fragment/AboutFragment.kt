@@ -178,7 +178,7 @@ class AboutFragment : RootFragment(R.layout.fragment_about) {
         if(message.simple == 4){
             LZYLog.e("simple","message simple:${message.simple}")
 
-            ZYMAllAdsUtils.loadSimpleAll(requireActivity(),"信息",binding.feedContainerAbout)
+            ZYMAllAdsUtils.loadSimpleNoLimitAd1(requireActivity(),"信息",binding.feedContainerAbout)
         }
     }
 
