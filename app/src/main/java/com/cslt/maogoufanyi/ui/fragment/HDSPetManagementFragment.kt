@@ -355,6 +355,7 @@ class HDSPetManagementFragment : RootFragment(R.layout.fragment_pet_management) 
             val uri = data.data
             if (uri != null) {
                 dialog.setSelectedImage(uri)
+                AppConst.photoExitFlag=false
             }
         }
     }
