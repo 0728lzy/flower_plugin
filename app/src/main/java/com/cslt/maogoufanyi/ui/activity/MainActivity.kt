@@ -152,13 +152,13 @@ class MainActivity : BaseActivity() {
         when (index) {
             0 -> {
                 binding.bottomBar.tabCatLanguage.setBackgroundColor(ContextCompat.getColor(this, R.color.tab_cat_language_selected))
-                binding.bottomBar.ivCatLanguage.setImageResource(R.drawable.icon_index2_s)
+                binding.bottomBar.ivCatLanguage.setImageResource(R.drawable.icon_index1_s)
                 binding.bottomBar.tvCatLanguage.setTextColor(ContextCompat.getColor(this, R.color.color_main_tab_1))
             }
 
             1 -> {
                 binding.bottomBar.tabDogLanguage.setBackgroundColor(ContextCompat.getColor(this, R.color.tab_dog_language_selected))
-                binding.bottomBar.ivDogLanguage.setImageResource(R.drawable.icon_index1_s)
+                binding.bottomBar.ivDogLanguage.setImageResource(R.drawable.icon_index2_s)
                 binding.bottomBar.tvDogLanguage.setTextColor(ContextCompat.getColor(this, R.color.color_main_tab_2))
             }
 
