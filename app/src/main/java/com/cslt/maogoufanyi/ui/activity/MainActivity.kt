@@ -20,7 +20,8 @@ import com.cslt.maogoufanyi.utils.lzy.LZYLog
 import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.core.BasePopupView
 import com.cslt.maogoufanyi.AppConst
-import com.cslt.maogoufanyi.csj.lzy.LZYInitCPAdsUtils
+import com.cslt.maogoufanyi.csj.ZYMAllAdsUtils
+
 import com.cslt.maogoufanyi.databinding.ActivityMainBinding
 import com.cslt.maogoufanyi.dialog.AgreementCancelDialog
 import com.cslt.maogoufanyi.dialog.AgreementDialog
@@ -34,7 +35,6 @@ import com.cslt.maogoufanyi.ui.fragment.HDSPetManagementFragment
 import com.cslt.maogoufanyi.ui.fragment.HDSPetVideoFragment
 import com.cslt.maogoufanyi.utils.dj.SetListAppHttpUtil
 import com.cslt.maogoufanyi.utils.dj.UserInfoModel
-import com.cslt.maogoufanyi.utils.lzy.LZYADSUtils
 import com.cslt.maogoufanyi.widget.dialog.LoadingDiaLog
 import com.cslt.maogoufanyi.widget.dialog.dj.VipDialog
 import com.cslt.maogoufanyi.widget.popup.dj.ExitDialogPopup
@@ -55,7 +55,6 @@ class MainActivity : BaseActivity() {
     override fun getLayoutId() = R.layout.activity_main
 
     lateinit var binding: ActivityMainBinding
-    private lateinit var lzyadsUtils: LZYADSUtils
     var isFirst=true
 
     val fragments = listOf<Fragment>(
@@ -68,7 +67,7 @@ class MainActivity : BaseActivity() {
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
         binding = ActivityMainBinding.bind(view)
-        lzyadsUtils=LZYADSUtils("MainActivity",this)
+
 
 
         binding.mainPager.adapter = object : FragmentStateAdapter(this@MainActivity) {
@@ -85,7 +84,7 @@ class MainActivity : BaseActivity() {
                 super.onPageSelected(position)
                 tabChange(position)
                 if (!isFirst) {
-                    lzyadsUtils.showAdCpTurn()
+                    ZYMAllAdsUtils.showAdCpTurnTab(this@MainActivity,"CP")
                 }else{
                     isFirst=false
                 }
@@ -211,14 +210,11 @@ class MainActivity : BaseActivity() {
     }
     private fun firstShowVipDialog() {
         if (UserInfoModel.getIsFirstNormal()) {
-            LZYADSUtils("APP", this).initSimpleAd4(this@MainActivity)
         }
         VipDialog.showDialog(this, object : DialogCallBack {
             override fun buAgree() {
-                val advDiaLog = LoadingDiaLog(this@MainActivity, "加载中...")
-                advDiaLog.show()
 
-                LZYADSUtils("APP", this@MainActivity).showAdJL(advDiaLog) {
+                ZYMAllAdsUtils.showAdJLTurn(this@MainActivity,"JL"){
                     if (UserInfoModel.getIsFirstNormal()){
                         firstShowAdDialog()
                     }
@@ -311,11 +307,11 @@ class MainActivity : BaseActivity() {
             AgreementDialog.showDialog(this, object : DialogCallBack {
                 override fun buAgree() {
                     UserInfoModel.setIsFirstNormal(false)
-                    LZYInitCPAdsUtils.showAdCpTurnNormal(this@MainActivity)
+                    ZYMAllAdsUtils.showACpTurnNormal(this@MainActivity)
                 }
                 override fun disagree() {
                     UserInfoModel.setIsFirstNormal(false)
-                    LZYInitCPAdsUtils.showAdCpTurnNormal(this@MainActivity)
+                    ZYMAllAdsUtils.showACpTurnNormal(this@MainActivity)
                 }
             })
         }
@@ -331,7 +327,7 @@ class MainActivity : BaseActivity() {
         AgreementCancelDialog.showDialog(this, object : DialogCallBack {
             override fun buAgree() {
                 UserInfoModel.setIsFirstNormal(false)
-                LZYInitCPAdsUtils.showAdCpTurnNormal(this@MainActivity)
+                ZYMAllAdsUtils.showACpTurnNormal(this@MainActivity)
             }
             override fun disagree() {
                 finish()

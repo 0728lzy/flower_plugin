@@ -17,13 +17,14 @@ import com.cslt.maogoufanyi.APP
 import com.cslt.maogoufanyi.AppConst
 import com.cslt.maogoufanyi.R
 import com.cslt.maogoufanyi.base.dj.BaseActivity
+import com.cslt.maogoufanyi.csj.ZYMAllAdsUtils
 import com.cslt.maogoufanyi.databinding.ActivityAboutBinding
 import com.cslt.maogoufanyi.ext.getBinding
 import com.cslt.maogoufanyi.ext.thrillClickListener
 import com.cslt.maogoufanyi.utils.dj.DeviceUtils
 import com.cslt.maogoufanyi.utils.dj.GetHttpDataUtil
 import com.cslt.maogoufanyi.utils.dj.UserInfoModel
-import com.cslt.maogoufanyi.utils.lzy.LZYADSUtils
+
 import com.cslt.maogoufanyi.utils.lzy.LZYLog
 import com.cslt.maogoufanyi.utils.lzy.ScreenUtils
 import com.cslt.maogoufanyi.widget.popup.dj.QNInputPasswordDialogPopup
@@ -50,7 +51,7 @@ class HDSAboutActivity : BaseActivity() {
     private lateinit var appLogoImageView: ImageView
     private var stat = 0
 
-    private lateinit var lzyAdsUtils: LZYADSUtils
+
 
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
@@ -60,9 +61,8 @@ class HDSAboutActivity : BaseActivity() {
         binding.toolbar.ivMenu.thrillClickListener {
             finish()
         }
-        lzyAdsUtils=LZYADSUtils("MineFragment",this)
-        lzyAdsUtils.showAdCpTurn()
-        lzyAdsUtils.loadSimpleAdTurn(binding.feedContainerActivityAbout,-1)
+        ZYMAllAdsUtils.showAdCpTurnTab(this@HDSAboutActivity,"CP")
+        ZYMAllAdsUtils.loadSimpleAll(this@HDSAboutActivity,"",binding.feedContainerActivityAbout)
         mineLinearLayout = binding.mineLin
         privacyLinearLayout = binding.mineLinPrivacy
         userProLinearLayout = binding.mineLinUserPro

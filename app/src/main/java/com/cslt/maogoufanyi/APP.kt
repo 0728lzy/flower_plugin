@@ -39,7 +39,7 @@ import com.cslt.maogoufanyi.utils.lzy.LZYLog
 import com.umeng.commonsdk.UMConfigure
 import com.umeng.commonsdk.utils.UMUtils
 import com.cslt.maogoufanyi.utils.dj.AdDynamicUtils
-import com.cslt.maogoufanyi.utils.lzy.LZYADSUtils
+
 import com.yl.adsdk.YlLib
 import me.jessyan.autosize.AutoSize
 import me.jessyan.autosize.AutoSizeConfig
@@ -112,7 +112,7 @@ class APP : Application() {
                 }
             }
             if(UserInfoModel.getIsFirstVip()){
-                LZYADSUtils("APP", activity).initSimpleAd3(activity)
+
             }
         }
     }

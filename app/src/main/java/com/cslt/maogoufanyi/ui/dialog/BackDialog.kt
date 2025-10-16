@@ -3,9 +3,10 @@ package com.cslt.maogoufanyi.ui.dialog
 import android.view.View
 import com.cslt.maogoufanyi.R
 import com.cslt.maogoufanyi.base.dj.BaseDialog
+import com.cslt.maogoufanyi.csj.ZYMAllAdsUtils
 import com.cslt.maogoufanyi.databinding.DialogBackBinding
 import com.cslt.maogoufanyi.ext.getBinding
-import com.cslt.maogoufanyi.utils.lzy.LZYADSUtils
+
 
 class BackDialog() : BaseDialog() {
 
@@ -18,7 +19,9 @@ class BackDialog() : BaseDialog() {
     override fun initView(view: View) {
         _binding = view.getBinding()
         isCancelable = false
-        LZYADSUtils("BackDialog",requireActivity()).loadSimpleAdTurn(binding.feedContainerDialogBack,280)
+
+        ZYMAllAdsUtils.loadSimpleAll(requireActivity(),"信息",binding.feedContainerDialogBack)
+
     }
 
 }

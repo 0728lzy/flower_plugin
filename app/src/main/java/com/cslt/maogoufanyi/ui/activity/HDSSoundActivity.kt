@@ -15,10 +15,11 @@ import androidx.appcompat.widget.ListPopupWindow
 import androidx.core.view.isVisible
 import com.cslt.maogoufanyi.R
 import com.cslt.maogoufanyi.base.dj.BaseActivity
+import com.cslt.maogoufanyi.csj.ZYMAllAdsUtils
 import com.cslt.maogoufanyi.databinding.ActivitySoundDetailBinding
 import com.cslt.maogoufanyi.ext.dp2px
 import com.cslt.maogoufanyi.ext.thrillClickListener
-import com.cslt.maogoufanyi.utils.lzy.LZYADSUtils
+
 import java.math.BigDecimal
 import java.math.RoundingMode
 
@@ -36,7 +37,7 @@ class HDSSoundActivity : BaseActivity() {
     override fun getLayoutId() = R.layout.activity_sound_detail
 
     private lateinit var binding: ActivitySoundDetailBinding
-    private lateinit var lzyadsUtils: LZYADSUtils
+
 
     private var rawPath: Int = 0
 
@@ -66,9 +67,10 @@ class HDSSoundActivity : BaseActivity() {
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
         binding = ActivitySoundDetailBinding.bind(view)
-        lzyadsUtils=LZYADSUtils("SoundActivity",this@HDSSoundActivity)
-        lzyadsUtils.showAdCpTurn()
-        lzyadsUtils.loadSimpleAdTurn(binding.feedContainerActivitySound,-1)
+
+        ZYMAllAdsUtils.showAdCpTurnTab(this@HDSSoundActivity,"CP")
+        ZYMAllAdsUtils.loadSimpleAll(this@HDSSoundActivity,"信息",binding.feedContainerActivitySound)
+
         binding.toolbar.ivMenu.setImageResource(R.drawable.ic_arrow_back_24)
         binding.toolbar.ivMenu.thrillClickListener { onBackPressed() }
         val index = intent.getIntExtra("index", 1)

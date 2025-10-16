@@ -11,9 +11,10 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.cslt.maogoufanyi.R
 import com.cslt.maogoufanyi.base.dj.BaseActivity
+import com.cslt.maogoufanyi.csj.ZYMAllAdsUtils
 import com.cslt.maogoufanyi.databinding.ActivityOverviewCallBinding
 import com.cslt.maogoufanyi.ext.thrillClickListener
-import com.cslt.maogoufanyi.utils.lzy.LZYADSUtils
+
 import java.math.BigDecimal
 import java.math.RoundingMode
 
@@ -35,7 +36,7 @@ class HDSVideoActivity : BaseActivity() {
     private var index = 0
 
     private var total = 0
-    private lateinit var lzyadsUtils: LZYADSUtils
+
     private var duration = 0
 
     private val handler = object : Handler(Looper.getMainLooper()) {
@@ -56,9 +57,10 @@ class HDSVideoActivity : BaseActivity() {
         binding = ActivityOverviewCallBinding.bind(view)
         binding.toolbar.ivMenu.setImageResource(R.drawable.ic_arrow_back_24)
         binding.toolbar.ivMenu.thrillClickListener { onBackPressed() }
-        lzyadsUtils=LZYADSUtils("WHVideoActivity",this@HDSVideoActivity)
-        lzyadsUtils.showAdCpTurn()
-        lzyadsUtils.loadSimpleAdTurn(binding.feedContainer,-1)
+
+        ZYMAllAdsUtils.showAdCpTurnTab(this@HDSVideoActivity,"CP")
+        ZYMAllAdsUtils.loadSimpleAll(this@HDSVideoActivity,"信息",binding.feedContainer)
+
         index = intent.getIntExtra("index", 1)
         var name = ""
         var icon = 0

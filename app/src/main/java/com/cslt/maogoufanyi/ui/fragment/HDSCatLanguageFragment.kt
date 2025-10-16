@@ -16,6 +16,7 @@ import com.cslt.maogoufanyi.AppConst
 import com.cslt.maogoufanyi.R
 import com.cslt.maogoufanyi.base.dj.RootFragment
 import com.cslt.maogoufanyi.csj.AdFeedSimpleOneNoLimitUtils
+import com.cslt.maogoufanyi.csj.ZYMAllAdsUtils
 import com.cslt.maogoufanyi.databinding.FragmentCatLanguageBinding
 import com.cslt.maogoufanyi.databinding.ItemDogBinding
 import com.cslt.maogoufanyi.entity.Index1Entity
@@ -26,10 +27,11 @@ import com.cslt.maogoufanyi.ext.getBinding
 import com.cslt.maogoufanyi.ext.thrillClickListener
 import com.cslt.maogoufanyi.ui.activity.HDSSoundActivity
 import com.cslt.maogoufanyi.ui.dialog.ResultDialog
-import com.cslt.maogoufanyi.utils.lzy.LZYADSUtils
+import com.cslt.maogoufanyi.utils.dj.UserInfoModel
+
 import com.cslt.maogoufanyi.utils.lzy.LZYLog
 import com.cslt.maogoufanyi.utils.lzy.PermissionUtils
-import com.cslt.maogoufanyi.widget.dialog.LoadingDiaLog
+
 import kotlinx.coroutines.Job
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -39,11 +41,11 @@ import java.util.Formatter
 class HDSCatLanguageFragment : RootFragment(R.layout.fragment_cat_language) {
 
     var _binding: FragmentCatLanguageBinding? = null
-    private lateinit var lzyadsUtils: LZYADSUtils
+
     private var isRecording = false
     private var recordingType = 0 // 0: 未录音, 1: 人话录音, 2: 喵语录音
     private var record: com.cslt.maogoufanyi.utils.AudioRecordUtil? = null
-    private lateinit var myDiaLog: LoadingDiaLog
+
     private var job: Job? = null
     
     val binding get() = _binding!!
@@ -62,32 +64,16 @@ class HDSCatLanguageFragment : RootFragment(R.layout.fragment_cat_language) {
     fun onMessageSimpleEvent(message: SimpleEvent) {
         if (message.simple == 1) { // 使用新的事件ID避免冲突
             LZYLog.e("simple", "CatLanguageFragment message simple:${message.simple}")
-            loadSimpleAd(binding.feedContainerCatLanguage)
+
+            ZYMAllAdsUtils.loadSimpleAll(requireActivity(),"信息",binding.feedContainerCatLanguage)
         }
     }
 
-    fun loadSimpleAd(fragment: FrameLayout?) {
-        if (requireActivity() != null &&  AppConst.is_show_ad) {
-            AdFeedSimpleOneNoLimitUtils.init(
-                requireActivity(),
-                object : AdFeedSimpleOneNoLimitUtils.GirdMenuStateListener {
-                    override fun onSuccess() {
-                        if (fragment != null && requireActivity() != null) {
-                            Log.i("tttt", "准备刷新CatLanguageFragment的广告")
-                            AdFeedSimpleOneNoLimitUtils.showAd(fragment, requireActivity())
-                        }
-                    }
 
-                    override fun onError() {
-                    }
-                })
-            AdFeedSimpleOneNoLimitUtils.initPreloading()
-        }
-    }
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
         _binding = view.getBinding()
-        lzyadsUtils = LZYADSUtils("CatLanguageFragment", requireActivity())
+
 
         // 初始化录音按钮点击事件
         initRecordButtons()
@@ -100,7 +86,7 @@ class HDSCatLanguageFragment : RootFragment(R.layout.fragment_cat_language) {
             binding.tvTop.visibility=View.VISIBLE
         }
         Handler().postDelayed({
-            loadSimpleAd(binding.feedContainerCatLanguage)
+            ZYMAllAdsUtils.loadSimpleAll(requireActivity(),"信息",binding.feedContainerCatLanguage)
         },500)
     }
 
@@ -130,9 +116,9 @@ class HDSCatLanguageFragment : RootFragment(R.layout.fragment_cat_language) {
                 val entity =  catList.random()
                 val result=record?.stopRecord()
                 job?.cancel()
-                myDiaLog = LoadingDiaLog(requireContext())
-                myDiaLog.show()
-                lzyadsUtils.showAdJL(myDiaLog) {
+
+
+                ZYMAllAdsUtils.showAdJLTurn(requireActivity(),"JL"){
                     Handler().postDelayed({
                         runOnUiThread {
                             if (result==null||!result)

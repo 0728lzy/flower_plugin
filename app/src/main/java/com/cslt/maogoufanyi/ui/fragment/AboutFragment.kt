@@ -22,6 +22,7 @@ import com.cslt.maogoufanyi.AppConst
 import com.cslt.maogoufanyi.R
 import com.cslt.maogoufanyi.base.dj.RootFragment
 import com.cslt.maogoufanyi.csj.AdFeedSimpleOneUtils
+import com.cslt.maogoufanyi.csj.ZYMAllAdsUtils
 import com.cslt.maogoufanyi.databinding.FragmentAboutBinding
 import com.cslt.maogoufanyi.event.SimpleEvent
 import com.cslt.maogoufanyi.ext.getBinding
@@ -176,26 +177,10 @@ class AboutFragment : RootFragment(R.layout.fragment_about) {
     fun onMessageSimpleEvent(message: SimpleEvent) {
         if(message.simple == 4){
             LZYLog.e("simple","message simple:${message.simple}")
-            loadSimpleAd(binding.feedContainerAbout)
-        }
-    }
-    fun loadSimpleAd(fragment: FrameLayout?) {
-        if (requireActivity() != null && (!UserInfoModel.getIsCheckFlag() || AppConst.is_show_ad)) {
-            AdFeedSimpleOneUtils.init(
-                requireActivity(),
-                object : AdFeedSimpleOneUtils.GirdMenuStateListener {
-                    override fun onSuccess() {
-                        if (fragment != null && requireActivity() != null) {
-                            Log.i("tttt", "准备刷新CatLanguageFragment的广告")
-                            AdFeedSimpleOneUtils.showAd(fragment, requireActivity())
-                        }
-                    }
 
-                    override fun onError() {
-                    }
-                })
-            AdFeedSimpleOneUtils.initPreloading()
+            ZYMAllAdsUtils.loadSimpleAll(requireActivity(),"信息",binding.feedContainerAbout)
         }
     }
+
 
 }

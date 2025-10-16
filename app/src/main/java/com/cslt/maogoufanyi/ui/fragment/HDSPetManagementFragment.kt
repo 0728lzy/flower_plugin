@@ -12,6 +12,7 @@ import com.cslt.maogoufanyi.AppConst
 import com.cslt.maogoufanyi.R
 import com.cslt.maogoufanyi.base.dj.RootFragment
 import com.cslt.maogoufanyi.csj.AdFeedSimpleThreeUtils
+import com.cslt.maogoufanyi.csj.ZYMAllAdsUtils
 import com.cslt.maogoufanyi.databinding.FragmentPetManagementBinding
 import com.cslt.maogoufanyi.event.SimpleEvent
 import com.cslt.maogoufanyi.model.Pet
@@ -21,7 +22,7 @@ import com.cslt.maogoufanyi.ui.activity.HDSPetPhotosActivity
 import com.cslt.maogoufanyi.ui.adapter.PetAdapter
 import com.cslt.maogoufanyi.ui.dialog.AddPetDialog
 import com.cslt.maogoufanyi.utils.ToastUtils
-import com.cslt.maogoufanyi.utils.lzy.LZYADSUtils
+
 import com.cslt.maogoufanyi.utils.lzy.LZYLog
 import org.litepal.LitePal
 import kotlinx.coroutines.*
@@ -40,7 +41,7 @@ class HDSPetManagementFragment : RootFragment(R.layout.fragment_pet_management) 
 
     private lateinit var petAdapter: PetAdapter
     private val petList = mutableListOf<Pet>()
-    private lateinit var lzyadsUtils: LZYADSUtils
+
     private val fragmentScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
 
     private lateinit var dialog: AddPetDialog
@@ -52,7 +53,7 @@ class HDSPetManagementFragment : RootFragment(R.layout.fragment_pet_management) 
     }
 
     private fun initViews() {
-        lzyadsUtils= LZYADSUtils("SoundActivity",requireActivity())
+
 
         // 初始化RecyclerView
         petAdapter = PetAdapter(petList) { pet, action ->
@@ -222,7 +223,7 @@ class HDSPetManagementFragment : RootFragment(R.layout.fragment_pet_management) 
                     petAdapter.notifyItemInserted(petList.size - 1)
                     updateEmptyState()
                     ToastUtils.show("添加宠物成功")
-                    lzyadsUtils.showAdCpTurn()
+                    ZYMAllAdsUtils.showAdCpTurnTab(requireActivity(),"CP")
                 } else {
                     ToastUtils.show("添加宠物失败")
                 }
@@ -251,7 +252,7 @@ class HDSPetManagementFragment : RootFragment(R.layout.fragment_pet_management) 
                         petList[index] = pet
                         petAdapter.notifyItemChanged(index)
                         ToastUtils.show("更新宠物信息成功")
-                        lzyadsUtils.showAdCpTurn()
+                        ZYMAllAdsUtils.showAdCpTurnTab(requireActivity(),"CP")
                     }
                 } else {
                     ToastUtils.show("更新宠物信息失败")
@@ -281,7 +282,7 @@ class HDSPetManagementFragment : RootFragment(R.layout.fragment_pet_management) 
                         petAdapter.notifyItemRemoved(index)
                         updateEmptyState()
                         ToastUtils.show("删除宠物成功")
-                        lzyadsUtils.showAdCpTurn()
+                        ZYMAllAdsUtils.showAdCpTurnTab(requireActivity(),"CP")
                     }
                 } else {
                     ToastUtils.show("删除宠物失败")
@@ -333,28 +334,13 @@ class HDSPetManagementFragment : RootFragment(R.layout.fragment_pet_management) 
     fun onMessageSimpleEvent(message: SimpleEvent) {
         if (message.simple == 2) { // 使用新的事件ID避免冲突
             LZYLog.e("simple", "DogLanguageFragment message simple:${message.simple}")
-            loadSimpleAd(binding.feedContainerMg)
+
+
+            ZYMAllAdsUtils.loadSimpleAll(requireActivity(),"信息",binding.feedContainerMg)
         }
     }
 
-    fun loadSimpleAd(fragment: FrameLayout?) {
-        if (requireActivity() != null && AppConst.is_show_ad) {
-            AdFeedSimpleThreeUtils.init(
-                requireActivity(),
-                object : AdFeedSimpleThreeUtils.GirdMenuStateListener {
-                    override fun onSuccess() {
-                        if (fragment != null && requireActivity() != null) {
-                            Log.i("tttt", "准备刷新DogLanguageFragment的广告")
-                            AdFeedSimpleThreeUtils.showAd(fragment, requireActivity())
-                        }
-                    }
 
-                    override fun onError() {
-                    }
-                })
-            AdFeedSimpleThreeUtils.initPreloading("")
-        }
-    }
 
     companion object {
         fun newInstance(): HDSPetManagementFragment {

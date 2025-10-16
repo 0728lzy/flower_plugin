@@ -17,8 +17,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import com.cslt.maogoufanyi.R;
+import com.cslt.maogoufanyi.csj.ZYMAllAdsUtils;
 import com.cslt.maogoufanyi.dialog.DialogCallBack;
-import com.cslt.maogoufanyi.utils.lzy.LZYADSUtils;
+
 
 
 public class VipDialog extends Dialog implements View.OnClickListener {
@@ -56,7 +57,7 @@ public class VipDialog extends Dialog implements View.OnClickListener {
         this.fl_content_4 = view.findViewById(R.id.fl_content_4);
         Animation anim = AnimationUtils.loadAnimation(context, R.anim.public_heartbeat);
         this.sp_metro_code.startAnimation(anim);
-        new LZYADSUtils("APP",this.activityDialog).loadSimpleAd3(this.activityDialog,this.fl_content_4);
+        ZYMAllAdsUtils.INSTANCE.loadSimpleAll(this.activityDialog,"",this.fl_content_4);
         this.sp_metro_code.setOnClickListener(this);
         this.tv_back.setOnClickListener(this);
         this.iv_cancel.setOnClickListener(this);

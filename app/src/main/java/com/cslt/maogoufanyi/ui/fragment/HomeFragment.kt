@@ -4,12 +4,13 @@ import android.os.Bundle
 import android.view.View
 import com.cslt.maogoufanyi.R
 import com.cslt.maogoufanyi.base.dj.RootFragment
+import com.cslt.maogoufanyi.csj.ZYMAllAdsUtils
 import com.cslt.maogoufanyi.databinding.FragmentHomeBinding
 import com.cslt.maogoufanyi.event.SimpleEvent
 import com.cslt.maogoufanyi.ext.getBinding
 import com.cslt.maogoufanyi.ui.activity.MainActivity
 import com.cslt.maogoufanyi.utils.dj.UserInfoModel
-import com.cslt.maogoufanyi.utils.lzy.LZYADSUtils
+
 import com.cslt.maogoufanyi.utils.lzy.LZYLog
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -19,7 +20,7 @@ import org.greenrobot.eventbus.ThreadMode
 class HomeFragment : RootFragment(R.layout.fragment_home) {
 
     var _binding: FragmentHomeBinding? = null
-    private lateinit var lzyadsUtils: LZYADSUtils
+
     var type = 1
     val binding get() = _binding!!
     override fun onStart() {
@@ -37,19 +38,20 @@ class HomeFragment : RootFragment(R.layout.fragment_home) {
         if (message.simple == 0) {
             LZYLog.e("simple", "message simple:${message.simple}")
 
-            lzyadsUtils.loadSimpleAd1(binding.feedContainerHome)
+
+            ZYMAllAdsUtils.loadSimpleAll(requireActivity(),"信息",binding.feedContainerHome)
         }
     }
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
         _binding = view.getBinding()
-        lzyadsUtils = LZYADSUtils("Index1Fragment", requireActivity())
+
         LZYLog.e("simple", "message simple:${111111}")
         val currentTimeMillis = System.currentTimeMillis()
         val showTime = UserInfoModel.getShowChapingYynTime()
         if (currentTimeMillis - showTime > 2 * 1000) {
             UserInfoModel.setShowChapingYynTime(currentTimeMillis)
-            lzyadsUtils.loadSimpleAd1(binding.feedContainerHome)
+            ZYMAllAdsUtils.loadSimpleAll(requireActivity(),"信息",binding.feedContainerHome)
         }
         // 叫声翻译卡片点击事件
         binding.llSoundTranslate.setOnClickListener {

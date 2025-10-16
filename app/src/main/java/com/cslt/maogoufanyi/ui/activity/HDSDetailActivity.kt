@@ -7,10 +7,11 @@ import android.view.View
 import androidx.core.view.isVisible
 import com.cslt.maogoufanyi.R
 import com.cslt.maogoufanyi.base.dj.BaseActivity
+import com.cslt.maogoufanyi.csj.ZYMAllAdsUtils
 import com.cslt.maogoufanyi.databinding.ActivityDetailBinding
 import com.cslt.maogoufanyi.ext.getBinding
 import com.cslt.maogoufanyi.ext.thrillClickListener
-import com.cslt.maogoufanyi.utils.lzy.LZYADSUtils
+
 
 class HDSDetailActivity : BaseActivity() {
 
@@ -24,14 +25,14 @@ class HDSDetailActivity : BaseActivity() {
 
     private lateinit var binding: ActivityDetailBinding
 
-    private lateinit var lzyadsUtils: LZYADSUtils
+
 
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
         binding = view.getBinding()
-        lzyadsUtils=LZYADSUtils("DetailActivity",this)
-        lzyadsUtils.showAdCpTurn()
-        lzyadsUtils.loadSimpleAdTurn(binding.feedContainerActivityDetail,-1)
+
+        ZYMAllAdsUtils.showAdCpTurnTab(this@HDSDetailActivity,"CP")
+        ZYMAllAdsUtils.loadSimpleAll(this@HDSDetailActivity,"信息",binding.feedContainerActivityDetail)
         binding.toolbar.ivMenu.setImageResource(R.drawable.ic_arrow_back_24)
         binding.toolbar.ivMenu.thrillClickListener { onBackPressed() }
         val index = intent.getIntExtra("index", 1)

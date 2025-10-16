@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cslt.maogoufanyi.R
 import com.cslt.maogoufanyi.base.dj.BaseActivity
+import com.cslt.maogoufanyi.csj.ZYMAllAdsUtils
 import com.cslt.maogoufanyi.databinding.ActivityPetNotesBinding
 import com.cslt.maogoufanyi.model.Pet
 import com.cslt.maogoufanyi.model.PetNote
@@ -16,7 +17,7 @@ import com.cslt.maogoufanyi.ui.dialog.AddEditNoteDialog
 import com.gyf.immersionbar.ImmersionBar
 import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.core.BasePopupView
-import com.cslt.maogoufanyi.utils.lzy.LZYADSUtils
+
 
 class HDSPetNotesActivity : BaseActivity() {
 
@@ -28,7 +29,6 @@ class HDSPetNotesActivity : BaseActivity() {
     }
 
     override fun getLayoutId() = R.layout.activity_pet_notes
-    private lateinit var lzyadsUtils: LZYADSUtils
     private lateinit var binding: ActivityPetNotesBinding
     private lateinit var notesAdapter: PetNotesAdapter
     private var notesList = mutableListOf<PetNote>()
@@ -57,9 +57,9 @@ class HDSPetNotesActivity : BaseActivity() {
         binding.btnAddNote.setOnClickListener {
             showAddEditNoteDialog()
         }
-        lzyadsUtils=LZYADSUtils("PetNotesActivity",this@HDSPetNotesActivity)
-        lzyadsUtils.showAdCpTurn()
-        lzyadsUtils.loadSimpleAdTurn(binding.feedContainer,-1)
+
+        ZYMAllAdsUtils.showAdCpTurnTab(this@HDSPetNotesActivity,"CP")
+        ZYMAllAdsUtils.loadSimpleAll(this@HDSPetNotesActivity,"信息",binding.feedContainer)
     }
 
     private fun setupRecyclerView() {
@@ -167,7 +167,7 @@ class HDSPetNotesActivity : BaseActivity() {
                         // 重新加载所有数据
                         loadAllNotes()
                         val message = if (note.id == 0L) "记录添加成功" else "记录更新成功"
-                        lzyadsUtils.showAdCpTurn()
+                        ZYMAllAdsUtils.showAdCpTurnTab(this@HDSPetNotesActivity,"CP")
                         Toast.makeText(this@HDSPetNotesActivity, message, Toast.LENGTH_SHORT).show()
                     } else {
                         Toast.makeText(this@HDSPetNotesActivity, "保存失败", Toast.LENGTH_SHORT).show()
@@ -194,7 +194,7 @@ class HDSPetNotesActivity : BaseActivity() {
                 Toast.makeText(this, "记录删除成功", Toast.LENGTH_SHORT).show()
                 // 重新加载所有数据
                 loadAllNotes()
-                lzyadsUtils.showAdCpTurn()
+                ZYMAllAdsUtils.showAdCpTurnTab(this@HDSPetNotesActivity,"CP")
             } else {
                 Toast.makeText(this, "记录删除失败", Toast.LENGTH_SHORT).show()
             }
@@ -221,7 +221,7 @@ class HDSPetNotesActivity : BaseActivity() {
                 if (position != -1) {
                     notesAdapter.notifyItemChanged(position)
                 }
-                lzyadsUtils.showAdCpTurn()
+                ZYMAllAdsUtils.showAdCpTurnTab(this@HDSPetNotesActivity,"CP")
                 val message = if (note.isCompleted) "已标记为完成" else "已标记为未完成"
                 Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
             } else {

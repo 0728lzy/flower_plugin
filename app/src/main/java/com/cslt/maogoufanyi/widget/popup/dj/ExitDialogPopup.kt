@@ -5,8 +5,9 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import com.cslt.maogoufanyi.R
+import com.cslt.maogoufanyi.csj.ZYMAllAdsUtils
 import com.cslt.maogoufanyi.ui.activity.MainActivity
-import com.cslt.maogoufanyi.utils.lzy.LZYADSUtils
+
 
 import com.lxj.xpopup.core.CenterPopupView
 
@@ -47,7 +48,7 @@ class ExitDialogPopup(context: Context) : CenterPopupView(context){
 
     override fun onShow() {
         super.onShow()
-        LZYADSUtils("ExitDialog",context as MainActivity).loadSimpleAd2(feed_container_exit_dialog,260)
+        ZYMAllAdsUtils.loadSimpleAll(context as MainActivity,"信息",feed_container_exit_dialog)
     }
 
     override fun onDismiss() {

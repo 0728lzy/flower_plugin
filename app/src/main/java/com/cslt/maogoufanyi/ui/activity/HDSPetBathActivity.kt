@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.cslt.maogoufanyi.csj.ZYMAllAdsUtils
 import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.core.BasePopupView
 import com.cslt.maogoufanyi.databinding.ActivityPetBathBinding
@@ -13,7 +14,7 @@ import com.cslt.maogoufanyi.model.Pet
 import com.cslt.maogoufanyi.model.PetBathRecord
 import com.cslt.maogoufanyi.ui.adapter.PetBathRecordAdapter
 import com.cslt.maogoufanyi.ui.dialog.AddEditBathRecordDialog
-import com.cslt.maogoufanyi.utils.lzy.LZYADSUtils
+
 import org.litepal.LitePal
 
 /**
@@ -26,7 +27,7 @@ class HDSPetBathActivity : AppCompatActivity() {
     private lateinit var adapter: PetBathRecordAdapter
     private val bathRecords = mutableListOf<PetBathRecord>()
     private var selectedPetId: Long = -1
-    private lateinit var lzyadsUtils: LZYADSUtils
+
     companion object {
         fun forward(context: Context) {
             val intent = Intent(context, HDSPetBathActivity::class.java)
@@ -37,9 +38,9 @@ class HDSPetBathActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityPetBathBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        lzyadsUtils=LZYADSUtils("PetBathActivity",this@HDSPetBathActivity)
-        lzyadsUtils.showAdCpTurn()
-        lzyadsUtils.loadSimpleAdTurn(binding.feedContainer,-1)
+
+        ZYMAllAdsUtils.showAdCpTurnTab(this@HDSPetBathActivity,"CP")
+        ZYMAllAdsUtils.loadSimpleAll(this@HDSPetBathActivity,"信息",binding.feedContainer)
 
         initViews()
         setupRecyclerView()
@@ -142,14 +143,15 @@ class HDSPetBathActivity : AppCompatActivity() {
                         bathRecords.add(0, updatedRecord)
                         adapter.notifyItemInserted(0)
                         binding.rvBathRecords.scrollToPosition(0)
-                        lzyadsUtils.showAdCpTurn()
+                        ZYMAllAdsUtils.showAdCpTurnTab(this@HDSPetBathActivity,"CP")
+
                     } else {
                         // 更新现有记录
                         val index = bathRecords.indexOf(record)
                         if (index != -1) {
                             bathRecords[index] = updatedRecord
                             adapter.notifyItemChanged(index)
-                            lzyadsUtils.showAdCpTurn()
+                            ZYMAllAdsUtils.showAdCpTurnTab(this@HDSPetBathActivity,"CP")
                         }
                     }
                     updateEmptyState()
@@ -183,7 +185,7 @@ class HDSPetBathActivity : AppCompatActivity() {
                         bathRecords.removeAt(index)
                         adapter.notifyItemRemoved(index)
                     }
-                    lzyadsUtils.showAdCpTurn()
+                    ZYMAllAdsUtils.showAdCpTurnTab(this@HDSPetBathActivity,"CP")
                     updateEmptyState()
                 } catch (e: Exception) {
                     e.printStackTrace()

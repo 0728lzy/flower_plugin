@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.lxj.xpopup.XPopup
 import com.cslt.maogoufanyi.R
 import com.cslt.maogoufanyi.base.dj.BaseActivity
+import com.cslt.maogoufanyi.csj.ZYMAllAdsUtils
 import com.cslt.maogoufanyi.databinding.ActivityPetPhotosBinding
 import com.cslt.maogoufanyi.model.Pet
 import com.cslt.maogoufanyi.model.PetPhoto
@@ -26,7 +27,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import com.gyf.immersionbar.ImmersionBar
 import com.lxj.xpopup.core.BasePopupView
-import com.cslt.maogoufanyi.utils.lzy.LZYADSUtils
+
 
 class HDSPetPhotosActivity : BaseActivity() {
 
@@ -40,7 +41,7 @@ class HDSPetPhotosActivity : BaseActivity() {
     }
 
     override fun getLayoutId() = R.layout.activity_pet_photos
-    private lateinit var lzyadsUtils: LZYADSUtils
+
     private lateinit var binding: ActivityPetPhotosBinding
     private lateinit var photosAdapter: PetPhotosAdapter
     private var photosList = mutableListOf<PetPhoto>()
@@ -70,9 +71,9 @@ class HDSPetPhotosActivity : BaseActivity() {
         binding.btnUploadPhoto.setOnClickListener {
             showUploadPhotoDialog()
         }
-        lzyadsUtils=LZYADSUtils("PetNotesActivity",this@HDSPetPhotosActivity)
-        lzyadsUtils.showAdCpTurn()
-        lzyadsUtils.loadSimpleAdTurn(binding.feedContainer,-1)
+
+        ZYMAllAdsUtils.showAdCpTurnTab(this@HDSPetPhotosActivity,"CP")
+        ZYMAllAdsUtils.loadSimpleAll(this@HDSPetPhotosActivity,"信息",binding.feedContainer)
     }
 
     private fun setupRecyclerView() {
@@ -168,7 +169,7 @@ class HDSPetPhotosActivity : BaseActivity() {
             if (petPhoto.save()) {
                 Toast.makeText(this, "照片保存成功", Toast.LENGTH_SHORT).show()
                 loadPhotos() // 重新加载照片列表
-                lzyadsUtils.showAdCpTurn()
+                ZYMAllAdsUtils.showAdCpTurnTab(this@HDSPetPhotosActivity,"CP")
             } else {
                 Toast.makeText(this, "照片保存失败", Toast.LENGTH_SHORT).show()
             }
@@ -191,7 +192,7 @@ class HDSPetPhotosActivity : BaseActivity() {
             if (photo.delete() > 0) {
                 Toast.makeText(this, "照片删除成功", Toast.LENGTH_SHORT).show()
                 loadPhotos() // 重新加载照片列表
-                lzyadsUtils.showAdCpTurn()
+                ZYMAllAdsUtils.showAdCpTurnTab(this@HDSPetPhotosActivity,"CP")
             } else {
                 Toast.makeText(this, "照片删除失败", Toast.LENGTH_SHORT).show()
             }

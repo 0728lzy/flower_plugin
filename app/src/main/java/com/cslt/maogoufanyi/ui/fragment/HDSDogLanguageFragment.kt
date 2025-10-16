@@ -16,6 +16,7 @@ import com.cslt.maogoufanyi.AppConst
 import com.cslt.maogoufanyi.R
 import com.cslt.maogoufanyi.base.dj.RootFragment
 import com.cslt.maogoufanyi.csj.AdFeedSimpleTwoUtils
+import com.cslt.maogoufanyi.csj.ZYMAllAdsUtils
 import com.cslt.maogoufanyi.databinding.FragmentDogLanguageBinding
 import com.cslt.maogoufanyi.databinding.ItemDogBinding
 import com.cslt.maogoufanyi.entity.Index1Entity
@@ -26,10 +27,11 @@ import com.cslt.maogoufanyi.ext.getBinding
 import com.cslt.maogoufanyi.ext.thrillClickListener
 import com.cslt.maogoufanyi.ui.activity.HDSSoundActivity
 import com.cslt.maogoufanyi.ui.dialog.ResultDialog
-import com.cslt.maogoufanyi.utils.lzy.LZYADSUtils
+import com.cslt.maogoufanyi.utils.dj.UserInfoModel
+
 import com.cslt.maogoufanyi.utils.lzy.LZYLog
 import com.cslt.maogoufanyi.utils.lzy.PermissionUtils
-import com.cslt.maogoufanyi.widget.dialog.LoadingDiaLog
+
 import kotlinx.coroutines.Job
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -39,11 +41,11 @@ import java.util.Formatter
 class HDSDogLanguageFragment : RootFragment(R.layout.fragment_dog_language) {
 
     var _binding: FragmentDogLanguageBinding? = null
-    private lateinit var lzyadsUtils: LZYADSUtils
+
     private var isRecording = false
     private var recordingType = 0 // 0: 未录音, 1: 人话录音, 2: 狗语录音
     private var record: com.cslt.maogoufanyi.utils.AudioRecordUtil? = null
-    private lateinit var myDiaLog: LoadingDiaLog
+
     private var job: Job? = null
     
     val binding get() = _binding!!
@@ -62,32 +64,16 @@ class HDSDogLanguageFragment : RootFragment(R.layout.fragment_dog_language) {
     fun onMessageSimpleEvent(message: SimpleEvent) {
         if (message.simple == 0) { // 使用新的事件ID避免冲突
             LZYLog.e("simple", "DogLanguageFragment message simple:${message.simple}")
-            loadSimpleAd(binding.feedContainerDogLanguage)
+
+
+            ZYMAllAdsUtils.loadSimpleAll(requireActivity(),"信息",binding.feedContainerDogLanguage)
         }
     }
 
-    fun loadSimpleAd(fragment: FrameLayout?) {
-        if (requireActivity() != null && AppConst.is_show_ad) {
-            AdFeedSimpleTwoUtils.init(
-                requireActivity(),
-                object : AdFeedSimpleTwoUtils.GirdMenuStateListener {
-                    override fun onSuccess() {
-                        if (fragment != null && requireActivity() != null) {
-                            Log.i("tttt", "准备刷新DogLanguageFragment的广告")
-                            AdFeedSimpleTwoUtils.showAd(fragment, requireActivity())
-                        }
-                    }
-
-                    override fun onError() {
-                    }
-                })
-            AdFeedSimpleTwoUtils.initPreloading("")
-        }
-    }
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
         _binding = view.getBinding()
-        lzyadsUtils = LZYADSUtils("DogLanguageFragment", requireActivity())
+
 
         // 初始化录音按钮点击事件
         initRecordButtons()
@@ -100,7 +86,7 @@ class HDSDogLanguageFragment : RootFragment(R.layout.fragment_dog_language) {
             binding.tvTop.visibility=View.VISIBLE
         }
         // 加载广告
-        lzyadsUtils.loadSimpleAdTurn(binding.feedContainerDogLanguage, -1)
+        ZYMAllAdsUtils.loadSimpleAll(requireActivity(),"信息",binding.feedContainerDogLanguage)
     }
 
     private fun initRecordButtons() {
@@ -130,18 +116,18 @@ class HDSDogLanguageFragment : RootFragment(R.layout.fragment_dog_language) {
                 val result=record?.stopRecord()
                 job?.cancel()
 
-                myDiaLog = LoadingDiaLog(requireContext())
-                myDiaLog.show()
-                lzyadsUtils.showAdJL(myDiaLog) {
-                    Handler().postDelayed({
-                        runOnUiThread {
-                            if (result==null||!result)
-                                Toast.makeText(requireContext(),"请发出足够大的声音以保证能被识别翻译~", Toast.LENGTH_SHORT).show()
-                            else
-                                ResultDialog(entity).show(requireRootActivity())
-                            binding.tvRecordHint.text = "点击按钮开始录音"
-                        }
-                    }, 600)
+                ZYMAllAdsUtils.showAdJLTurn(requireActivity(),"JL"){
+                    if (UserInfoModel.getIsFirstNormal()){
+                        Handler().postDelayed({
+                            runOnUiThread {
+                                if (result==null||!result)
+                                    Toast.makeText(requireContext(),"请发出足够大的声音以保证能被识别翻译~", Toast.LENGTH_SHORT).show()
+                                else
+                                    ResultDialog(entity).show(requireRootActivity())
+                                binding.tvRecordHint.text = "点击按钮开始录音"
+                            }
+                        }, 600)
+                    }
                 }
 
                 // 恢复按钮样式

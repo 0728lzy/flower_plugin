@@ -11,6 +11,7 @@ import com.cslt.maogoufanyi.AppConst
 import com.cslt.maogoufanyi.R
 import com.cslt.maogoufanyi.base.dj.RootFragment
 import com.cslt.maogoufanyi.csj.AdFeedSimpleFourUtils
+import com.cslt.maogoufanyi.csj.ZYMAllAdsUtils
 import com.cslt.maogoufanyi.databinding.FragmentPetVideoBinding
 import com.cslt.maogoufanyi.databinding.ItemPetVideoBinding
 import com.cslt.maogoufanyi.event.SimpleEvent
@@ -101,25 +102,8 @@ class HDSPetVideoFragment : RootFragment(R.layout.fragment_pet_video) {
     fun onMessageSimpleEvent(message: SimpleEvent) {
         if(message.simple ==3){
             LZYLog.e("simple","message simple:${message.simple}")
-            loadSimpleAd(binding.feedContainerPetVideo)
+            ZYMAllAdsUtils.loadSimpleAll(requireActivity(),"信息",binding.feedContainerPetVideo)
         }
     }
-    fun loadSimpleAd(fragment: FrameLayout?) {
-        if (requireActivity() != null && AppConst.is_show_ad) {
-            AdFeedSimpleFourUtils.init(
-                requireActivity(),
-                object : AdFeedSimpleFourUtils.GirdMenuStateListener {
-                    override fun onSuccess() {
-                        if (fragment != null && requireActivity() != null) {
-                            Log.i("tttt", "准备刷新DogLanguageFragment的广告")
-                            AdFeedSimpleFourUtils.showAd(fragment, requireActivity())
-                        }
-                    }
 
-                    override fun onError() {
-                    }
-                })
-            AdFeedSimpleFourUtils.initPreloading("")
-        }
-    }
 }

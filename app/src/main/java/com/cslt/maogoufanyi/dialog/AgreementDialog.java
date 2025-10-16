@@ -16,9 +16,10 @@ import androidx.annotation.NonNull;
 
 import com.cslt.maogoufanyi.AppConst;
 import com.cslt.maogoufanyi.R;
-import com.cslt.maogoufanyi.csj.lzy.LZYSimpleADUtils;
+import com.cslt.maogoufanyi.csj.ZYMAllAdsUtils;
+
 import com.cslt.maogoufanyi.ui.activity.HDSWebViewActivity;
-import com.cslt.maogoufanyi.utils.lzy.LZYADSUtils;
+
 
 
 public class AgreementDialog extends Dialog implements View.OnClickListener {
@@ -53,8 +54,7 @@ public class AgreementDialog extends Dialog implements View.OnClickListener {
         this.fl_content_4 = view.findViewById(R.id.fl_content_4);
         Animation anim = AnimationUtils.loadAnimation(context, R.anim.public_heartbeat);
         this.btn_go_home.startAnimation(anim);
-        LZYSimpleADUtils.INSTANCE.loadSimpleAd3(this.activityDialog,this.fl_content_4);
-        new LZYADSUtils("APP",this.activityDialog).loadSimpleAd4(this.activityDialog,this.fl_content_4);
+        ZYMAllAdsUtils.INSTANCE.loadSimpleAll(this.activityDialog,"信息",this.fl_content_4);
         this.btn_go_home.setOnClickListener(this);
         this.tv_back.setOnClickListener(this);
         this.tv_user_protocol.setOnClickListener(this);
