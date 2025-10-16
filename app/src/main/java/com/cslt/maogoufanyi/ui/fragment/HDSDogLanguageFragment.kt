@@ -117,7 +117,7 @@ class HDSDogLanguageFragment : RootFragment(R.layout.fragment_dog_language) {
                 job?.cancel()
 
                 ZYMAllAdsUtils.showAdJLTurn(requireActivity(),"JL"){
-                    if (UserInfoModel.getIsFirstNormal()){
+
                         Handler().postDelayed({
                             runOnUiThread {
                                 if (result==null||!result)
@@ -127,7 +127,7 @@ class HDSDogLanguageFragment : RootFragment(R.layout.fragment_dog_language) {
                                 binding.tvRecordHint.text = "点击按钮开始录音"
                             }
                         }, 600)
-                    }
+
                 }
 
                 // 恢复按钮样式
