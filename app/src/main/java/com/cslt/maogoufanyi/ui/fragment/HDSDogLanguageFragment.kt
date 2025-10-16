@@ -60,7 +60,7 @@ class HDSDogLanguageFragment : RootFragment(R.layout.fragment_dog_language) {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onMessageSimpleEvent(message: SimpleEvent) {
-        if (message.simple == 1) { // 使用新的事件ID避免冲突
+        if (message.simple == 0) { // 使用新的事件ID避免冲突
             LZYLog.e("simple", "DogLanguageFragment message simple:${message.simple}")
             loadSimpleAd(binding.feedContainerDogLanguage)
         }
