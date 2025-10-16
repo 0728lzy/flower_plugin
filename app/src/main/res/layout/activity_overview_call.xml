@@ -1,170 +1,173 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:fitsSystemWindows="true"
     android:background="@color/main_background"
     android:tag="layout/activity_overview_call_0">
-
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/layout_app_bar_main" />
-
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="fill_parent"
-        android:layout_height="0.0dip"
-        app:layout_constraintBottom_toTopOf="@+id/relay_ads"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/layout_app_bar_main" />
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/iv_avatar"
-            android:layout_width="@dimen/_60sdp"
-            android:layout_height="@dimen/_60sdp"
-            android:layout_marginTop="@dimen/_8sdp"
-            android:scaleType="centerCrop"
-            android:src="@mipmap/ic_launcher"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tv_name"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/content_ym"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/_12sdp"
-            android:layout_marginTop="@dimen/_4sdp"
-            android:layout_marginRight="@dimen/_12sdp"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_14sdp"
-            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_avatar" />
+            app:layout_constraintTop_toBottomOf="@id/toolbar">
 
-        <TextView
-            android:id="@+id/tv_number_phone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/color_black_50"
-            android:visibility="invisible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_name" />
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_avatar"
+                android:layout_width="@dimen/_60sdp"
+                android:layout_height="@dimen/_60sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/ic_launcher"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tv_set_call_after"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_8sdp"
-            android:text="@string/text_set_call_after"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_12sdp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_number_phone" />
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:layout_marginRight="@dimen/_12sdp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14sdp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_avatar" />
 
-        <RelativeLayout
-            android:id="@+id/rl_set_time"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_8sdp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_set_call_after">
+            <TextView
+                android:id="@+id/tv_number_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_black_50"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_name" />
+
+            <TextView
+                android:id="@+id/tv_set_call_after"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:text="@string/text_set_call_after"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_number_phone" />
 
             <RelativeLayout
-                android:id="@+id/rl_time"
+                android:id="@+id/rl_set_time"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:tag="binding_1">
+                android:layout_marginTop="@dimen/_8sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_set_call_after">
 
-                <include
-                    android:id="@+id/layout_set_time"
-                    layout="@layout/layout_set_time_call"
+                <RelativeLayout
+                    android:id="@+id/rl_time"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true" />
-            </RelativeLayout>
+                    android:tag="binding_1">
 
-            <TextView
-                android:id="@+id/tv_take_a_video_call"
-                android:layout_width="wrap_content"
-                android:layout_height="48.0dip"
-                android:layout_below="@+id/rl_time"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/_14sdp"
-                android:background="@drawable/bg_button_fake_call"
-                android:gravity="center"
-                android:paddingLeft="@dimen/_32sdp"
-                android:paddingRight="@dimen/_32sdp"
-                android:text="@string/text_take_a_video_call"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_12sdp" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/rl_count_down"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_12sdp"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_set_call_after">
-
-            <RelativeLayout
-                android:id="@+id/rl_progress"
-                android:layout_width="@dimen/_100sdp"
-                android:layout_height="@dimen/_100sdp"
-                android:layout_centerHorizontal="true">
+                    <include
+                        android:id="@+id/layout_set_time"
+                        layout="@layout/layout_set_time_call"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true" />
+                </RelativeLayout>
 
                 <TextView
-                    android:id="@+id/tv_time_count_down"
+                    android:id="@+id/tv_take_a_video_call"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:text="00:00"
-                    android:textColor="@color/black" />
-
-                <ProgressBar
-                    android:id="@+id/progress"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_centerInParent="true"
-                    android:layout_gravity="center_horizontal"
-                    android:indeterminateOnly="false"
-                    android:progress="0"
-                    android:progressDrawable="@drawable/circle_progress" />
+                    android:layout_height="48.0dip"
+                    android:layout_below="@+id/rl_time"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/_14sdp"
+                    android:background="@drawable/bg_button_fake_call"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/_32sdp"
+                    android:paddingRight="@dimen/_32sdp"
+                    android:text="@string/text_take_a_video_call"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_12sdp" />
             </RelativeLayout>
 
-            <TextView
-                android:id="@+id/tv_cancel"
+            <RelativeLayout
+                android:id="@+id/rl_count_down"
                 android:layout_width="wrap_content"
-                android:layout_height="48.0dip"
-                android:layout_below="@+id/rl_progress"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/_16sdp"
-                android:background="@drawable/bg_button_fake_call"
-                android:gravity="center"
-                android:paddingLeft="@dimen/_32sdp"
-                android:paddingRight="@dimen/_32sdp"
-                android:text="@string/text_cancel"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_12sdp" />
-        </RelativeLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_set_call_after">
 
-    <RelativeLayout
-        android:id="@+id/relay_ads"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+                <RelativeLayout
+                    android:id="@+id/rl_progress"
+                    android:layout_width="@dimen/_100sdp"
+                    android:layout_height="@dimen/_100sdp"
+                    android:layout_centerHorizontal="true">
+
+                    <TextView
+                        android:id="@+id/tv_time_count_down"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="00:00"
+                        android:textColor="@color/black" />
+
+                    <ProgressBar
+                        android:id="@+id/progress"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_centerInParent="true"
+                        android:layout_gravity="center_horizontal"
+                        android:indeterminateOnly="false"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/circle_progress" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/tv_cancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48.0dip"
+                    android:layout_below="@+id/rl_progress"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:background="@drawable/bg_button_fake_call"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/_32sdp"
+                    android:paddingRight="@dimen/_32sdp"
+                    android:text="@string/text_cancel"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_12sdp" />
+            </RelativeLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <RelativeLayout
+            android:id="@+id/relay_ads"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            app:layout_constraintTop_toBottomOf="@id/content_ym"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
             <FrameLayout
                 android:id="@+id/feed_container"
                 android:layout_width="wrap_content"
@@ -174,5 +177,6 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-    </RelativeLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+        </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>
