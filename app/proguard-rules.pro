@@ -450,7 +450,8 @@
 -dontoptimize
 -keep class org.json.** {*;}
 -dontshrink
-
+#融合归因
+-keep class com.bytedance.ads.convert.broadcast.common.EncryptionTools {*;}
 
 
 

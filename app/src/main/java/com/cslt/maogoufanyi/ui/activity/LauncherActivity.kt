@@ -11,6 +11,7 @@ import android.util.Log
 import android.view.View
 import android.webkit.WebView
 import androidx.annotation.RequiresApi
+import com.bytedance.ads.convert.BDConvert
 import com.google.gson.Gson
 import com.gyf.immersionbar.ImmersionBar
 import com.cslt.maogoufanyi.csj.AdCPNoLimitUtils
@@ -50,7 +51,7 @@ import org.greenrobot.eventbus.ThreadMode
  * author:  DengZhiYang
  * desc:    something
  */
-class HDSLauncherActivity : BaseActivity() {
+class LauncherActivity : BaseActivity() {
 
     private lateinit var binding: ActivityLauncherBinding
     var TAG = "SplashActivity"
@@ -120,6 +121,7 @@ class HDSLauncherActivity : BaseActivity() {
             if (UserInfoModel.getIsFirstTime()) {
                 firstShowDialog()
             } else {
+                initBDConvert()
                 if (TextUtils.isEmpty(UserInfoModel.getDjid())) {
                     callInstall()
                 } else {
@@ -578,6 +580,7 @@ class HDSLauncherActivity : BaseActivity() {
                 firstShowDialog()
             } else {
                 // 强烈建议在Application#onCreate()方法中调用，避免出现context为null的异常
+                initBDConvert()
                 if (TextUtils.isEmpty(UserInfoModel.getDjid())) {
                     callInstall()
                 } else {
@@ -638,6 +641,7 @@ class HDSLauncherActivity : BaseActivity() {
             UserInfoModel.setIsFirstTime(false)
             GetHttpDataUtil.getOutNetIP()
 
+            initBDConvert()
             AppConst.riskInfo = YlLib.getRiskInfo(this)//设备异常标签，正常、代理、异常、模拟器、root、无SIM
             AppConst.AndroidId = DeviceInfoUtil.getAndroidId(this)
 
@@ -745,4 +749,8 @@ class HDSLauncherActivity : BaseActivity() {
         super.onDestroy()
         EventBus.getDefault().unregister(this)
     }
+    fun initBDConvert(){
+        BDConvert.init(this,this)
+    }
+
 }

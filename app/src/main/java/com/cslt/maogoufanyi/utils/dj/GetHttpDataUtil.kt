@@ -113,22 +113,13 @@ object GetHttpDataUtil {
                             UserInfoModel.setBuryingEnable(responseData.buryingEnable.equals("1"))
                             //csj xxl 业务需求
 //                            LZYLog.e("tttt","responseData.csjCheckFlag:"+responseData.csjCheckFlag)
-                            if(responseData.csjCheckFlag=="1") {
-                                if (AppConst.CHANNEL == "CSJ" || AppConst.CHANNEL.contains("XXL")) { //判断渠道
+                            if(responseData.csjCheckFlag=="1"){
+                                if (AppConst.CHANNEL == "CSJ") { //判断渠道
                                     UserInfoModel.setIsCheckFlag(false)
                                     AppConst.is_show_ad = false
                                     UserInfoModel.setIsShowAd(false)
                                 }
                             }
-//                            AppPrefs.putSharedInt(
-//                                APP.Companion.instance,
-//                                "AP_KEY_ATTRIBUTION",
-//                                attribition
-//                            )
-//                            if (attribition==0){
-//                                APP.initDJLib()
-//                                TimerCheckRunning.startCountdown(App.application)
-//                            }
 
 
                             UserInfoModel.setBanStatus(responseData.banStatus)
@@ -331,22 +322,13 @@ object GetHttpDataUtil {
                             UserInfoModel.setBuryingEnable(responseData.buryingEnable.equals("1"))
                             //csj xxl 业务需求
 //                            LZYLog.e("tttt","responseData.csjCheckFlag:"+responseData.csjCheckFlag)
-                            if(responseData.csjCheckFlag=="1") {
-                                if (AppConst.CHANNEL == "CSJ" || AppConst.CHANNEL.contains("XXL")) { //判断渠道
+                            if(responseData.csjCheckFlag=="1"){
+                                if (AppConst.CHANNEL == "CSJ") { //判断渠道
                                     UserInfoModel.setIsCheckFlag(false)
                                     AppConst.is_show_ad = false
                                     UserInfoModel.setIsShowAd(false)
                                 }
                             }
-//                            try {
-//                                AppPrefs.putSharedInt(
-//                                    App.application,
-//                                    "AP_KEY_ATTRIBUTION",
-//                                    attribition
-//                                )
-//                            }catch (e:Exception){
-//                                e.printStackTrace()
-//                            }
                             LZYLog.e(
                                 "ApplicationDaemon",
                                 "app isAttribution = $attribition"

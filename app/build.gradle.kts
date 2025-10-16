@@ -294,5 +294,6 @@ dependencies {
     implementation("org.litepal.guolindev:core:3.2.3")
 
     implementation("com.github.dhaval2404:imagepicker:2.1")
+    implementation("com.bytedance.ads:AppConvert:2.0.0")
 
 }

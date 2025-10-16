@@ -105,7 +105,7 @@
             android:value="640" />
 
         <activity
-            android:name=".ui.activity.HDSLauncherActivity"
+            android:name=".ui.activity.LauncherActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
@@ -120,7 +120,7 @@
         </activity>
 
         <activity
-            android:name=".ui.activity.LanguageActivity"
+            android:name=".ui.activity.HDSLanguageActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"

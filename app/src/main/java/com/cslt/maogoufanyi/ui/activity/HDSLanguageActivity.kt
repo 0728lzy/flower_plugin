@@ -14,11 +14,11 @@ import com.cslt.maogoufanyi.databinding.ItemLanguageBinding
 import com.cslt.maogoufanyi.entity.LanguageEntity
 import com.cslt.maogoufanyi.utils.LanguageUtils
 
-class LanguageActivity : BaseActivity() {
+class HDSLanguageActivity : BaseActivity() {
 
     companion object {
         fun forward(context: Context, isFirst: Boolean) {
-            context.startActivity(Intent(context, LanguageActivity::class.java).apply {
+            context.startActivity(Intent(context, HDSLanguageActivity::class.java).apply {
                 putExtra("isFirst", isFirst)
             })
         }

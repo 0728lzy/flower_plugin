@@ -33,6 +33,7 @@ dependencyResolutionManagement {
         //mintegral sdk依赖   引入mintegral sdk需要添加此maven
         maven ("https://dl-maven-android.mintegral.com/repository/mbridge_android_sdk_support/" )
         maven("https://developer.huawei.com/repo/")
+        maven("https://artifact.bytedance.com/repository/Volcengine/")
     }
 }
 
