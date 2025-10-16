@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_demo_main_bg"
-    tools:context=".ui.fragment.PetManagementFragment">
+    tools:context=".ui.fragment.HDSPetManagementFragment">
 
     <!-- 主内容区域 -->
     <androidx.core.widget.NestedScrollView

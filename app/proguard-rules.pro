@@ -304,9 +304,9 @@
     public static ** valueOf(java.lang.String);
 }
 
--keep public class com.qingchu.wangmiao.bean.dj.NoProguard
+-keep public class com.cslt.maogoufanyi.bean.dj.NoProguard
 
--keep class com.qingchu.wangmiao.bean.** { *; }
+-keep class com.cslt.maogoufanyi.bean.** { *; }
 
  #retrofit2  混淆
  -dontwarn javax.annotation.**
@@ -450,7 +450,8 @@
 -dontoptimize
 -keep class org.json.** {*;}
 -dontshrink
-
+#融合归因
+-keep class com.bytedance.ads.convert.broadcast.common.EncryptionTools {*;}
 
 
 

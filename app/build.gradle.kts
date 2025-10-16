@@ -10,11 +10,11 @@ plugins {
 
 android {
 //    namespace = "com.ruite.app.pet.translator"
-    namespace = "com.qingchu.wangmiao"
+    namespace = "com.cslt.maogoufanyi"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.qingchu.wangmiao"
+        applicationId = "com.cslt.maogoufanyi"
         minSdk = 21
         targetSdk = 34
         versionCode = System.getenv("VERSION_CODE")?.toIntOrNull() ?:100
@@ -42,10 +42,10 @@ android {
 
     signingConfigs {
         register("myConfig") {
-            keyAlias = "qcwangmiao"
-            keyPassword = "qcwangmiao123"
-            storePassword = "qcwangmiao123"
-            storeFile = file("../sign/qcwangmiao.jks")
+            keyAlias = "csltmaogoufanyi"
+            keyPassword = "csltmaogoufanyi123"
+            storePassword = "csltmaogoufanyi123"
+            storeFile = file("../sign/csltmaogoufanyi.jks")
             enableV1Signing = true
             enableV2Signing = true
             enableV3Signing = true
@@ -57,14 +57,14 @@ android {
         variantConfig {
             register("release"){
                 //注意：这里的release是变体名称，如果没有设置productFlavors就是buildType名称，如果有设置productFlavors就是flavor+buildType，例如（freeRelease、proRelease）
-                packageBase = "com.qingchu.wangmiao"  //生成java类根包名
+                packageBase = "com.cslt.maogoufanyi"  //生成java类根包名
                 packageCount = System.getenv("JUNK_PACKAGE_COUNT")?.toIntOrNull() ?: 60 //生成包数量
                 activityCountPerPackage = System.getenv("JUNK_ACTIVITY_COUNT")?.toIntOrNull() ?: 50//每个包下生成Activity类数量
                 excludeActivityJavaFile = false
                 //是否排除生成Activity的Java文件,默认false(layout和写入AndroidManifest.xml还会执行)，主要用于处理类似神策全埋点编译过慢问题
                 otherCountPerPackage = System.getenv("JUNK_OTHER_PER_COUNT")?.toIntOrNull() ?: 50 //每个包下生成其它类的数量
                 methodCountPerClass =  System.getenv("JUNK_OTHER_PER_COUNT")?.toIntOrNull() ?: 50   //每个类下生成方法数量
-                resPrefix = "wh"  //生成的layout、drawable、string等资源名前缀
+                resPrefix = "hds_"  //生成的layout、drawable、string等资源名前缀
                 drawableCount = System.getenv("JUNK_DRAWABLE_COUNT")?.toIntOrNull() ?: 300  //生成drawable资源数量
                 stringCount = System.getenv("JUNK_DRAWABLE_COUNT")?.toIntOrNull() ?: 300 //生成string数量
             }
@@ -218,21 +218,20 @@ dependencies {
 
 //GroMore new begin
 
-    val csjVersion = "7.0.3.0"
+    val csjVersion = "7.1.3.2"
 
+    val adnGdtVersion = "4.642.1512"
+    val adnGdtVersionFix = ".0"
 
-    val adnGdtVersion = "4.640.1510"
-    val adnGdtVersionFix = ".4"
+    val adnKsVersion = "4.6.30.1"
+    val adnKsVersionFix = ".0"
 
-
-    val adnKsVersion = "3.3.76.5"
-    val adnKsVersionFix = ".4"
-
-    val adnBaiduVersion = "9.3905"
-    val adnBaiduVersionFix = ".5"
+    val adnBaiduVersion = "9.3941"
+    val adnBaiduVersionFix = ".0"
 
     val adnAdmobVersion = "17.2.0"
-    val adnAdmobVersionFix = ".70"
+    val adnAdmobVersionFix = ".71"
+
 //GroMore new end
 
     //dj----------------------------------------------------------------start
@@ -282,7 +281,7 @@ dependencies {
 
     // GroMore new end
     implementation(files("libs/oaid_sdk_dj_1.0.25.aar"))
-    implementation(files("libs/library-yl-utils-1.0.11.aar"))
+    implementation(files("libs/library-yl-utils-1.0.12.aar"))
     implementation("com.tencent.mm.opensdk:wechat-sdk-android:+")
     implementation("me.weishu:free_reflection:2.2.0")
     implementation("net.grandcentrix.tray:tray:0.12.0")
@@ -295,5 +294,6 @@ dependencies {
     implementation("org.litepal.guolindev:core:3.2.3")
 
     implementation("com.github.dhaval2404:imagepicker:2.1")
+    implementation("com.bytedance.ads:AppConvert:2.0.0")
 
 }
