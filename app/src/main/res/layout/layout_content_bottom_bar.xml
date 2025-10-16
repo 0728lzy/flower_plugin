@@ -32,7 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
-                android:src="@drawable/icon_index1_s" />
+                android:src="@drawable/icon_index2_s" />
 
             <TextView
                 android:id="@+id/tv_cat_language"
@@ -62,7 +62,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
-                android:src="@drawable/icon_index2_n" />
+                android:src="@drawable/icon_index1_n" />
 
             <TextView
                 android:id="@+id/tv_dog_language"

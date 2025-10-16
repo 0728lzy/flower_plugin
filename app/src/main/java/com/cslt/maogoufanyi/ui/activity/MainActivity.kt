@@ -136,8 +136,8 @@ class MainActivity : BaseActivity() {
         binding.bottomBar.tabProfile.setBackgroundColor(ContextCompat.getColor(this, R.color.tab_default_background))
         
         // 重置所有图标和文字颜色
-        binding.bottomBar.ivCatLanguage.setImageResource(R.drawable.icon_index1_n)
-        binding.bottomBar.ivDogLanguage.setImageResource(R.drawable.icon_index2_n)
+        binding.bottomBar.ivCatLanguage.setImageResource(R.drawable.icon_index2_n)
+        binding.bottomBar.ivDogLanguage.setImageResource(R.drawable.icon_index1_n)
         binding.bottomBar.ivPetManagement.setImageResource(R.drawable.icon_index3_n)
         binding.bottomBar.ivCuteVideo.setImageResource(R.drawable.icon_index4_n)
         binding.bottomBar.ivProfile.setImageResource(R.drawable.icon_index5_n)
@@ -152,13 +152,13 @@ class MainActivity : BaseActivity() {
         when (index) {
             0 -> {
                 binding.bottomBar.tabCatLanguage.setBackgroundColor(ContextCompat.getColor(this, R.color.tab_cat_language_selected))
-                binding.bottomBar.ivCatLanguage.setImageResource(R.drawable.icon_index1_s)
+                binding.bottomBar.ivCatLanguage.setImageResource(R.drawable.icon_index2_s)
                 binding.bottomBar.tvCatLanguage.setTextColor(ContextCompat.getColor(this, R.color.color_main_tab_1))
             }
 
             1 -> {
                 binding.bottomBar.tabDogLanguage.setBackgroundColor(ContextCompat.getColor(this, R.color.tab_dog_language_selected))
-                binding.bottomBar.ivDogLanguage.setImageResource(R.drawable.icon_index2_s)
+                binding.bottomBar.ivDogLanguage.setImageResource(R.drawable.icon_index1_s)
                 binding.bottomBar.tvDogLanguage.setTextColor(ContextCompat.getColor(this, R.color.color_main_tab_2))
             }
 
