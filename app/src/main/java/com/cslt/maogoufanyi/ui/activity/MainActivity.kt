@@ -98,6 +98,7 @@ class MainActivity : BaseActivity() {
                     },800)
                 }
             }
+
         })
 
         binding.bottomBar.tabCatLanguage.thrillClickListener {
