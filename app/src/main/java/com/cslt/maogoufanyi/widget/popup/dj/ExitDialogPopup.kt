@@ -40,7 +40,7 @@ class ExitDialogPopup(context: Context) : CenterPopupView(context){
         }
 
         exit_tv_check.setOnClickListener {
-
+            dismiss()
             listener?.ok()
         }
 

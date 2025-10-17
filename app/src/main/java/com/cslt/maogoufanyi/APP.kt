@@ -315,7 +315,7 @@ class APP : Application() {
             }
 
             override fun onActivityStopped(activity: Activity) {
-                if ((AppConst.is_show_ad&&!AppConst.photoExitFlag)||activity is LauncherActivity||!AppConst.SWITCH_LEAVE_RETURN_LAUNCH_NORMAL) {
+                if (activity is LauncherActivity||!AppConst.SWITCH_LEAVE_RETURN_LAUNCH_NORMAL) {
                     LZYLog.e(TAG, "onActivityStopped: ")
                     appount--
                     if (appount === 0 && AppConst.isStopBoolen && AppConst.isSuspendedBoolen) {
