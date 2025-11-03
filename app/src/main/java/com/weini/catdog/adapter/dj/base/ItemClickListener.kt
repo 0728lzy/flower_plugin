@@ -1,0 +1,5 @@
+package com.weini.catdog.adapter.dj.base
+
+interface ItemClickListener<T> {
+    fun click(position: Int, data: T)
+}

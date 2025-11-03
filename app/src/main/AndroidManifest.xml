@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
     <uses-sdk tools:overrideLibrary="com.google.android.gms.ads_base,com.google.android.gms.ads.impl,com.google.android.gms.gass,com.google.android.gms.ads,com.kwad.sdk,com.sigmob.windad,com.unity3d.ads,com.bun.miitmdid     ,com.mbridge.msdk.video,com.mbridge.msdk.mbsignalcommon,com.mbridge.msdk.playercommon,com.mbridge.msdk.reward,com.mbridge.msdk.banner,com.mbridge.msdk.splash ,com.mbridge.msdk.videocommon,com.mbridge.msdk,com.mbridge.msdk.intervideo,com.mbridge.msdk.mbnative,com.mbridge.msdk.nativex,com.mbridge.msdk.advanced,com.mbridge.msdk.interstitial,com.tencent.klevin,com.bytedance.sdk.openadsdk.adhost,com.huawei.hms.framework.common,
-            com.daemon.lib,
             com.huawei.hms.framework.network.grs,
             com.huawei.hms.baselegacyapi,
             com.huawei.hmf.tasks,
@@ -68,7 +67,7 @@
     </queries>
 
     <application
-        android:name="com.cslt.maogoufanyi.APP"
+        android:name="com.weini.catdog.APP"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -120,21 +119,21 @@
         </activity>
 
         <activity
-            android:name=".ui.activity.HDSLanguageActivity"
+            android:name=".ui.activity.WCLanguageActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".ui.activity.HDSPermissionActivity"
+            android:name=".ui.activity.WCPermissionActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".ui.activity.HDSGuideActivity"
+            android:name=".ui.activity.WCGuideActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
@@ -148,60 +147,60 @@
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".ui.activity.HDSDetailActivity"
+            android:name=".ui.activity.WCDetailActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".ui.activity.HDSVideoActivity"
+            android:name=".ui.activity.WCVideoActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".ui.activity.HDSSoundActivity"
+            android:name=".ui.activity.WCSoundActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".ui.activity.HDSCallActivity"
+            android:name=".ui.activity.WCCallActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".ui.activity.HDSWebViewActivity"
+            android:name=".ui.activity.WCWebViewActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.HDSContactCustomerServiceActivity"
+            android:name=".ui.activity.WCContactCustomerServiceActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.activity.HDSAboutActivity"
+        <activity android:name=".ui.activity.WCAboutActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait" />
 
 
-        <activity android:name=".ui.activity.HDSPetPhotosActivity"
+        <activity android:name=".ui.activity.WCPetPhotosActivity"
             android:windowSoftInputMode="stateHidden|adjustResize"
             android:exported="true"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".ui.activity.HDSPetNotesActivity"
+        <activity android:name=".ui.activity.WCPetNotesActivity"
             android:windowSoftInputMode="stateHidden|adjustResize"
             android:exported="true"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".ui.activity.HDSPetBathActivity"
+        <activity android:name=".ui.activity.WCPetBathActivity"
             android:windowSoftInputMode="stateHidden|adjustResize"
             android:exported="true"
             android:screenOrientation="portrait" />

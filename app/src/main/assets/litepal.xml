@@ -5,9 +5,9 @@
     <version value="4"></version>
 
     <list>
-        <mapping class="com.cslt.maogoufanyi.model.Pet" />
-        <mapping class="com.cslt.maogoufanyi.model.PetPhoto" />
-        <mapping class="com.cslt.maogoufanyi.model.PetNote" />
-        <mapping class="com.cslt.maogoufanyi.model.PetBathRecord" />
+        <mapping class="com.weini.catdog.model.Pet" />
+        <mapping class="com.weini.catdog.model.PetPhoto" />
+        <mapping class="com.weini.catdog.model.PetNote" />
+        <mapping class="com.weini.catdog.model.PetBathRecord" />
     </list>
 </litepal>

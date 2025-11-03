@@ -7,22 +7,25 @@ plugins {
     id("org.jetbrains.kotlin.kapt")
     id("android-junk-code")
 }
-
+val l_app_channel = "VIVO"   //CSJ HUAWEI BAIDU OPPO XIAOMI VIVO HONOR YYB                                𤓖
+val l_version_code = 100
+val l_version_name = "1.0.0"
+val l_app_name="猫狗翻译全能王"
 android {
 //    namespace = "com.ruite.app.pet.translator"
-    namespace = "com.cslt.maogoufanyi"
+    namespace = "com.weini.catdog"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.cslt.maogoufanyi"
+        applicationId = "com.weini.catdog"
         minSdk = 21
         targetSdk = 34
-        versionCode = System.getenv("VERSION_CODE")?.toIntOrNull() ?:100
-        versionName = System.getenv("VERSION_NAME") ?: "1.0.0"
-        //温馨提示：不要忘了核对渠道哦！！
+        versionCode = System.getenv("VERSION_CODE")?.toIntOrNull() ?: l_version_code
+        versionName = System.getenv("VERSION_NAME") ?: l_version_name
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        resValue("string", "app_name", System.getenv("APP_NAME_PARAM") ?: "猫狗翻译官")
-        buildConfigField("String", "APP_CHANNEL", "\"${System.getenv("APP_CHANNEL") ?: "BAIDU"}\"")
+        resValue("string", "app_name", System.getenv("APP_NAME_PARAM") ?: l_app_name)
+//        resValue("string", "app_channel", System.getenv("APP_CHANNEL") ?: l_app_channel)
+        buildConfigField("String", "APP_CHANNEL", "\"${System.getenv("APP_CHANNEL") ?: l_app_channel}\"")
         buildConfigField("String", "URL_USER_AGREEMENT", "\"${System.getenv("URL_USER_AGREEMENT") ?: ""}\"")
         buildConfigField("String", "URL_PRIVACY_POLICY", "\"${System.getenv("URL_PRIVACY_POLICY") ?: ""}\"")
 
@@ -42,10 +45,10 @@ android {
 
     signingConfigs {
         register("myConfig") {
-            keyAlias = "csltmaogoufanyi"
-            keyPassword = "csltmaogoufanyi123"
-            storePassword = "csltmaogoufanyi123"
-            storeFile = file("../sign/csltmaogoufanyi.jks")
+            keyAlias = "weinicatdog"
+            keyPassword = "weinicatdog123"
+            storePassword = "weinicatdog123"
+            storeFile = file("../sign/weinicatdog.jks")
             enableV1Signing = true
             enableV2Signing = true
             enableV3Signing = true
@@ -57,14 +60,14 @@ android {
         variantConfig {
             register("release"){
                 //注意：这里的release是变体名称，如果没有设置productFlavors就是buildType名称，如果有设置productFlavors就是flavor+buildType，例如（freeRelease、proRelease）
-                packageBase = "com.cslt.maogoufanyi"  //生成java类根包名
+                packageBase = "com.weini.catdog"  //生成java类根包名
                 packageCount = System.getenv("JUNK_PACKAGE_COUNT")?.toIntOrNull() ?: 60 //生成包数量
                 activityCountPerPackage = System.getenv("JUNK_ACTIVITY_COUNT")?.toIntOrNull() ?: 50//每个包下生成Activity类数量
                 excludeActivityJavaFile = false
                 //是否排除生成Activity的Java文件,默认false(layout和写入AndroidManifest.xml还会执行)，主要用于处理类似神策全埋点编译过慢问题
                 otherCountPerPackage = System.getenv("JUNK_OTHER_PER_COUNT")?.toIntOrNull() ?: 50 //每个包下生成其它类的数量
                 methodCountPerClass =  System.getenv("JUNK_OTHER_PER_COUNT")?.toIntOrNull() ?: 50   //每个类下生成方法数量
-                resPrefix = "hds_"  //生成的layout、drawable、string等资源名前缀
+                resPrefix = "WC"  //生成的layout、drawable、string等资源名前缀
                 drawableCount = System.getenv("JUNK_DRAWABLE_COUNT")?.toIntOrNull() ?: 300  //生成drawable资源数量
                 stringCount = System.getenv("JUNK_DRAWABLE_COUNT")?.toIntOrNull() ?: 300 //生成string数量
             }
@@ -110,7 +113,7 @@ android {
         val flavorName = variant.flavorName
         val applicationId=variant.applicationId
         val date = System.currentTimeMillis()
-        val app_channel=System.getenv("APP_CHANNEL") ?: "VIVO"
+        val app_channel=System.getenv("APP_CHANNEL") ?: l_app_channel
 //        val applicationId = this@all.applicationId
 
         variant.outputs.all {
