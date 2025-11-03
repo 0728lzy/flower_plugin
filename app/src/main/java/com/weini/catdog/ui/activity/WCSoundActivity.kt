@@ -168,6 +168,7 @@ class WCSoundActivity : BaseActivity() {
         }
         mediaPlayer?.setOnCompletionListener {
             stopProgressUpdates()
+            pause()
         }
         mediaPlayer?.reset()
         val fd = resources.openRawResourceFd(rawPath)
@@ -208,9 +209,9 @@ class WCSoundActivity : BaseActivity() {
         if (mediaPlayer?.isPlaying == true) {
             pause()
         } else {
-            if(AppConst.is_show_ad) {
+//            if(AppConst.is_show_ad) {
                 initPlayer()
-            }
+//            }
             play()
         }
     }
