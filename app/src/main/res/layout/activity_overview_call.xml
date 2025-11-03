@@ -155,7 +155,7 @@
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_set_call_after">
+                app:layout_constraintTop_toBottomOf="@+id/head_cl">
 
                 <RelativeLayout
                     android:id="@+id/rl_progress"

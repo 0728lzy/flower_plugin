@@ -93,7 +93,7 @@ public class AdManagerHolder {
         return new TTAdConfig.Builder()
                 .appId(AppConst.Ad_ID)
                 .appName(context.getString(R.string.app_name))
-                .debug(true) //测试阶段打开，可以通过日志排查问题，上线时去除该调用
+                .debug(false) //测试阶段打开，可以通过日志排查问题，上线时去除该调用
                 .useMediation(true)
                 .setAgeGroup(TTAdConstant.ADULT)
                 .customController(new TTCustomController() {

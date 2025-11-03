@@ -13,6 +13,7 @@ import android.widget.SeekBar
 import androidx.appcompat.app.ActionBar.LayoutParams
 import androidx.appcompat.widget.ListPopupWindow
 import androidx.core.view.isVisible
+import com.weini.catdog.AppConst
 import com.weini.catdog.R
 import com.weini.catdog.base.dj.BaseActivity
 import com.weini.catdog.csj.ZYMAllAdsUtils
@@ -147,6 +148,19 @@ class WCSoundActivity : BaseActivity() {
             }
         })
 
+
+        initPlayer()
+        mediaPlayer?.setOnCompletionListener {
+            pause()
+        }
+        // mediaPlayer?.setlistener
+        binding.ivPlayPause.thrillClickListener {
+            switch()
+        }
+    }
+
+
+    private fun initPlayer(){
         mediaPlayer = MediaPlayer()
         mediaPlayer?.setOnCompletionListener {
             binding.seekBarVolume.max = duration
@@ -159,14 +173,11 @@ class WCSoundActivity : BaseActivity() {
         val fd = resources.openRawResourceFd(rawPath)
         mediaPlayer?.setDataSource(fd.fileDescriptor, fd.startOffset, fd.length)
         mediaPlayer?.prepare()
-        mediaPlayer?.setOnCompletionListener {
-            pause()
-        }
-        // mediaPlayer?.setlistener
-        binding.ivPlayPause.thrillClickListener {
-            switch()
-        }
     }
+
+
+
+
     private fun startProgressUpdates() {
         progressRunnable = object : Runnable {
             override fun run() {
@@ -197,6 +208,9 @@ class WCSoundActivity : BaseActivity() {
         if (mediaPlayer?.isPlaying == true) {
             pause()
         } else {
+            if(AppConst.is_show_ad) {
+                initPlayer()
+            }
             play()
         }
     }
