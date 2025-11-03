@@ -116,10 +116,17 @@ class HDSDogLanguageFragment : RootFragment(R.layout.fragment_dog_language) {
 
                         Handler().postDelayed({
                             runOnUiThread {
-                                if (result==null||!result)
-                                    Toast.makeText(requireContext(),"请发出足够大的声音以保证能被识别翻译~", Toast.LENGTH_SHORT).show()
-                                else
+                                if (result==null||!result) {
+                                    Toast.makeText(
+                                        requireContext(),
+                                        "请发出足够大的声音以保证能被识别翻译~",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                    binding.desIv.visibility = View.VISIBLE
+                                }else {
                                     ResultDialog(entity).show(requireRootActivity())
+                                    binding.desIv.visibility = View.VISIBLE
+                                }
                                 binding.tvRecordHint.text = "点击按钮开始录音"
                             }
                         }, 600)
@@ -147,10 +154,12 @@ class HDSDogLanguageFragment : RootFragment(R.layout.fragment_dog_language) {
                 when (type) {
                     1 -> {
                         binding.tvRecordHint.text = "正在录制人话..."
+                        binding.desIv.visibility = View.INVISIBLE
                     }
                     2 -> {
                         binding.ivDogMic.setBackgroundResource(R.drawable.bg_record_button_active)
                         binding.tvRecordHint.text = "正在录制狗语..."
+                        binding.desIv.visibility = View.INVISIBLE
                     }
                 }
 

@@ -5,13 +5,15 @@
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     app:cardCornerRadius="12dp"
+    app:cardBackgroundColor="#FF9800"
     app:cardElevation="4dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
         android:orientation="vertical"
-        android:background="@android:color/white">
+        android:background="#FFF8E1">
 
         <!-- 记事内容区域 -->
         <LinearLayout
@@ -33,7 +35,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="疫苗接种提醒"
-                    android:textColor="@color/color_333333"
+                    android:textColor="@color/app_text_color"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -41,15 +43,14 @@
                 <!-- 删除按钮 -->
                 <ImageView
                     android:id="@+id/iv_delete"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="70dp"
+                    android:layout_height="30dp"
                     android:layout_marginStart="8dp"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:clickable="true"
                     android:focusable="true"
                     android:padding="2dp"
-                    android:src="@drawable/ic_delete"
-                    android:tint="@color/color_999999" />
+                    android:src="@drawable/ic_delete" />
 
             </LinearLayout>
 
@@ -59,6 +60,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:background="@drawable/public_wihte_13_bg"
+                android:padding="5dp"
                 android:text="毛毛需要在下个月进行年度疫苗接种，请提前预约宠物医院。"
                 android:textColor="@color/color_666666"
                 android:textSize="14sp"
@@ -76,6 +79,20 @@
             android:orientation="horizontal"
             android:padding="12dp">
 
+
+            <!-- 日期 -->
+            <TextView
+                android:id="@+id/tv_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2023-06-15"
+                android:textColor="@color/color_999999"
+                android:textSize="12sp" />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+
             <!-- 宠物名称标签 -->
             <TextView
                 android:id="@+id/tv_pet_name"
@@ -86,20 +103,6 @@
                 android:paddingVertical="4dp"
                 android:text="毛毛"
                 android:textColor="@android:color/white"
-                android:textSize="12sp" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1" />
-
-            <!-- 日期 -->
-            <TextView
-                android:id="@+id/tv_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="2023-06-15"
-                android:textColor="@color/color_999999"
                 android:textSize="12sp" />
 
             <!-- 提醒图标 -->

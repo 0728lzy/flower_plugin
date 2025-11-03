@@ -8,6 +8,15 @@
     android:focusable="true"
     android:focusableInTouchMode="true">
 
+  <ScrollView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
     <!-- 标题 -->
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,12 +24,13 @@
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
+
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="添加洗澡记录"
-            android:textColor="@color/color_333333"
+            android:textColor="@color/app_text_color"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -50,9 +60,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="选择宠物"
-                android:textColor="@color/color_333333"
+                android:textColor="@color/app_text_color"
                 android:textSize="14sp"
                 android:textStyle="bold" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="#8D6E63"/>
 
             <Spinner
                 android:id="@+id/spinner_pet"
@@ -83,7 +99,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="水温 (°C)"
-                        android:textColor="@color/color_333333"
+                        android:textColor="@color/app_text_color"
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
@@ -112,7 +128,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="洗澡时长 (分钟)"
-                        android:textColor="@color/color_333333"
+                        android:textColor="@color/app_text_color"
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
@@ -137,9 +153,24 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="使用香波"
-                android:textColor="@color/color_333333"
+                android:textColor="@color/app_text_color"
                 android:textSize="14sp"
                 android:textStyle="bold" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="#8D6E63"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="请输入使用的香液"
+                android:textColor="@color/app_text_color"
+                android:textSize="12dp" />
 
             <EditText
                 android:id="@+id/et_shampoo"
@@ -157,7 +188,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="吹风方式"
-                android:textColor="@color/color_333333"
+                android:textColor="@color/app_text_color"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
@@ -178,9 +209,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="备注"
-                android:textColor="@color/color_333333"
+                android:textColor="@color/app_text_color"
                 android:textSize="14sp"
                 android:textStyle="bold" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="#8D6E63"/>
+
 
             <EditText
                 android:id="@+id/et_notes"
@@ -203,7 +241,7 @@
     <!-- 按钮区域 -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_marginTop="24dp"
         android:gravity="end"
         android:orientation="horizontal">
@@ -211,9 +249,9 @@
         <TextView
             android:id="@+id/btn_cancel"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginEnd="12dp"
-            android:background="@drawable/bg_button_add_pet_1"
+            android:background="@drawable/bg_button_add_pet_no_line"
             android:paddingLeft="@dimen/_30sdp"
             android:paddingTop="@dimen/dp_10"
             android:paddingRight="@dimen/_30sdp"
@@ -224,8 +262,8 @@
         <TextView
             android:id="@+id/btn_save"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_button_add_bath"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_button_add_bath_brown"
             android:paddingLeft="@dimen/_30sdp"
             android:paddingTop="@dimen/dp_10"
             android:paddingRight="@dimen/_30sdp"
@@ -234,4 +272,6 @@
             android:textColor="@android:color/white" />
 
     </LinearLayout>
+    </LinearLayout>
+  </ScrollView>
 </LinearLayout>

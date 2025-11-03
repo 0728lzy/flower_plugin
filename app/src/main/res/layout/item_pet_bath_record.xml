@@ -1,15 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="12dp"
-    app:cardElevation="4dp">
+
+    android:orientation="vertical">
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="12dp"
+        app:cardBackgroundColor="#2196F3"
+        app:cardElevation="4dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#FFF3E0"
+        android:layout_marginTop="5dp"
         android:orientation="vertical">
 
         <!-- 主要内容区域 -->
@@ -42,6 +51,8 @@
                     android:layout_height="wrap_content"
                     android:text="2023-06-15"
                     android:textColor="@color/color_999999"
+                    android:padding="5dp"
+                    android:background="@drawable/bg_gray"
                     android:textSize="12sp" />
 
             </LinearLayout>
@@ -51,11 +62,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
                 <!-- 左侧信息 -->
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical">
@@ -75,6 +86,8 @@
                         <TextView
                             android:id="@+id/tv_shampoo"
                             android:layout_width="wrap_content"
+                            android:layout_weight="1.0"
+                            android:gravity="right"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:text="宠物专用香波"
@@ -83,6 +96,12 @@
                             android:textStyle="bold" />
 
                     </LinearLayout>
+                    <View
+                        android:background="#e1e1e1"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -102,6 +121,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
+                            android:layout_weight="1.0"
+                            android:gravity="right"
                             android:text="15分钟"
                             android:textColor="@color/color_333333"
                             android:textSize="12sp"
@@ -110,10 +131,15 @@
                     </LinearLayout>
 
                 </LinearLayout>
-
+                <View
+                    android:background="#e1e1e1"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"/>
                 <!-- 右侧信息 -->
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical">
@@ -135,13 +161,20 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
+                            android:layout_weight="1.0"
+                            android:gravity="right"
                             android:text="38°C"
                             android:textColor="@color/color_333333"
                             android:textSize="12sp"
                             android:textStyle="bold" />
 
                     </LinearLayout>
-
+                    <View
+                        android:background="#e1e1e1"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"/>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -160,6 +193,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
+                            android:layout_weight="1.0"
+                            android:gravity="right"
                             android:text="低热风"
                             android:textColor="@color/color_333333"
                             android:textSize="12sp"
@@ -171,8 +206,9 @@
 
             </LinearLayout>
             <View
-                android:layout_marginTop="@dimen/dp_10"
-                android:background="#FFDDAA"
+                android:background="#e1e1e1"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"/>
             <!-- 备注 -->
@@ -181,6 +217,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:background="@drawable/bg_no_empty_gray"
+                android:padding="5dp"
                 android:text="毛毛在洗澡过程中表现得很配合，毛发变得非常柔顺有光泽。"
                 android:textColor="@color/color_666666"
                 android:textSize="14sp"
@@ -218,27 +256,30 @@
             <!-- 操作按钮 -->
             <TextView
                 android:id="@+id/btn_edit"
-                android:layout_width="wrap_content"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
-                android:background="?attr/selectableItemBackground"
+                android:background="@drawable/bg_button_delete_blue"
                 android:padding="8dp"
                 android:text="编辑"
-                android:textColor="@color/black"
+                android:gravity="center"
+                android:textColor="@color/white"
                 android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/btn_delete"
-                android:layout_width="wrap_content"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackground"
+                android:background="@drawable/bg_button_delete_red"
                 android:padding="8dp"
+                android:gravity="center"
                 android:text="删除"
-                android:textColor="#F44336"
+                android:textColor="@color/white"
                 android:textSize="12sp" />
 
         </LinearLayout>
 
     </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
-</androidx.cardview.widget.CardView>
+</LinearLayout>

@@ -49,8 +49,8 @@ object AppConst {
 
     private val urls = when (CHANNEL) {
         "CSJ" -> Pair(
-            "", //用户协议
-            ""    //隐私政策
+            "https://app.dingjiwangluo.com/protocol/mould/agreement/7f4533d9-2483-4f84-86a2-c61b53fcaf75.html", //用户协议
+            "https://app.dingjiwangluo.com/protocol/mould/privacy/bdc1310c-9615-4ba2-932e-bf6c99ff8092.html"    //隐私政策
         )
         else -> Pair(
             "https://app.dingjiwangluo.com/protocol/mould/agreement/175b3397-b137-47f1-83b5-8dd90eb92380.html", //用户协议  上海亮侨

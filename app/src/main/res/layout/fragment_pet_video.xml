@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_demo_gradient"
+    android:background="@color/white"
     android:fillViewport="true">
 
     <LinearLayout
@@ -22,7 +22,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="虚拟视频"
-                android:textColor="#9810FA"
+                android:textColor="@color/app_text_color"
                 android:textSize="@dimen/_25sdp"
                 android:textStyle="bold"
                 android:layout_gravity="center_horizontal"
@@ -32,7 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="与宠物进行视频互动"
-                android:textColor="@color/color_666666"
+                android:textColor="@color/app_text_color"
                 android:textSize="14sp"
                 android:layout_gravity="center_horizontal" />
 

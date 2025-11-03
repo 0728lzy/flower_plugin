@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/bg_demo_gradient">
+    android:background="@color/white">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -20,9 +20,11 @@
             <TextView
 
                 android:layout_marginTop="40dp"
-                android:textColor="@color/black"
+                android:textColor="@color/app_text_color"
                 android:textSize="24dp"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="20dp"
+                android:textStyle="bold"
                 android:text="我的"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
@@ -44,7 +46,7 @@
             <LinearLayout
                 android:layout_marginTop="10dp"
                 android:layout_marginHorizontal="20dp"
-                android:background="@drawable/beizi_white_about"
+                android:background="@drawable/bg_item_pet_orange_line_8"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -127,7 +129,8 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:paddingVertical="15dp"
-                    android:background="?android:attr/selectableItemBackground">
+                    android:background="@drawable/bg_mine"
+                    android:layout_marginBottom="15dp">
 
                     <FrameLayout
                         android:layout_width="40dp"
@@ -157,11 +160,6 @@
                         android:tint="@color/gray_light" />
 
                 </LinearLayout>
-                <LinearLayout
-                    android:layout_marginHorizontal="10dp"
-                    android:background="#E6E6E6"
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"/>
 
                 <!-- 使用帮助 -->
                 <LinearLayout
@@ -170,7 +168,8 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:paddingVertical="15dp"
-                    android:background="?android:attr/selectableItemBackground">
+                    android:background="@drawable/bg_mine"
+                    android:layout_marginBottom="15dp">
 
                     <FrameLayout
                         android:layout_width="40dp"
@@ -181,8 +180,7 @@
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:layout_gravity="center"
-                            android:src="@mipmap/mine_protocol"
-                            android:tint="#155DFC" />
+                            android:src="@mipmap/mine_protocol"  />
                     </FrameLayout>
 
                     <TextView
@@ -199,11 +197,7 @@
                         android:src="@mipmap/mine_arrow_right"
                         android:tint="@color/gray_light" />
                 </LinearLayout>
-                <LinearLayout
-                    android:layout_marginHorizontal="10dp"
-                    android:background="#E6E6E6"
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"/>
+
                 <!-- 关于我们 -->
                 <LinearLayout
                     android:id="@+id/mine_lin_user_fb"
@@ -211,7 +205,8 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:paddingVertical="15dp"
-                    android:background="?android:attr/selectableItemBackground">
+                    android:background="@drawable/bg_mine"
+                    android:layout_marginBottom="15dp">
 
                     <FrameLayout
                         android:layout_width="40dp"
@@ -223,7 +218,7 @@
                             android:layout_height="20dp"
                             android:layout_gravity="center"
                             android:src="@mipmap/mine_feedback"
-                            android:tint="#00A63E" />
+                            />
                     </FrameLayout>
 
                     <TextView

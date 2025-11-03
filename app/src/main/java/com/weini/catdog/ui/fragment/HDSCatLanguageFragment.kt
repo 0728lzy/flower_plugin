@@ -117,10 +117,17 @@ class HDSCatLanguageFragment : RootFragment(R.layout.fragment_cat_language) {
                 ZYMAllAdsUtils.showAdJLTurn(requireActivity(),"JL"){
                     Handler().postDelayed({
                         runOnUiThread {
-                            if (result==null||!result)
-                                Toast.makeText(requireContext(),"请发出足够大的声音以保证能被识别翻译~", Toast.LENGTH_SHORT).show()
-                            else
+                            if (result==null||!result) {
+                                Toast.makeText(
+                                    requireContext(),
+                                    "请发出足够大的声音以保证能被识别翻译~",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                binding.desIv.visibility = View.VISIBLE
+                            }else {
                                 ResultDialog(entity).show(requireRootActivity())
+                                binding.desIv.visibility = View.VISIBLE
+                            }
                             binding.tvRecordHint.text = "点击按钮开始录音"
                         }
                     }, 600)
@@ -146,10 +153,12 @@ class HDSCatLanguageFragment : RootFragment(R.layout.fragment_cat_language) {
                 when (type) {
                     1 -> {
                         binding.tvRecordHint.text = "正在录制人话..."
+                        binding.desIv.visibility = View.INVISIBLE
                     }
                     2 -> {
                         binding.ivCatMic.setBackgroundResource(R.drawable.bg_record_button_active)
                         binding.tvRecordHint.text = "正在录制喵语..."
+                        binding.desIv.visibility = View.INVISIBLE
                     }
                 }
 

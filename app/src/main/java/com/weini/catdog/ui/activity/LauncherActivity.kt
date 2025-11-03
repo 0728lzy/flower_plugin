@@ -113,7 +113,7 @@ class LauncherActivity : BaseActivity() {
             AppConst.GetWebViewUserAgent = ""
         }
         setProgressBar(5)
-        if (LzyUtils.isNormalUser(this)) {
+        if (LzyUtils.isNormalUser(this) && !(AppConst.CHANNEL.equals("CSJ"))) {
 //            Log.e("tttt","LzyUtils.isNormalUser")
             GetHttpDataUtil.ipRisk()
         } else {

@@ -23,7 +23,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="添加记录"
-            android:textColor="@color/color_9C27B0"
+            android:gravity="center"
+            android:textColor="@color/app_text_color"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -53,7 +54,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:text="记录标题"
-                android:textColor="@color/color_333333"
+                android:textStyle="bold"
+                android:textColor="@color/app_text_color"
+
                 android:textSize="14sp" />
 
             <EditText
@@ -75,23 +78,39 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:text="选择宠物"
-                android:textColor="@color/color_333333"
+                android:textColor="@color/app_text_color"
+                android:textStyle="bold"
                 android:textSize="14sp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_marginBottom="16dp"
+                android:layout_height="wrap_content">
+
 
             <Spinner
                 android:id="@+id/spinner_pet"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:layout_marginBottom="16dp"
                 android:background="@drawable/spinner_background" />
 
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/down_icon"/>
+
+            </RelativeLayout>
             <!-- 记录内容 -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:text="记录内容"
-                android:textColor="@color/color_333333"
+                android:textColor="@color/app_text_color"
+                android:textStyle="bold"
                 android:textSize="14sp" />
 
             <EditText
@@ -121,7 +140,8 @@
 
         <TextView
             android:id="@+id/btn_cancel"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1.0"
             android:layout_height="wrap_content"
             android:layout_marginEnd="12dp"
             android:background="@drawable/bg_button_add_pet_1"
@@ -129,15 +149,19 @@
             android:paddingTop="@dimen/dp_10"
             android:paddingRight="@dimen/_30sdp"
             android:paddingBottom="@dimen/dp_10"
+            android:gravity="center"
             android:text="取消"
             android:textColor="@color/color_333333" />
 
+
         <TextView
             android:id="@+id/btn_save"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1.0"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_button_add_pet"
+            android:background="@drawable/bg_button_add_pet_10"
             android:paddingLeft="@dimen/_30sdp"
+            android:gravity="center"
             android:paddingTop="@dimen/dp_10"
             android:paddingRight="@dimen/_30sdp"
             android:paddingBottom="@dimen/dp_10"

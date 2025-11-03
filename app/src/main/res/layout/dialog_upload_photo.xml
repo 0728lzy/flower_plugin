@@ -20,7 +20,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="上传照片"
-            android:textColor="@color/color_9C27B0"
+            android:gravity="center"
+            android:textColor="@color/app_text_color"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -40,8 +41,9 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:text="选择宠物"
-        android:textColor="@color/color_333333"
+        android:textColor="@color/app_text_color"
         android:textSize="14sp" />
+
 
     <TextView
         android:id="@+id/tv_pet_name"
@@ -52,6 +54,7 @@
         android:gravity="center_vertical"
         android:paddingStart="12dp"
         android:paddingEnd="12dp"
+        android:drawableRight="@drawable/down_icon"
         android:text="毛毛"
         android:textColor="@color/color_333333"
         android:textSize="14sp" />
@@ -102,7 +105,7 @@
             android:background="@drawable/bg_button_add_pet_1"
             android:gravity="center"
             android:text="选择文件"
-            android:textColor="@color/color_333333"
+            android:textColor="#78909C"
             android:textSize="14sp" />
 
         <TextView
@@ -114,7 +117,7 @@
             android:background="@drawable/bg_button_add_pet_1"
             android:gravity="center"
             android:text="选择任意文件"
-            android:textColor="@color/color_333333"
+            android:textColor="#78909C"
             android:textSize="14sp" />
     </LinearLayout>
 
@@ -156,7 +159,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="12dp"
-            android:background="@drawable/bg_button_add_pet_1"
+            android:background="@drawable/bg_button_add_pet_no_line"
             android:paddingLeft="@dimen/_30sdp"
             android:paddingTop="@dimen/dp_10"
             android:paddingRight="@dimen/_30sdp"
@@ -168,7 +171,7 @@
             android:id="@+id/btn_save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_button_add_pet"
+            android:background="@drawable/bg_button_add_pet_10"
             android:paddingLeft="@dimen/_30sdp"
             android:paddingTop="@dimen/dp_10"
             android:paddingRight="@dimen/_30sdp"

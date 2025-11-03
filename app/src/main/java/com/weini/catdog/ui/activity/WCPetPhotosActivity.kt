@@ -27,6 +27,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import com.gyf.immersionbar.ImmersionBar
 import com.lxj.xpopup.core.BasePopupView
+import com.weini.catdog.ui.dialog.DeletePhotoDialog
 
 
 class WCPetPhotosActivity : BaseActivity() {
@@ -84,7 +85,8 @@ class WCPetPhotosActivity : BaseActivity() {
                     // TODO: 实现照片预览
                 }
                 "delete" -> {
-                    deletePhoto(photo)
+                    deletePopupDialog(photo)
+
                 }
             }
         }
@@ -136,6 +138,33 @@ class WCPetPhotosActivity : BaseActivity() {
             .asCustom(dialog)
             .show()
     }
+
+
+    var deletePopupView: BasePopupView? = null
+    private fun deletePopupDialog(photo: PetPhoto) {
+        if (deletePopupView?.isShow == true) {
+            return
+        }
+        val dialog = DeletePhotoDialog(this)
+        dialog.listener = object : DeletePhotoDialog.OnOperatorListener{
+            override fun cancel() {
+
+            }
+
+            override fun ok() {
+                deletePhoto(photo)
+            }
+
+        }
+        deletePopupView = XPopup.Builder(this@WCPetPhotosActivity)
+            .autoOpenSoftInput(false)
+            .autoDismiss(false)
+            .dismissOnBackPressed(false)
+            .dismissOnTouchOutside(false)
+            .asCustom(dialog)
+            .show()
+    }
+
 
     private fun savePhotoToDatabase(imageUri: Uri, description: String, selectedPet: Pet) {
         try {

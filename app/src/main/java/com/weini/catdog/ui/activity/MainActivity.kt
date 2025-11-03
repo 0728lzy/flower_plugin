@@ -151,33 +151,33 @@ class MainActivity : BaseActivity() {
         // 根据选中的索引设置对应的背景色、图标和文字颜色
         when (index) {
             0 -> {
-                binding.bottomBar.tabCatLanguage.setBackgroundColor(ContextCompat.getColor(this, R.color.tab_cat_language_selected))
-                binding.bottomBar.ivCatLanguage.setImageResource(R.drawable.icon_index1_s)
-                binding.bottomBar.tvCatLanguage.setTextColor(ContextCompat.getColor(this, R.color.color_main_tab_1))
+                binding.bottomBar.tabCatLanguage.setBackgroundResource(R.drawable.bg_home_tab_selected)
+                binding.bottomBar.ivCatLanguage.setImageResource(R.drawable.icon_index2_s)
+                binding.bottomBar.tvCatLanguage.setTextColor(ContextCompat.getColor(this, R.color.app_text_color))
             }
 
             1 -> {
-                binding.bottomBar.tabDogLanguage.setBackgroundColor(ContextCompat.getColor(this, R.color.tab_dog_language_selected))
-                binding.bottomBar.ivDogLanguage.setImageResource(R.drawable.icon_index2_s)
-                binding.bottomBar.tvDogLanguage.setTextColor(ContextCompat.getColor(this, R.color.color_main_tab_2))
+                binding.bottomBar.tabDogLanguage.setBackgroundResource(R.drawable.bg_home_tab_selected)
+                binding.bottomBar.ivDogLanguage.setImageResource(R.drawable.icon_index1_n)
+                binding.bottomBar.tvDogLanguage.setTextColor(ContextCompat.getColor(this, R.color.app_text_color))
             }
 
             2 -> {
-                binding.bottomBar.tabPetManagement.setBackgroundColor(ContextCompat.getColor(this, R.color.tab_pet_management_selected))
-                binding.bottomBar.ivPetManagement.setImageResource(R.drawable.icon_index3_s)
-                binding.bottomBar.tvPetManagement.setTextColor(ContextCompat.getColor(this, R.color.color_main_tab_3))
+                binding.bottomBar.tabPetManagement.setBackgroundResource(R.drawable.bg_home_tab_selected)
+                binding.bottomBar.ivPetManagement.setImageResource(R.drawable.icon_index3_n)
+                binding.bottomBar.tvPetManagement.setTextColor(ContextCompat.getColor(this, R.color.app_text_color))
             }
 
             3 -> {
-                binding.bottomBar.tabCuteVideo.setBackgroundColor(ContextCompat.getColor(this, R.color.tab_cute_video_selected))
-                binding.bottomBar.ivCuteVideo.setImageResource(R.drawable.icon_index4_s)
-                binding.bottomBar.tvCuteVideo.setTextColor(ContextCompat.getColor(this, R.color.color_main_tab_4))
+                binding.bottomBar.tabCuteVideo.setBackgroundResource(R.drawable.bg_home_tab_selected)
+                binding.bottomBar.ivCuteVideo.setImageResource(R.drawable.icon_index4_n)
+                binding.bottomBar.tvCuteVideo.setTextColor(ContextCompat.getColor(this, R.color.app_text_color))
             }
 
             4 -> {
-                binding.bottomBar.tabProfile.setBackgroundColor(ContextCompat.getColor(this, R.color.tab_profile_selected))
-                binding.bottomBar.ivProfile.setImageResource(R.drawable.icon_index5_s)
-                binding.bottomBar.tvProfile.setTextColor(ContextCompat.getColor(this, R.color.color_main_tab_5))
+                binding.bottomBar.tabProfile.setBackgroundResource(R.drawable.bg_home_tab_selected)
+                binding.bottomBar.ivProfile.setImageResource(R.drawable.icon_index5_n)
+                binding.bottomBar.tvProfile.setTextColor(ContextCompat.getColor(this, R.color.app_text_color))
             }
         }
         binding.mainPager.currentItem = index
@@ -200,12 +200,17 @@ class MainActivity : BaseActivity() {
         if (AppConst.splashInfoShowMainCP) {
             AppConst.splashInfoShowMainCP = false
             isShowYSDialog = false
+            if(AppConst.CHANNEL.equals("CSJ")){
+                showAdCpOne()
+            }else{
             if(UserInfoModel.getIsFirstVip() && AppConst.is_show_ad) {
                 firstShowVipDialog()
                 UserInfoModel.setIsFirstVip(false)
             }else {
                 showAdCpOne()
             }
+            }
+
         }
     }
     private fun firstShowVipDialog() {

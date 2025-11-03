@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E8CCEC"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <!-- 标题栏 -->
@@ -22,7 +22,7 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:clickable="true"
             android:focusable="true"
-            android:tint="#AA48BC"
+            android:tint="@color/app_text_color"
             android:src="@mipmap/toolbar_close_iv_black" />
 
         <TextView
@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="宠物相册"
-            android:textColor="#AA48BC"
+            android:textColor="@color/app_text_color"
             android:textSize="@dimen/_20sdp"
             android:textStyle="bold" />
 
@@ -41,7 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="管理您的宠物照片"
-            android:textColor="@color/black"
+            android:textColor="@color/app_text_color"
             android:textSize="12sp" />
 
     </LinearLayout>
@@ -72,7 +72,7 @@
         android:padding="16dp">
 
         <!-- 标题和上传按钮 -->
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
@@ -80,7 +80,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="我的宠物照片"
@@ -88,18 +88,29 @@
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/btn_upload_photo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_button_add_pet"
-                android:paddingHorizontal="16dp"
-                android:paddingVertical="8dp"
-                android:text="+ 上传照片"
-                android:textColor="@android:color/white"
-                android:textSize="14sp" />
+            <View
+                android:layout_width="80dp"
+                android:layout_height="2dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="20dp"
+                android:background="@color/app_text_color"/>
 
-        </LinearLayout>
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/btn_upload_photo"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@drawable/bg_button_add_pet"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="8dp"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:text="+ 上传照片"
+            android:textColor="@android:color/white"
+            android:textSize="17dp" />
 
         <!-- 照片列表 -->
         <androidx.recyclerview.widget.RecyclerView

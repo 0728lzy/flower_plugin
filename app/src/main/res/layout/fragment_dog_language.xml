@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_demo_gradient"
+    android:background="@color/white"
     android:fillViewport="true">
 
     <LinearLayout
@@ -12,35 +12,32 @@
         android:orientation="vertical"
         android:gravity="center_horizontal">
         <!-- 顶部标题区域 -->
-        <ImageView
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_marginTop="@dimen/_50sdp"
-            android:src="@mipmap/ym_img_dog"/>
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="30dp"
             android:text="汪语翻译官"
-            android:textColor="#E60076"
+            android:textColor="@color/app_text_color"
             android:textSize="@dimen/_25sdp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tv_subtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginTop="8dp"
             android:text="听懂狗狗的每一句话"
-            android:textColor="@color/color_666666"
-            android:textSize="@dimen/_12ssp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_title" />
+            android:textColor="@color/app_text_color"
+            android:textSize="@dimen/_12ssp"  />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:layout_marginTop="10dp"
+            android:src="@mipmap/ym_img_dog"/>
+
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/adv"
             android:layout_width="match_parent"
@@ -79,18 +76,28 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_15sdp"
-            android:layout_marginTop="@dimen/_20sdp"
-            app:cardCornerRadius="@dimen/_12sdp"
+            app:cardCornerRadius="8dp"
             app:cardElevation="@dimen/_2sdp"
             app:layout_constraintTop_toBottomOf="@id/adv">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
+                android:background="@drawable/bg_home_line_green"
                 android:orientation="vertical"
                 android:gravity="center_horizontal"
-                android:paddingVertical="28dp">
+                android:paddingVertical="10dp">
+                <!-- 提示文本 -->
+                <TextView
+                    android:id="@+id/tv_record_hint"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="点击按钮开始录音"
+                    android:textColor="@color/color_999999"
+                    android:textSize="14dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
 
                 <ImageView
                     android:id="@+id/iv_dog_mic"
@@ -100,40 +107,48 @@
                     android:padding="16dp"
                     android:elevation="6dp"
                     android:src="@mipmap/ic_mic_white"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:layout_marginTop="10dp"  />
 
-                <!-- 提示文本 -->
-                <TextView
-                    android:id="@+id/tv_record_hint"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/bg_white_rounded"
-                    android:gravity="center"
-                    android:text="点击按钮开始录音"
-                    android:textColor="@color/color_999999"
-                    android:textSize="14dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+                <ImageView
+                    android:id="@+id/des_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:src="@mipmap/detail_fy"
+                    android:layout_marginTop="10dp"  />
+
+
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
 
 
 
-        <TextView
-            android:id="@+id/tv_common_title"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="常用汪语"
-            android:textColor="@color/color_333333"
-            android:textSize="@dimen/_16ssp"
-            app:layout_constraintTop_toBottomOf="@id/card_translation"
-            android:layout_marginHorizontal="12dp"
-            android:layout_marginTop="12dp"
-            android:textStyle="bold" />
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/tv_common_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="常用汪语"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/_16ssp"
+                android:layout_centerInParent="true"
+                 android:layout_marginHorizontal="12dp"
+                android:layout_marginTop="12dp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="80dp"
+                android:layout_height="2dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="20dp"
+                android:background="@color/app_text_color"/>
+        </RelativeLayout>
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_common_sounds"
