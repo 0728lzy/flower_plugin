@@ -150,7 +150,6 @@
         android:id="@+id/ripple_background"
         android:layout_width="fill_parent"
         android:layout_height="0.0dip"
-        app:layout_constraintBottom_toTopOf="@+id/ln_bottomBar"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

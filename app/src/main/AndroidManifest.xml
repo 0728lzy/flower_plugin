@@ -222,20 +222,20 @@
         <activity
             android:name="com.qq.e.ads.PortraitADActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+            tools:replace="android:configChanges"
             android:screenOrientation="portrait"/>
         <activity
             android:name="com.qq.e.ads.LandscapeADActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
-
             android:screenOrientation="landscape"
-            tools:replace="android:screenOrientation" /> <!-- 声明SDK所需要的组件 -->
+            tools:replace="android:screenOrientation,android:configChanges" /> <!-- 声明SDK所需要的组件 -->
         <service
             android:name="com.qq.e.comm.DownloadService"
             android:exported="false" /> <!-- 请开发者注意字母的大小写，ADActivity，而不是AdActivity -->
         <activity
             android:name="com.qq.e.ads.ADActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
-
+            tools:replace="android:configChanges"
             android:screenOrientation="portrait" /> <!-- GDT end================== -->
         <!-- Pangle start================== -->
         <!-- 穿山甲 start================== -->

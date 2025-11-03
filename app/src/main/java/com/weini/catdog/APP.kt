@@ -88,32 +88,32 @@ class APP : Application() {
                 }) //初始化插全屏广告
                 AdCPNoLimitUtils.initPreloading()
             }
-            if(AppConst.is_show_ad && !AppConst.isWaked){
-                if(!AdCPTwoUtils.isReady()) {
-                    AdCPTwoUtils.init(
-                        activity,
-                        object : AdCPTwoUtils.GirdMenuStateListener {
-                            override fun onSuccess() {
-
-                            }
-
-                            override fun onError() {
-                            }
-
-                            override fun showVideoClosed() {
-                            }
-
-                            override fun onShowError() {
-                            }
-                        })
-                    Handler().postDelayed({
-                        AdCPTwoUtils.initPreloading()
-                    },1000)
-                }
-            }
-            if(UserInfoModel.getIsFirstVip()){
-
-            }
+//            if(AppConst.is_show_ad && !AppConst.isWaked){
+//                if(!AdCPTwoUtils.isReady()) {
+//                    AdCPTwoUtils.init(
+//                        activity,
+//                        object : AdCPTwoUtils.GirdMenuStateListener {
+//                            override fun onSuccess() {
+//
+//                            }
+//
+//                            override fun onError() {
+//                            }
+//
+//                            override fun showVideoClosed() {
+//                            }
+//
+//                            override fun onShowError() {
+//                            }
+//                        })
+//                    Handler().postDelayed({
+//                        AdCPTwoUtils.initPreloading()
+//                    },1000)
+//                }
+//            }
+//            if(UserInfoModel.getIsFirstVip()){
+//
+//            }
         }
     }
 

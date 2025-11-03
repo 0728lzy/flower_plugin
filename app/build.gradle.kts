@@ -221,15 +221,15 @@ dependencies {
 
 //GroMore new begin
 
-    val csjVersion = "7.1.3.2"
+    val csjVersion = "7.1.3.9"
 
-    val adnGdtVersion = "4.642.1512"
+    val adnGdtVersion = "4.660.1530"
     val adnGdtVersionFix = ".0"
 
-    val adnKsVersion = "4.6.30.1"
+    val adnKsVersion = "4.9.20.1"
     val adnKsVersionFix = ".0"
 
-    val adnBaiduVersion = "9.3941"
+    val adnBaiduVersion = "9.423"
     val adnBaiduVersionFix = ".0"
 
     val adnAdmobVersion = "17.2.0"
