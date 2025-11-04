@@ -76,7 +76,7 @@
                     android:id="@+id/mine_app_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="猫狗翻译官"
+                    android:text="@string/app_name"
                     android:textColor="@color/black"
                     android:textSize="18dp"
                     android:textStyle="bold" />
