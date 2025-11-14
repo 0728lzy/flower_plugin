@@ -103,7 +103,7 @@
             android:id="@+id/btn_upload_photo"
             android:layout_width="match_parent"
             android:layout_height="45dp"
-            android:background="@drawable/bg_button_add_pet"
+            android:background="@drawable/bg_button_add_petda"
             android:paddingHorizontal="16dp"
             android:paddingVertical="8dp"
             android:layout_marginBottom="10dp"

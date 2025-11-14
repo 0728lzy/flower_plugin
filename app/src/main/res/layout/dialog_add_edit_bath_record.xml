@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="添加洗澡记录"
-            android:textColor="@color/app_text_color"
+            android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -60,7 +60,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="选择宠物"
-                android:textColor="@color/app_text_color"
+                android:textColor="@color/black"
                 android:textSize="14sp"
                 android:textStyle="bold" />
             <View
@@ -99,7 +99,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="水温 (°C)"
-                        android:textColor="@color/app_text_color"
+                        android:textColor="@color/black"
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
@@ -128,7 +128,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="洗澡时长 (分钟)"
-                        android:textColor="@color/app_text_color"
+                        android:textColor="@color/black"
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
@@ -153,7 +153,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="使用香波"
-                android:textColor="@color/app_text_color"
+                android:textColor="@color/black"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
@@ -169,7 +169,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:text="请输入使用的香液"
-                android:textColor="@color/app_text_color"
+                android:textColor="@color/black"
                 android:textSize="12dp" />
 
             <EditText
@@ -188,7 +188,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="吹风方式"
-                android:textColor="@color/app_text_color"
+                android:textColor="@color/black"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
@@ -209,7 +209,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="备注"
-                android:textColor="@color/app_text_color"
+                android:textColor="@color/black"
                 android:textSize="14sp"
                 android:textStyle="bold" />
             <View

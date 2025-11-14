@@ -69,21 +69,36 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
                 android:orientation="vertical">
-
-
-
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_marginBottom="10dp"
-                    android:background="@drawable/app_home_bg"
-                    android:layout_height="200dp">
+                    android:layout_height="340dp">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/head_bg"/>
 
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="180dp"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="50dp"
                         android:orientation="vertical">
-
+                        <TextView
+                            android:padding="8dp"
+                            android:id="@+id/btn_add_pet"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="+ 添加我的宠物"
+                            android:textStyle="bold"
+                            android:gravity="center"
+                            android:layout_gravity="center"
+                            android:textColor="@color/app_text_color"
+                            android:textSize="17dp"
+                            android:background="@drawable/bg_button_add_pet"/>
 
                     </LinearLayout>
 
@@ -95,18 +110,7 @@
                 </RelativeLayout>
 
 
-                <TextView
-                    android:padding="8dp"
-                    android:id="@+id/btn_add_pet"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="+ 添加宠物"
-                    android:textStyle="bold"
-                    android:gravity="center"
-                    android:layout_gravity="center"
-                    android:textColor="@android:color/white"
-                    android:textSize="17dp"
-                    android:background="@drawable/bg_button_add_pet"/>
+
                 <!-- 宠物列表 -->
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_pets"
@@ -178,132 +182,128 @@
                     android:textSize="18dp"
                     android:textColor="@color/white"/>
             </LinearLayout>
-            
+
             <LinearLayout
-                android:id="@+id/layout_pet_album"
                 android:layout_width="match_parent"
-                android:layout_height="90dp"
-                android:background="@drawable/bg_home_line_green"
-                android:layout_marginTop="10dp"
-                android:paddingRight="20dp"
-                android:paddingLeft="20dp"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:src="@mipmap/icon_tab_da_fun1"/>
-                    <TextView
+                    android:id="@+id/layout_pet_album"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.0"
+                    android:layout_height="90dp"
+                    android:background="@drawable/bg_home_line_green"
+                    android:layout_marginTop="10dp"
+                    android:paddingRight="20dp"
+                    android:paddingLeft="20dp"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+
+                    <LinearLayout
                         android:layout_width="wrap_content"
+                        android:gravity="center_horizontal"
                         android:layout_height="wrap_content"
-                        android:text="宠物相册"
-                        android:textSize="14dp"
-                        android:layout_marginTop="5dp"
-                        android:textColor="@color/app_text_color"/>
+                        android:orientation="vertical">
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:tint="@color/white"
+                            android:src="@mipmap/icon_tab_da_fun1"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="宠物相册"
+                            android:textSize="14dp"
+                            android:layout_marginTop="5dp"
+                            android:textColor="@color/white"/>
+
+                    </LinearLayout>
+
 
                 </LinearLayout>
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="3dp"
-                    android:layout_weight="1.0"/>
 
-                <ImageView
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
-                    android:src="@mipmap/icon_tab_da_fun4"
-                    app:tint="@color/app_text_color" />
+
+                <LinearLayout
+                    android:id="@+id/layout_pet_notes"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.0"
+                    android:layout_marginLeft="10dp"
+                    android:layout_height="90dp"
+                    android:background="@drawable/bg_home_line_green"
+                    android:layout_marginTop="10dp"
+                    android:paddingRight="20dp"
+                    android:paddingLeft="20dp"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:tint="@color/white"
+                            android:src="@mipmap/icon_tab_da_fun2"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="记事本"
+                            android:textSize="14dp"
+                            android:layout_marginTop="5dp"
+                            android:textColor="@color/white"/>
+
+                    </LinearLayout>
+
+
+
+                </LinearLayout>
+
+
+
+                <LinearLayout
+                    android:id="@+id/layout_bath_record"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.0"
+                    android:layout_marginLeft="10dp"
+                    android:layout_height="90dp"
+                    android:background="@drawable/bg_home_line_green"
+                    android:layout_marginTop="10dp"
+                    android:paddingRight="20dp"
+                    android:paddingLeft="20dp"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:gravity="center_horizontal"
+
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:tint="@color/white"
+                            android:src="@mipmap/icon_tab_da_fun3"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="洗澡记录"
+                            android:textSize="14dp"
+                            android:layout_marginTop="5dp"
+                            android:textColor="@color/white"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
             </LinearLayout>
 
 
-            <LinearLayout
-                android:id="@+id/layout_pet_notes"
-                android:layout_width="match_parent"
-                android:layout_height="90dp"
-                android:background="@drawable/bg_home_line_green"
-                android:layout_marginTop="10dp"
-                android:paddingRight="20dp"
-                android:paddingLeft="20dp"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:src="@mipmap/icon_tab_da_fun2"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="记事本"
-                        android:textSize="14dp"
-                        android:layout_marginTop="5dp"
-                        android:textColor="@color/app_text_color"/>
-
-                </LinearLayout>
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="3dp"
-                    android:layout_weight="1.0"/>
-
-                <ImageView
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
-                    android:src="@mipmap/icon_tab_da_fun4"
-                    app:tint="@color/app_text_color" />
-            </LinearLayout>
-
-
-
-            <LinearLayout
-                android:id="@+id/layout_bath_record"
-                android:layout_width="match_parent"
-                android:layout_height="90dp"
-                android:background="@drawable/bg_home_line_green"
-                android:layout_marginTop="10dp"
-                android:paddingRight="20dp"
-                android:paddingLeft="20dp"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:src="@mipmap/icon_tab_da_fun3"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="洗澡记录"
-                        android:textSize="14dp"
-                        android:layout_marginTop="5dp"
-                        android:textColor="@color/app_text_color"/>
-
-                </LinearLayout>
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="3dp"
-                    android:layout_weight="1.0"/>
-
-                <ImageView
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
-                    android:src="@mipmap/icon_tab_da_fun4"
-                    app:tint="@color/app_text_color" />
-            </LinearLayout>
 
 
         </LinearLayout>

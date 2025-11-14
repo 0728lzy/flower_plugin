@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/white">
+    android:background="@drawable/app_home_bg">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -15,38 +15,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-
             android:paddingBottom="40dp">
-            <TextView
 
-                android:layout_marginTop="40dp"
-                android:textColor="@color/app_text_color"
-                android:textSize="24dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="20dp"
-                android:textStyle="bold"
-                android:text="我的"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_16sdp">
-
-                <FrameLayout
-                    android:id="@+id/feed_container_about"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
             <!-- 顶部头像区域 -->
             <LinearLayout
-                android:layout_marginTop="10dp"
-                android:layout_marginHorizontal="20dp"
-                android:background="@drawable/bg_item_pet_orange_line_8"
+                android:background="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -72,7 +45,7 @@
 
                 <!-- 应用名称 -->
                 <TextView
-                    android:layout_marginBottom="@dimen/_20sdp"
+                    android:layout_marginBottom="5dp"
                     android:id="@+id/mine_app_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -98,7 +71,30 @@
                     android:text=""
                     android:textColor="@color/little_gray"
                     android:textSize="12dp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:background="#55e1e1e1"
+                    android:layout_marginTop="10dp"/>
             </LinearLayout>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_16sdp">
+
+                <FrameLayout
+                    android:id="@+id/feed_container_about"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             <!-- 设置卡片区域 -->
             <LinearLayout
@@ -108,95 +104,9 @@
                 android:orientation="vertical"
                 android:background="@drawable/bg_white_rounded_card"
                 android:layout_marginHorizontal="@dimen/_20sdp"
-                android:paddingHorizontal="20dp"
-                android:paddingVertical="20dp">
+               >
 
-                <!-- 标题 -->
-                <TextView
-                    android:visibility="gone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="设置与帮助"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:layout_marginBottom="20dp" />
 
-                <!-- 隐私设置 -->
-                <LinearLayout
-                    android:id="@+id/mine_lin_privacy"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:paddingVertical="15dp"
-                    android:background="@drawable/bg_mine"
-                    android:layout_marginBottom="15dp">
-
-                    <FrameLayout
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_marginEnd="15dp">
-
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_gravity="center"
-                            android:src="@mipmap/mine_privacy"
-                            android:tint="#4A5565" />
-                    </FrameLayout>
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="隐私政策"
-                        android:textColor="@color/black"
-                        android:textSize="16sp" />
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@mipmap/mine_arrow_right"
-                        android:tint="@color/gray_light" />
-
-                </LinearLayout>
-
-                <!-- 使用帮助 -->
-                <LinearLayout
-                    android:id="@+id/mine_lin_user_pro"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:paddingVertical="15dp"
-                    android:background="@drawable/bg_mine"
-                    android:layout_marginBottom="15dp">
-
-                    <FrameLayout
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_marginEnd="15dp">
-
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_gravity="center"
-                            android:src="@mipmap/mine_protocol"  />
-                    </FrameLayout>
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="用户协议"
-                        android:textColor="@color/black"
-                        android:textSize="16sp" />
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@mipmap/mine_arrow_right"
-                        android:tint="@color/gray_light" />
-                </LinearLayout>
 
                 <!-- 关于我们 -->
                 <LinearLayout
@@ -204,8 +114,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
                     android:paddingVertical="15dp"
-                    android:background="@drawable/bg_mine"
                     android:layout_marginBottom="15dp">
 
                     <FrameLayout
@@ -214,8 +125,8 @@
                         android:layout_marginEnd="15dp">
 
                         <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
                             android:layout_gravity="center"
                             android:src="@mipmap/mine_feedback"
                             />
@@ -235,6 +146,95 @@
                         android:src="@mipmap/mine_arrow_right"
                         android:tint="@color/gray_light" />
                 </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#55e1e1e1"/>
+                <!-- 隐私设置 -->
+                <LinearLayout
+                    android:id="@+id/mine_lin_privacy"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:paddingVertical="15dp"
+                    android:layout_marginBottom="15dp">
+
+                    <FrameLayout
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="15dp">
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="center"
+                            android:src="@mipmap/mine_privacy"
+                              />
+                    </FrameLayout>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="隐私政策"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@mipmap/mine_arrow_right"
+                        android:tint="@color/gray_light" />
+
+                </LinearLayout>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#55e1e1e1"/>
+                <!-- 使用帮助 -->
+                <LinearLayout
+                    android:id="@+id/mine_lin_user_pro"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:paddingVertical="15dp"
+                    android:layout_marginBottom="15dp">
+
+                    <FrameLayout
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="15dp">
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="center"
+                            android:src="@mipmap/mine_protocol"  />
+                    </FrameLayout>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="用户协议"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@mipmap/mine_arrow_right"
+                        android:tint="@color/gray_light" />
+                </LinearLayout>
+
+
             </LinearLayout>
 
 
