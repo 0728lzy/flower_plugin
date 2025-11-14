@@ -1,5 +1,6 @@
 package com.cslianta.catdog.ui.fragment
 
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
@@ -27,6 +28,7 @@ import com.cslianta.catdog.ui.dialog.ResultDialog
 
 import com.cslianta.catdog.utils.lzy.LZYLog
 import com.cslianta.catdog.utils.lzy.PermissionUtils
+import com.drake.brv.utils.grid
 
 import kotlinx.coroutines.Job
 import org.greenrobot.eventbus.EventBus
@@ -66,6 +68,8 @@ class HDSDogLanguageFragment : RootFragment(R.layout.fragment_dog_language) {
         }
     }
 
+    private var type = 1;  //1 狗  2 猫
+
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
         _binding = view.getBinding()
@@ -74,8 +78,7 @@ class HDSDogLanguageFragment : RootFragment(R.layout.fragment_dog_language) {
         // 初始化录音按钮点击事件
         initRecordButtons()
         
-        // 初始化常见狗语列表
-        initCommonSoundsList()
+
         if (AppConst.is_show_ad){
             binding.tvTop.visibility=View.GONE
         }else{
@@ -83,6 +86,49 @@ class HDSDogLanguageFragment : RootFragment(R.layout.fragment_dog_language) {
         }
         // 加载广告
         ZYMAllAdsUtils.loadSimpleAll(requireActivity(),"信息",binding.feedContainerDogLanguage)
+
+        binding.dogLl.setOnClickListener({
+            initDog()
+        })
+
+        binding.catLl.setOnClickListener({
+            initCat()
+        })
+
+        initDog()
+    }
+
+    private fun initDog(){
+        binding.dogLl.setBackgroundResource(R.drawable.app_tab_selected_bg)
+        binding.dogTv.setTextColor(Color.parseColor("#ffffff"))
+
+        binding.catLl.setBackgroundResource(R.drawable.app_tab_unselected_bg)
+        binding.catTv.setTextColor(Color.parseColor("#000000"))
+        type = 1
+        // 初始化常见狗语列表
+        initCommonSoundsList()
+
+        // 加载狗狗声音数据
+        loadDogSounds()
+    }
+
+    private fun initCat(){
+        binding.catLl.setBackgroundResource(R.drawable.app_tab_selected_bg)
+        binding.catTv.setTextColor(Color.parseColor("#ffffff"))
+        type = 2
+        binding.dogLl.setBackgroundResource(R.drawable.app_tab_unselected_bg)
+        binding.dogTv.setTextColor(Color.parseColor("#000000"))
+        // 初始化常见狗语列表
+        initCommonSoundsList()
+
+        // 加载猫咪声音数据
+        loadCatSounds()
+
+    }
+    private fun loadCatSounds() {
+        // 获取猫咪声音列表并随机排序，只显示前6个
+        val catSounds = AppConst.catSoundList(requireContext()).shuffled()
+        binding.rvCommonSounds.bindingAdapter.models = catSounds
     }
 
     private fun initRecordButtons() {
@@ -184,7 +230,7 @@ class HDSDogLanguageFragment : RootFragment(R.layout.fragment_dog_language) {
     }
 
     private fun initCommonSoundsList() {
-        binding.rvCommonSounds.linear(LinearLayout.VERTICAL).setup {
+        binding.rvCommonSounds.grid(2,LinearLayout.VERTICAL).setup {
             addType<Index1Entity>(R.layout.item_dog)
 
             onBind {
@@ -193,18 +239,28 @@ class HDSDogLanguageFragment : RootFragment(R.layout.fragment_dog_language) {
                     ivThumb.setImageResource(item.icon)
                     tvName.text = item.title
                     root.thrillClickListener {
-                        // 获取原始数据列表中的正确索引
-                        val originalList = AppConst.dogSoundList(requireContext())
-                        val originalIndex = originalList.indexOfFirst { it.title == item.title && it.icon == item.icon }
-                        // 播放狗狗声音，type=1表示狗，传递原始索引
-                        CASoundActivity.show(requireContext(), true, originalIndex)
+
+
+                        if(type == 1) {
+
+                            // 获取原始数据列表中的正确索引
+                            val originalList = AppConst.dogSoundList(requireContext())
+                            val originalIndex =
+                                originalList.indexOfFirst { it.title == item.title && it.icon == item.icon }
+                            // 播放狗狗声音，type=1表示狗，传递原始索引
+                            CASoundActivity.show(requireContext(), true, originalIndex)
+                        }else{
+                            // 获取原始数据列表中的正确索引
+                            val originalList = AppConst.catSoundList(requireContext())
+                            val originalIndex = originalList.indexOfFirst { it.title == item.title && it.icon == item.icon }
+                            // 播放猫咪声音，type=2表示猫，传递原始索引
+                            CASoundActivity.show(requireContext(), false, originalIndex)
+                        }
                     }
                 }
             }
         }
-        
-        // 加载狗狗声音数据
-        loadDogSounds()
+
     }
 
     private fun loadDogSounds() {

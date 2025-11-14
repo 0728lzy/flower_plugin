@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@drawable/app_home_bg"
     android:fillViewport="true">
 
     <LinearLayout
@@ -13,31 +13,100 @@
         android:gravity="center_horizontal">
         <!-- 顶部标题区域 -->
 
-        <!-- 顶部标题区域 -->
-        <TextView
-            android:id="@+id/tv_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:text="喵语翻译官"
-            android:textColor="@color/app_text_color"
-            android:textSize="@dimen/_25sdp"
-            android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/tv_subtitle"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="读懂猫主子的心思"
-            android:textColor="@color/app_text_color"
-            android:textSize="@dimen/_12ssp"  />
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <!-- 顶部标题区域 -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="30dp"
+                android:text="人宠对话"
+                android:textColor="@color/app_text_color"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <!-- 顶部标题区域 -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="录音翻译宠物语言"
+                android:textColor="@color/gray"
+                android:textSize="14dp"
+                android:textStyle="bold" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/dog_ll"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1.0"
+                    android:gravity="center"
+                    android:background="@drawable/app_tab_selected_bg"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/dog_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:text="🐶 狗狗"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/cat_ll"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_weight="1.0"
+                    android:gravity="center"
+                    android:background="@drawable/app_tab_unselected_bg"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/cat_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:text="🐱 猫咪"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="6dp"
+                android:background="#44e1e1e1"/>
+
+
+        </LinearLayout>
+
+
+
+
+
 
         <ImageView
+            android:id="@+id/iv_cat_mic"
             android:layout_width="wrap_content"
-            android:layout_height="100dp"
+            android:layout_height="150dp"
             android:layout_marginTop="10dp"
-            android:src="@mipmap/img_ym_cat"/>
+            android:src="@mipmap/dialog"/>
 
 
 
@@ -68,6 +137,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
             android:text="该功能仅供娱乐"
+            android:layout_marginBottom="10dp"
             android:textColor="@color/black"
             android:textSize="16dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -80,15 +150,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_15sdp"
-            android:layout_marginTop="@dimen/_20sdp"
             app:cardCornerRadius="@dimen/_12sdp"
-            app:cardElevation="@dimen/_2sdp"
+            app:cardElevation="0dp"
             app:layout_constraintTop_toBottomOf="@id/adv">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_home_line_purple"
                 android:orientation="vertical"
                 android:gravity="center_horizontal"
                 android:paddingVertical="10dp">
@@ -105,26 +173,47 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
 
-                <ImageView
-                    android:id="@+id/iv_cat_mic"
-                    android:layout_width="65dp"
-                    android:layout_height="65dp"
+                <!-- 提示文本 -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="将自动识别并翻译宠物的叫声"
+                    android:textColor="@color/gray"
+                    android:textSize="12dp"
                     android:layout_marginTop="10dp"
-                    android:background="@drawable/bg_record_button_red"
-                    android:padding="16dp"
-                    android:elevation="6dp"
-                    android:src="@mipmap/ic_mic_white"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-                <ImageView
-                    android:id="@+id/des_iv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:src="@mipmap/detail_fy1"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/iv_cat_mic"-->
+<!--                    android:layout_width="65dp"-->
+<!--                    android:layout_height="65dp"-->
+<!--                    android:layout_marginTop="10dp"-->
+<!--                    android:visibility="gone"-->
+<!--                    android:background="@drawable/bg_record_button_red"-->
+<!--                    android:padding="16dp"-->
+<!--                    android:elevation="6dp"-->
+<!--                    android:src="@mipmap/ic_mic_white"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintTop_toTopOf="parent" />-->
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:background="@drawable/app_tip_bg"
+                    android:padding="5dp"
+                    android:text="小贴士：在安静的环境下录音效果更好哦"
+                    android:textColor="@color/app_text_color"
+                    android:textSize="12dp"
                     android:layout_marginTop="10dp"  />
 
-                </LinearLayout>
+
+
+
+            </LinearLayout>
 
         </androidx.cardview.widget.CardView>
 
@@ -132,6 +221,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
+            android:visibility="gone"
             android:orientation="horizontal">
             <TextView
                 android:id="@+id/tv_common_title"
@@ -157,6 +247,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_common_sounds"
             android:layout_width="match_parent"
+            android:visibility="gone"
             android:layout_height="wrap_content"
             android:clipToPadding="false"
             android:layout_margin="6dp"

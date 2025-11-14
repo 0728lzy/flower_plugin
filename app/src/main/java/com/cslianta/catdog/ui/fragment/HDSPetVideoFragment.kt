@@ -2,6 +2,7 @@ package com.cslianta.catdog.ui.fragment
 
 import android.os.Bundle
 import android.view.View
+import com.cslianta.catdog.AppConst
 import com.drake.brv.utils.bindingAdapter
 import com.drake.brv.utils.grid
 import com.drake.brv.utils.setup
@@ -36,19 +37,28 @@ class HDSPetVideoFragment : RootFragment(R.layout.fragment_pet_video) {
         _binding = view.getBinding()
 
         val list by lazy {  listOf(
-            requireActivity().getString(R.string.pet_video_1) to R.drawable.maoamo2_tab4 to R.drawable.maomao_tab4, // 毛毛 -> index 5
-            requireActivity().getString(R.string.pet_video_2) to R.drawable.fa_cai_tab4 to R.drawable.fa_cai2_tab4, // 发财 -> index 1
+            requireActivity().getString(R.string.pet_video_5) to R.drawable.bo_bo_tab4 to R.drawable.bo_bo2_tab4, // 波波 -> index 3 (映射到波波)
+
+
             requireActivity().getString(R.string.pet_video_3) to R.drawable.er_ha_tab4 to R.drawable.er_ha2_tab4, // 二哈 -> index 2
             requireActivity().getString(R.string.pet_video_4) to R.drawable.xiao_bai_tab4 to R.drawable.xiao_abi2_tab4, // 小白 -> index 4
-            requireActivity().getString(R.string.pet_video_5) to R.drawable.bo_bo_tab4 to R.drawable.bo_bo2_tab4, // 波波 -> index 3 (映射到波波)
+            requireActivity().getString(R.string.pet_video_2) to R.drawable.fa_cai_tab4 to R.drawable.fa_cai2_tab4, // 发财 -> index 1
+            requireActivity().getString(R.string.pet_video_1) to R.drawable.maoamo2_tab4 to R.drawable.maomao_tab4, // 毛毛 -> index 5
+
         ) }
         val nameToIndexMap = mapOf(
-            requireActivity().getString(R.string.pet_video_1) to 5, // 毛毛 -> call_4
-            requireActivity().getString(R.string.pet_video_2) to 1, // 发财 -> call_3
+            requireActivity().getString(R.string.pet_video_5) to 3,  // 嘟嘟 -> call_5 (波波)
             requireActivity().getString(R.string.pet_video_3) to 2, // 二哈 -> call_1
             requireActivity().getString(R.string.pet_video_4) to 4, // 小白 -> call_2
-            requireActivity().getString(R.string.pet_video_5) to 3  // 嘟嘟 -> call_5 (波波)
+            requireActivity().getString(R.string.pet_video_2) to 1, // 发财 -> call_3
+            requireActivity().getString(R.string.pet_video_1) to 5, // 毛毛 -> call_4
         )
+
+        if (AppConst.is_show_ad){
+            binding.tvTop.visibility=View.GONE
+        }else{
+            binding.tvTop.visibility=View.VISIBLE
+        }
         binding.rvList.grid(1).setup {
             addType< Pair<Pair<String,Int>,Int>>(R.layout.item_pet_video)
             onBind {
@@ -96,7 +106,7 @@ class HDSPetVideoFragment : RootFragment(R.layout.fragment_pet_video) {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onMessageSimpleEvent(message: SimpleEvent) {
-        if(message.simple ==3){
+        if(message.simple ==2){
             LZYLog.e("simple","message simple:${message.simple}")
             ZYMAllAdsUtils.loadSimpleAll(requireActivity(),"信息",binding.feedContainerPetVideo)
         }

@@ -1,5 +1,6 @@
 package com.cslianta.catdog.ui.fragment
 
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
@@ -27,6 +28,7 @@ import com.cslianta.catdog.ui.dialog.ResultDialog
 
 import com.cslianta.catdog.utils.lzy.LZYLog
 import com.cslianta.catdog.utils.lzy.PermissionUtils
+import com.drake.brv.utils.grid
 
 import kotlinx.coroutines.Job
 import org.greenrobot.eventbus.EventBus
@@ -46,6 +48,7 @@ class HDSCatLanguageFragment : RootFragment(R.layout.fragment_cat_language) {
     
     val binding get() = _binding!!
 
+    private var PetType = 1;  //1 狗  2 猫
     override fun onStart() {
         super.onStart()
         EventBus.getDefault().register(this)
@@ -109,7 +112,17 @@ class HDSCatLanguageFragment : RootFragment(R.layout.fragment_cat_language) {
         ) {
             if (isRecording) {
                 // 停止录音并展示结果
-                val entity =  catList.random()
+                var entity =  catList.random()
+
+
+                if(PetType == 1){
+                    // 停止录音并展示结果
+                    entity = if (type==1) dogList.random() else person2Dog.random()
+                }
+
+
+
+
                 val result=record?.stopRecord()
                 job?.cancel()
 
@@ -123,10 +136,10 @@ class HDSCatLanguageFragment : RootFragment(R.layout.fragment_cat_language) {
                                     "请发出足够大的声音以保证能被识别翻译~",
                                     Toast.LENGTH_SHORT
                                 ).show()
-                                binding.desIv.visibility = View.VISIBLE
+//                                binding.desIv.visibility = View.VISIBLE
                             }else {
                                 ResultDialog(entity).show(requireRootActivity())
-                                binding.desIv.visibility = View.VISIBLE
+//                                binding.desIv.visibility = View.VISIBLE
                             }
                             binding.tvRecordHint.text = "点击按钮开始录音"
                         }
@@ -134,7 +147,7 @@ class HDSCatLanguageFragment : RootFragment(R.layout.fragment_cat_language) {
                 }
 
                 // 恢复按钮样式
-                binding.ivCatMic.setBackgroundResource(R.drawable.bg_record_button_red)
+//                binding.ivCatMic.setBackgroundResource(R.drawable.bg_record_button_red)
                 isRecording = false
                 recordingType = 0
             } else {
@@ -153,12 +166,12 @@ class HDSCatLanguageFragment : RootFragment(R.layout.fragment_cat_language) {
                 when (type) {
                     1 -> {
                         binding.tvRecordHint.text = "正在录制人话..."
-                        binding.desIv.visibility = View.INVISIBLE
+//                        binding.desIv.visibility = View.INVISIBLE
                     }
                     2 -> {
-                        binding.ivCatMic.setBackgroundResource(R.drawable.bg_record_button_active)
+//                        binding.ivCatMic.setBackgroundResource(R.drawable.bg_record_button_active)
                         binding.tvRecordHint.text = "正在录制喵语..."
-                        binding.desIv.visibility = View.INVISIBLE
+//                        binding.desIv.visibility = View.INVISIBLE
                     }
                 }
 
@@ -183,7 +196,7 @@ class HDSCatLanguageFragment : RootFragment(R.layout.fragment_cat_language) {
     }
 
     private fun initCommonSoundsList() {
-        binding.rvCommonSounds.linear(LinearLayout.VERTICAL).setup {
+        binding.rvCommonSounds.grid(2,LinearLayout.VERTICAL).setup {
             addType<Index1Entity>(R.layout.item_dog)
 
             onBind {
@@ -204,7 +217,40 @@ class HDSCatLanguageFragment : RootFragment(R.layout.fragment_cat_language) {
         
         // 加载猫咪声音数据
         loadCatSounds()
+
+        binding.dogLl.setOnClickListener({
+            initDog()
+        })
+
+        binding.catLl.setOnClickListener({
+            initCat()
+        })
+
+        initDog()
+
     }
+
+
+    private fun initDog(){
+        binding.dogLl.setBackgroundResource(R.drawable.app_tab_selected_bg)
+        binding.dogTv.setTextColor(Color.parseColor("#ffffff"))
+
+        binding.catLl.setBackgroundResource(R.drawable.app_tab_unselected_bg)
+        binding.catTv.setTextColor(Color.parseColor("#000000"))
+        PetType = 1
+
+    }
+
+    private fun initCat(){
+        binding.catLl.setBackgroundResource(R.drawable.app_tab_selected_bg)
+        binding.catTv.setTextColor(Color.parseColor("#ffffff"))
+        PetType = 2
+        binding.dogLl.setBackgroundResource(R.drawable.app_tab_unselected_bg)
+        binding.dogTv.setTextColor(Color.parseColor("#000000"))
+
+
+    }
+
 
     private fun loadCatSounds() {
         // 获取猫咪声音列表并随机排序，只显示前6个
@@ -324,6 +370,252 @@ class HDSCatLanguageFragment : RootFragment(R.layout.fragment_cat_language) {
                 "好吧",
                 "cat_images/cat_19.webp",
                 "cat_sounds/cat_19.wav"
+            ),
+        )
+    }
+
+
+    // 与 WHIndex3Fragment 一致的狗狗资源列表，用于结果弹窗展示
+    private val dogList by lazy {
+        listOf(
+            Index3Entity(
+                getString(R.string.result_dog_1),
+                "dog_images/dog_angry.jpeg",
+                "dog_sounds/dog_angry.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_2),
+                "dog_images/dog_yes.jpeg",
+                "dog_sounds/dog_yes.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_3),
+                "dog_images/dog_shy.jpeg",
+                "dog_sounds/dog_shy.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_4),
+                "dog_images/dog_dance.jpeg",
+                "dog_sounds/dog_dance.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_5),
+                "dog_images/dog_happy.jpeg",
+                "dog_sounds/dog_happy.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_6),
+                "dog_images/dog_soft_angry.jpeg",
+                "dog_sounds/dog_soft_angry.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_7),
+                "dog_images/dog_handclap.jpeg",
+                "dog_sounds/dog_handclap.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_8),
+                "dog_images/dog_lie.jpeg",
+                "dog_sounds/dog_lie.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_9),
+                "dog_images/dog_raise_hand.jpeg",
+                "dog_sounds/dog_raise_hand.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_10),
+                "dog_images/dog_pet.jpeg",
+                "dog_sounds/dog_pet.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_11),
+                "dog_images/dog_scared.jpeg",
+                "dog_sounds/dog_scared.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_12),
+                "dog_images/dog_hi.jpeg",
+                "dog_sounds/dog_hi.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_13),
+                "dog_images/dog_love.jpeg",
+                "dog_sounds/dog_love.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_14),
+                "dog_images/dog_happy_walk.jpeg",
+                "dog_sounds/dog_happy_walk.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_15),
+                "dog_images/dog_sad.jpeg",
+                "dog_sounds/dog_sad.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_16),
+                "dog_images/dog_exhausted.jpeg",
+                "dog_sounds/dog_exhausted.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_17),
+                "dog_images/dog_begging.jpeg",
+                "dog_sounds/dog_begging.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_18),
+                "dog_images/dog_cry_lying.jpeg",
+                "dog_sounds/dog_cry_lying.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_19),
+                "dog_images/dog_super_angry.jpeg",
+                "dog_sounds/dog_super_angry.m4a"
+            ),
+        )
+    }
+    private val person2Dog by lazy {
+        listOf(
+            Index3Entity(
+                getString(R.string.result_dog_2_1),
+                "dog_images/dog_yes.jpeg",
+                "dog_sounds/dog_yes.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_2_2),
+                "dog_images/dog_wow.jpeg",
+                "dog_sounds/dog_wow.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_2_3),
+                "dog_images/dog_wonder.jpeg",
+                "dog_sounds/dog_wonder.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_2_4),
+                "dog_images/dog_hungry.jpeg",
+                "dog_sounds/dog_hungry.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_2_5),
+                "dog_images/dog_agree.jpeg",
+                "dog_sounds/dog_agree.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_2_6),
+                "dog_images/dog_happy.jpeg",
+                "dog_sounds/dog_happy.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_2_7),
+                "dog_images/dog_scratch.jpeg",
+                "dog_sounds/dog_scratch.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_2_8),
+                "dog_images/dog_raise_hand.jpeg",
+                "dog_sounds/dog_raise_hand.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_2_9),
+                "dog_images/dog_exhausted.jpeg",
+                "dog_sounds/dog_exhausted.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_2_10),
+                "dog_images/dog_cry.jpeg",
+                "dog_sounds/dog_cry.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_2_11),
+                "dog_images/dog_angry.jpeg",
+                "dog_sounds/dog_angry.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_2_12),
+                "dog_images/dog_cry_lying.jpeg",
+                "dog_sounds/dog_cry_lying.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_2_13),
+                "dog_images/dog_dance.jpeg",
+                "dog_sounds/dog_dance.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_2_14),
+                "dog_images/dog_handclap.jpeg",
+                "dog_sounds/dog_handclap.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_2_15),
+                "dog_images/dog_happy_walk.jpeg",
+                "dog_sounds/dog_happy_walk.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_2_16),
+                "dog_images/dog_hi.jpeg",
+                "dog_sounds/dog_hi.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_2_17),
+                "dog_images/dog_hi_fence.jpeg",
+                "dog_sounds/dog_hi_fence.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_2_18),
+                "dog_images/dog_lie.jpeg",
+                "dog_sounds/dog_lie.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_2_19),
+                "dog_images/dog_love.jpeg",
+                "dog_sounds/dog_love.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_2_20),
+                "dog_images/dog_no.jpeg",
+                "dog_sounds/dog_no.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_2_21),
+                "dog_images/dog_pet.jpeg",
+                "dog_sounds/dog_pet.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_2_22),
+                "dog_images/dog_sad.jpeg",
+                "dog_sounds/dog_sad.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_2_23),
+                "dog_images/dog_scared.jpeg",
+                "dog_sounds/dog_scared.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_2_24),
+                "dog_images/dog_shy.jpeg",
+                "dog_sounds/dog_shy.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_2_25),
+                "dog_images/dog_soft_angry.jpeg",
+                "dog_sounds/dog_soft_angry.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_2_26),
+                "dog_images/dog_soft_begging.jpeg",
+                "dog_sounds/dog_soft_begging.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_2_27),
+                "dog_images/dog_super_angry.jpeg",
+                "dog_sounds/dog_super_angry.m4a"
+            ),
+            Index3Entity(
+                getString(R.string.result_dog_2_28),
+                "dog_images/dog_yeah.jpeg",
+                "dog_sounds/dog_yeah.m4a"
             ),
         )
     }

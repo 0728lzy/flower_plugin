@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@drawable/app_home_bg"
     tools:context=".ui.fragment.HDSPetManagementFragment">
 
     <!-- 主内容区域 -->
@@ -16,14 +16,14 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:orientation="vertical"  >
 
             <!-- 标题区域 -->
             <LinearLayout
-                android:layout_marginTop="@dimen/_20sdp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingTop="30dp"
+                android:background="@color/white"
                 android:orientation="vertical"
                 android:layout_marginBottom="10dp">
 
@@ -35,15 +35,13 @@
                     android:textSize="@dimen/_25sdp"
                     android:textStyle="bold"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="5dp" />
+                    android:layout_marginBottom="20dp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="记录与宠物的美好时光"
-                    android:textColor="@color/app_text_color"
-                    android:textSize="14dp"
-                    android:layout_gravity="center_horizontal" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="6dp"
+                    android:background="#44e1e1e1"/>
 
             </LinearLayout>
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -69,34 +67,33 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="15dp"
                 android:orientation="vertical">
 
-                <!-- 我的宠物标题和添加按钮 -->
+
+
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:layout_marginBottom="16dp">
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/app_home_bg"
+                    android:layout_height="200dp">
 
-                    <TextView
+
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="我的宠物"
-                        android:textColor="@color/app_text_color"
-                        android:textSize="18dp"
-                        android:textStyle="bold" />
+                        android:orientation="vertical">
 
-                    <View
-                        android:layout_width="80dp"
-                        android:layout_height="2dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginRight="20dp"
-                        android:background="@color/app_text_color"/>
+
+                    </LinearLayout>
+
+
+
+
+
 
                 </RelativeLayout>
+
 
                 <TextView
                     android:padding="8dp"

@@ -59,8 +59,9 @@ class MainActivity : BaseActivity() {
     val fragments = listOf<Fragment>(
         HDSDogLanguageFragment(),
         HDSCatLanguageFragment(),
-        HDSPetManagementFragment(),
         HDSPetVideoFragment(),
+        HDSPetManagementFragment(),
+
         AboutFragment(),
     )
 
@@ -158,25 +159,25 @@ class MainActivity : BaseActivity() {
 
             1 -> {
                 binding.bottomBar.tabDogLanguage.setBackgroundResource(R.drawable.bg_home_tab_selected)
-                binding.bottomBar.ivDogLanguage.setImageResource(R.drawable.icon_index1_n)
+                binding.bottomBar.ivDogLanguage.setImageResource(R.drawable.icon_index1_s)
                 binding.bottomBar.tvDogLanguage.setTextColor(ContextCompat.getColor(this, R.color.app_text_color))
             }
 
             2 -> {
                 binding.bottomBar.tabPetManagement.setBackgroundResource(R.drawable.bg_home_tab_selected)
-                binding.bottomBar.ivPetManagement.setImageResource(R.drawable.icon_index3_n)
+                binding.bottomBar.ivPetManagement.setImageResource(R.drawable.icon_index3_s)
                 binding.bottomBar.tvPetManagement.setTextColor(ContextCompat.getColor(this, R.color.app_text_color))
             }
 
             3 -> {
                 binding.bottomBar.tabCuteVideo.setBackgroundResource(R.drawable.bg_home_tab_selected)
-                binding.bottomBar.ivCuteVideo.setImageResource(R.drawable.icon_index4_n)
+                binding.bottomBar.ivCuteVideo.setImageResource(R.drawable.icon_index4_s)
                 binding.bottomBar.tvCuteVideo.setTextColor(ContextCompat.getColor(this, R.color.app_text_color))
             }
 
             4 -> {
                 binding.bottomBar.tabProfile.setBackgroundResource(R.drawable.bg_home_tab_selected)
-                binding.bottomBar.ivProfile.setImageResource(R.drawable.icon_index5_n)
+                binding.bottomBar.ivProfile.setImageResource(R.drawable.icon_index5_s)
                 binding.bottomBar.tvProfile.setTextColor(ContextCompat.getColor(this, R.color.app_text_color))
             }
         }

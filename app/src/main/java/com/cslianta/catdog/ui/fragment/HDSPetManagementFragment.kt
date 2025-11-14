@@ -329,7 +329,7 @@ class HDSPetManagementFragment : RootFragment(R.layout.fragment_pet_management) 
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onMessageSimpleEvent(message: SimpleEvent) {
-        if (message.simple == 2) { // 使用新的事件ID避免冲突
+        if (message.simple == 3) { // 使用新的事件ID避免冲突
             LZYLog.e("simple", "DogLanguageFragment message simple:${message.simple}")
 
 
