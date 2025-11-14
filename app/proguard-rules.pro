@@ -304,9 +304,9 @@
     public static ** valueOf(java.lang.String);
 }
 
--keep public class com.weini.catdog.bean.dj.NoProguard
+-keep public class com.cslianta.catdog.bean.dj.NoProguard
 
--keep class com.weini.catdog.bean.** { *; }
+-keep class com.cslianta.catdog.bean.** { *; }
 
  #retrofit2  混淆
  -dontwarn javax.annotation.**

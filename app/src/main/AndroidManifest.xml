@@ -67,7 +67,7 @@
     </queries>
 
     <application
-        android:name="com.weini.catdog.APP"
+        android:name="com.cslianta.catdog.APP"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -119,21 +119,21 @@
         </activity>
 
         <activity
-            android:name=".ui.activity.WCLanguageActivity"
+            android:name=".ui.activity.CALanguageActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".ui.activity.WCPermissionActivity"
+            android:name=".ui.activity.CAPermissionActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".ui.activity.WCGuideActivity"
+            android:name=".ui.activity.CAGuideActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
@@ -147,60 +147,60 @@
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".ui.activity.WCDetailActivity"
+            android:name=".ui.activity.CADetailActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".ui.activity.WCVideoActivity"
+            android:name=".ui.activity.CAVideoActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".ui.activity.WCSoundActivity"
+            android:name=".ui.activity.CASoundActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".ui.activity.WCCallActivity"
+            android:name=".ui.activity.CACallActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".ui.activity.WCWebViewActivity"
+            android:name=".ui.activity.CAWebViewActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.WCContactCustomerServiceActivity"
+            android:name=".ui.activity.CAContactCustomerServiceActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.activity.WCAboutActivity"
+        <activity android:name=".ui.activity.CAAboutActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait" />
 
 
-        <activity android:name=".ui.activity.WCPetPhotosActivity"
+        <activity android:name=".ui.activity.CAPetPhotosActivity"
             android:windowSoftInputMode="stateHidden|adjustResize"
             android:exported="true"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".ui.activity.WCPetNotesActivity"
+        <activity android:name=".ui.activity.CAPetNotesActivity"
             android:windowSoftInputMode="stateHidden|adjustResize"
             android:exported="true"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".ui.activity.WCPetBathActivity"
+        <activity android:name=".ui.activity.CAPetBathActivity"
             android:windowSoftInputMode="stateHidden|adjustResize"
             android:exported="true"
             android:screenOrientation="portrait" />

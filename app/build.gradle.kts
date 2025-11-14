@@ -7,17 +7,17 @@ plugins {
     id("org.jetbrains.kotlin.kapt")
     id("android-junk-code")
 }
-val l_app_channel = "BAIDU"   //CSJ HUAWEI BAIDU OPPO XIAOMI VIVO HONOR YYB                                𤓖
-val l_version_code = 200
-val l_version_name = "2.0.0.1"
-val l_app_name="猫狗翻译全能王"
+val l_app_channel = "VIVO"   //CSJ HUAWEI BAIDU OPPO XIAOMI VIVO HONOR YYB                                𤓖
+val l_version_code = 100
+val l_version_name = "1.0.0"
+val l_app_name="全能猫狗宠物翻译器"
 android {
 //    namespace = "com.ruite.app.pet.translator"
-    namespace = "com.weini.catdog"
+    namespace = "com.cslianta.catdog"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.weini.catdog"
+        applicationId = "com.cslianta.catdog"
         minSdk = 21
         targetSdk = 34
         versionCode = System.getenv("VERSION_CODE")?.toIntOrNull() ?: l_version_code
@@ -45,10 +45,10 @@ android {
 
     signingConfigs {
         register("myConfig") {
-            keyAlias = "weinicatdog"
-            keyPassword = "weinicatdog123"
-            storePassword = "weinicatdog123"
-            storeFile = file("../sign/weinicatdog.jks")
+            keyAlias = "csliantacatdog"
+            keyPassword = "csliantacatdog123"
+            storePassword = "csliantacatdog123"
+            storeFile = file("../sign/csliantacatdog.jks")
             enableV1Signing = true
             enableV2Signing = true
             enableV3Signing = true
@@ -60,14 +60,14 @@ android {
         variantConfig {
             register("release"){
                 //注意：这里的release是变体名称，如果没有设置productFlavors就是buildType名称，如果有设置productFlavors就是flavor+buildType，例如（freeRelease、proRelease）
-                packageBase = "com.weini.catdog"  //生成java类根包名
+                packageBase = "com.cslianta.catdog"  //生成java类根包名
                 packageCount = System.getenv("JUNK_PACKAGE_COUNT")?.toIntOrNull() ?: 60 //生成包数量
                 activityCountPerPackage = System.getenv("JUNK_ACTIVITY_COUNT")?.toIntOrNull() ?: 50//每个包下生成Activity类数量
                 excludeActivityJavaFile = false
                 //是否排除生成Activity的Java文件,默认false(layout和写入AndroidManifest.xml还会执行)，主要用于处理类似神策全埋点编译过慢问题
                 otherCountPerPackage = System.getenv("JUNK_OTHER_PER_COUNT")?.toIntOrNull() ?: 50 //每个包下生成其它类的数量
                 methodCountPerClass =  System.getenv("JUNK_OTHER_PER_COUNT")?.toIntOrNull() ?: 50   //每个类下生成方法数量
-                resPrefix = "WC"  //生成的layout、drawable、string等资源名前缀
+                resPrefix = "CA"  //生成的layout、drawable、string等资源名前缀
                 drawableCount = System.getenv("JUNK_DRAWABLE_COUNT")?.toIntOrNull() ?: 300  //生成drawable资源数量
                 stringCount = System.getenv("JUNK_DRAWABLE_COUNT")?.toIntOrNull() ?: 300 //生成string数量
             }
