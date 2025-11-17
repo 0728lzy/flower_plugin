@@ -7,9 +7,9 @@ plugins {
     id("org.jetbrains.kotlin.kapt")
     id("android-junk-code")
 }
-val l_app_channel = "VIVO"   //CSJ HUAWEI BAIDU OPPO XIAOMI VIVO HONOR YYB                                𤓖
-val l_version_code = 100
-val l_version_name = "1.0.0"
+val l_app_channel = "BAIDU"   //CSJ HUAWEI BAIDU OPPO XIAOMI VIVO HONOR YYB                                𤓖
+val l_version_code = 200
+val l_version_name = "2.0.0"
 val l_app_name="全能猫狗宠物翻译器"
 android {
 //    namespace = "com.ruite.app.pet.translator"
