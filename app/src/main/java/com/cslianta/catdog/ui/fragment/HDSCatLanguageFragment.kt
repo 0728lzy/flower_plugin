@@ -220,10 +220,12 @@ class HDSCatLanguageFragment : RootFragment(R.layout.fragment_cat_language) {
 
         binding.dogLl.setOnClickListener({
             initDog()
+            ZYMAllAdsUtils.showAdCpTurnTab(requireActivity(),"CP")
         })
 
         binding.catLl.setOnClickListener({
             initCat()
+            ZYMAllAdsUtils.showAdCpTurnTab(requireActivity(),"CP")
         })
 
         initDog()

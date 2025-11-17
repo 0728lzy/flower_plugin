@@ -15,6 +15,8 @@ import com.cslianta.catdog.AppConst
 import com.cslianta.catdog.R
 import com.cslianta.catdog.base.dj.RootFragment
 import com.cslianta.catdog.csj.ZYMAllAdsUtils
+import com.cslianta.catdog.csj.lzy.LZYCPCounterHelper
+import com.cslianta.catdog.csj.lzy.LzyUtils
 import com.cslianta.catdog.databinding.FragmentDogLanguageBinding
 import com.cslianta.catdog.databinding.ItemDogBinding
 import com.cslianta.catdog.entity.Index1Entity
@@ -88,10 +90,13 @@ class HDSDogLanguageFragment : RootFragment(R.layout.fragment_dog_language) {
         ZYMAllAdsUtils.loadSimpleAll(requireActivity(),"信息",binding.feedContainerDogLanguage)
 
         binding.dogLl.setOnClickListener({
+            ZYMAllAdsUtils.showAdCpTurnTab(requireActivity(),"CP")
+
             initDog()
         })
 
         binding.catLl.setOnClickListener({
+            ZYMAllAdsUtils.showAdCpTurnTab(requireActivity(),"CP")
             initCat()
         })
 

@@ -302,10 +302,12 @@ object ZYMAllAdsUtils {
             0 -> {
                 showAdCp3(activity,tag)
                 showAdCp4(activity,tag)
+                initAdCp1(activity,tag)
             }
             1 -> {
                 showAdCp1(activity,tag)
                 showAdCp2(activity,tag)
+                initAdCp3(activity,tag)
             }
         }
         currentIndex++

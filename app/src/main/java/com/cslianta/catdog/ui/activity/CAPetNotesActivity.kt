@@ -33,6 +33,8 @@ class CAPetNotesActivity : BaseActivity() {
     private lateinit var notesAdapter: PetNotesAdapter
     private var notesList = mutableListOf<PetNote>()
 
+    private lateinit var deleteNode : PetNote;
+
     override fun initView(view: View, savedInstanceState: Bundle?) {
         binding = ActivityPetNotesBinding.bind(view)
         
@@ -67,7 +69,9 @@ class CAPetNotesActivity : BaseActivity() {
             when (action) {
                 "click" -> {
                     // 点击记事，编辑记事
+                    deleteNode = note
                     showAddEditNoteDialog(note)
+
                 }
                 "delete" -> {
                     deleteNote(note)
@@ -88,8 +92,7 @@ class CAPetNotesActivity : BaseActivity() {
      * 加载所有记录数据
      * 直接获取全部数据，不进行筛选
      */
-    private fun 
-            loadAllNotes() {
+    private fun loadAllNotes() {
         try {
             notesList.clear()
             
@@ -164,6 +167,7 @@ class CAPetNotesActivity : BaseActivity() {
                 override fun onNoteSaved(note: PetNote) {
                     // 保存记录到数据库
                     if (note.save()) {
+                        deleteNote(deleteNode)
                         // 重新加载所有数据
                         loadAllNotes()
                         val message = if (note.id == 0L) "记录添加成功" else "记录更新成功"

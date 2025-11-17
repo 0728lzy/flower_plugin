@@ -115,6 +115,10 @@ class CASoundActivity : BaseActivity() {
                 binding.tvTextTimeDelay.isVisible = true
                 binding.btnEndTime.isVisible = true
                 binding.tvTextTimeDelay.text = (duration / 1000).toString() + "s"
+
+
+                binding.tvTimeSet.setText(list.get(position))
+
                 send()
                 listPop.dismiss()
             }
