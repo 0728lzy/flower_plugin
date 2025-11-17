@@ -68,7 +68,7 @@ class CAPetNotesActivity : BaseActivity() {
             when (action) {
                 "click" -> {
                     // 点击记事，编辑记事
-                    showAddEditNoteDialog(note)
+//                    showAddEditNoteDialog(note)
 
                 }
                 "delete" -> {
