@@ -167,7 +167,7 @@ class CAPetNotesActivity : BaseActivity() {
                     if (note.save()) {
                         // 重新加载所有数据
                         loadAllNotes()
-                        val message = if (note.id == 0L) "记录添加成功" else "记录更新成功"
+                        val message = if (note.id == 0L) "记录添加成功" else "记录添加成功"
                         ZYMAllAdsUtils.showAdCpTurnTab(this@CAPetNotesActivity,"CP")
                         Toast.makeText(this@CAPetNotesActivity, message, Toast.LENGTH_SHORT).show()
                     } else {
