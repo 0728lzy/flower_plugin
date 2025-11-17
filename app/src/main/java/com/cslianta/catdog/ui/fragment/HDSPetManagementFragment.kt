@@ -62,7 +62,7 @@ class HDSPetManagementFragment : RootFragment(R.layout.fragment_pet_management) 
 
                 PetAdapter.ACTION_EDIT -> {
                     // 编辑宠物
-                    showEditPetDialog(pet)
+//                    showEditPetDialog(pet)
                 }
 
                 PetAdapter.ACTION_DELETE -> {
