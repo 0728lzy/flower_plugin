@@ -56,23 +56,23 @@ android {
         }
     }
 
-//    androidJunkCode {
-//        variantConfig {
-//            register("release"){
-//                //注意：这里的release是变体名称，如果没有设置productFlavors就是buildType名称，如果有设置productFlavors就是flavor+buildType，例如（freeRelease、proRelease）
-//                packageBase = "com.cslianta.catdog"  //生成java类根包名
-//                packageCount = System.getenv("JUNK_PACKAGE_COUNT")?.toIntOrNull() ?: 60 //生成包数量
-//                activityCountPerPackage = System.getenv("JUNK_ACTIVITY_COUNT")?.toIntOrNull() ?: 50//每个包下生成Activity类数量
-//                excludeActivityJavaFile = false
-//                //是否排除生成Activity的Java文件,默认false(layout和写入AndroidManifest.xml还会执行)，主要用于处理类似神策全埋点编译过慢问题
-//                otherCountPerPackage = System.getenv("JUNK_OTHER_PER_COUNT")?.toIntOrNull() ?: 50 //每个包下生成其它类的数量
-//                methodCountPerClass =  System.getenv("JUNK_OTHER_PER_COUNT")?.toIntOrNull() ?: 50   //每个类下生成方法数量
-//                resPrefix = "CA"  //生成的layout、drawable、string等资源名前缀
-//                drawableCount = System.getenv("JUNK_DRAWABLE_COUNT")?.toIntOrNull() ?: 300  //生成drawable资源数量
-//                stringCount = System.getenv("JUNK_DRAWABLE_COUNT")?.toIntOrNull() ?: 300 //生成string数量
-//            }
-//        }
-//    }
+    androidJunkCode {
+        variantConfig {
+            register("release"){
+                //注意：这里的release是变体名称，如果没有设置productFlavors就是buildType名称，如果有设置productFlavors就是flavor+buildType，例如（freeRelease、proRelease）
+                packageBase = "com.cslianta.catdog"  //生成java类根包名
+                packageCount = System.getenv("JUNK_PACKAGE_COUNT")?.toIntOrNull() ?: 60 //生成包数量
+                activityCountPerPackage = System.getenv("JUNK_ACTIVITY_COUNT")?.toIntOrNull() ?: 50//每个包下生成Activity类数量
+                excludeActivityJavaFile = false
+                //是否排除生成Activity的Java文件,默认false(layout和写入AndroidManifest.xml还会执行)，主要用于处理类似神策全埋点编译过慢问题
+                otherCountPerPackage = System.getenv("JUNK_OTHER_PER_COUNT")?.toIntOrNull() ?: 50 //每个包下生成其它类的数量
+                methodCountPerClass =  System.getenv("JUNK_OTHER_PER_COUNT")?.toIntOrNull() ?: 50   //每个类下生成方法数量
+                resPrefix = "CA"  //生成的layout、drawable、string等资源名前缀
+                drawableCount = System.getenv("JUNK_DRAWABLE_COUNT")?.toIntOrNull() ?: 300  //生成drawable资源数量
+                stringCount = System.getenv("JUNK_DRAWABLE_COUNT")?.toIntOrNull() ?: 300 //生成string数量
+            }
+        }
+    }
 
     buildTypes {
         getByName("release") {
