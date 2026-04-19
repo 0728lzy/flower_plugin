@@ -89,14 +89,6 @@ class MainActivity : BaseActivity() {
                     isFirst=false
                 }
                 EventBus.getDefault().post(SimpleEvent(position))
-                val channelName = AppConst.CHANNEL.uppercase()
-                LZYLog.i("lzyp","channelName:$channelName")
-                if (AppConst.is_show_ad && (channelName.equals("HONOR"))) {
-                    LZYLog.i("lzyp","channelName:$channelName")
-                    Handler().postDelayed({
-                        SetListAppHttpUtil.setList(this@MainActivity);
-                    },800)
-                }
             }
 
         })
@@ -122,8 +114,8 @@ class MainActivity : BaseActivity() {
             tabChange(4)
         }
 
-        if(!TextUtils.isEmpty(UserInfoModel.getRiseId())) {
-            binding.splashAppDjid.text = UserInfoModel.getRiseId()
+        if(!TextUtils.isEmpty(UserInfoModel.getShowId())) {
+            binding.splashAppDjid.text = UserInfoModel.getShowId()
         }
 
     }
@@ -201,34 +193,25 @@ class MainActivity : BaseActivity() {
         if (AppConst.splashInfoShowMainCP) {
             AppConst.splashInfoShowMainCP = false
             isShowYSDialog = false
-            if(AppConst.CHANNEL.equals("CSJ")){
-                showAdCpOne()
-            }else{
+            ZYMAllAdsUtils.showAdCp1(this@MainActivity)
+            ZYMAllAdsUtils.showAdCp2(this@MainActivity)
             if(UserInfoModel.getIsFirstVip() && AppConst.is_show_ad) {
                 firstShowVipDialog()
-                UserInfoModel.setIsFirstVip(false)
-            }else {
-                showAdCpOne()
             }
-            }
-
         }
+
     }
     private fun firstShowVipDialog() {
-        if (UserInfoModel.getIsFirstNormal()) {
-        }
         VipDialog.showDialog(this, object : DialogCallBack {
             override fun buAgree() {
-
+                UserInfoModel.setIsFirstVip(false)
                 ZYMAllAdsUtils.showAdJLTurn(this@MainActivity,"JL"){
-                    if (UserInfoModel.getIsFirstNormal()){
-                        firstShowAdDialog()
-                    }
                 }
 
             }
             override fun disagree() {
-                showAdCpOne1()
+                UserInfoModel.setIsFirstVip(false)
+                ZYMAllAdsUtils.showAdCp1(this@MainActivity)
             }
         })
     }

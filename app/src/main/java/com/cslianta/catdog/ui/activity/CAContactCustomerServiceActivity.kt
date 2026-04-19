@@ -15,6 +15,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.ToastUtils
+import com.cslianta.catdog.AppConst
 import com.cslianta.catdog.R
 import com.cslianta.catdog.adapter.dj.RBHelpQuestionAdapter
 import com.cslianta.catdog.adapter.dj.base.ItemClickListener
@@ -83,6 +84,14 @@ class CAContactCustomerServiceActivity : BaseActivity(){
 
 
         initActionBar("联系客服")
+
+        if (AppConst.is_show_ad){
+            contact_et_email_new.visibility=View.VISIBLE
+            (view.findViewById<TextView>(R.id.contact_et_email_tips)!!).visibility=View.VISIBLE
+        }else{
+            contact_et_email_new.visibility=View.GONE
+            (view.findViewById<TextView>(R.id.contact_et_email_tips)!!).visibility=View.GONE
+        }
 
         recycler_view.layoutManager = GridLayoutManager(this,3)
         // 设置边距  

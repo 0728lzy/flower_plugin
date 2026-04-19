@@ -158,6 +158,8 @@ dependencies {
     implementation("com.hyman:flowlayout-lib:1.1.2")
 
     implementation("com.geyifeng.immersionbar:immersionbar:3.2.2")
+    implementation("com.geyifeng.immersionbar:immersionbar-ktx:3.2.2")
+
     implementation("com.github.getActivity:XXPermissions:18.63")//权限管理   已混淆
 
     implementation("io.github.scwang90:refresh-layout-kernel:2.1.0")      //核心必须依赖
@@ -220,21 +222,19 @@ dependencies {
     //网络框架---------------------------------------------------end
 
 //GroMore new begin
+    val csjVersion = "7.4.2.1"
 
-    val csjVersion = "7.1.3.9"
-
-    val adnGdtVersion = "4.660.1530"
+    val adnGdtVersion = "4.662.1532"
     val adnGdtVersionFix = ".0"
 
-    val adnKsVersion = "4.9.20.1"
+    val adnKsVersion = "4.11.20.1"
     val adnKsVersionFix = ".0"
 
     val adnBaiduVersion = "9.423"
-    val adnBaiduVersionFix = ".0"
+    val adnBaiduVersionFix = ".3"
 
     val adnAdmobVersion = "17.2.0"
-    val adnAdmobVersionFix = ".71"
-
+    val adnAdmobVersionFix = ".72"
 //GroMore new end
 
     //dj----------------------------------------------------------------start
@@ -298,5 +298,7 @@ dependencies {
 
     implementation("com.github.dhaval2404:imagepicker:2.1")
     implementation("com.bytedance.ads:AppConvert:2.0.0")
+    implementation(files("libs/customer-1.0.0.5.aar"))
+
 
 }

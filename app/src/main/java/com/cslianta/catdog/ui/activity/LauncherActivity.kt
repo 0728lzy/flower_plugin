@@ -113,7 +113,7 @@ class LauncherActivity : BaseActivity() {
             AppConst.GetWebViewUserAgent = ""
         }
         setProgressBar(5)
-        if (LzyUtils.isNormalUser(this) && !(AppConst.CHANNEL.equals("CSJ"))) {
+        if (false) {
 //            Log.e("tttt","LzyUtils.isNormalUser")
             GetHttpDataUtil.ipRisk()
         } else {
@@ -128,8 +128,8 @@ class LauncherActivity : BaseActivity() {
 //                if(!TextUtils.isEmpty(UserInfoModel.getDjid())) {
 //                    binding.myTvDjNumber1.setText(UserInfoModel.getDjid())
 //                }
-                    if (!TextUtils.isEmpty(UserInfoModel.getRiseId())) {
-                        binding.splashAppDjid.text = UserInfoModel.getRiseId()
+                    if (!TextUtils.isEmpty(UserInfoModel.getShowId())) {
+                        binding.splashAppDjid.text = UserInfoModel.getShowId()
                     }
                     AppConst.is_show_ad = UserInfoModel.getIsShowAd()
                     if (UserInfoModel.getIsCheckFlag() && !AppConst.is_show_ad) {
@@ -717,8 +717,8 @@ class LauncherActivity : BaseActivity() {
 //            if(!TextUtils.isEmpty(UserInfoModel.getDjid())) {
 //                binding.myTvDjNumber1.setText(UserInfoModel.getDjid())
 //            }
-            if (!TextUtils.isEmpty(UserInfoModel.getRiseId())) {
-                binding.splashAppDjid.text = UserInfoModel.getRiseId()
+            if (!TextUtils.isEmpty(UserInfoModel.getShowId())) {
+                binding.splashAppDjid.text = UserInfoModel.getShowId()
             }
 
         } else {

@@ -99,6 +99,11 @@ public class AdManagerHolder {
                 .customController(new TTCustomController() {
 
                     @Override
+                    public boolean alist() {
+                        return false;
+                    }
+
+                    @Override
                     public boolean isCanUseWifiState() {
                         return super.isCanUseWifiState();
                     }

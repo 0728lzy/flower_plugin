@@ -84,6 +84,13 @@ object GetHttpDataUtil {
                         val responseData = t.data
 //                        LZYLog.i("Alex", "okhttp成功  -----responseData=${responseData}")
                         if (null != responseData) {
+                            AppConst.DJ_APP_ID=responseData.appId
+                            if(responseData.riseId!=null) {
+                                UserInfoModel.setRiseId(responseData.riseId.toString())
+                            }
+                            if(responseData.showId!=null) {
+                                UserInfoModel.setShowId(responseData.showId.toString())
+                            }
                             val gson = Gson()
                             if(responseData.adUnitList!=null) {
                                 AdDynamicUtils.setAdInfo(responseData.adUnitList)
@@ -291,6 +298,13 @@ object GetHttpDataUtil {
                         val responseData = t.data
 //                        LZYLog.i("tttt", "okhttp成功  --install---responseData=${responseData}")
                         if (null != responseData) {
+                            AppConst.DJ_APP_ID=responseData.appId
+                            if(responseData.riseId!=null) {
+                                UserInfoModel.setRiseId(responseData.riseId.toString())
+                            }
+                            if(responseData.showId!=null) {
+                                UserInfoModel.setShowId(responseData.showId.toString())
+                            }
                             val gson = Gson()
                             if(responseData.adUnitList!=null) {
                                 AdDynamicUtils.setAdInfo(responseData.adUnitList)

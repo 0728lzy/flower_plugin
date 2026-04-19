@@ -911,4 +911,14 @@ public class UserInfoModel {
     public static void setShowKpYynTime(long ts) {
         SPUtils.getInstance().setLong(SHOW_KP_YYN_TIME, ts);
     }
+
+    private final static String SHOW_ID = "show_id";
+
+    public static String getShowId() {
+        return SPUtils.getInstance().getString(SHOW_ID,"");
+    }
+
+    public static void setShowId(String showId) {
+        SPUtils.getInstance().setString(SHOW_ID, showId);
+    }
 }

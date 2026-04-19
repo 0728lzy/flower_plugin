@@ -39,6 +39,9 @@ import com.umeng.commonsdk.utils.UMUtils
 import com.cslianta.catdog.utils.dj.AdDynamicUtils
 
 import com.yl.adsdk.YlLib
+import com.zym.customer.CustomerConfig
+import com.zym.customer.ui.activity.CustomerDetailActivity
+import com.zym.customer.ui.activity.SpecialCustomerServiceActivity
 import me.jessyan.autosize.AutoSize
 import me.jessyan.autosize.AutoSizeConfig
 import me.jessyan.autosize.onAdaptListener
@@ -66,26 +69,6 @@ class APP : Application() {
             }
         }
         fun initCp(activity: Activity){
-            if (!AdCPNoLimitUtils.isReady()) {
-                AdCPNoLimitUtils.init(activity, object : AdCPNoLimitUtils.GirdMenuStateListener {
-                    override fun onShowError() {
-
-                    }
-
-                    override fun showVideoClosed() {
-
-                    }
-
-                    override fun onError() {
-
-                    }
-
-                    override fun onSuccess() {
-
-                    }
-                }) //初始化插全屏广告
-                AdCPNoLimitUtils.initPreloading()
-            }
 //            if(AppConst.is_show_ad && !AppConst.isWaked){
 //                if(!AdCPTwoUtils.isReady()) {
 //                    AdCPTwoUtils.init(
@@ -112,6 +95,8 @@ class APP : Application() {
 //            if(UserInfoModel.getIsFirstVip()){
 //
 //            }
+            if (AppConst.is_show_ad&&UserInfoModel.getIsFirstVip()){
+            }
         }
     }
 
@@ -150,6 +135,7 @@ class APP : Application() {
         DialogX.init(this)
         DialogX.globalTheme = DialogX.THEME.DARK
         ToastUtils.init(this)
+        CustomerConfig.init(this)
         LZYLog.setLogEnabled(false)
         var currProcessName = getAppProcessName()
         if (currProcessName == this.packageName) {
@@ -283,7 +269,10 @@ class APP : Application() {
             }
 
             override fun onActivityStarted(activity: Activity) {
-                if ((AppConst.is_show_ad&&!AppConst.photoExitFlag)||activity is LauncherActivity||!AppConst.SWITCH_LEAVE_RETURN_LAUNCH_NORMAL) {
+                if (activity is CustomerDetailActivity ||activity is SpecialCustomerServiceActivity) {
+                    AppConst.specialExitFlag=false
+                }
+                if ((AppConst.is_show_ad&&!AppConst.specialExitFlag)||activity is LauncherActivity ||!AppConst.SWITCH_LEAVE_RETURN_LAUNCH_NORMAL) {
                     LZYLog.e(TAG, "onActivityStarted: ")
                     appount++
                     if (appount == 1 && !isBackground) {
@@ -313,10 +302,13 @@ class APP : Application() {
             }
 
             override fun onActivityStopped(activity: Activity) {
-                if (activity is LauncherActivity||!AppConst.SWITCH_LEAVE_RETURN_LAUNCH_NORMAL) {
+                if (activity is CustomerDetailActivity||activity is SpecialCustomerServiceActivity) {
+                    AppConst.specialExitFlag=true
+                }
+                if ((AppConst.is_show_ad&&!AppConst.specialExitFlag)||activity is LauncherActivity ||!AppConst.SWITCH_LEAVE_RETURN_LAUNCH_NORMAL) {
                     LZYLog.e(TAG, "onActivityStopped: ")
                     appount--
-                    if (appount === 0 && AppConst.isStopBoolen && AppConst.isSuspendedBoolen) {
+                    if (appount == 0 && AppConst.isStopBoolen && AppConst.isSuspendedBoolen) {
                         LZYLog.e(TAG, "切入后台------------- startRet")
                     }
                     if (appount == 0 && isBackground) {

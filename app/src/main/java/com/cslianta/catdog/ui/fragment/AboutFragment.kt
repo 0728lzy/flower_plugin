@@ -32,6 +32,8 @@ import com.cslianta.catdog.utils.lzy.LZYLog
 import com.cslianta.catdog.utils.lzy.ScreenUtils
 import com.cslianta.catdog.widget.popup.dj.QNInputPasswordDialogPopup
 import com.cslianta.catdog.utils.dj.GetHttpDataUtil
+import com.zym.customer.CustomerConfig
+import com.zym.customer.ui.activity.SpecialCustomerServiceActivity
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -61,7 +63,7 @@ class AboutFragment : RootFragment(R.layout.fragment_about) {
         versionTextView = binding.mineAppVersion
         djIdTextView = binding.mineDjId
         appLogoImageView = binding.mineAppImg
-        
+
         mineLinearLayout.outlineProvider = object : ViewOutlineProvider() {
             override fun getOutline(view: View, outline: Outline?) {
                 outline?.setRoundRect(
@@ -74,7 +76,7 @@ class AboutFragment : RootFragment(R.layout.fragment_about) {
             }
         }
         mineLinearLayout.clipToOutline = true
-        
+
         privacyLinearLayout.thrillClickListener {
             CAWebViewActivity.forward(
                 requireActivity() as com.cslianta.catdog.base.dj.BaseActivity,
@@ -82,7 +84,7 @@ class AboutFragment : RootFragment(R.layout.fragment_about) {
                 AppConst.URL_PRIVACY_POLICY
             )
         }
-        
+
         userProLinearLayout.thrillClickListener {
             CAWebViewActivity.forward(
                 requireActivity() as com.cslianta.catdog.base.dj.BaseActivity,
@@ -90,11 +92,11 @@ class AboutFragment : RootFragment(R.layout.fragment_about) {
                 AppConst.URL_USER_AGREEMENT
             )
         }
-        
+
         feedbackLinearLayout.thrillClickListener {
             CAContactCustomerServiceActivity.show(requireActivity() as com.cslianta.catdog.base.dj.BaseActivity)
         }
-        
+
         binding.mineAppImg.setOnClickListener {
             stat++
             LZYLog.i("countDownTimerstat", "$stat")
@@ -106,13 +108,24 @@ class AboutFragment : RootFragment(R.layout.fragment_about) {
                 showInputPasswordDialog()
             }
         }
-        
-        binding.mineDjId.text = UserInfoModel.getDjid()
+
+        binding.mineDjId.text = UserInfoModel.getRiseId()
         binding.mineAppVersion.text = DeviceUtils.getVersionName(APP.instance)
         Glide.with(this)
             .load(R.mipmap.ic_app_logo)
             .transform(CenterCrop(),RoundedCorners(ScreenUtils.dip2px(50,requireContext())))
             .into(binding.mineAppImg)
+
+        if (AppConst.is_show_ad){
+            binding.mineLinUserKf.visibility=View.VISIBLE
+        }else{
+            binding.mineLinUserKf.visibility=View.GONE
+        }
+
+        binding.mineLinUserKf.thrillClickListener {
+            CustomerConfig.setDjValue(AppConst.DJ_APP_ID, UserInfoModel.getDjid())
+            SpecialCustomerServiceActivity.show(requireActivity())
+        }
     }
 
     var inputPopupView: BasePopupView? = null

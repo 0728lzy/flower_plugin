@@ -318,6 +318,18 @@ public class CAStartRet implements Serializable {
         this.baiduId = baiduId;
     }
 
+    @SerializedName("showId")
+    private String showId;
+
+    public String getShowId() {
+        return showId;
+    }
+
+    public void setShowId(String showId) {
+        this.showId = showId;
+    }
+
+
     @Override
     public String toString() {
         return "StartRet{" +

@@ -11,7 +11,8 @@ object AppConst {
     //----------------------------模板常量（常修改）----------------------------start
     @JvmField
     var CHANNEL = BuildConfig.APP_CHANNEL//用户协议MK
-    const val DJ_APP_ID = "a92c610a89339805905121471ac23325ed1aad"
+    @JvmField
+    var DJ_APP_ID = "a92c610a89339805905121471ac23325ed1aad"
     const val UM_APP_ID = "66f79ecb61c3b13bde90b57a"  //沿用 猫狗交流翻译器
     const val TAG = "ad_log"
 
@@ -33,6 +34,9 @@ object AppConst {
     @JvmField var  GMRDAd_ID_IN = "" //激励视频
     @JvmField var  GMRDAd_ID_TWO = "" //激励视频
 
+
+    //对自然量和非自然量的退出后台时的唤醒开屏的逻辑控制，为true时，在自然量的情况下不会在退出后台时重新进入开屏页。
+    var specialExitFlag=false//虽然这个不是常量，但是这个和SWITCH_LEAVE_RETURN_LAUNCH_NORMAL搭配使用，这个设置为true时，处理白名单模式下需要取消唤醒开屏的特殊操作
 
     @JvmField
     var adsJLFlag = 0

@@ -136,7 +136,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="联系客服"
+                        android:text="建议反馈"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
 
@@ -234,6 +234,48 @@
                         android:tint="@color/gray_light" />
                 </LinearLayout>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#55e1e1e1"/>
+
+                <LinearLayout
+                    android:id="@+id/mine_lin_user_kf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:paddingVertical="15dp"
+                    android:layout_marginBottom="15dp">
+
+                    <FrameLayout
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="15dp">
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="center"
+                            android:src="@mipmap/mine_feedback"
+                            />
+                    </FrameLayout>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="联系客服"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@mipmap/mine_arrow_right"
+                        android:tint="@color/gray_light" />
+                </LinearLayout>
 
             </LinearLayout>
 

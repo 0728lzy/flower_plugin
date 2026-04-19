@@ -57,7 +57,7 @@ public class VipDialog extends Dialog implements View.OnClickListener {
         this.fl_content_4 = view.findViewById(R.id.fl_content_4);
         Animation anim = AnimationUtils.loadAnimation(context, R.anim.public_heartbeat);
         this.sp_metro_code.startAnimation(anim);
-        ZYMAllAdsUtils.INSTANCE.loadSimpleAll(this.activityDialog,"",this.fl_content_4);
+        ZYMAllAdsUtils.INSTANCE.loadSimpleAd3(this.activityDialog,"",this.fl_content_4);
         this.sp_metro_code.setOnClickListener(this);
         this.tv_back.setOnClickListener(this);
         this.iv_cancel.setOnClickListener(this);
