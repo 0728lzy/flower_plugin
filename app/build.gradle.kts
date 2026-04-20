@@ -1,5 +1,5 @@
-import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.random.Random
 
 plugins {
     id("com.android.application")
@@ -11,6 +11,41 @@ val l_app_channel = "BAIDU"   //CSJ HUAWEI BAIDU OPPO XIAOMI VIVO HONOR YYB     
 val l_version_code = 200
 val l_version_name = "2.0.0"
 val l_app_name="全能猫狗宠物翻译器"
+
+tasks.register("generateObfuscationDict") {
+    doLast {
+        val firstChars = charArrayOf('l','I','O','o','S','s','Z','z','B','b')
+        val otherChars = charArrayOf(
+            'l','I','1',
+            'O','0','o',
+            'S','5','s',
+            'Z','2','z',
+            'B','8','b'
+        )
+        val size = 20000
+        val minLen = 8
+        val maxLen = 12
+        val set = HashSet<String>(size)
+        while (set.size < size) {
+            val len = Random.nextInt(minLen, maxLen + 1)
+            val sb = StringBuilder(len)
+            sb.append(firstChars.random())
+            repeat(len - 1) {
+                sb.append(otherChars.random())
+            }
+            set.add(sb.toString())
+        }
+        val file = File(rootProject.projectDir, "./app/obf-dict.txt")
+        file.bufferedWriter().use { writer ->
+            set.forEach {
+                writer.appendLine(it)
+            }
+        }    }}
+
+tasks.named("preBuild") {
+    dependsOn("generateObfuscationDict")
+}
+
 android {
 //    namespace = "com.ruite.app.pet.translator"
     namespace = "com.cslianta.catdog"
