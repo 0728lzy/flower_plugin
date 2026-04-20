@@ -24,6 +24,7 @@ import com.cslianta.catdog.csj.lzy.LZYCPCounterHelper
 import com.cslianta.catdog.csj.AdCPNoLimitUtils
 import com.cslianta.catdog.csj.AdManagerHolder
 import com.cslianta.catdog.csj.lzy.EventCounterHelper
+import com.cslianta.catdog.csj.lzy.LzyInitFeedSimpleAdsUtils
 import com.cslianta.catdog.db.RoomHelper
 import com.cslianta.catdog.helper.dj.PushHelper
 import com.cslianta.catdog.net.GsonConverter
@@ -96,6 +97,7 @@ class APP : Application() {
 //
 //            }
             if (AppConst.is_show_ad&&UserInfoModel.getIsFirstVip()){
+                LzyInitFeedSimpleAdsUtils.initSimpleAd3(activity)
             }
         }
     }
