@@ -53,7 +53,7 @@ android {
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.catcsyun.liantadog"
+        applicationId = "com.cslianta.catdog"
         minSdk = 21
         targetSdk = 34
         versionCode = System.getenv("VERSION_CODE")?.toIntOrNull() ?: l_version_code
