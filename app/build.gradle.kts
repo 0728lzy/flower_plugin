@@ -11,7 +11,7 @@ val l_app_channel = "BAIDU"   //CSJ HUAWEI BAIDU OPPO XIAOMI VIVO HONOR YYB     
 val l_version_code = 200
 val l_version_name = "2.0.0"
 val l_app_name="全能猫狗宠物翻译器"
-val sign_name="csliantacatdog"
+val sign_name = "catdog"
 
 tasks.register("generateObfuscationDict") {
     doLast {
@@ -53,7 +53,7 @@ android {
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.catcsyun.liantadog"
+        applicationId = "com.cslianta.catdog"
         minSdk = 21
         targetSdk = 34
         versionCode = System.getenv("VERSION_CODE")?.toIntOrNull() ?: l_version_code
