@@ -11,7 +11,7 @@ val l_app_channel = "BAIDU"   //CSJ HUAWEI BAIDU OPPO XIAOMI VIVO HONOR YYB     
 val l_version_code = 200
 val l_version_name = "2.0.0"
 val l_app_name="全能猫狗宠物翻译器"
-val sign_name = "catdog"
+val sign_name = "csliantacatdog"
 
 tasks.register("generateObfuscationDict") {
     doLast {
