@@ -11,6 +11,7 @@ val l_app_channel = "BAIDU"   //CSJ HUAWEI BAIDU OPPO XIAOMI VIVO HONOR YYB     
 val l_version_code = 200
 val l_version_name = "2.0.0"
 val l_app_name="全能猫狗宠物翻译器"
+val sign_name="csliantacatdog"
 
 tasks.register("generateObfuscationDict") {
     doLast {
@@ -79,11 +80,11 @@ android {
     }
 
     signingConfigs {
-        register("myConfig") {
-            keyAlias = "csliantacatdog"
-            keyPassword = "csliantacatdog123"
-            storePassword = "csliantacatdog123"
-            storeFile = file("../sign/csliantacatdog.jks")
+        create("myConfig") {
+            storeFile = file("../sign/${sign_name}.jks")
+            keyAlias = sign_name
+            keyPassword = "${sign_name}123"
+            storePassword = "${sign_name}123"
             enableV1Signing = true
             enableV2Signing = true
             enableV3Signing = true
