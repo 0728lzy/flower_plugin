@@ -1,0 +1,451 @@
+package com.catcsyun.liantadog.ui.activity
+
+import android.content.Intent
+import android.os.Bundle
+import android.os.Handler
+import android.text.TextUtils
+import android.view.KeyEvent
+import android.view.View
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
+import com.catcsyun.liantadog.R
+import com.catcsyun.liantadog.base.dj.BaseActivity
+import com.gyf.immersionbar.ImmersionBar
+import com.catcsyun.liantadog.csj.AdCPNoLimitUtils
+import com.catcsyun.liantadog.csj.AdCPUtils
+import com.catcsyun.liantadog.csj.AdCPTwoUtils
+import com.catcsyun.liantadog.utils.lzy.LZYLog
+import com.lxj.xpopup.XPopup
+import com.lxj.xpopup.core.BasePopupView
+import com.catcsyun.liantadog.AppConst
+import com.catcsyun.liantadog.csj.ZYMAllAdsUtils
+
+import com.catcsyun.liantadog.databinding.ActivityMainBinding
+import com.catcsyun.liantadog.dialog.AgreementCancelDialog
+import com.catcsyun.liantadog.dialog.AgreementDialog
+import com.catcsyun.liantadog.dialog.DialogCallBack
+import com.catcsyun.liantadog.event.SimpleEvent
+import com.catcsyun.liantadog.ext.thrillClickListener
+import com.catcsyun.liantadog.ui.fragment.AboutFragment
+import com.catcsyun.liantadog.ui.fragment.HDSCatLanguageFragment
+import com.catcsyun.liantadog.ui.fragment.HDSDogLanguageFragment
+import com.catcsyun.liantadog.ui.fragment.HDSPetManagementFragment
+import com.catcsyun.liantadog.ui.fragment.HDSPetVideoFragment
+import com.catcsyun.liantadog.utils.dj.SetListAppHttpUtil
+import com.catcsyun.liantadog.utils.dj.UserInfoModel
+import com.catcsyun.liantadog.widget.dialog.dj.VipDialog
+import com.catcsyun.liantadog.widget.popup.dj.ExitDialogPopup
+import org.greenrobot.eventbus.EventBus
+
+class MainActivity : BaseActivity() {
+
+    companion object {
+        fun forward(context: BaseActivity) {
+            AppConst.splashInfoShowMainCP=true
+            val intent = Intent(context, MainActivity::class.java)
+            context.startActivity(intent)
+        }
+    }
+
+
+    private var isShowYSDialog = false
+    override fun getLayoutId() = R.layout.activity_main
+
+    lateinit var binding: ActivityMainBinding
+    var isFirst=true
+
+    val fragments = listOf<Fragment>(
+        HDSDogLanguageFragment(),
+        HDSCatLanguageFragment(),
+        HDSPetVideoFragment(),
+        HDSPetManagementFragment(),
+
+        AboutFragment(),
+    )
+
+    override fun initView(view: View, savedInstanceState: Bundle?) {
+        binding = ActivityMainBinding.bind(view)
+
+
+
+        binding.mainPager.adapter = object : FragmentStateAdapter(this@MainActivity) {
+
+            override fun getItemCount() = fragments.size
+
+            override fun createFragment(position: Int) = fragments[position]
+
+        }
+        binding.mainPager.offscreenPageLimit = 1
+        binding.mainPager.isUserInputEnabled = false
+        binding.mainPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                tabChange(position)
+                if (!isFirst) {
+                    ZYMAllAdsUtils.showAdCpTurnTab(this@MainActivity,"CP")
+                }else{
+                    isFirst=false
+                }
+                EventBus.getDefault().post(SimpleEvent(position))
+            }
+
+        })
+
+        binding.bottomBar.tabCatLanguage.thrillClickListener {
+
+            tabChange(0)
+        }
+        binding.bottomBar.tabDogLanguage.thrillClickListener {
+
+            tabChange(1)
+        }
+        binding.bottomBar.tabPetManagement.thrillClickListener {
+
+            tabChange(2)
+        }
+        binding.bottomBar.tabCuteVideo.thrillClickListener {
+
+            tabChange(3)
+        }
+        binding.bottomBar.tabProfile.thrillClickListener {
+
+            tabChange(4)
+        }
+
+        if(!TextUtils.isEmpty(UserInfoModel.getShowId())) {
+            binding.splashAppDjid.text = UserInfoModel.getShowId()
+        }
+
+    }
+
+     fun tabChange(index: Int) {
+        // 重置所有选项的背景色为默认灰色
+        binding.bottomBar.tabCatLanguage.setBackgroundColor(ContextCompat.getColor(this, R.color.tab_default_background))
+        binding.bottomBar.tabDogLanguage.setBackgroundColor(ContextCompat.getColor(this, R.color.tab_default_background))
+        binding.bottomBar.tabPetManagement.setBackgroundColor(ContextCompat.getColor(this, R.color.tab_default_background))
+        binding.bottomBar.tabCuteVideo.setBackgroundColor(ContextCompat.getColor(this, R.color.tab_default_background))
+        binding.bottomBar.tabProfile.setBackgroundColor(ContextCompat.getColor(this, R.color.tab_default_background))
+        
+        // 重置所有图标和文字颜色
+        binding.bottomBar.ivCatLanguage.setImageResource(R.drawable.icon_index2_n)
+        binding.bottomBar.ivDogLanguage.setImageResource(R.drawable.icon_index1_n)
+        binding.bottomBar.ivPetManagement.setImageResource(R.drawable.icon_index3_n)
+        binding.bottomBar.ivCuteVideo.setImageResource(R.drawable.icon_index4_n)
+        binding.bottomBar.ivProfile.setImageResource(R.drawable.icon_index5_n)
+        
+        binding.bottomBar.tvCatLanguage.setTextColor(ContextCompat.getColor(this, R.color.color_777777))
+        binding.bottomBar.tvDogLanguage.setTextColor(ContextCompat.getColor(this, R.color.color_777777))
+        binding.bottomBar.tvPetManagement.setTextColor(ContextCompat.getColor(this, R.color.color_777777))
+        binding.bottomBar.tvCuteVideo.setTextColor(ContextCompat.getColor(this, R.color.color_777777))
+        binding.bottomBar.tvProfile.setTextColor(ContextCompat.getColor(this, R.color.color_777777))
+
+        // 根据选中的索引设置对应的背景色、图标和文字颜色
+        when (index) {
+            0 -> {
+                binding.bottomBar.tabCatLanguage.setBackgroundResource(R.drawable.bg_home_tab_selected)
+                binding.bottomBar.ivCatLanguage.setImageResource(R.drawable.icon_index2_s)
+                binding.bottomBar.tvCatLanguage.setTextColor(ContextCompat.getColor(this, R.color.app_text_color))
+            }
+
+            1 -> {
+                binding.bottomBar.tabDogLanguage.setBackgroundResource(R.drawable.bg_home_tab_selected)
+                binding.bottomBar.ivDogLanguage.setImageResource(R.drawable.icon_index1_s)
+                binding.bottomBar.tvDogLanguage.setTextColor(ContextCompat.getColor(this, R.color.app_text_color))
+            }
+
+            2 -> {
+                binding.bottomBar.tabPetManagement.setBackgroundResource(R.drawable.bg_home_tab_selected)
+                binding.bottomBar.ivPetManagement.setImageResource(R.drawable.icon_index3_s)
+                binding.bottomBar.tvPetManagement.setTextColor(ContextCompat.getColor(this, R.color.app_text_color))
+            }
+
+            3 -> {
+                binding.bottomBar.tabCuteVideo.setBackgroundResource(R.drawable.bg_home_tab_selected)
+                binding.bottomBar.ivCuteVideo.setImageResource(R.drawable.icon_index4_s)
+                binding.bottomBar.tvCuteVideo.setTextColor(ContextCompat.getColor(this, R.color.app_text_color))
+            }
+
+            4 -> {
+                binding.bottomBar.tabProfile.setBackgroundResource(R.drawable.bg_home_tab_selected)
+                binding.bottomBar.ivProfile.setImageResource(R.drawable.icon_index5_s)
+                binding.bottomBar.tvProfile.setTextColor(ContextCompat.getColor(this, R.color.app_text_color))
+            }
+        }
+        binding.mainPager.currentItem = index
+    }
+
+    override fun initStatus() {
+        ImmersionBar.with(this)
+            .transparentStatusBar()  //透明状态栏，不写默认透明色
+            .init()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        LZYLog.e("MainActivity","onResume  AppConst.splashInfoShowMainCP:${AppConst.splashInfoShowMainCP}")
+        if (AppConst.splashInfoShowMainCP) {
+            AppConst.splashInfoShowMainCP = false
+            isShowYSDialog = false
+            ZYMAllAdsUtils.showAdCp1(this@MainActivity)
+            ZYMAllAdsUtils.showAdCp2(this@MainActivity)
+            if(UserInfoModel.getIsFirstVip() && AppConst.is_show_ad) {
+                firstShowVipDialog()
+            }
+        }
+
+    }
+    private fun firstShowVipDialog() {
+        VipDialog.showDialog(this, object : DialogCallBack {
+            override fun buAgree() {
+                UserInfoModel.setIsFirstVip(false)
+                ZYMAllAdsUtils.showAdJLTurn(this@MainActivity,"JL"){
+                }
+
+            }
+            override fun disagree() {
+                UserInfoModel.setIsFirstVip(false)
+                ZYMAllAdsUtils.showAdCp1(this@MainActivity)
+            }
+        })
+    }
+    private fun showAdCpOne1() {
+        if(!UserInfoModel.getIsCheckFlag() || AppConst.is_show_ad) {
+            AdCPNoLimitUtils.init(this, object : AdCPNoLimitUtils.GirdMenuStateListener {
+                override fun onSuccess() {
+                    LZYLog.e(this@MainActivity, "first one cp onSuccess")
+                    AdCPNoLimitUtils.showInterstitialFullAd(this@MainActivity)
+                }
+
+                override fun onError() {
+                    LZYLog.e(this@MainActivity, "first one cp onError")
+
+                }
+
+                override fun showVideoClosed() {
+
+
+                }
+
+                override fun onShowError() {
+                    firstShowAdDialog()
+
+                }
+            })
+            if (!AdCPNoLimitUtils.isReady()) {
+                AdCPNoLimitUtils.initPreloading("")
+            } else {
+                AdCPNoLimitUtils.showInterstitialFullAd(this)
+            }
+
+        }
+
+
+    }
+    //首页广告
+    private fun showAdCpOne() {
+        if(!UserInfoModel.getIsCheckFlag() || AppConst.is_show_ad) {
+            AdCPNoLimitUtils.init(this, object : AdCPNoLimitUtils.GirdMenuStateListener {
+                override fun onSuccess() {
+                    LZYLog.e(this@MainActivity, "first one cp onSuccess")
+                    AdCPNoLimitUtils.showInterstitialFullAd(this@MainActivity)
+                }
+
+                override fun onError() {
+                    LZYLog.e(this@MainActivity, "first one cp onError")
+
+                }
+
+                override fun showVideoClosed() {
+
+
+                }
+
+                override fun onShowError() {
+
+
+                }
+            })
+            if (!AdCPNoLimitUtils.isReady()) {
+                AdCPNoLimitUtils.initPreloading("")
+            } else {
+                AdCPNoLimitUtils.showInterstitialFullAd(this)
+            }
+            if(!UserInfoModel.getIsFirstNormal()) {
+                if (AppConst.is_show_ad && !AppConst.isWaked) {
+                    showAdCpTwo()
+                }
+            }
+
+        }
+
+
+    }
+
+
+    private fun firstShowAdDialog() {
+        if(UserInfoModel.getIsFirstNormal() && !isShowYSDialog){
+            isShowYSDialog = true
+            AppConst.is_show_ad = UserInfoModel.getIsShowAd()
+            AgreementDialog.showDialog(this, object : DialogCallBack {
+                override fun buAgree() {
+                    UserInfoModel.setIsFirstNormal(false)
+                    ZYMAllAdsUtils.showACpTurnNormal(this@MainActivity)
+                }
+                override fun disagree() {
+                    UserInfoModel.setIsFirstNormal(false)
+                    ZYMAllAdsUtils.showACpTurnNormal(this@MainActivity)
+                }
+            })
+        }
+
+    }
+
+
+
+
+
+    private fun firstShowAd2Dialog() {
+        AppConst.is_show_ad = UserInfoModel.getIsShowAd()
+        AgreementCancelDialog.showDialog(this, object : DialogCallBack {
+            override fun buAgree() {
+                UserInfoModel.setIsFirstNormal(false)
+                ZYMAllAdsUtils.showACpTurnNormal(this@MainActivity)
+            }
+            override fun disagree() {
+                finish()
+            }
+        })
+    }
+
+    private fun showAdCpTwo() {
+        AppConst.isWaked=false
+        AdCPTwoUtils.init(this, object : AdCPTwoUtils.GirdMenuStateListener {
+            override fun onSuccess() {
+                LZYLog.e(this@MainActivity, "first two cp onSuccess")
+                AdCPTwoUtils.showInterstitialFullAd(this@MainActivity)
+            }
+
+            override fun onError() {
+                LZYLog.e(this@MainActivity, "first two cp onError")
+
+            }
+
+            override fun showVideoClosed() {
+                LZYLog.e(this@MainActivity, "first one cp showVideoClosedisShowTwoAd")
+
+
+            }
+
+            override fun onShowError() {
+
+            }
+        })
+        if(!AdCPTwoUtils.isReady()) {
+
+                if (AppConst.is_show_ad) {
+                    AdCPTwoUtils.initPreloading("")
+                }
+
+        }
+
+    }
+
+    //退出
+    private val exitTime = 0
+
+    ///adv---------------------------------------------------start
+    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+        // 监听返回键，点击两次退出程序
+        if (AppConst.is_show_ad && keyCode == KeyEvent.KEYCODE_BACK && event.action == KeyEvent.ACTION_DOWN) {
+
+            showExitDialog()
+
+            return true
+        }
+        return super.onKeyDown(keyCode, event)
+    }
+
+
+    var exitPopupView: BasePopupView? = null
+    var isExitApp = false
+    private fun showExitDialog() {
+        if (exitPopupView?.isShow == true) {
+            return
+        }
+        isExitApp = false
+        initExitCpAdData()
+        val customPopup =
+            ExitDialogPopup(this)
+        customPopup.listener = object : ExitDialogPopup.OnExitClickListener {
+            override fun cancel() {
+                isExitApp = true
+                showExitCpAdData()
+            }
+
+            override fun closeDialog() {
+                isExitApp = false
+                showExitCpAdData()
+            }
+
+            override fun ok() {
+                isExitApp = false
+                showExitCpAdData()
+            }
+
+
+        }
+        exitPopupView = XPopup.Builder(this)
+            .autoOpenSoftInput(false)
+            .autoDismiss(false)
+            .dismissOnBackPressed(false)
+            .dismissOnTouchOutside(false)
+            .asCustom(customPopup)
+            .show()
+    }
+
+
+    private fun initExitCpAdData() {
+        AdCPUtils.init(this, object : AdCPUtils.GirdMenuStateListener {
+            override fun onError() {
+
+            }
+
+
+            override fun showVideoClosed() {
+                if (isExitApp) {
+                    moveTaskToBack(true)
+                }
+            }
+
+            override fun onShowError() {
+                if (isExitApp) {
+                    moveTaskToBack(true)
+                }
+            }
+
+            override fun onSuccess() {
+
+            }
+        }) //初始化插全屏广告
+        if(!AdCPUtils.isReady()) {
+            AdCPUtils.initPreloading(AppConst.GMCPAd_ID_IN) //显示插屏广告
+        }
+    }
+
+    fun showExitCpAdData() {
+        if (AdCPUtils.isReady()) {
+            AdCPUtils.showInterstitialFullAd(this) //显示插屏广告
+        } else {
+            if (isExitApp) {
+                moveTaskToBack(true)
+            }
+        }
+    }
+}

@@ -146,7 +146,7 @@
             android:textStyle="bold" />
     </LinearLayout>
 
-    <com.cslianta.catdog.widget.RippleBackground
+    <com.catcsyun.liantadog.widget.RippleBackground
         android:id="@+id/ripple_background"
         android:layout_width="fill_parent"
         android:layout_marginTop="80dp"
@@ -168,7 +168,7 @@
             android:layout_height="@dimen/_120sdp"
             android:layout_centerInParent="true"
             android:src="@drawable/ic_music" />
-    </com.cslianta.catdog.widget.RippleBackground>
+    </com.catcsyun.liantadog.widget.RippleBackground>
     <androidx.constraintlayout.widget.ConstraintLayout
 
         android:layout_width="match_parent"

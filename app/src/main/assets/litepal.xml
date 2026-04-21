@@ -5,9 +5,9 @@
     <version value="4"></version>
 
     <list>
-        <mapping class="com.cslianta.catdog.model.Pet" />
-        <mapping class="com.cslianta.catdog.model.PetPhoto" />
-        <mapping class="com.cslianta.catdog.model.PetNote" />
-        <mapping class="com.cslianta.catdog.model.PetBathRecord" />
+        <mapping class="com.catcsyun.liantadog.model.Pet" />
+        <mapping class="com.catcsyun.liantadog.model.PetPhoto" />
+        <mapping class="com.catcsyun.liantadog.model.PetNote" />
+        <mapping class="com.catcsyun.liantadog.model.PetBathRecord" />
     </list>
 </litepal>

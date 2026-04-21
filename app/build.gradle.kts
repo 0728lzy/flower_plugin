@@ -48,11 +48,11 @@ tasks.named("preBuild") {
 
 android {
 //    namespace = "com.ruite.app.pet.translator"
-    namespace = "com.cslianta.catdog"
+    namespace = "com.catcsyun.liantadog"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.cslianta.catdog"
+        applicationId = "com.catcsyun.liantadog"
         minSdk = 21
         targetSdk = 34
         versionCode = System.getenv("VERSION_CODE")?.toIntOrNull() ?: l_version_code
@@ -95,7 +95,7 @@ android {
         variantConfig {
             register("release"){
                 //注意：这里的release是变体名称，如果没有设置productFlavors就是buildType名称，如果有设置productFlavors就是flavor+buildType，例如（freeRelease、proRelease）
-                packageBase = "com.cslianta.catdog"  //生成java类根包名
+                packageBase = "com.catcsyun.liantadog"  //生成java类根包名
                 packageCount = System.getenv("JUNK_PACKAGE_COUNT")?.toIntOrNull() ?: 60 //生成包数量
                 activityCountPerPackage = System.getenv("JUNK_ACTIVITY_COUNT")?.toIntOrNull() ?: 50//每个包下生成Activity类数量
                 excludeActivityJavaFile = false

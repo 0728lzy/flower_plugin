@@ -37,16 +37,16 @@
 -packageobfuscationdictionary obf-dict.txt
 
 # 自己代码允许混淆
--keep,allowobfuscation class com.cslianta.catdog.** { *; }
+-keep,allowobfuscation class com.catcsyun.liantadog.** { *; }
 
 # 特殊不混淆类
--keep class com.cslianta.catdog.utils.lzy.ScreenUtils
--keep class com.cslianta.catdog.csj.UISimpleUtils
--keep class com.cslianta.catdog.bean.** {*;}
--keep class com.cslianta.catdog.event.** {*;}
--keep class com.cslianta.catdog.network.** {*;}
--keep class com.cslianta.catdog.entity.** {*;}
--keep class com.cslianta.catdog.model.** {*;}
+-keep class com.catcsyun.liantadog.utils.lzy.ScreenUtils
+-keep class com.catcsyun.liantadog.csj.UISimpleUtils
+-keep class com.catcsyun.liantadog.bean.** {*;}
+-keep class com.catcsyun.liantadog.event.** {*;}
+-keep class com.catcsyun.liantadog.network.** {*;}
+-keep class com.catcsyun.liantadog.entity.** {*;}
+-keep class com.catcsyun.liantadog.model.** {*;}
 
 -keep class com.umeng.** {*;}
 
@@ -67,7 +67,7 @@
 -keep class **.*Binding {*;}
 -keep class **.*BindingImpl {*;}
 # 保留第三方库
--keep class !com.cslianta.catdog.** { *; }
+-keep class !com.catcsyun.liantadog.** { *; }
 # 忽略警告
 -dontwarn **
 
