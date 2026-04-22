@@ -22,8 +22,8 @@ import android.webkit.WebView
 import androidx.core.app.ActivityCompat
 import com.catcsyun.liantadog.APP
 import com.catcsyun.liantadog.AppConst
+import com.hjq.permissions.XXPermissions
 import com.huawei.hms.ads.identifier.AdvertisingIdClient
-import com.catcsyun.liantadog.utils.lzy.LZYLog
 import com.umeng.commonsdk.UMConfigure
 import java.io.BufferedReader
 import java.io.File
@@ -37,13 +37,13 @@ import java.util.*
 
 
 /**
- * Created by xtc on 2019/12/18.
- */
-object DeviceInfoUtil {
+ * Created by xtc on 2019/12/18. */object DeviceInfoUtil {
+
 
     private var oaid = ""
+
     var goIntData = false
-    fun init(context: Context,GuideStr:Int=AppConst.INSTALL_FROM_APP) {
+    fun init(context: Context,GuideStr:Int= AppConst.INSTALL_FROM_APP) {
         goIntData = false
         Thread {
             val brand = DeviceUtils.getBrand()
@@ -80,24 +80,25 @@ object DeviceInfoUtil {
                     Log.i("LoggingInterceptor", "getAdvertisingIdInfo Exception: $e")
                 }
 
-
-                MiitHelper(MiitHelper.AppIdsUpdater { ids ->
-                    Log.d("LoggingInterceptor", "MiitHelper oaid: $ids")
-                    if (!TextUtils.isEmpty(ids)) {
-                        AppConst.oaid = ids//获取oaid
-                        if (TextUtils.isEmpty(UserInfoModel.getDjid()) && !TextUtils.isEmpty(
-                                AppConst.oaid
-                            ) && !TextUtils.isEmpty(AppConst.oaid_u)
-                            && !TextUtils.isEmpty(AppConst.oaid_h) && !goIntData
-                        ) {
-                            goIntData = true
-                            GetHttpDataUtil.setInstall(
-                                APP.instance!!, GuideStr
-                            )
-                            Log.d("LoggingInterceptor", "22222222222")
+                if (AppConst.CHANNEL!="OPPO") {
+                    MiitHelper(MiitHelper.AppIdsUpdater { ids ->
+                        Log.d("LoggingInterceptor", "MiitHelper oaid: $ids")
+                        if (!TextUtils.isEmpty(ids)) {
+                            AppConst.oaid = ids//获取oaid
+                            if (TextUtils.isEmpty(UserInfoModel.getDjid()) && !TextUtils.isEmpty(
+                                    AppConst.oaid
+                                ) && !TextUtils.isEmpty(AppConst.oaid_u)
+                                && !TextUtils.isEmpty(AppConst.oaid_h) && !goIntData
+                            ) {
+                                goIntData = true
+                                GetHttpDataUtil.setInstall(
+                                    APP.instance!!, GuideStr
+                                )
+                                Log.d("LoggingInterceptor", "22222222222")
+                            }
                         }
-                    }
-                }).getDeviceIds(context)
+                    }).getDeviceIds(context)
+                }
 
 //        LoggerUtil.loggerMsg("hhh---,DeviceInfoUtil init 222")
                 UMConfigure.getOaid(context) {
@@ -123,21 +124,24 @@ object DeviceInfoUtil {
 
 
             }else{
-                MiitHelper(MiitHelper.AppIdsUpdater { ids ->
-                    Log.d("LoggingInterceptor", "MiitHelper oaid: $ids")
-                    if (!TextUtils.isEmpty(ids)) {
-                        AppConst.oaid = ids//获取oaid
-                        if (TextUtils.isEmpty(UserInfoModel.getDjid()) && !TextUtils.isEmpty(
-                                AppConst.oaid  ) && !TextUtils.isEmpty(AppConst.oaid_u) && !goIntData
-                        ) {
-                            goIntData = true
-                            GetHttpDataUtil.setInstall(
-                                APP.instance!!, GuideStr
-                            )
-                            Log.d("LoggingInterceptor", "22222222222")
+
+                if (AppConst.CHANNEL!="OPPO"){
+                    MiitHelper(MiitHelper.AppIdsUpdater { ids ->
+                        Log.d("LoggingInterceptor", "MiitHelper oaid: $ids")
+                        if (!TextUtils.isEmpty(ids)) {
+                            AppConst.oaid = ids//获取oaid
+                            if (TextUtils.isEmpty(UserInfoModel.getDjid()) && !TextUtils.isEmpty(
+                                    AppConst.oaid  ) && !TextUtils.isEmpty(AppConst.oaid_u) && !goIntData
+                            ) {
+                                goIntData = true
+                                GetHttpDataUtil.setInstall(
+                                    APP.instance!!, GuideStr
+                                )
+                                Log.d("LoggingInterceptor", "22222222222")
+                            }
                         }
-                    }
-                }).getDeviceIds(context)
+                    }).getDeviceIds(context)
+                }
 
 
 //        LoggerUtil.loggerMsg("hhh---,DeviceInfoUtil init 222")
@@ -179,169 +183,6 @@ object DeviceInfoUtil {
     }
 
 
-
-//
-//    fun init(context: Context) {
-////        LoggerUtil.loggerMsg("hhh---,DeviceInfoUtil init")
-//        thread {
-//            try {
-//                val info: AdvertisingIdClient.Info =
-//                    AdvertisingIdClient.getAdvertisingIdInfo(APP.instance!!)
-//                if (null != info) {
-//                    val oa_id = info.getId()
-//                    if (!TextUtils.isEmpty(oa_id) && TextUtils.isEmpty(AppConst.oaid)) {
-//                        AppConst.oaid = oa_id//获取oaid
-//                        if (TextUtils.isEmpty(UserInfoModel.getDjid())) {
-//                            if (AppConst.DEVICE_OUT_NET_ID == "0.0.0.0") {
-//                                Handler(Looper.getMainLooper()).postDelayed({
-//                                    GetHttpDataUtil.setInstall(
-//                                        APP.instance!!,AppConst.INSTALL_FROM_APP
-//                                    )
-//                                }, 1000)
-//                            } else {
-//                                GetHttpDataUtil.setInstall(
-//                                    APP.instance!!,AppConst.INSTALL_FROM_APP
-//                                )
-//                            }
-//                        }
-//                    }
-//                    LZYLog.i(
-//                        "LoggingInterceptor", "getAdvertisingIdInfo id=" + info.getId() +
-//                                ", isLimitAdTrackingEnabled=" + info.isLimitAdTrackingEnabled()
-//                    )
-//                }
-//            } catch (e: IOException) {
-//                LZYLog.i("LoggingInterceptor", "getAdvertisingIdInfo Exception: $e")
-//            }
-//        }
-////        LoggerUtil.loggerMsg("hhh---,DeviceInfoUtil init 222")
-//        UMConfigure.getOaid(context) {
-//            var oa_id = it
-//            if (!TextUtils.isEmpty(oa_id) && TextUtils.isEmpty(AppConst.oaid)) {
-//                AppConst.oaid = oa_id//获取oaid
-//                if (TextUtils.isEmpty(UserInfoModel.getDjid())) {
-//                    if (AppConst.DEVICE_OUT_NET_ID == "0.0.0.0") {
-//                        Handler(Looper.getMainLooper()).postDelayed({
-//                            GetHttpDataUtil.setInstall(
-//                                APP.instance!!,AppConst.INSTALL_FROM_APP
-//                            )
-//                        }, 1000)
-//                    } else {
-//                        GetHttpDataUtil.setInstall(
-//                            APP.instance!!,AppConst.INSTALL_FROM_APP
-//                        )
-//                    }
-//                }
-//            }
-//
-//            LZYLog.d("LoggingInterceptor", "UMConfigure oaid: $oa_id")
-//        }
-////        AppLog.setOaidObserver {
-////            var oa_id = it.id
-////            if(oa_id != null && !TextUtils.isEmpty(oa_id) && TextUtils.isEmpty(AppConst.oaid)) {
-////                AppConst.oaid = oa_id
-////                if (TextUtils.isEmpty(UserInfoModel.getDjid())) {
-////                    if(AppConst.DEVICE_OUT_NET_ID == "0.0.0.0"){
-////                        Handler(Looper.getMainLooper()).postDelayed({
-////                            GetHttpDataUtil.setInstall(App.instance!!)
-////                        },1000)
-////                    }else {
-////                        GetHttpDataUtil.setInstall(App.instance!!)
-////                    }
-////                }
-////                //获取oaid
-////            }
-////            LZYLog.d("LoggingInterceptor", "AppLog: $oa_id")
-////        }
-//
-//        Handler(Looper.getMainLooper()).postDelayed({
-//            if (TextUtils.isEmpty(UserInfoModel.getDjid()) && TextUtils.isEmpty(AppConst.oaid)) {
-//                GetHttpDataUtil.setInstall( APP.instance!!,AppConst.INSTALL_FROM_APP)
-//            }
-//        }, 3000)
-//    }
-//
-//
-//    fun splashInit(context: Context) {
-//        thread {
-//            try {
-//                val info: AdvertisingIdClient.Info =
-//                    AdvertisingIdClient.getAdvertisingIdInfo( APP.instance!!)
-//                if (null != info) {
-//                    val oa_id = info.getId()
-//                    if (!TextUtils.isEmpty(oa_id) && TextUtils.isEmpty(AppConst.oaid)) {
-//                        AppConst.oaid = oa_id//获取oaid
-//                        if (TextUtils.isEmpty(UserInfoModel.getDjid())) {
-//                            if (AppConst.DEVICE_OUT_NET_ID == "0.0.0.0") {
-//                                Handler(Looper.getMainLooper()).postDelayed({
-//                                    GetHttpDataUtil.setInstall(
-//                                        APP.instance!!,AppConst.INSTALL_FROM_SPLASH
-//                                    )
-//                                }, 1000)
-//                            } else {
-//                                GetHttpDataUtil.setInstall(
-//                                    APP.instance!!,AppConst.INSTALL_FROM_SPLASH
-//                                )
-//                            }
-//                        }
-//                    }
-//                    LZYLog.i(
-//                        "LoggingInterceptor", "getAdvertisingIdInfo id=" + info.getId() +
-//                                ", isLimitAdTrackingEnabled=" + info.isLimitAdTrackingEnabled()
-//                    )
-//                }
-//            } catch (e: IOException) {
-//                LZYLog.i("LoggingInterceptor", "getAdvertisingIdInfo Exception: $e")
-//            }
-//        }
-////        LoggerUtil.loggerMsg("hhh---,DeviceInfoUtil init 222")
-//        UMConfigure.getOaid(context) {
-//            var oa_id = it
-//            if (!TextUtils.isEmpty(oa_id) && TextUtils.isEmpty(AppConst.oaid)) {
-//                AppConst.oaid = oa_id//获取oaid
-//                if (TextUtils.isEmpty(UserInfoModel.getDjid())) {
-//                    if (AppConst.DEVICE_OUT_NET_ID == "0.0.0.0") {
-//                        Handler(Looper.getMainLooper()).postDelayed({
-//                            GetHttpDataUtil.setInstall(
-//                                APP.instance!!,AppConst.INSTALL_FROM_SPLASH
-//                            )
-//                        }, 1000)
-//                    } else {
-//                        GetHttpDataUtil.setInstall(
-//                            APP.instance!!,AppConst.INSTALL_FROM_SPLASH
-//                        )
-//                    }
-//                }
-//            }
-//
-//            LZYLog.d("LoggingInterceptor", "UMConfigure oaid: $oa_id")
-//        }
-////        AppLog.setOaidObserver {
-////            var oa_id = it.id
-////            if(oa_id != null && !TextUtils.isEmpty(oa_id) && TextUtils.isEmpty(AppConst.oaid)) {
-////                AppConst.oaid = oa_id
-////                if (TextUtils.isEmpty(UserInfoModel.getDjid())) {
-////                    if(AppConst.DEVICE_OUT_NET_ID == "0.0.0.0"){
-////                        Handler(Looper.getMainLooper()).postDelayed({
-////                            GetHttpDataUtil.setInstall(App.instance!!)
-////                        },1000)
-////                    }else {
-////                        GetHttpDataUtil.setInstall(App.instance!!)
-////                    }
-////                }
-////                //获取oaid
-////            }
-////            LZYLog.d("LoggingInterceptor", "AppLog: $oa_id")
-////        }
-//
-//        Handler(Looper.getMainLooper()).postDelayed({
-//            if (TextUtils.isEmpty(UserInfoModel.getDjid()) && TextUtils.isEmpty(AppConst.oaid)) {
-//                GetHttpDataUtil.setInstall( APP.instance!!,AppConst.INSTALL_FROM_SPLASH)
-//            }
-//        }, 3000)
-//    }
-
-
     /**获取oaId*/
     fun getOaId(): String {
         return oaid
@@ -359,7 +200,7 @@ object DeviceInfoUtil {
             webview.layout(0, 0, 0, 0)
             val settings: WebSettings = webview.getSettings()
             ua = settings.getUserAgentString()
-            LZYLog.e("LHM", "User Agent:$ua")
+            Log.e("LHM", "User Agent:$ua")
         } catch (e: java.lang.Exception) {
             e.printStackTrace()
         }
@@ -393,12 +234,12 @@ object DeviceInfoUtil {
                 )
                 val meid2 = method.invoke(null, "ril.cdma.meid", "") as String
                 if (!TextUtils.isEmpty(meid2)) {
-                    LZYLog.d("LHM", "getMEID meid: $meid")
+                    Log.d("LHM", "getMEID meid: $meid")
                     meid = meid2
                 }
             } catch (e: java.lang.Exception) {
                 e.printStackTrace()
-                LZYLog.w("LHM", "getMEID error : " + e.message)
+                Log.w("LHM", "getMEID error : " + e.message)
             }
 
         }
@@ -437,7 +278,7 @@ object DeviceInfoUtil {
     fun getImeiLessQ(context: Context): String {
         var deviceId = ""
         try {
-            LZYLog.e("LHM", "getIMEI: $deviceId")
+            Log.e("LHM", "getIMEI: $deviceId")
             val telephonyManager =
                 context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
@@ -458,7 +299,7 @@ object DeviceInfoUtil {
             e.printStackTrace()
         }
         if (deviceId.length == 0) {
-            LZYLog.e("LHM", "getIMEI:  return null")
+            Log.e("LHM", "getIMEI:  return null")
         }
         return deviceId
     }
@@ -523,7 +364,7 @@ object DeviceInfoUtil {
             context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
         if (ActivityCompat.checkSelfPermission(context,Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED
             || tm == null) { // 没有权限
-            LZYLog.e("DeviceInfoUtil", "getIMEIforO: no permission")
+            Log.e("DeviceInfoUtil", "getIMEIforO: no permission")
             map["imei1"] = ""
             map["imei2"] = ""
             return map
@@ -545,8 +386,7 @@ object DeviceInfoUtil {
 
     /**
      * 5.0统一使用这个获取IMEI IMEI2 MEID
-     *
-     * @param ctx
+     *     * @param ctx
      * @return
      */
     @SuppressLint("MissingPermission")
@@ -620,8 +460,7 @@ object DeviceInfoUtil {
 
     /**
      * Android  6.0 之前（不包括6.0）
-     * 必须的权限  <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>
-     * @param context
+     * 必须的权限  <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>     * @param context
      * @return
      */
     @SuppressLint("MissingPermission")
@@ -664,19 +503,17 @@ object DeviceInfoUtil {
     }
 
     /**
-     * 遍历循环所有的网络接口，找到接口是 wlan0
-     * 必须的权限 <uses-permission android:name="android.permission.INTERNET"></uses-permission>
-     * @return
+     * 遍历循环所有的网络接口，找到接口是 wlan0     * 必须的权限 <uses-permission android:name="android.permission.INTERNET"></uses-permission>     * @return
      */
     private fun getMacFromWlan(): String? {
         try {
             val all: List<NetworkInterface> =
                 Collections.list(NetworkInterface.getNetworkInterfaces())
-            LZYLog.d("Utils", "all:" + all.size)
+            Log.d("Utils", "all:" + all.size)
             for (nif in all) {
                 if (!nif.name.equals("wlan0", ignoreCase = true)) continue
                 val macBytes = nif.hardwareAddress ?: return null
-                LZYLog.d("Utils", "macBytes:" + macBytes.size + "," + nif.name)
+                Log.d("Utils", "macBytes:" + macBytes.size + "," + nif.name)
                 val res1 = StringBuilder()
                 for (b in macBytes) {
                     res1.append(String.format("%02X:", b))
@@ -706,6 +543,47 @@ object DeviceInfoUtil {
         return versionCodes
     }
 
+    /**
+     * 得到全局唯一UUID,有权限时
+     * @param context NameActivity.this
+     * @return 返回UUID字符串
+     */
+    @SuppressLint("MissingPermission")
+    fun getUniqueID(context: Context): String? {
+        try {
+            var perms =
+                arrayOf<String>(
+                    AppConst.PERMISSONURL.WRITE_EXTERNAL.value,
+                    AppConst.PERMISSONURL.READ_EXTERNAL.value,
+                    AppConst.PERMISSONURL.READ_PHONE.value
+                )
+            if (XXPermissions.isGranted(context, perms)) {
+                val tm = context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+                val tmDevice: String
+                val tmSerial: String
+                val androidId: String
+                tmDevice = "" + tm.deviceId
+                tmSerial = "" + tm.simSerialNumber
+                androidId =
+                    "" + Settings.Secure.getString(
+                        context.contentResolver,
+                        Settings.Secure.ANDROID_ID
+                    )
+                val deviceUuid = UUID(
+                    androidId.hashCode().toLong(),
+                    tmDevice.hashCode().toLong() shl 32 or tmSerial.hashCode()
+                        .toLong()
+                )
+                return deviceUuid.toString()
+            }
+            return ""
+        } catch (ex: java.lang.Exception) {
+            Log.e("IP Address", ex.toString())
+        }
+        return ""
+    }
+
+
     //ipv6
     fun getLocalIpV6(): String {
         try {
@@ -715,7 +593,7 @@ object DeviceInfoUtil {
                 val enumIpAddr: Enumeration<InetAddress> = intf.inetAddresses
                 while (enumIpAddr.hasMoreElements()) {
                     val inetAddress: InetAddress = enumIpAddr.nextElement()
-                    LZYLog.e("ip1  ", inetAddress.getHostAddress())
+                    Log.e("ip1  ", inetAddress.getHostAddress())
 
                     if (!inetAddress.isLoopbackAddress() && inetAddress is Inet6Address) {
                         var hostIp6 = inetAddress.getHostAddress()
@@ -739,7 +617,7 @@ object DeviceInfoUtil {
                 }
             }
         } catch (ex: java.lang.Exception) {
-            LZYLog.e("IP Address", ex.toString())
+            Log.e("IP Address", ex.toString())
         }
         return ""
     }
