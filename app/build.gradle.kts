@@ -135,6 +135,8 @@ tasks.register("resDJApkGenerate") {
     val finalApk = buildDir.file("outputs/apk/release/$dynamicName").get().asFile
     val dptOutputDir = buildDir.dir("outputs/apk/release/dpt").get().asFile
     val dptProtectedApk = buildDir.file("outputs/apk/release/${dynamicName.removeSuffix(".apk")}_dpt.apk").get().asFile
+    val releaseOutputDir = file("release")
+    val releaseOutputApk = file("release/${dynamicName.removeSuffix(".apk")}_o.apk")
     val bundletoolJar = file("${rootProject.projectDir}/tools/bundletool.jar")
     val dptJar = file("${rootProject.projectDir}/tools/dpt.jar")
     val signingConfig = android.signingConfigs.getByName("myConfig")
@@ -144,6 +146,12 @@ tasks.register("resDJApkGenerate") {
         if (!obfuscatedAab.exists()) throw GradleException("Missing ReSChiper output bundle: ${obfuscatedAab.absolutePath}")
         if (!bundletoolJar.exists()) throw GradleException("Missing: ${bundletoolJar.absolutePath}")
         outputApks.parentFile.mkdirs()
+        releaseOutputDir.mkdirs()
+        releaseOutputDir.listFiles()?.forEach { file ->
+            if (file.isFile && file.extension.equals("apk", ignoreCase = true)) {
+                file.delete()
+            }
+        }
 
         exec {
             commandLine(
@@ -174,6 +182,7 @@ tasks.register("resDJApkGenerate") {
             outputApks.delete()
             println("APK Generated: ${finalApk.absolutePath}")
 
+            var releaseCandidate = finalApk
             if (envFlag("DPT_ENABLE", true)) {
                 if (!dptJar.exists()) throw GradleException("Missing: ${dptJar.absolutePath}")
 
@@ -224,7 +233,11 @@ tasks.register("resDJApkGenerate") {
 
                 generatedDptApk.copyTo(dptProtectedApk, overwrite = true)
                 println("DPT APK Generated: ${dptProtectedApk.absolutePath}")
+                releaseCandidate = dptProtectedApk
             }
+
+            releaseCandidate.copyTo(releaseOutputApk, overwrite = true)
+            println("Release APK Generated: ${releaseOutputApk.absolutePath}")
         }
     }
 }
