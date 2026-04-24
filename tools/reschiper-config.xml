@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<reschiper>
+    <whitelist>
+        <path>*.R.drawable.icon_app_logo*</path>
+        <path>*.R.drawable.ic_app_logo*</path>
+        <path>*.R.mipmap.icon_app_logo*</path>
+        <path>*.R.mipmap.ic_app_logo*</path>
+        <path>*.R.string.app_name</path>
+        <path>*.R.string.app_channel</path>
+
+        <path>*.R.drawable.tt_*</path>
+        <path>*.R.layout.tt_*</path>
+        <path>*.R.id.tt_*</path>
+        <path>*.R.string.tt_*</path>
+        <path>*.R.style.tt_*</path>
+
+        <path>*.R.drawable.gdt_*</path>
+        <path>*.R.layout.gdt_*</path>
+        <path>*.R.id.gdt_*</path>
+        <path>*.R.string.gdt_*</path>
+
+        <path>*.R.drawable.bd_*</path>
+        <path>*.R.layout.bd_*</path>
+        <path>*.R.id.bd_*</path>
+        <path>*.R.string.bd_*</path>
+
+        <path>*.R.attr.qmui_*</path>
+        <path>*.R.style.QMUI*</path>
+        <path>*.R.drawable.qmui_*</path>
+        <path>*.R.layout.qmui_*</path>
+
+        <path>*.R.layout._xpopup_*</path>
+        <path>*.R.layout.layout_dialogx_*</path>
+        <path>*.R.id.toast_main_layout</path>
+
+        <path>*.R.drawable.lteg_*</path>
+        <path>*.R.layout.lteg_*</path>
+        <path>*.R.string.lteg_*</path>
+
+        <path>*.R.raw.lottie_*</path>
+
+        <path>*.R.drawable.umeng_*</path>
+        <path>*.R.layout.umeng_*</path>
+    </whitelist>
+</reschiper>

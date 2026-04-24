@@ -1,6 +1,10 @@
 import java.util.*
 import kotlin.random.Random
 import com.github.megatronking.stringfog.plugin.StringFogExtension
+import io.github.goldfish07.reschiper.plugin.Extension
+import java.io.FileOutputStream
+import java.util.zip.ZipFile
+import javax.xml.parsers.DocumentBuilderFactory
 
 plugins {
     id("com.android.application")
@@ -10,6 +14,36 @@ plugins {
     id("com.flower.code")
 }
 apply(plugin = "stringfog")
+apply(plugin = "io.github.goldfish07.reschiper")
+
+val reschiperUtil by configurations.creating
+
+fun loadResChiperWhiteList(configFile: File): Set<String> {
+    if (!configFile.exists()) return emptySet()
+
+    val document = DocumentBuilderFactory.newInstance()
+        .newDocumentBuilder()
+        .parse(configFile)
+    val nodes = document.getElementsByTagName("path")
+
+    return (0 until nodes.length)
+        .mapNotNull { nodes.item(it).textContent?.trim() }
+        .filter { it.isNotEmpty() }
+        .toSet()
+}
+
+val resChiperConfigFile = rootProject.file("tools/reschiper-config.xml")
+val resChiperOutputBundleName = "app-release-obfuscated.aab"
+
+extensions.configure<Extension>("resChiper") {
+    enableObfuscation = true
+    obfuscationMode = "default"
+    mergeDuplicateResources = true
+    enableFileFiltering = false
+    enableFilterStrings = false
+    obfuscatedBundleName = resChiperOutputBundleName
+    whiteList = loadResChiperWhiteList(resChiperConfigFile)
+}
 
 flowerCode {
     enabled = true
@@ -70,6 +104,62 @@ tasks.register("generateObfuscationDict") {
 
 tasks.named("preBuild") {
     dependsOn("generateObfuscationDict")
+}
+
+
+tasks.register("resDJApkGenerate") {
+    group = "obfuscation"
+    description = "Build release AAB, obfuscate resources with ReSChiper, then convert it to a signed universal APK."
+    dependsOn("resChiperRelease")
+    val buildDir = layout.buildDirectory
+    val appId = android.defaultConfig.applicationId
+    val versionName = android.defaultConfig.versionName
+    val channel = System.getenv("APP_CHANNEL") ?: l_app_channel
+    val date = System.currentTimeMillis()
+    val dynamicName = "${appId}_release_${date}_${channel}_${versionName}_obfuscated.apk"
+    val inputAab = buildDir.file("outputs/bundle/release/app-release.aab").get().asFile
+    val obfuscatedAab = buildDir.file("outputs/bundle/release/$resChiperOutputBundleName").get().asFile
+    val outputApks = buildDir.file("outputs/apk/release/app-release-obfuscated.apks").get().asFile
+    val finalApk = buildDir.file("outputs/apk/release/$dynamicName").get().asFile
+    val bundletoolJar = file("${rootProject.projectDir}/tools/bundletool.jar")
+    val signingConfig = android.signingConfigs.getByName("myConfig")
+    doLast {
+        if (!resChiperConfigFile.exists()) throw GradleException("Missing: ${resChiperConfigFile.absolutePath}")
+        if (!inputAab.exists()) throw GradleException("Missing release bundle: ${inputAab.absolutePath}")
+        if (!obfuscatedAab.exists()) throw GradleException("Missing ReSChiper output bundle: ${obfuscatedAab.absolutePath}")
+        if (!bundletoolJar.exists()) throw GradleException("Missing: ${bundletoolJar.absolutePath}")
+        outputApks.parentFile.mkdirs()
+
+        exec {
+            commandLine(
+                "${System.getProperty("java.home")}${File.separator}bin${File.separator}java",
+                "-jar",
+                bundletoolJar.absolutePath,
+                "build-apks",
+                "--bundle=${obfuscatedAab.absolutePath}",
+                "--output=${outputApks.absolutePath}",
+                "--mode=universal",
+                "--overwrite",
+                "--ks=${signingConfig.storeFile?.absolutePath}",
+                "--ks-pass=pass:${signingConfig.storePassword}",
+                "--ks-key-alias=${signingConfig.keyAlias}",
+                "--key-pass=pass:${signingConfig.keyPassword}"
+            )
+        }
+
+        if (outputApks.exists()) {
+            ZipFile(outputApks).use { zip ->
+                val entry = zip.getEntry("universal.apk") ?: throw GradleException("universal.apk not found in apks")
+                zip.getInputStream(entry).use { input ->
+                    FileOutputStream(finalApk).use { output ->
+                        input.copyTo(output)
+                    }
+                }
+            }
+            outputApks.delete()
+            println("APK Generated: ${finalApk.absolutePath}")
+        }
+    }
 }
 
 android {
@@ -193,7 +283,7 @@ android {
 
 dependencies {
     implementation("com.github.megatronking.stringfog:xor:5.0.0")
-
+    reschiperUtil("io.github.goldfish07.reschiper:plugin:0.1.0-rc4")
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.9.0")
