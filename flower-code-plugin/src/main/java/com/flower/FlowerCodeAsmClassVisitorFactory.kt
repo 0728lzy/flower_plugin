@@ -6,17 +6,27 @@ import com.android.build.api.instrumentation.ClassData
 import com.android.build.api.instrumentation.InstrumentationParameters
 import org.gradle.api.provider.ListProperty
 import org.gradle.api.provider.Property
+import org.gradle.api.tasks.Input
 import org.objectweb.asm.ClassVisitor
 
 interface FlowerCodeAsmParams : InstrumentationParameters {
+    @get:Input
     val enabled: Property<Boolean>
+    @get:Input
     val targetClasses: ListProperty<String>
+    @get:Input
     val protectAllProjectClasses: Property<Boolean>
+    @get:Input
     val minTemplatesPerMethod: Property<Int>
+    @get:Input
     val maxTemplatesPerMethod: Property<Int>
+    @get:Input
     val excludeMethods: ListProperty<String>
+    @get:Input
     val injectAtMethodStart: Property<Boolean>
+    @get:Input
     val injectAtMethodEnd: Property<Boolean>
+    @get:Input
     val injectBeforeReturn: Property<Boolean>
 }
 
