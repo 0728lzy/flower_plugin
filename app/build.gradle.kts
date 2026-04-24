@@ -35,6 +35,15 @@ fun loadResChiperWhiteList(configFile: File): Set<String> {
 val resChiperConfigFile = rootProject.file("tools/reschiper-config.xml")
 val resChiperOutputBundleName = "app-release-obfuscated.aab"
 
+fun envFlag(name: String, defaultValue: Boolean = false): Boolean {
+    return when (System.getenv(name)?.trim()?.lowercase(Locale.ROOT)) {
+        null, "" -> defaultValue
+        "1", "true", "yes", "y", "on" -> true
+        "0", "false", "no", "n", "off" -> false
+        else -> defaultValue
+    }
+}
+
 extensions.configure<Extension>("resChiper") {
     enableObfuscation = true
     obfuscationMode = "default"
@@ -109,7 +118,7 @@ tasks.named("preBuild") {
 
 tasks.register("resDJApkGenerate") {
     group = "obfuscation"
-    description = "Build release AAB, obfuscate resources with ReSChiper, then convert it to a signed universal APK."
+    description = "Build release AAB, obfuscate resources with ReSChiper, convert to APK, then protect Dex with dpt-shell."
     dependsOn("resChiperRelease")
     val buildDir = layout.buildDirectory
     val appId = android.defaultConfig.applicationId
@@ -121,7 +130,10 @@ tasks.register("resDJApkGenerate") {
     val obfuscatedAab = buildDir.file("outputs/bundle/release/$resChiperOutputBundleName").get().asFile
     val outputApks = buildDir.file("outputs/apk/release/app-release-obfuscated.apks").get().asFile
     val finalApk = buildDir.file("outputs/apk/release/$dynamicName").get().asFile
+    val dptOutputDir = buildDir.dir("outputs/apk/release/dpt").get().asFile
+    val dptProtectedApk = buildDir.file("outputs/apk/release/${dynamicName.removeSuffix(".apk")}_dpt.apk").get().asFile
     val bundletoolJar = file("${rootProject.projectDir}/tools/bundletool.jar")
+    val dptJar = file("${rootProject.projectDir}/tools/dpt.jar")
     val signingConfig = android.signingConfigs.getByName("myConfig")
     doLast {
         if (!resChiperConfigFile.exists()) throw GradleException("Missing: ${resChiperConfigFile.absolutePath}")
@@ -158,6 +170,58 @@ tasks.register("resDJApkGenerate") {
             }
             outputApks.delete()
             println("APK Generated: ${finalApk.absolutePath}")
+
+            if (envFlag("DPT_ENABLE", true)) {
+                if (!dptJar.exists()) throw GradleException("Missing: ${dptJar.absolutePath}")
+
+                dptOutputDir.mkdirs()
+                dptOutputDir.listFiles()?.forEach { file ->
+                    if (file.isFile && file.extension.equals("apk", ignoreCase = true)) {
+                        file.delete()
+                    }
+                }
+
+                val dptArgs = mutableListOf(
+                    "${System.getProperty("java.home")}${File.separator}bin${File.separator}java",
+                    "-jar",
+                    dptJar.absolutePath,
+                    "-f",
+                    finalApk.absolutePath,
+                    "-o",
+                    dptOutputDir.absolutePath
+                )
+
+                if (envFlag("DPT_NO_SIGN")) dptArgs.add("-x")
+                if (envFlag("DPT_DEBUG")) dptArgs.add("--debug")
+                if (envFlag("DPT_DISABLE_ACF")) dptArgs.add("--disable-acf")
+                if (envFlag("DPT_DUMP_CODE")) dptArgs.add("--dump-code")
+                if (envFlag("DPT_NOISY_LOG")) dptArgs.add("--noisy-log")
+                if (envFlag("DPT_KEEP_CLASSES")) dptArgs.add("-K")
+                if (envFlag("DPT_SMALLER")) dptArgs.add("-S")
+                if (envFlag("DPT_VERIFY_SIGN")) dptArgs.add("-vs")
+                val dptExcludeAbi = System.getenv("DPT_EXCLUDE_ABI")
+                    ?.takeIf { it.isNotBlank() }
+                    ?: "x86,x86_64"
+                dptArgs.addAll(listOf("-e", dptExcludeAbi))
+                System.getenv("DPT_RULES_FILE")?.takeIf { it.isNotBlank() }?.let {
+                    dptArgs.addAll(listOf("-r", file(it).absolutePath))
+                }
+                System.getenv("DPT_PROTECT_CONFIG")?.takeIf { it.isNotBlank() }?.let {
+                    dptArgs.addAll(listOf("-c", file(it).absolutePath))
+                }
+
+                exec {
+                    commandLine(dptArgs)
+                }
+
+                val generatedDptApk = dptOutputDir
+                    .listFiles { file -> file.isFile && file.extension.equals("apk", ignoreCase = true) }
+                    ?.maxByOrNull { it.lastModified() }
+                    ?: throw GradleException("dpt-shell did not generate an APK in ${dptOutputDir.absolutePath}")
+
+                generatedDptApk.copyTo(dptProtectedApk, overwrite = true)
+                println("DPT APK Generated: ${dptProtectedApk.absolutePath}")
+            }
         }
     }
 }
@@ -212,15 +276,15 @@ android {
             register("release"){
                 //注意：这里的release是变体名称，如果没有设置productFlavors就是buildType名称，如果有设置productFlavors就是flavor+buildType，例如（freeRelease、proRelease）
                 packageBase = "com.catcsyun.liantadog"  //生成java类根包名
-                packageCount = System.getenv("JUNK_PACKAGE_COUNT")?.toIntOrNull() ?: 60 //生成包数量
-                activityCountPerPackage = System.getenv("JUNK_ACTIVITY_COUNT")?.toIntOrNull() ?: 50//每个包下生成Activity类数量
+                packageCount = System.getenv("JUNK_PACKAGE_COUNT")?.toIntOrNull() ?: 30 //生成包数量
+                activityCountPerPackage = System.getenv("JUNK_ACTIVITY_COUNT")?.toIntOrNull() ?: 30//每个包下生成Activity类数量
                 excludeActivityJavaFile = false
                 //是否排除生成Activity的Java文件,默认false(layout和写入AndroidManifest.xml还会执行)，主要用于处理类似神策全埋点编译过慢问题
-                otherCountPerPackage = System.getenv("JUNK_OTHER_PER_COUNT")?.toIntOrNull() ?: 50 //每个包下生成其它类的数量
-                methodCountPerClass =  System.getenv("JUNK_OTHER_PER_COUNT")?.toIntOrNull() ?: 50   //每个类下生成方法数量
+                otherCountPerPackage = System.getenv("JUNK_OTHER_PER_COUNT")?.toIntOrNull() ?: 30 //每个包下生成其它类的数量
+                methodCountPerClass =  System.getenv("JUNK_OTHER_PER_COUNT")?.toIntOrNull() ?: 30   //每个类下生成方法数量
                 resPrefix = "lteg_"  //生成的layout、drawable、string等资源名前缀
-                drawableCount = System.getenv("JUNK_DRAWABLE_COUNT")?.toIntOrNull() ?: 300  //生成drawable资源数量
-                stringCount = System.getenv("JUNK_DRAWABLE_COUNT")?.toIntOrNull() ?: 300 //生成string数量
+                drawableCount = System.getenv("JUNK_DRAWABLE_COUNT")?.toIntOrNull() ?: 200  //生成drawable资源数量
+                stringCount = System.getenv("JUNK_DRAWABLE_COUNT")?.toIntOrNull() ?: 200 //生成string数量
             }
         }
     }
