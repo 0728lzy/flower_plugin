@@ -605,3 +605,6 @@
 -keep class com.catcsyun.liantadog.model.** {*;}
 
 -keep class com.catcsyun.liantadog.databinding.** { *; }
+
+-keep class org.litepal.** {*;}
+-keep class * extends org.litepal.crud.LitePalSupport {*;}

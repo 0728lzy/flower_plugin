@@ -44,6 +44,22 @@ fun envFlag(name: String, defaultValue: Boolean = false): Boolean {
     }
 }
 
+fun findAndroidBuildTool(toolName: String): File {
+    val sdkDir = listOfNotNull(
+        System.getenv("ANDROID_HOME"),
+        System.getenv("ANDROID_SDK_ROOT"),
+        System.getenv("LOCALAPPDATA")?.let { "$it${File.separator}Android${File.separator}Sdk" }
+    ).map(::File).firstOrNull { it.exists() }
+        ?: throw GradleException("Android SDK not found. Set ANDROID_HOME or ANDROID_SDK_ROOT.")
+
+    return File(sdkDir, "build-tools")
+        .listFiles { file -> file.isDirectory }
+        ?.sortedByDescending { it.name }
+        ?.map { File(it, toolName) }
+        ?.firstOrNull { it.exists() }
+        ?: throw GradleException("Android build tool not found: $toolName")
+}
+
 extensions.configure<Extension>("resChiper") {
     enableObfuscation = true
     obfuscationMode = "default"
@@ -137,6 +153,7 @@ tasks.register("resDJApkGenerate") {
     val dptProtectedApk = buildDir.file("outputs/apk/release/${dynamicName.removeSuffix(".apk")}_dpt.apk").get().asFile
     val releaseOutputDir = file("release")
     val releaseOutputApk = file("release/${dynamicName.removeSuffix(".apk")}_o.apk")
+    val dptAlignedApk = buildDir.file("outputs/apk/release/${dynamicName.removeSuffix(".apk")}_dpt_aligned.apk").get().asFile
     val bundletoolJar = file("${rootProject.projectDir}/tools/bundletool.jar")
     val dptJar = file("${rootProject.projectDir}/tools/dpt.jar")
     val signingConfig = android.signingConfigs.getByName("myConfig")
@@ -200,10 +217,10 @@ tasks.register("resDJApkGenerate") {
                     "-f",
                     finalApk.absolutePath,
                     "-o",
-                    dptOutputDir.absolutePath
+                    dptOutputDir.absolutePath,
+                    "-x"
                 )
 
-                if (envFlag("DPT_NO_SIGN")) dptArgs.add("-x")
                 if (envFlag("DPT_DEBUG")) dptArgs.add("--debug")
                 if (envFlag("DPT_DISABLE_ACF")) dptArgs.add("--disable-acf")
                 if (envFlag("DPT_DUMP_CODE")) dptArgs.add("--dump-code")
@@ -231,7 +248,35 @@ tasks.register("resDJApkGenerate") {
                     ?.maxByOrNull { it.lastModified() }
                     ?: throw GradleException("dpt-shell did not generate an APK in ${dptOutputDir.absolutePath}")
 
-                generatedDptApk.copyTo(dptProtectedApk, overwrite = true)
+                exec {
+                    commandLine(
+                        findAndroidBuildTool("zipalign.exe").absolutePath,
+                        "-p",
+                        "-f",
+                        "4",
+                        generatedDptApk.absolutePath,
+                        dptAlignedApk.absolutePath
+                    )
+                }
+
+                exec {
+                    commandLine(
+                        findAndroidBuildTool("apksigner.bat").absolutePath,
+                        "sign",
+                        "--ks",
+                        signingConfig.storeFile?.absolutePath,
+                        "--ks-pass",
+                        "pass:${signingConfig.storePassword}",
+                        "--ks-key-alias",
+                        signingConfig.keyAlias,
+                        "--key-pass",
+                        "pass:${signingConfig.keyPassword}",
+                        "--out",
+                        dptProtectedApk.absolutePath,
+                        dptAlignedApk.absolutePath
+                    )
+                }
+
                 println("DPT APK Generated: ${dptProtectedApk.absolutePath}")
                 releaseCandidate = dptProtectedApk
             }
