@@ -38,12 +38,16 @@ publishing {
     repositories {
         maven {
             name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/0728lzy/flower-code-plugin")
+            url = uri("https://maven.pkg.github.com/0728lzy/flower_plugin")
 
             credentials {
                 username = project.findProperty("gpr.user") as String?
+                    ?: project.findProperty("gprUser") as String?
+                    ?: System.getenv("GPR_USER")
                     ?: System.getenv("GITHUB_ACTOR")
                 password = project.findProperty("gpr.key") as String?
+                    ?: project.findProperty("gprKey") as String?
+                    ?: System.getenv("GPR_KEY")
                     ?: System.getenv("GITHUB_TOKEN")
             }
         }
