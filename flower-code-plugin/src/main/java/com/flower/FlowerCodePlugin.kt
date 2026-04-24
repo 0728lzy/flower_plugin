@@ -27,6 +27,7 @@ class FlowerCodePlugin : Plugin<Project> {
                 params.minTemplatesPerMethod.set(extension.minTemplatesPerMethod)
                 params.maxTemplatesPerMethod.set(extension.maxTemplatesPerMethod)
                 params.excludeMethods.set(extension.excludeMethods.toList())
+                params.excludeClassRegexes.set(extension.excludeClassRegexes)
                 params.injectAtMethodStart.set(extension.injectAtMethodStart)
                 params.injectAtMethodEnd.set(extension.injectAtMethodEnd)
                 params.injectBeforeReturn.set(extension.injectBeforeReturn)

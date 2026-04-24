@@ -16,6 +16,9 @@ open class FlowerCodeExtension {
         "<init>", "<clinit>", "toString", "hashCode", "equals"
     )
 
+    // Internal class name regexes using "/" separator.
+    var excludeClassRegexes: MutableList<String> = mutableListOf()
+
     var injectAtMethodStart: Boolean = true
     var injectAtMethodEnd: Boolean = true
     var injectBeforeReturn: Boolean = true

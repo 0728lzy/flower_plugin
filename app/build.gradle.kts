@@ -55,7 +55,7 @@ extensions.configure<Extension>("resChiper") {
 }
 
 flowerCode {
-    enabled = true
+    enabled = envFlag("FLOWER_CODE_ENABLE", true)
     protectAllProjectClasses = true
 
     targetClasses = mutableListOf()
@@ -64,6 +64,9 @@ flowerCode {
     maxTemplatesPerMethod = 3
 
     excludeMethods = mutableSetOf("<init>", "<clinit>", "toString", "hashCode", "equals")
+    excludeClassRegexes = mutableListOf(
+        "com/catcsyun/liantadog/[a-z]+\\d+(/.*)?"
+    )
     injectAtMethodStart = true
     injectAtMethodEnd = true
     injectBeforeReturn = true

@@ -23,6 +23,8 @@ interface FlowerCodeAsmParams : InstrumentationParameters {
     @get:Input
     val excludeMethods: ListProperty<String>
     @get:Input
+    val excludeClassRegexes: ListProperty<String>
+    @get:Input
     val injectAtMethodStart: Property<Boolean>
     @get:Input
     val injectAtMethodEnd: Property<Boolean>
@@ -37,6 +39,7 @@ abstract class FlowerCodeAsmClassVisitorFactory : AsmClassVisitorFactory<FlowerC
 
         val className = classData.className.replace('.', '/')
         if (isGeneratedOrFrameworkClass(className)) return false
+        if (params.excludeClassRegexes.get().any { regex -> Regex(regex).matches(className) }) return false
 
         if (params.protectAllProjectClasses.get()) return true
 
@@ -58,6 +61,7 @@ abstract class FlowerCodeAsmClassVisitorFactory : AsmClassVisitorFactory<FlowerC
             minTemplatesPerMethod = params.minTemplatesPerMethod.get()
             maxTemplatesPerMethod = params.maxTemplatesPerMethod.get()
             excludeMethods = params.excludeMethods.get().toMutableSet()
+            excludeClassRegexes = params.excludeClassRegexes.get().toMutableList()
             injectAtMethodStart = params.injectAtMethodStart.get()
             injectAtMethodEnd = params.injectAtMethodEnd.get()
             injectBeforeReturn = params.injectBeforeReturn.get()
