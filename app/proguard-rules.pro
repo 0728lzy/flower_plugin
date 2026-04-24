@@ -603,3 +603,5 @@
 -keep class com.catcsyun.liantadog.network.** {*;}
 -keep class com.catcsyun.liantadog.entity.** {*;}
 -keep class com.catcsyun.liantadog.model.** {*;}
+
+-keep class com.catcsyun.liantadog.databinding.** { *; }
