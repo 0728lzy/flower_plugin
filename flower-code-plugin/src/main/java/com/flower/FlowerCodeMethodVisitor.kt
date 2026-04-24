@@ -24,7 +24,7 @@ class FlowerCodeMethodVisitor(
     }
 
     override fun visitInsn(opcode: Int) {
-        if (extension.injectBeforeReturn && isReturnOpcode(opcode)) {
+        if ((extension.injectBeforeReturn || extension.injectAtMethodEnd) && isReturnOpcode(opcode)) {
             injectSafeDeadSnippet()
         }
         super.visitInsn(opcode)
@@ -34,9 +34,18 @@ class FlowerCodeMethodVisitor(
         val end = Label()
         val marker = listOf("ret#", "chk#", "sig#", "mask#").random() + Random.nextInt(1000, 9999)
 
-        // Always jump; no local variable writes, so verifier frames stay stable.
-        mv.visitInsn(Opcodes.ICONST_0)
-        mv.visitJumpInsn(Opcodes.IFEQ, end)
+        // Runtime-opaque guard. R8 can fold a literal false branch, but it must
+        // keep this path because System.nanoTime() is not known at compile time.
+        mv.visitMethodInsn(
+            Opcodes.INVOKESTATIC,
+            "java/lang/System",
+            "nanoTime",
+            "()J",
+            false
+        )
+        mv.visitLdcInsn(Long.MIN_VALUE)
+        mv.visitInsn(Opcodes.LCMP)
+        mv.visitJumpInsn(Opcodes.IFNE, end)
 
         mv.visitTypeInsn(Opcodes.NEW, "java/lang/StringBuilder")
         mv.visitInsn(Opcodes.DUP)
