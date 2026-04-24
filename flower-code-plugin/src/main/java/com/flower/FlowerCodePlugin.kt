@@ -19,10 +19,11 @@ class FlowerCodePlugin : Plugin<Project> {
         androidComponents.onVariants { variant ->
             variant.instrumentation.transformClassesWith(
                 FlowerCodeAsmClassVisitorFactory::class.java,
-                InstrumentationScope.ALL
+                InstrumentationScope.PROJECT
             ) { params ->
                 params.enabled.set(extension.enabled)
                 params.targetClasses.set(extension.targetClasses)
+                params.protectAllProjectClasses.set(extension.protectAllProjectClasses)
                 params.minTemplatesPerMethod.set(extension.minTemplatesPerMethod)
                 params.maxTemplatesPerMethod.set(extension.maxTemplatesPerMethod)
                 params.excludeMethods.set(extension.excludeMethods.toList())
@@ -39,7 +40,8 @@ class FlowerCodePlugin : Plugin<Project> {
         project.afterEvaluate {
             if (extension.enabled) {
                 project.logger.lifecycle(
-                    "Flower code enabled, target classes: ${extension.targetClasses.size}, " +
+                    "Flower code enabled, protectAllProjectClasses: ${extension.protectAllProjectClasses}, " +
+                        "target classes: ${extension.targetClasses.size}, " +
                         "templates per method: ${extension.minTemplatesPerMethod}~${extension.maxTemplatesPerMethod}"
                 )
             }

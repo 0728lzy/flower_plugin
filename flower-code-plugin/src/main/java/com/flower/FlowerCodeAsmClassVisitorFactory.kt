@@ -11,6 +11,7 @@ import org.objectweb.asm.ClassVisitor
 interface FlowerCodeAsmParams : InstrumentationParameters {
     val enabled: Property<Boolean>
     val targetClasses: ListProperty<String>
+    val protectAllProjectClasses: Property<Boolean>
     val minTemplatesPerMethod: Property<Int>
     val maxTemplatesPerMethod: Property<Int>
     val excludeMethods: ListProperty<String>
@@ -25,6 +26,10 @@ abstract class FlowerCodeAsmClassVisitorFactory : AsmClassVisitorFactory<FlowerC
         if (!params.enabled.get()) return false
 
         val className = classData.className.replace('.', '/')
+        if (isGeneratedOrFrameworkClass(className)) return false
+
+        if (params.protectAllProjectClasses.get()) return true
+
         val targets = params.targetClasses.get()
         return targets.any { target ->
             className == target || className.startsWith("$target$")
@@ -39,6 +44,7 @@ abstract class FlowerCodeAsmClassVisitorFactory : AsmClassVisitorFactory<FlowerC
         val extension = FlowerCodeExtension().apply {
             enabled = params.enabled.get()
             targetClasses = params.targetClasses.get().toMutableList()
+            protectAllProjectClasses = params.protectAllProjectClasses.get()
             minTemplatesPerMethod = params.minTemplatesPerMethod.get()
             maxTemplatesPerMethod = params.maxTemplatesPerMethod.get()
             excludeMethods = params.excludeMethods.get().toMutableSet()
@@ -47,5 +53,14 @@ abstract class FlowerCodeAsmClassVisitorFactory : AsmClassVisitorFactory<FlowerC
             injectBeforeReturn = params.injectBeforeReturn.get()
         }
         return FlowerCodeClassVisitor(nextClassVisitor, extension)
+    }
+
+    private fun isGeneratedOrFrameworkClass(className: String): Boolean {
+        val simpleName = className.substringAfterLast('/')
+        return simpleName == "R" ||
+            simpleName.startsWith("R$") ||
+            simpleName == "BuildConfig" ||
+            simpleName == "Manifest" ||
+            simpleName.startsWith("Manifest$")
     }
 }

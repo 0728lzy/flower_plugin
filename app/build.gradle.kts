@@ -169,12 +169,9 @@ android {
 
 flowerCode {
     enabled = true
+    protectAllProjectClasses = true
 
-    targetClasses = mutableListOf(
-        "com/catcsyun/liantadog/APP",
-        "com/catcsyun/liantadog/AppConst",
-        "com/catcsyun/liantadog/csj/AdCPUtils"
-    )
+    targetClasses = mutableListOf()
 
     minTemplatesPerMethod = 2
     maxTemplatesPerMethod = 3
