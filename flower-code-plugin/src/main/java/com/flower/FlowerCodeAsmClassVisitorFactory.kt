@@ -13,6 +13,12 @@ interface FlowerCodeAsmParams : InstrumentationParameters {
     @get:Input
     val enabled: Property<Boolean>
     @get:Input
+    val enableInDebug: Property<Boolean>
+    @get:Input
+    val enableInRelease: Property<Boolean>
+    @get:Input
+    val variantName: Property<String>
+    @get:Input
     val targetClasses: ListProperty<String>
     @get:Input
     val protectAllProjectClasses: Property<Boolean>
@@ -36,6 +42,7 @@ abstract class FlowerCodeAsmClassVisitorFactory : AsmClassVisitorFactory<FlowerC
     override fun isInstrumentable(classData: ClassData): Boolean {
         val params = parameters.get()
         if (!params.enabled.get()) return false
+        if (!isVariantEnabled(params)) return false
 
         val className = classData.className.replace('.', '/')
         if (isGeneratedOrFrameworkClass(className)) return false
@@ -56,6 +63,8 @@ abstract class FlowerCodeAsmClassVisitorFactory : AsmClassVisitorFactory<FlowerC
         val params = parameters.get()
         val extension = FlowerCodeExtension().apply {
             enabled = params.enabled.get()
+            enableInDebug = params.enableInDebug.get()
+            enableInRelease = params.enableInRelease.get()
             targetClasses = params.targetClasses.get().toMutableList()
             protectAllProjectClasses = params.protectAllProjectClasses.get()
             minTemplatesPerMethod = params.minTemplatesPerMethod.get()
@@ -76,5 +85,14 @@ abstract class FlowerCodeAsmClassVisitorFactory : AsmClassVisitorFactory<FlowerC
             simpleName == "BuildConfig" ||
             simpleName == "Manifest" ||
             simpleName.startsWith("Manifest$")
+    }
+
+    private fun isVariantEnabled(params: FlowerCodeAsmParams): Boolean {
+        val variant = params.variantName.get().lowercase()
+        return when {
+            "debug" in variant -> params.enableInDebug.get()
+            "release" in variant -> params.enableInRelease.get()
+            else -> params.enableInRelease.get()
+        }
     }
 }

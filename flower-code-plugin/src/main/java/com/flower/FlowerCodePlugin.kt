@@ -22,6 +22,9 @@ class FlowerCodePlugin : Plugin<Project> {
                 InstrumentationScope.PROJECT
             ) { params ->
                 params.enabled.set(extension.enabled)
+                params.enableInDebug.set(extension.enableInDebug)
+                params.enableInRelease.set(extension.enableInRelease)
+                params.variantName.set(variant.name)
                 params.targetClasses.set(extension.targetClasses)
                 params.protectAllProjectClasses.set(extension.protectAllProjectClasses)
                 params.minTemplatesPerMethod.set(extension.minTemplatesPerMethod)
@@ -41,7 +44,8 @@ class FlowerCodePlugin : Plugin<Project> {
         project.afterEvaluate {
             if (extension.enabled) {
                 project.logger.lifecycle(
-                    "Flower code enabled, protectAllProjectClasses: ${extension.protectAllProjectClasses}, " +
+                    "Flower code enabled, debug: ${extension.enableInDebug}, release: ${extension.enableInRelease}, " +
+                        "protectAllProjectClasses: ${extension.protectAllProjectClasses}, " +
                         "target classes: ${extension.targetClasses.size}, " +
                         "templates per method: ${extension.minTemplatesPerMethod}~${extension.maxTemplatesPerMethod}"
                 )

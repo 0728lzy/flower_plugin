@@ -2,6 +2,8 @@ package com.flower
 
 open class FlowerCodeExtension {
     var enabled: Boolean = true
+    var enableInDebug: Boolean = false
+    var enableInRelease: Boolean = true
 
     // Internal class names using "/" separator, e.g. com/example/MyClass
     var targetClasses: MutableList<String> = mutableListOf()

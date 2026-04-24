@@ -1,10 +1,10 @@
 import java.util.*
 import kotlin.random.Random
 import com.github.megatronking.stringfog.plugin.StringFogExtension
-import io.github.goldfish07.reschiper.plugin.Extension
 import java.io.FileOutputStream
 import java.util.zip.ZipFile
 import javax.xml.parsers.DocumentBuilderFactory
+import org.gradle.kotlin.dsl.withGroovyBuilder
 
 plugins {
     id("com.android.application")
@@ -15,8 +15,6 @@ plugins {
 }
 apply(plugin = "stringfog")
 apply(plugin = "io.github.goldfish07.reschiper")
-
-val reschiperUtil by configurations.creating
 
 fun loadResChiperWhiteList(configFile: File): Set<String> {
     if (!configFile.exists()) return emptySet()
@@ -60,18 +58,20 @@ fun findAndroidBuildTool(toolName: String): File {
         ?: throw GradleException("Android build tool not found: $toolName")
 }
 
-extensions.configure<Extension>("resChiper") {
-    enableObfuscation = true
-    obfuscationMode = "default"
-    mergeDuplicateResources = true
-    enableFileFiltering = false
-    enableFilterStrings = false
-    obfuscatedBundleName = resChiperOutputBundleName
-    whiteList = loadResChiperWhiteList(resChiperConfigFile)
+extensions.getByName("resChiper").withGroovyBuilder {
+    setProperty("enableObfuscation", true)
+    setProperty("obfuscationMode", "default")
+    setProperty("mergeDuplicateResources", true)
+    setProperty("enableFileFiltering", false)
+    setProperty("enableFilterStrings", false)
+    setProperty("obfuscatedBundleName", resChiperOutputBundleName)
+    setProperty("whiteList", loadResChiperWhiteList(resChiperConfigFile))
 }
 
 flowerCode {
     enabled = envFlag("FLOWER_CODE_ENABLE", true)
+    enableInDebug = false
+    enableInRelease = true
     protectAllProjectClasses = true
 
     targetClasses = mutableListOf()
@@ -91,7 +91,7 @@ flowerCode {
 extensions.configure<StringFogExtension>("stringfog") {
     implementation = "com.github.megatronking.stringfog.xor.StringFogImpl"
     enable = true
-    debug = true
+    debug = false
 }
 
 val l_app_channel = "OPPO"   //CSJ HUAWEI BAIDU OPPO XIAOMI VIVO HONOR YYB                                𤓖
@@ -130,8 +130,10 @@ tasks.register("generateObfuscationDict") {
             }
         }    }}
 
-tasks.named("preBuild") {
-    dependsOn("generateObfuscationDict")
+tasks.configureEach {
+    if (name == "preReleaseBuild") {
+        dependsOn("generateObfuscationDict")
+    }
 }
 
 
@@ -408,7 +410,6 @@ android {
 
 dependencies {
     implementation("com.github.megatronking.stringfog:xor:5.0.0")
-    reschiperUtil("io.github.goldfish07.reschiper:plugin:0.1.0-rc4")
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.9.0")
