@@ -1,5 +1,6 @@
 import java.util.*
 import kotlin.random.Random
+import com.github.megatronking.stringfog.plugin.StringFogExtension
 
 plugins {
     id("com.android.application")
@@ -8,6 +9,29 @@ plugins {
     id("android-junk-code")
     id("com.flower.code")
 }
+apply(plugin = "stringfog")
+
+flowerCode {
+    enabled = true
+    protectAllProjectClasses = true
+
+    targetClasses = mutableListOf()
+
+    minTemplatesPerMethod = 2
+    maxTemplatesPerMethod = 3
+
+    excludeMethods = mutableSetOf("<init>", "<clinit>", "toString", "hashCode", "equals")
+    injectAtMethodStart = true
+    injectAtMethodEnd = true
+    injectBeforeReturn = true
+}
+
+extensions.configure<StringFogExtension>("stringfog") {
+    implementation = "com.github.megatronking.stringfog.xor.StringFogImpl"
+    enable = true
+    debug = true
+}
+
 val l_app_channel = "BAIDU"   //CSJ HUAWEI BAIDU OPPO XIAOMI VIVO HONOR YYB                                𤓖
 val l_version_code = 200
 val l_version_name = "2.0.0"
@@ -167,22 +191,8 @@ android {
     }
 }
 
-flowerCode {
-    enabled = true
-    protectAllProjectClasses = true
-
-    targetClasses = mutableListOf()
-
-    minTemplatesPerMethod = 2
-    maxTemplatesPerMethod = 3
-
-    excludeMethods = mutableSetOf("<init>", "<clinit>", "toString", "hashCode", "equals")
-    injectAtMethodStart = true
-    injectAtMethodEnd = true
-    injectBeforeReturn = true
-}
-
 dependencies {
+    implementation("com.github.megatronking.stringfog:xor:5.0.0")
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
