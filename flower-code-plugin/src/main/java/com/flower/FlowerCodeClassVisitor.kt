@@ -6,7 +6,7 @@ import org.objectweb.asm.Opcodes
 
 class FlowerCodeClassVisitor(
     cv: ClassVisitor,
-    private val extension: FlowerCodeExtension
+    private val extension: FlowerCodeConfig
 ) : ClassVisitor(Opcodes.ASM9, cv) {
 
     private var className: String = ""

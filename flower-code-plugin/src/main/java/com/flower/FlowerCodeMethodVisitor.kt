@@ -7,7 +7,7 @@ import kotlin.random.Random
 
 class FlowerCodeMethodVisitor(
     mv: MethodVisitor,
-    private val extension: FlowerCodeExtension,
+    private val extension: FlowerCodeConfig,
     private val className: String,
     private val methodName: String
 ) : MethodVisitor(Opcodes.ASM9, mv) {

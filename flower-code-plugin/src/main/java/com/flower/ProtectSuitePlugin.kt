@@ -1,8 +1,5 @@
 package com.flower
 
-import com.android.build.api.instrumentation.FramesComputationMode
-import com.android.build.api.instrumentation.InstrumentationScope
-import com.android.build.api.variant.ApplicationAndroidComponentsExtension
 import com.android.build.gradle.AppExtension
 import org.gradle.api.GradleException
 import org.gradle.api.Plugin
@@ -26,36 +23,7 @@ class ProtectSuitePlugin : Plugin<Project> {
     }
 
     private fun registerFlowerInstrumentation(project: Project, extension: ProtectSuiteExtension) {
-        val androidComponents = project.extensions.findByType(
-            ApplicationAndroidComponentsExtension::class.java
-        ) ?: throw IllegalStateException(
-            "Protect suite plugin can only be applied to Android Application modules"
-        )
-
-        androidComponents.onVariants { variant ->
-            variant.instrumentation.transformClassesWith(
-                FlowerCodeAsmClassVisitorFactory::class.java,
-                InstrumentationScope.PROJECT
-            ) { params ->
-                params.enabled.set(extension.enabled && extension.flowerEnabled)
-                params.enableInDebug.set(extension.flowerEnableInDebug)
-                params.enableInRelease.set(extension.flowerEnableInRelease)
-                params.variantName.set(variant.name)
-                params.targetClasses.set(extension.targetClasses)
-                params.protectAllProjectClasses.set(extension.protectAllProjectClasses)
-                params.minTemplatesPerMethod.set(extension.minTemplatesPerMethod)
-                params.maxTemplatesPerMethod.set(extension.maxTemplatesPerMethod)
-                params.excludeMethods.set(extension.excludeMethods.toList())
-                params.excludeClassRegexes.set(extension.excludeClassRegexes)
-                params.injectAtMethodStart.set(extension.injectAtMethodStart)
-                params.injectAtMethodEnd.set(extension.injectAtMethodEnd)
-                params.injectBeforeReturn.set(extension.injectBeforeReturn)
-            }
-
-            variant.instrumentation.setAsmFramesComputationMode(
-                FramesComputationMode.COMPUTE_FRAMES_FOR_INSTRUMENTED_METHODS
-            )
-        }
+        FlowerCodeRegistrar.register(project, ProtectSuiteFlowerCodeConfig(extension))
     }
 
     private fun configureResChiper(project: Project, extension: ProtectSuiteExtension) {

@@ -1,27 +1,42 @@
 package com.flower
 
-open class FlowerCodeExtension {
-    var enabled: Boolean = true
-    var enableInDebug: Boolean = false
-    var enableInRelease: Boolean = true
+interface FlowerCodeConfig {
+    val enabled: Boolean
+    val enableInDebug: Boolean
+    val enableInRelease: Boolean
+    val targetClasses: MutableList<String>
+    val protectAllProjectClasses: Boolean
+    val minTemplatesPerMethod: Int
+    val maxTemplatesPerMethod: Int
+    val excludeMethods: MutableSet<String>
+    val excludeClassRegexes: MutableList<String>
+    val injectAtMethodStart: Boolean
+    val injectAtMethodEnd: Boolean
+    val injectBeforeReturn: Boolean
+}
+
+open class FlowerCodeExtension : FlowerCodeConfig {
+    override var enabled: Boolean = true
+    override var enableInDebug: Boolean = false
+    override var enableInRelease: Boolean = true
 
     // Internal class names using "/" separator, e.g. com/example/MyClass
-    var targetClasses: MutableList<String> = mutableListOf()
+    override var targetClasses: MutableList<String> = mutableListOf()
 
     // When true, inject all classes from current app module.
-    var protectAllProjectClasses: Boolean = false
+    override var protectAllProjectClasses: Boolean = false
 
-    var minTemplatesPerMethod: Int = 2
-    var maxTemplatesPerMethod: Int = 4
+    override var minTemplatesPerMethod: Int = 2
+    override var maxTemplatesPerMethod: Int = 4
 
-    var excludeMethods: MutableSet<String> = mutableSetOf(
+    override var excludeMethods: MutableSet<String> = mutableSetOf(
         "<init>", "<clinit>", "toString", "hashCode", "equals"
     )
 
     // Internal class name regexes using "/" separator.
-    var excludeClassRegexes: MutableList<String> = mutableListOf()
+    override var excludeClassRegexes: MutableList<String> = mutableListOf()
 
-    var injectAtMethodStart: Boolean = true
-    var injectAtMethodEnd: Boolean = true
-    var injectBeforeReturn: Boolean = true
+    override var injectAtMethodStart: Boolean = true
+    override var injectAtMethodEnd: Boolean = true
+    override var injectBeforeReturn: Boolean = true
 }

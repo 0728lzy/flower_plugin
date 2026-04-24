@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "com.flower"
-version = "1.0.0"
+version = "1.0.1"
 
 repositories {
     google()
@@ -14,7 +14,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.android.tools.build:gradle:8.1.0")
+    compileOnly("com.android.tools.build:gradle:8.1.0")
     implementation("io.github.goldfish07.reschiper:plugin:0.1.0-rc4")
     implementation("org.ow2.asm:asm:9.6")
     implementation("org.ow2.asm:asm-commons:9.6")
