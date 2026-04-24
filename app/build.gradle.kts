@@ -1,37 +1,15 @@
 import java.util.*
 import kotlin.random.Random
 import com.github.megatronking.stringfog.plugin.StringFogExtension
-import java.io.FileOutputStream
-import java.util.zip.ZipFile
-import javax.xml.parsers.DocumentBuilderFactory
-import org.gradle.kotlin.dsl.withGroovyBuilder
 
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.kapt")
     id("android-junk-code")
-    id("com.flower.code")
+    id("com.flower.protect-suite")
 }
 apply(plugin = "stringfog")
-apply(plugin = "io.github.goldfish07.reschiper")
-
-fun loadResChiperWhiteList(configFile: File): Set<String> {
-    if (!configFile.exists()) return emptySet()
-
-    val document = DocumentBuilderFactory.newInstance()
-        .newDocumentBuilder()
-        .parse(configFile)
-    val nodes = document.getElementsByTagName("path")
-
-    return (0 until nodes.length)
-        .mapNotNull { nodes.item(it).textContent?.trim() }
-        .filter { it.isNotEmpty() }
-        .toSet()
-}
-
-val resChiperConfigFile = rootProject.file("tools/reschiper-config.xml")
-val resChiperOutputBundleName = "app-release-obfuscated.aab"
 
 fun envFlag(name: String, defaultValue: Boolean = false): Boolean {
     return when (System.getenv(name)?.trim()?.lowercase(Locale.ROOT)) {
@@ -42,36 +20,10 @@ fun envFlag(name: String, defaultValue: Boolean = false): Boolean {
     }
 }
 
-fun findAndroidBuildTool(toolName: String): File {
-    val sdkDir = listOfNotNull(
-        System.getenv("ANDROID_HOME"),
-        System.getenv("ANDROID_SDK_ROOT"),
-        System.getenv("LOCALAPPDATA")?.let { "$it${File.separator}Android${File.separator}Sdk" }
-    ).map(::File).firstOrNull { it.exists() }
-        ?: throw GradleException("Android SDK not found. Set ANDROID_HOME or ANDROID_SDK_ROOT.")
-
-    return File(sdkDir, "build-tools")
-        .listFiles { file -> file.isDirectory }
-        ?.sortedByDescending { it.name }
-        ?.map { File(it, toolName) }
-        ?.firstOrNull { it.exists() }
-        ?: throw GradleException("Android build tool not found: $toolName")
-}
-
-extensions.getByName("resChiper").withGroovyBuilder {
-    setProperty("enableObfuscation", true)
-    setProperty("obfuscationMode", "default")
-    setProperty("mergeDuplicateResources", true)
-    setProperty("enableFileFiltering", false)
-    setProperty("enableFilterStrings", false)
-    setProperty("obfuscatedBundleName", resChiperOutputBundleName)
-    setProperty("whiteList", loadResChiperWhiteList(resChiperConfigFile))
-}
-
-flowerCode {
-    enabled = envFlag("FLOWER_CODE_ENABLE", true)
-    enableInDebug = false
-    enableInRelease = true
+protectSuite {
+    flowerEnabled = envFlag("FLOWER_CODE_ENABLE", true)
+    flowerEnableInDebug = false
+    flowerEnableInRelease = true
     protectAllProjectClasses = true
 
     targetClasses = mutableListOf()
@@ -86,6 +38,25 @@ flowerCode {
     injectAtMethodStart = true
     injectAtMethodEnd = true
     injectBeforeReturn = true
+
+    resChiperEnabled = true
+    resChiperConfigFile = "tools/reschiper-config.xml"
+    resChiperOutputBundleName = "app-release-obfuscated.aab"
+
+    outputDir = "release"
+    signingConfigName = "myConfig"
+    dptEnabled = envFlag("DPT_ENABLE", true)
+    dptJar = "tools/dpt.jar"
+    dptExcludeAbi = System.getenv("DPT_EXCLUDE_ABI")?.takeIf { it.isNotBlank() } ?: "x86,x86_64"
+    dptDebug = envFlag("DPT_DEBUG")
+    dptDisableAcf = envFlag("DPT_DISABLE_ACF")
+    dptDumpCode = envFlag("DPT_DUMP_CODE")
+    dptNoisyLog = envFlag("DPT_NOISY_LOG")
+    dptKeepClasses = envFlag("DPT_KEEP_CLASSES")
+    dptSmaller = envFlag("DPT_SMALLER")
+    dptVerifySign = envFlag("DPT_VERIFY_SIGN")
+    dptRulesFile = System.getenv("DPT_RULES_FILE")?.takeIf { it.isNotBlank() }
+    dptProtectConfig = System.getenv("DPT_PROTECT_CONFIG")?.takeIf { it.isNotBlank() }
 }
 
 extensions.configure<StringFogExtension>("stringfog") {
@@ -133,159 +104,6 @@ tasks.register("generateObfuscationDict") {
 tasks.configureEach {
     if (name == "preReleaseBuild") {
         dependsOn("generateObfuscationDict")
-    }
-}
-
-
-tasks.register("resDJApkGenerate") {
-    group = "obfuscation"
-    description = "Build release AAB, obfuscate resources with ReSChiper, convert to APK, then protect Dex with dpt-shell."
-    dependsOn("resChiperRelease")
-    val buildDir = layout.buildDirectory
-    val appId = android.defaultConfig.applicationId
-    val versionName = android.defaultConfig.versionName
-    val channel = System.getenv("APP_CHANNEL") ?: l_app_channel
-    val date = System.currentTimeMillis()
-    val dynamicName = "${appId}_release_${date}_${channel}_${versionName}_obfuscated.apk"
-    val inputAab = buildDir.file("outputs/bundle/release/app-release.aab").get().asFile
-    val obfuscatedAab = buildDir.file("outputs/bundle/release/$resChiperOutputBundleName").get().asFile
-    val outputApks = buildDir.file("outputs/apk/release/app-release-obfuscated.apks").get().asFile
-    val finalApk = buildDir.file("outputs/apk/release/$dynamicName").get().asFile
-    val dptOutputDir = buildDir.dir("outputs/apk/release/dpt").get().asFile
-    val dptProtectedApk = buildDir.file("outputs/apk/release/${dynamicName.removeSuffix(".apk")}_dpt.apk").get().asFile
-    val releaseOutputDir = file("release")
-    val releaseOutputApk = file("release/${dynamicName.removeSuffix(".apk")}_o.apk")
-    val dptAlignedApk = buildDir.file("outputs/apk/release/${dynamicName.removeSuffix(".apk")}_dpt_aligned.apk").get().asFile
-    val bundletoolJar = file("${rootProject.projectDir}/tools/bundletool.jar")
-    val dptJar = file("${rootProject.projectDir}/tools/dpt.jar")
-    val signingConfig = android.signingConfigs.getByName("myConfig")
-    doLast {
-        if (!resChiperConfigFile.exists()) throw GradleException("Missing: ${resChiperConfigFile.absolutePath}")
-        if (!inputAab.exists()) throw GradleException("Missing release bundle: ${inputAab.absolutePath}")
-        if (!obfuscatedAab.exists()) throw GradleException("Missing ReSChiper output bundle: ${obfuscatedAab.absolutePath}")
-        if (!bundletoolJar.exists()) throw GradleException("Missing: ${bundletoolJar.absolutePath}")
-        outputApks.parentFile.mkdirs()
-        releaseOutputDir.mkdirs()
-        releaseOutputDir.listFiles()?.forEach { file ->
-            if (file.isFile && file.extension.equals("apk", ignoreCase = true)) {
-                file.delete()
-            }
-        }
-
-        exec {
-            commandLine(
-                "${System.getProperty("java.home")}${File.separator}bin${File.separator}java",
-                "-jar",
-                bundletoolJar.absolutePath,
-                "build-apks",
-                "--bundle=${obfuscatedAab.absolutePath}",
-                "--output=${outputApks.absolutePath}",
-                "--mode=universal",
-                "--overwrite",
-                "--ks=${signingConfig.storeFile?.absolutePath}",
-                "--ks-pass=pass:${signingConfig.storePassword}",
-                "--ks-key-alias=${signingConfig.keyAlias}",
-                "--key-pass=pass:${signingConfig.keyPassword}"
-            )
-        }
-
-        if (outputApks.exists()) {
-            ZipFile(outputApks).use { zip ->
-                val entry = zip.getEntry("universal.apk") ?: throw GradleException("universal.apk not found in apks")
-                zip.getInputStream(entry).use { input ->
-                    FileOutputStream(finalApk).use { output ->
-                        input.copyTo(output)
-                    }
-                }
-            }
-            outputApks.delete()
-            println("APK Generated: ${finalApk.absolutePath}")
-
-            var releaseCandidate = finalApk
-            if (envFlag("DPT_ENABLE", true)) {
-                if (!dptJar.exists()) throw GradleException("Missing: ${dptJar.absolutePath}")
-
-                dptOutputDir.mkdirs()
-                dptOutputDir.listFiles()?.forEach { file ->
-                    if (file.isFile && file.extension.equals("apk", ignoreCase = true)) {
-                        file.delete()
-                    }
-                }
-
-                val dptArgs = mutableListOf(
-                    "${System.getProperty("java.home")}${File.separator}bin${File.separator}java",
-                    "-jar",
-                    dptJar.absolutePath,
-                    "-f",
-                    finalApk.absolutePath,
-                    "-o",
-                    dptOutputDir.absolutePath,
-                    "-x"
-                )
-
-                if (envFlag("DPT_DEBUG")) dptArgs.add("--debug")
-                if (envFlag("DPT_DISABLE_ACF")) dptArgs.add("--disable-acf")
-                if (envFlag("DPT_DUMP_CODE")) dptArgs.add("--dump-code")
-                if (envFlag("DPT_NOISY_LOG")) dptArgs.add("--noisy-log")
-                if (envFlag("DPT_KEEP_CLASSES")) dptArgs.add("-K")
-                if (envFlag("DPT_SMALLER")) dptArgs.add("-S")
-                if (envFlag("DPT_VERIFY_SIGN")) dptArgs.add("-vs")
-                val dptExcludeAbi = System.getenv("DPT_EXCLUDE_ABI")
-                    ?.takeIf { it.isNotBlank() }
-                    ?: "x86,x86_64"
-                dptArgs.addAll(listOf("-e", dptExcludeAbi))
-                System.getenv("DPT_RULES_FILE")?.takeIf { it.isNotBlank() }?.let {
-                    dptArgs.addAll(listOf("-r", file(it).absolutePath))
-                }
-                System.getenv("DPT_PROTECT_CONFIG")?.takeIf { it.isNotBlank() }?.let {
-                    dptArgs.addAll(listOf("-c", file(it).absolutePath))
-                }
-
-                exec {
-                    commandLine(dptArgs)
-                }
-
-                val generatedDptApk = dptOutputDir
-                    .listFiles { file -> file.isFile && file.extension.equals("apk", ignoreCase = true) }
-                    ?.maxByOrNull { it.lastModified() }
-                    ?: throw GradleException("dpt-shell did not generate an APK in ${dptOutputDir.absolutePath}")
-
-                exec {
-                    commandLine(
-                        findAndroidBuildTool("zipalign.exe").absolutePath,
-                        "-p",
-                        "-f",
-                        "4",
-                        generatedDptApk.absolutePath,
-                        dptAlignedApk.absolutePath
-                    )
-                }
-
-                exec {
-                    commandLine(
-                        findAndroidBuildTool("apksigner.bat").absolutePath,
-                        "sign",
-                        "--ks",
-                        signingConfig.storeFile?.absolutePath,
-                        "--ks-pass",
-                        "pass:${signingConfig.storePassword}",
-                        "--ks-key-alias",
-                        signingConfig.keyAlias,
-                        "--key-pass",
-                        "pass:${signingConfig.keyPassword}",
-                        "--out",
-                        dptProtectedApk.absolutePath,
-                        dptAlignedApk.absolutePath
-                    )
-                }
-
-                println("DPT APK Generated: ${dptProtectedApk.absolutePath}")
-                releaseCandidate = dptProtectedApk
-            }
-
-            releaseCandidate.copyTo(releaseOutputApk, overwrite = true)
-            println("Release APK Generated: ${releaseOutputApk.absolutePath}")
-        }
     }
 }
 
