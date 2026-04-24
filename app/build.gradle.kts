@@ -6,6 +6,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.kapt")
     id("android-junk-code")
+    id("com.flower.code")
 }
 val l_app_channel = "BAIDU"   //CSJ HUAWEI BAIDU OPPO XIAOMI VIVO HONOR YYB                                𤓖
 val l_version_code = 200
@@ -164,6 +165,24 @@ android {
     lint{
         abortOnError = false
     }
+}
+
+flowerCode {
+    enabled = true
+
+    targetClasses = mutableListOf(
+        "com/catcsyun/liantadog/APP",
+        "com/catcsyun/liantadog/AppConst",
+        "com/catcsyun/liantadog/csj/AdCPUtils"
+    )
+
+    minTemplatesPerMethod = 2
+    maxTemplatesPerMethod = 3
+
+    excludeMethods = mutableSetOf("<init>", "<clinit>", "toString", "hashCode", "equals")
+    injectAtMethodStart = true
+    injectAtMethodEnd = true
+    injectBeforeReturn = true
 }
 
 dependencies {

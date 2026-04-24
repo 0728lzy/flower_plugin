@@ -1,6 +1,7 @@
-pluginManagement {
+﻿pluginManagement {
+    includeBuild("flower-code-plugin")
     repositories {
-        //中台 需要配置 国内镜像
+        //涓彴 闇€瑕侀厤缃?鍥藉唴闀滃儚
         maven("https://maven.aliyun.com/nexus/content/groups/public/")
         maven("https://maven.aliyun.com/nexus/content/repositories/google")
 
@@ -12,7 +13,7 @@ pluginManagement {
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
-        //中台 需要配置 国内镜像
+        //涓彴 闇€瑕侀厤缃?鍥藉唴闀滃儚
         maven("https://maven.aliyun.com/nexus/content/groups/public/")
         maven("https://maven.aliyun.com/nexus/content/repositories/google")
 
@@ -26,11 +27,11 @@ dependencyResolutionManagement {
         maven("https://maven.aliyun.com/nexus/content/repositories/jcenter")
         maven("https://maven.aliyun.com/nexus/content/repositories/central")
 
-        //GroMore SDK依赖
+        //GroMore SDK渚濊禆
         maven ("https://artifact.bytedance.com/repository/pangle" )
         //applog
         maven ("https://artifact.bytedance.com/repository/Volcengine/" )
-        //mintegral sdk依赖   引入mintegral sdk需要添加此maven
+        //mintegral sdk渚濊禆   寮曞叆mintegral sdk闇€瑕佹坊鍔犳maven
         maven ("https://dl-maven-android.mintegral.com/repository/mbridge_android_sdk_support/" )
         maven("https://developer.huawei.com/repo/")
         maven("https://artifact.bytedance.com/repository/Volcengine/")
