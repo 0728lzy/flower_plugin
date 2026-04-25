@@ -3,6 +3,8 @@ package com.flower
 import org.objectweb.asm.Label
 import org.objectweb.asm.MethodVisitor
 import org.objectweb.asm.Opcodes
+import java.nio.charset.StandardCharsets
+import java.util.Base64
 import kotlin.random.Random
 
 class FlowerCodeMethodVisitor(
@@ -10,7 +12,24 @@ class FlowerCodeMethodVisitor(
     private val extension: FlowerCodeConfig,
     private val className: String,
     private val methodName: String
-) : MethodVisitor(Opcodes.ASM9, mv) {
+) : MethodVisitor(AsmApi.value, mv) {
+
+    override fun visitLdcInsn(value: Any?) {
+        if (extension.stringFogEnabled && value is String && value.isNotEmpty()) {
+            val key = Random.nextInt(1, 127)
+            mv.visitLdcInsn(encode(value, key))
+            mv.visitIntInsn(Opcodes.BIPUSH, key)
+            mv.visitMethodInsn(
+                Opcodes.INVOKESTATIC,
+                extension.stringFogClassName,
+                "decode",
+                "(Ljava/lang/String;I)Ljava/lang/String;",
+                false
+            )
+            return
+        }
+        super.visitLdcInsn(value)
+    }
 
     override fun visitCode() {
         super.visitCode()
@@ -90,5 +109,13 @@ class FlowerCodeMethodVisitor(
             opcode == Opcodes.FRETURN ||
             opcode == Opcodes.DRETURN ||
             opcode == Opcodes.ARETURN
+    }
+
+    private fun encode(value: String, key: Int): String {
+        val bytes = value.toByteArray(StandardCharsets.UTF_8)
+        for (index in bytes.indices) {
+            bytes[index] = (bytes[index].toInt() xor key).toByte()
+        }
+        return Base64.getEncoder().encodeToString(bytes)
     }
 }

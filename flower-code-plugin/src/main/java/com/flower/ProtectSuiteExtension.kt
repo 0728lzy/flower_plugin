@@ -17,6 +17,8 @@ open class ProtectSuiteExtension {
     var injectAtMethodStart: Boolean = true
     var injectAtMethodEnd: Boolean = true
     var injectBeforeReturn: Boolean = true
+    var stringFogEnabled: Boolean = true
+    var stringFogClassName: String = "com/flower/runtime/StringFog"
 
     var resChiperEnabled: Boolean = true
     var resChiperConfigFile: String = "tools/reschiper-config.xml"

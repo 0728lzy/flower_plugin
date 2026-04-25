@@ -31,6 +31,8 @@ object FlowerCodeAgp8Registrar {
                 params.injectAtMethodStart.set(config.injectAtMethodStart)
                 params.injectAtMethodEnd.set(config.injectAtMethodEnd)
                 params.injectBeforeReturn.set(config.injectBeforeReturn)
+                params.stringFogEnabled.set(false)
+                params.stringFogClassName.set(config.stringFogClassName)
             }
 
             variant.instrumentation.setAsmFramesComputationMode(

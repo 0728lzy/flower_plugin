@@ -17,9 +17,19 @@ class ProtectSuitePlugin : Plugin<Project> {
         )
 
         registerFlowerInstrumentation(project, extension)
+        applyResChiperIfAvailable(project)
         configureResChiper(project, extension)
-        project.pluginManager.apply("io.github.goldfish07.reschiper")
         registerReleaseApkTask(project, extension)
+    }
+
+    private fun applyResChiperIfAvailable(project: Project) {
+        runCatching {
+            project.pluginManager.apply("io.github.goldfish07.reschiper")
+        }.onFailure {
+            project.logger.lifecycle(
+                "ReSChiper plugin is not available on the build classpath; protectReleaseApk will use assembleRelease fallback."
+            )
+        }
     }
 
     private fun registerFlowerInstrumentation(project: Project, extension: ProtectSuiteExtension) {
@@ -30,7 +40,7 @@ class ProtectSuitePlugin : Plugin<Project> {
         project.afterEvaluate {
             if (!extension.enabled || !extension.resChiperEnabled) return@afterEvaluate
 
-            val resChiper = project.extensions.getByName("resChiper")
+            val resChiper = project.extensions.findByName("resChiper") ?: return@afterEvaluate
             setExtensionProperty(resChiper, "enableObfuscation", true)
             setExtensionProperty(resChiper, "obfuscationMode", extension.resChiperObfuscationMode)
             setExtensionProperty(resChiper, "mergeDuplicateResources", extension.mergeDuplicateResources)
@@ -49,7 +59,13 @@ class ProtectSuitePlugin : Plugin<Project> {
         project.tasks.register("protectReleaseApk") { task ->
             task.group = "obfuscation"
             task.description = "Build release AAB, obfuscate resources, convert to APK, and optionally protect Dex."
-            task.dependsOn("resChiperRelease")
+            task.dependsOn(
+                if (project.tasks.findByName("resChiperRelease") != null && extension.resChiperEnabled) {
+                    "resChiperRelease"
+                } else {
+                    "assembleRelease"
+                }
+            )
 
             task.doLast {
                 if (!extension.enabled) return@doLast
@@ -75,41 +91,50 @@ class ProtectSuitePlugin : Plugin<Project> {
                 )
 
                 val configFile = project.rootProject.file(extension.resChiperConfigFile)
-                if (extension.resChiperEnabled && !configFile.exists()) {
+                val useResChiper = extension.resChiperEnabled && project.tasks.findByName("resChiperRelease") != null
+                if (useResChiper && !configFile.exists()) {
                     throw GradleException("Missing: ${configFile.absolutePath}")
                 }
-                if (!inputAab.exists()) throw GradleException("Missing release bundle: ${inputAab.absolutePath}")
-                if (!obfuscatedAab.exists()) {
-                    throw GradleException("Missing ReSChiper output bundle: ${obfuscatedAab.absolutePath}")
-                }
 
-                outputApks.parentFile.mkdirs()
                 releaseOutputDir.mkdirs()
                 clearApks(releaseOutputDir)
 
                 val signingConfig = android.signingConfigs.getByName(extension.signingConfigName)
-                val bundletoolClasspath = project.configurations.detachedConfiguration(
-                    project.dependencies.create("com.android.tools.build:bundletool:${extension.bundletoolVersion}")
-                )
+                if (useResChiper) {
+                    if (!inputAab.exists()) throw GradleException("Missing release bundle: ${inputAab.absolutePath}")
+                    if (!obfuscatedAab.exists()) {
+                        throw GradleException("Missing ReSChiper output bundle: ${obfuscatedAab.absolutePath}")
+                    }
 
-                project.javaexec { spec ->
-                    spec.classpath = bundletoolClasspath
-                    spec.mainClass.set("com.android.tools.build.bundletool.BundleToolMain")
-                    spec.args(
-                        "build-apks",
-                        "--bundle=${obfuscatedAab.absolutePath}",
-                        "--output=${outputApks.absolutePath}",
-                        "--mode=universal",
-                        "--overwrite",
-                        "--ks=${signingConfig.storeFile?.absolutePath}",
-                        "--ks-pass=pass:${signingConfig.storePassword}",
-                        "--ks-key-alias=${signingConfig.keyAlias}",
-                        "--key-pass=pass:${signingConfig.keyPassword}"
+                    outputApks.parentFile.mkdirs()
+                    val bundletoolClasspath = project.configurations.detachedConfiguration(
+                        project.dependencies.create("com.android.tools.build:bundletool:${extension.bundletoolVersion}")
                     )
+
+                    project.javaexec { spec ->
+                        spec.classpath = bundletoolClasspath
+                        spec.mainClass.set("com.android.tools.build.bundletool.BundleToolMain")
+                        spec.args(
+                            "build-apks",
+                            "--bundle=${obfuscatedAab.absolutePath}",
+                            "--output=${outputApks.absolutePath}",
+                            "--mode=universal",
+                            "--overwrite",
+                            "--ks=${signingConfig.storeFile?.absolutePath}",
+                            "--ks-pass=pass:${signingConfig.storePassword}",
+                            "--ks-key-alias=${signingConfig.keyAlias}",
+                            "--key-pass=pass:${signingConfig.keyPassword}"
+                        )
+                    }
+
+                    extractUniversalApk(outputApks, finalApk)
+                    outputApks.delete()
+                } else {
+                    latestReleaseApk(File(buildDir, "outputs/apk/release"))
+                        ?.copyTo(finalApk, overwrite = true)
+                        ?: throw GradleException("No release APK found under ${File(buildDir, "outputs/apk/release").absolutePath}")
                 }
 
-                extractUniversalApk(outputApks, finalApk)
-                outputApks.delete()
                 var releaseCandidate = finalApk
 
                 if (extension.dptEnabled) {
@@ -243,6 +268,11 @@ class ProtectSuitePlugin : Plugin<Project> {
                 file.delete()
             }
         }
+    }
+
+    private fun latestReleaseApk(dir: File): File? {
+        return dir.listFiles { file -> file.isFile && file.extension.equals("apk", ignoreCase = true) }
+            ?.maxByOrNull { it.lastModified() }
     }
 
     private fun javaBin(): String {

@@ -27,4 +27,8 @@ class ProtectSuiteFlowerCodeConfig(
         get() = extension.injectAtMethodEnd
     override val injectBeforeReturn: Boolean
         get() = extension.injectBeforeReturn
+    override val stringFogEnabled: Boolean
+        get() = extension.stringFogEnabled
+    override val stringFogClassName: String
+        get() = extension.stringFogClassName
 }

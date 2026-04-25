@@ -36,6 +36,10 @@ interface FlowerCodeAsmParams : InstrumentationParameters {
     val injectAtMethodEnd: Property<Boolean>
     @get:Input
     val injectBeforeReturn: Property<Boolean>
+    @get:Input
+    val stringFogEnabled: Property<Boolean>
+    @get:Input
+    val stringFogClassName: Property<String>
 }
 
 abstract class FlowerCodeAsmClassVisitorFactory : AsmClassVisitorFactory<FlowerCodeAsmParams> {
@@ -74,6 +78,8 @@ abstract class FlowerCodeAsmClassVisitorFactory : AsmClassVisitorFactory<FlowerC
             injectAtMethodStart = params.injectAtMethodStart.get()
             injectAtMethodEnd = params.injectAtMethodEnd.get()
             injectBeforeReturn = params.injectBeforeReturn.get()
+            stringFogEnabled = false
+            stringFogClassName = params.stringFogClassName.get()
         }
         return FlowerCodeClassVisitor(nextClassVisitor, extension)
     }

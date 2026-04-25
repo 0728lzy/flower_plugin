@@ -13,6 +13,8 @@ interface FlowerCodeConfig {
     val injectAtMethodStart: Boolean
     val injectAtMethodEnd: Boolean
     val injectBeforeReturn: Boolean
+    val stringFogEnabled: Boolean
+    val stringFogClassName: String
 }
 
 open class FlowerCodeExtension : FlowerCodeConfig {
@@ -39,4 +41,7 @@ open class FlowerCodeExtension : FlowerCodeConfig {
     override var injectAtMethodStart: Boolean = true
     override var injectAtMethodEnd: Boolean = true
     override var injectBeforeReturn: Boolean = true
+
+    override var stringFogEnabled: Boolean = false
+    override var stringFogClassName: String = "com/flower/runtime/StringFog"
 }

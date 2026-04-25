@@ -8,6 +8,7 @@ import com.android.build.api.transform.Transform
 import com.android.build.api.transform.TransformInvocation
 import org.objectweb.asm.ClassReader
 import org.objectweb.asm.ClassWriter
+import org.objectweb.asm.Opcodes
 import java.io.File
 import java.io.FileOutputStream
 
@@ -42,6 +43,7 @@ class FlowerCodeTransform(
                 )
                 if (shouldInject) {
                     transformDirectory(directoryInput, output)
+                    writeStringFogRuntime(output)
                 } else {
                     copyDirectory(directoryInput.file, output)
                 }
@@ -84,6 +86,117 @@ class FlowerCodeTransform(
         val visitor = FlowerCodeClassVisitor(writer, config)
         reader.accept(visitor, ClassReader.EXPAND_FRAMES)
         return writer.toByteArray()
+    }
+
+    private fun writeStringFogRuntime(output: File) {
+        if (!config.stringFogEnabled) return
+
+        val runtimeClass = File(output, "${config.stringFogClassName}.class")
+        runtimeClass.parentFile.mkdirs()
+        runtimeClass.writeBytes(generateStringFogRuntime(config.stringFogClassName))
+    }
+
+    private fun generateStringFogRuntime(className: String): ByteArray {
+        val cw = ClassWriter(0)
+        cw.visit(
+            Opcodes.V1_7,
+            Opcodes.ACC_PUBLIC or Opcodes.ACC_FINAL or Opcodes.ACC_SUPER,
+            className,
+            null,
+            "java/lang/Object",
+            null
+        )
+
+        cw.visitField(
+            Opcodes.ACC_PRIVATE or Opcodes.ACC_STATIC or Opcodes.ACC_FINAL,
+            "UTF_8",
+            "Ljava/nio/charset/Charset;",
+            null,
+            null
+        ).visitEnd()
+
+        cw.visitMethod(Opcodes.ACC_PRIVATE, "<init>", "()V", null, null).apply {
+            visitCode()
+            visitVarInsn(Opcodes.ALOAD, 0)
+            visitMethodInsn(Opcodes.INVOKESPECIAL, "java/lang/Object", "<init>", "()V", false)
+            visitInsn(Opcodes.RETURN)
+            visitMaxs(1, 1)
+            visitEnd()
+        }
+
+        cw.visitMethod(
+            Opcodes.ACC_PUBLIC or Opcodes.ACC_STATIC,
+            "decode",
+            "(Ljava/lang/String;I)Ljava/lang/String;",
+            null,
+            null
+        ).apply {
+            val loop = org.objectweb.asm.Label()
+            val end = org.objectweb.asm.Label()
+            visitCode()
+            visitVarInsn(Opcodes.ALOAD, 0)
+            visitInsn(Opcodes.ICONST_2)
+            visitMethodInsn(
+                Opcodes.INVOKESTATIC,
+                "android/util/Base64",
+                "decode",
+                "(Ljava/lang/String;I)[B",
+                false
+            )
+            visitVarInsn(Opcodes.ASTORE, 2)
+            visitInsn(Opcodes.ICONST_0)
+            visitVarInsn(Opcodes.ISTORE, 3)
+            visitLabel(loop)
+            visitVarInsn(Opcodes.ILOAD, 3)
+            visitVarInsn(Opcodes.ALOAD, 2)
+            visitInsn(Opcodes.ARRAYLENGTH)
+            visitJumpInsn(Opcodes.IF_ICMPGE, end)
+            visitVarInsn(Opcodes.ALOAD, 2)
+            visitVarInsn(Opcodes.ILOAD, 3)
+            visitVarInsn(Opcodes.ALOAD, 2)
+            visitVarInsn(Opcodes.ILOAD, 3)
+            visitInsn(Opcodes.BALOAD)
+            visitVarInsn(Opcodes.ILOAD, 1)
+            visitInsn(Opcodes.IXOR)
+            visitInsn(Opcodes.I2B)
+            visitInsn(Opcodes.BASTORE)
+            visitIincInsn(3, 1)
+            visitJumpInsn(Opcodes.GOTO, loop)
+            visitLabel(end)
+            visitTypeInsn(Opcodes.NEW, "java/lang/String")
+            visitInsn(Opcodes.DUP)
+            visitVarInsn(Opcodes.ALOAD, 2)
+            visitFieldInsn(Opcodes.GETSTATIC, className, "UTF_8", "Ljava/nio/charset/Charset;")
+            visitMethodInsn(
+                Opcodes.INVOKESPECIAL,
+                "java/lang/String",
+                "<init>",
+                "([BLjava/nio/charset/Charset;)V",
+                false
+            )
+            visitInsn(Opcodes.ARETURN)
+            visitMaxs(5, 4)
+            visitEnd()
+        }
+
+        cw.visitMethod(Opcodes.ACC_STATIC, "<clinit>", "()V", null, null).apply {
+            visitCode()
+            visitLdcInsn("UTF-8")
+            visitMethodInsn(
+                Opcodes.INVOKESTATIC,
+                "java/nio/charset/Charset",
+                "forName",
+                "(Ljava/lang/String;)Ljava/nio/charset/Charset;",
+                false
+            )
+            visitFieldInsn(Opcodes.PUTSTATIC, className, "UTF_8", "Ljava/nio/charset/Charset;")
+            visitInsn(Opcodes.RETURN)
+            visitMaxs(1, 0)
+            visitEnd()
+        }
+
+        cw.visitEnd()
+        return cw.toByteArray()
     }
 
     private fun shouldProcessClass(relativeClassPath: String): Boolean {

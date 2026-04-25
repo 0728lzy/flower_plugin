@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "com.flower"
-version = "1.0.1"
+version = "1.0.2"
 
 repositories {
     google()
@@ -13,9 +13,17 @@ repositories {
     gradlePluginPortal()
 }
 
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+    kotlinOptions.jvmTarget = "11"
+}
+
 dependencies {
     compileOnly("com.android.tools.build:gradle:8.1.0")
-    implementation("io.github.goldfish07.reschiper:plugin:0.1.0-rc4")
     implementation("org.ow2.asm:asm:9.6")
     implementation("org.ow2.asm:asm-commons:9.6")
     implementation("org.ow2.asm:asm-util:9.6")
