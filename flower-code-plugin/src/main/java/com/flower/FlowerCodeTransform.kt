@@ -31,6 +31,7 @@ class FlowerCodeTransform(
         val outputProvider = transformInvocation.outputProvider ?: return
         val variantName = readVariantName(transformInvocation)
         val shouldInject = config.enabled && isVariantEnabled(variantName)
+        var stringFogRuntimeWritten = false
 
         outputProvider.deleteAll()
         transformInvocation.inputs.forEach { input ->
@@ -43,7 +44,10 @@ class FlowerCodeTransform(
                 )
                 if (shouldInject) {
                     transformDirectory(directoryInput, output)
-                    writeStringFogRuntime(output)
+                    if (!stringFogRuntimeWritten) {
+                        writeStringFogRuntime(output)
+                        stringFogRuntimeWritten = true
+                    }
                 } else {
                     copyDirectory(directoryInput.file, output)
                 }
@@ -82,7 +86,7 @@ class FlowerCodeTransform(
 
     private fun transformClass(bytes: ByteArray): ByteArray {
         val reader = ClassReader(bytes)
-        val writer = ClassWriter(reader, ClassWriter.COMPUTE_MAXS or ClassWriter.COMPUTE_FRAMES)
+        val writer = SafeClassWriter(reader, ClassWriter.COMPUTE_MAXS)
         val visitor = FlowerCodeClassVisitor(writer, config)
         reader.accept(visitor, ClassReader.EXPAND_FRAMES)
         return writer.toByteArray()

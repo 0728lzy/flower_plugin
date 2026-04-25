@@ -32,6 +32,10 @@ open class ProtectSuiteExtension {
     var outputDir: String = "release"
     var outputSuffix: String = "_o"
     var signingConfigName: String = "myConfig"
+    var javaExecutable: String? = null
+    var javaHome: String? = null
+    var bundletoolJavaExecutable: String? = null
+    var dptJavaExecutable: String? = null
 
     var dptEnabled: Boolean = true
     var dptJar: String = "tools/dpt.jar"

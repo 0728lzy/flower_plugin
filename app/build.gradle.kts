@@ -20,6 +20,28 @@ fun envFlag(name: String, defaultValue: Boolean = false): Boolean {
     }
 }
 
+fun javaLanguageVersion(): JavaVersion {
+    val raw = (findProperty("flower.java.version") as String?)
+        ?: System.getenv("FLOWER_JAVA_VERSION")
+        ?: "11"
+
+    return when (raw.trim()) {
+        "11" -> JavaVersion.VERSION_11
+        "17" -> JavaVersion.VERSION_17
+        else -> throw GradleException("Unsupported flower.java.version/FLOWER_JAVA_VERSION: $raw")
+    }
+}
+
+fun kotlinJvmTarget(version: JavaVersion): String {
+    return when (version) {
+        JavaVersion.VERSION_11 -> "11"
+        JavaVersion.VERSION_17 -> "17"
+        else -> throw GradleException("Unsupported JavaVersion for Kotlin target: $version")
+    }
+}
+
+val configuredJavaVersion = javaLanguageVersion()
+
 protectSuite {
     flowerEnabled = envFlag("FLOWER_CODE_ENABLE", true)
     flowerEnableInDebug = false
@@ -45,6 +67,14 @@ protectSuite {
 
     outputDir = "release"
     signingConfigName = "myConfig"
+    javaHome = (findProperty("flower.java.home") as String?)
+        ?: System.getenv("FLOWER_JAVA_HOME")
+    javaExecutable = (findProperty("flower.java.bin") as String?)
+        ?: System.getenv("FLOWER_JAVA_BIN")
+    bundletoolJavaExecutable = (findProperty("flower.bundletool.java.bin") as String?)
+        ?: System.getenv("FLOWER_BUNDLETOOL_JAVA_BIN")
+    dptJavaExecutable = (findProperty("flower.dpt.java.bin") as String?)
+        ?: System.getenv("FLOWER_DPT_JAVA_BIN")
     dptEnabled = envFlag("DPT_ENABLE", true)
     dptJar = "tools/dpt.jar"
     dptExcludeAbi = System.getenv("DPT_EXCLUDE_ABI")?.takeIf { it.isNotBlank() } ?: "x86,x86_64"
@@ -185,11 +215,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = configuredJavaVersion
+        targetCompatibility = configuredJavaVersion
     }
     kotlinOptions {
-        jvmTarget = "17"
+        jvmTarget = kotlinJvmTarget(configuredJavaVersion)
     }
     buildFeatures.viewBinding = true
     buildFeatures.buildConfig = true

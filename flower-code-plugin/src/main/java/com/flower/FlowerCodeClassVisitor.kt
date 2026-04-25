@@ -8,7 +8,6 @@ class FlowerCodeClassVisitor(
     cv: ClassVisitor,
     private val extension: FlowerCodeConfig
 ) : ClassVisitor(AsmApi.value, cv) {
-
     private var className: String = ""
 
     override fun visit(

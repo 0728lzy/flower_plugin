@@ -6,6 +6,7 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import java.io.File
 import java.io.FileOutputStream
+import java.util.Locale
 import java.util.zip.ZipFile
 import javax.xml.parsers.DocumentBuilderFactory
 
@@ -110,11 +111,14 @@ class ProtectSuitePlugin : Plugin<Project> {
                     val bundletoolClasspath = project.configurations.detachedConfiguration(
                         project.dependencies.create("com.android.tools.build:bundletool:${extension.bundletoolVersion}")
                     )
+                    val bundletoolJava = resolveJavaBin(project, extension, extension.bundletoolJavaExecutable)
 
-                    project.javaexec { spec ->
-                        spec.classpath = bundletoolClasspath
-                        spec.mainClass.set("com.android.tools.build.bundletool.BundleToolMain")
-                        spec.args(
+                    project.exec { spec ->
+                        spec.commandLine(
+                            bundletoolJava.absolutePath,
+                            "-cp",
+                            bundletoolClasspath.asPath,
+                            "com.android.tools.build.bundletool.BundleToolMain",
                             "build-apks",
                             "--bundle=${obfuscatedAab.absolutePath}",
                             "--output=${outputApks.absolutePath}",
@@ -171,8 +175,9 @@ class ProtectSuitePlugin : Plugin<Project> {
         dptOutputDir.mkdirs()
         clearApks(dptOutputDir)
 
+        val dptJava = resolveJavaBin(project, extension, extension.dptJavaExecutable)
         val dptArgs = mutableListOf(
-            javaBin(),
+            dptJava.absolutePath,
             "-jar",
             dptJar.absolutePath,
             "-f",
@@ -275,8 +280,52 @@ class ProtectSuitePlugin : Plugin<Project> {
             ?.maxByOrNull { it.lastModified() }
     }
 
-    private fun javaBin(): String {
-        return "${System.getProperty("java.home")}${File.separator}bin${File.separator}java"
+    private fun resolveJavaBin(
+        project: Project,
+        extension: ProtectSuiteExtension,
+        explicitExecutable: String?
+    ): File {
+        val executableCandidates = listOfNotNull(
+            explicitExecutable?.trim()?.takeIf { it.isNotEmpty() },
+            extension.javaExecutable?.trim()?.takeIf { it.isNotEmpty() }
+        ).map(project::file)
+
+        executableCandidates.firstOrNull { it.exists() }?.let { return it }
+
+        val homeCandidates = listOfNotNull(
+            extension.javaHome?.trim()?.takeIf { it.isNotEmpty() },
+            System.getenv("JAVA_HOME")?.trim()?.takeIf { it.isNotEmpty() },
+            System.getProperty("java.home")?.trim()?.takeIf { it.isNotEmpty() }
+        ).map(project::file)
+
+        homeCandidates
+            .asSequence()
+            .flatMap { javaHomeDir ->
+                sequenceOf(
+                    File(javaHomeDir, "bin${File.separator}${javaCommandName()}"),
+                    File(javaHomeDir, javaCommandName())
+                )
+            }
+            .firstOrNull { it.exists() }
+            ?.let { return it }
+
+        val attempted = buildList {
+            addAll(executableCandidates.map { it.absolutePath })
+            addAll(homeCandidates.map { it.absolutePath })
+        }.joinToString()
+
+        throw GradleException(
+            "Java executable not found. Checked: $attempted. " +
+                "Configure protectSuite.javaExecutable / javaHome / bundletoolJavaExecutable / dptJavaExecutable."
+        )
+    }
+
+    private fun javaCommandName(): String {
+        return if (System.getProperty("os.name").lowercase(Locale.ROOT).contains("windows")) {
+            "java.exe"
+        } else {
+            "java"
+        }
     }
 
     private fun findAndroidBuildTool(toolName: String): File {
